@@ -1,0 +1,26 @@
+{
+  "name": "@safliix-back/safliix-back-e2e",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "implicitDependencies": [
+      "@safliix-back/safliix-back"
+    ],
+    "targets": {
+      "e2e": {
+        "executor": "@nx/jest:jest",
+        "outputs": [
+          "{projectRoot}/test-output/jest/coverage"
+        ],
+        "options": {
+          "jestConfig": "apps/safliix-back-e2e/jest.config.ts",
+          "passWithNoTests": true
+        },
+        "dependsOn": [
+          "@safliix-back/safliix-back:build",
+          "@safliix-back/safliix-back:serve"
+        ]
+      }
+    }
+  }
+}
