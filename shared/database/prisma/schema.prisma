@@ -1,0 +1,355 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+// =============================================
+// MODÈLES PRINCIPAUX
+// =============================================
+
+model User {
+  id               String     @id @default(uuid())
+  email            String     @unique
+  password_hash    String
+  name             String?
+  avatarUrl       String?
+  createdAt       DateTime   @default(now())
+  lastLoginAt    DateTime?
+  isVerified      Boolean    @default(false)
+  isMainAccount  Boolean    @default(true)
+  role             UserRole   @default(USER)
+  
+  // Relations
+  sessions          Session[]
+  subscriptions     Subscription[]
+  ownedSharedAccounts SharedAccount[] @relation("OwnerAccounts")
+  sharedProfiles    SharedAccountUser[]
+  purchases         Purchase[]
+  views            View[]
+  comments         Comment[]
+
+  SharedAccount SharedAccount[]
+  adViews         AdView[] // Added opposite relation for AdView
+}
+
+model Session {
+  id           String   @id @default(uuid())
+  user         User     @relation(fields: [userId], references: [id])
+  userId       String
+  refreshToken String   @unique
+  ipAddress    String?
+  userAgent    String?
+  createdAt    DateTime @default(now())
+  expiresAt    DateTime
+
+  @@index([userId, refreshToken])
+}
+
+enum UserRole {
+  USER
+  ADMIN
+  SUPER_ADMIN
+}
+
+// =============================================
+// ABONNEMENTS ET COMPTES PARTAGÉS
+// =============================================
+
+model SubscriptionPlan {
+  id                String     @id @default(uuid())
+  name              String     @unique
+  price             Float
+  max_shared_accounts Int      @default(0)
+  video_quality     VideoQuality
+  subscriptions     Subscription[]
+}
+
+enum VideoQuality {
+  SD
+  HD
+  UHD
+}
+
+model Subscription {
+  id              String     @id @default(uuid())
+  user            User       @relation(fields: [userId], references: [id])
+  userId          String
+  plan            SubscriptionPlan @relation(fields: [planId], references: [id])
+  planId          String
+  start_date      DateTime
+  end_date        DateTime
+  renewal_status  RenewalStatus @default(AUTO_RENEW)
+  sharedAccounts  SharedAccount[]
+}
+
+enum RenewalStatus {
+  AUTO_RENEW
+  MANUAL
+  CANCELLED
+}
+
+model SharedAccount {
+  id              String     @id @default(uuid())
+  owner           User       @relation("OwnerAccounts", fields: [ownerUserId], references: [id])
+  ownerUserId     String
+  sharedUser      User?      @relation(fields: [sharedUserId], references: [id])
+  sharedUserId    String?
+  subscription    Subscription @relation(fields: [subscriptionId], references: [id])
+  subscriptionId  String
+  shared_on       DateTime   @default(now())
+  status          SharedAccountStatus @default(PENDING)
+  is_active       Boolean    @default(true)
+  profiles        SharedAccountUser[]
+}
+
+enum SharedAccountStatus {
+  PENDING
+  ACCEPTED
+  REVOKED
+}
+
+model SharedAccountUser {
+  id              String     @id @default(uuid())
+  sharedAccount   SharedAccount @relation(fields: [sharedAccountId], references: [id])
+  sharedAccountId String
+  user            User       @relation(fields: [userId], references: [id])
+  userId          String
+  profile_name    String
+  is_kid_profile  Boolean    @default(false)
+  avatar_url      String?
+  pin_code        String?
+  created_at      DateTime   @default(now())
+  
+  // Relations
+  views           View[]
+  adViews         AdView[]
+  activities      SharedProfileActivity[]
+
+  @@unique([sharedAccountId, profile_name])
+}
+
+// =============================================
+// CONTENU (VIDÉOS, FILMS, SÉRIES)
+// =============================================
+
+model Video {
+  id              String     @id @default(uuid())
+  file_path       String
+  duration_seconds Int
+  created_at      DateTime   @default(now())
+  
+  // Relations
+  movie           Movie?
+  episode         Episode?
+  subtitles       Subtitle[]
+  purchases       Purchase[]
+  views           View[]
+  comments        Comment[] // Added relation field for comments
+}
+
+model VideoMetadata {
+  id              String     @id @default(uuid())
+  title           String
+  description     String?
+  thumbnail_url   String
+  age_rating      AgeRating
+  release_date    DateTime
+  
+  // Relations
+  movie           Movie?
+  series          Series?
+  episodes        Episode[]
+}
+
+enum AgeRating {
+  G
+  PG
+  PG_13
+  R
+  NC_17
+}
+
+model Movie {
+  id              String     @id @default(uuid())
+  videoId         String   @unique
+  metadataId      String   @unique
+  
+  // Relations
+  tags            MovieTag[]
+  video           Video      @relation(fields: [videoId], references: [id])
+  metadata        VideoMetadata @relation(fields: [metadataId], references: [id])
+}
+
+model Series {
+  id              String     @id @default(uuid())
+  metadata        VideoMetadata @relation(fields: [metadataId], references: [id])
+  metadataId      String   @unique
+  
+  // Relations
+  seasons         Season[]
+  tags            SeriesTag[]
+}
+
+model Season {
+  id              String     @id @default(uuid())
+  series          Series     @relation(fields: [seriesId], references: [id])
+  seriesId        String
+  number          Int
+  title           String?
+  
+  // Relations
+  episodes        Episode[]
+
+  @@unique([seriesId, number])
+}
+
+model Episode {
+  id              String     @id @default(uuid())
+  season          Season     @relation(fields: [seasonId], references: [id])
+  seasonId        String
+  video           Video      @relation(fields: [videoId], references: [id])
+  videoId         String   @unique
+  metadata        VideoMetadata @relation(fields: [metadataId], references: [id])
+  metadataId      String
+  episode_number  Int
+  
+  @@unique([seasonId, episode_number])
+}
+
+// =============================================
+// ENRICHISSEMENT DU CONTENU
+// =============================================
+
+model Tag {
+  id              String     @id @default(uuid())
+  name            String     @unique
+  
+  // Relations
+  movieTags       MovieTag[]
+  seriesTags      SeriesTag[]
+}
+
+model MovieTag {
+  movie           Movie      @relation(fields: [movieId], references: [id])
+  movieId         String
+  tag             Tag        @relation(fields: [tagId], references: [id])
+  tagId           String
+  
+  @@id([movieId, tagId])
+}
+
+model SeriesTag {
+  series          Series     @relation(fields: [seriesId], references: [id])
+  seriesId        String
+  tag             Tag        @relation(fields: [tagId], references: [id])
+  tagId           String
+  
+  @@id([seriesId, tagId])
+}
+
+model Subtitle {
+  video           Video      @relation(fields: [videoId], references: [id])
+  videoId         String
+  language        String
+  subtitle_url    String
+  
+  @@id([videoId, language])
+}
+
+// =============================================
+// INTERACTIONS UTILISATEURS
+// =============================================
+
+model Purchase {
+  id              String     @id @default(uuid())
+  user            User       @relation(fields: [userId], references: [id])
+  userId          String
+  video           Video      @relation(fields: [videoId], references: [id])
+  videoId         String
+  purchase_date   DateTime   @default(now())
+  expiration_date DateTime?
+}
+
+model View {
+  id              String     @id @default(uuid())
+  user            User       @relation(fields: [userId], references: [id])
+  userId          String
+  profile         SharedAccountUser? @relation(fields: [profileId], references: [id])
+  profileId       String?
+  video           Video      @relation(fields: [videoId], references: [id])
+  videoId         String
+  viewed_at       DateTime   @default(now())
+  progress_seconds Int       @default(0)
+}
+
+model Comment {
+  id              String     @id @default(uuid())
+  user            User       @relation(fields: [userId], references: [id])
+  userId          String
+  video           Video      @relation(fields: [videoId], references: [id])
+  videoId         String
+  text            String
+  created_at      DateTime   @default(now())
+  parent          Comment?   @relation("CommentReplies", fields: [parentCommentId], references: [id])
+  parentCommentId String?
+  replies         Comment[]  @relation("CommentReplies")
+}
+
+// =============================================
+// PUBLICITÉS
+// =============================================
+
+model Ad {
+  id              String     @id @default(uuid())
+  title           String
+  image_url       String
+  video_url       String?
+  start_date      DateTime
+  end_date        DateTime
+  is_active       Boolean    @default(true)
+  
+  // Relations
+  views           AdView[]
+}
+
+model AdView {
+  id              String     @id @default(uuid())
+  ad              Ad         @relation(fields: [adId], references: [id])
+  adId            String
+  user            User?      @relation(fields: [userId], references: [id])
+  userId          String?
+  profile         SharedAccountUser? @relation(fields: [profileId], references: [id])
+  profileId       String?
+  viewed_at       DateTime   @default(now())
+}
+
+// =============================================
+// AUDIT ET ACTIVITÉ
+// =============================================
+
+model SharedProfileActivity {
+  id              String     @id @default(uuid())
+  profile         SharedAccountUser @relation(fields: [profileId], references: [id])
+  profileId       String
+  action          ProfileActivityAction
+  details         Json?
+  performed_at    DateTime   @default(now())
+}
+
+enum ProfileActivityAction {
+  LOGIN
+  CONTENT_ACCESS
+  SETTINGS_CHANGE
+}

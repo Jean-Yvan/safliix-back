@@ -1,10 +1,7 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "namedInputs": {
-    "default": [
-      "{projectRoot}/**/*",
-      "sharedGlobals"
-    ],
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
     "production": [
       "default",
       "!{projectRoot}/.eslintrc.json",
@@ -30,7 +27,16 @@
           "buildDepsName": "build-deps",
           "watchDepsName": "watch-deps"
         }
-      }
+      },
+      "exclude": [
+        "shared/database/*",
+        "shared/auth/*",
+        "shared/core/*",
+        "shared/utils/*",
+        "libs/domains/video/*",
+        "libs/domains/users/*",
+        "libs/domains/series/*"
+      ]
     },
     {
       "plugin": "@nx/webpack/plugin",
@@ -53,16 +59,30 @@
       "options": {
         "targetName": "test"
       },
-      "exclude": [
-        "apps/safliix-back-e2e/**/*"
-      ]
+      "exclude": ["admin-e2e/**/*", "admin-e2e/**/*"]
+    },
+    {
+      "plugin": "@nx/js/typescript",
+      "include": [
+        "shared/database/*",
+        "shared/auth/*",
+        "shared/core/*",
+        "shared/utils/*",
+        "libs/domains/video/*",
+        "libs/domains/users/*",
+        "libs/domains/series/*"
+      ],
+      "options": {
+        "typecheck": {
+          "targetName": "typecheck"
+        }
+      }
     }
   ],
   "targetDefaults": {
     "test": {
-      "dependsOn": [
-        "^build"
-      ]
+      "dependsOn": ["^build"]
     }
-  }
+  },
+  "projects": {}
 }

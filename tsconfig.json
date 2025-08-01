@@ -4,10 +4,34 @@
   "files": [],
   "references": [
     {
-      "path": "./apps/safliix-back-e2e"
+      "path": "./apps/admin-e2e"
     },
     {
-      "path": "./apps/safliix-back"
+      "path": "./apps/admin"
+    },
+    {
+      "path": "./apps/client-e2e"
+    },
+    {
+      "path": "./apps/client"
+    },
+    {
+      "path": "./shared/database"
+    },
+    {
+      "path": "./shared/auth"
+    },
+    {
+      "path": "./shared/core"
+    },
+    {
+      "path": "./shared/utils"
+    },
+    {
+      "path": "./libs/domains/users"
+    },
+    {
+      "path": "./libs/domains/series"
     }
   ]
 }
