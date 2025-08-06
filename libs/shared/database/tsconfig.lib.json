@@ -12,6 +12,7 @@
     "strictNullChecks": true,
     "noImplicitAny": true,
     "strictBindCallApply": true,
+    "composite": true,
     "noFallthroughCasesInSwitch": true
   },
   "include": ["src/**/*.ts"],

@@ -29,13 +29,15 @@
         }
       },
       "exclude": [
-        "shared/database/*",
-        "shared/auth/*",
-        "shared/core/*",
-        "shared/utils/*",
         "libs/domains/video/*",
         "libs/domains/users/*",
-        "libs/domains/series/*"
+        "libs/domains/series/*",
+        "libs/shared/*",
+        "libs/shared/auth/*",
+        "libs/shared/database/*",
+        "libs/domains/movies/*",
+        "libs/domains/contents/*",
+        "libs/shared/cqrs/*"
       ]
     },
     {
@@ -64,13 +66,15 @@
     {
       "plugin": "@nx/js/typescript",
       "include": [
-        "shared/database/*",
-        "shared/auth/*",
-        "shared/core/*",
-        "shared/utils/*",
         "libs/domains/video/*",
         "libs/domains/users/*",
-        "libs/domains/series/*"
+        "libs/domains/series/*",
+        "libs/shared/*",
+        "libs/shared/auth/*",
+        "libs/shared/database/*",
+        "libs/domains/movies/*",
+        "libs/domains/contents/*",
+        "libs/shared/cqrs/*"
       ],
       "options": {
         "typecheck": {

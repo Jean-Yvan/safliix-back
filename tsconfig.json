@@ -1,4 +1,4 @@
-{
+ {
   "extends": "./tsconfig.base.json",
   "compileOnSave": false,
   "files": [],
@@ -16,22 +16,26 @@
       "path": "./apps/client"
     },
     {
-      "path": "./shared/database"
-    },
-    {
-      "path": "./shared/auth"
-    },
-    {
-      "path": "./shared/core"
-    },
-    {
-      "path": "./shared/utils"
-    },
-    {
       "path": "./libs/domains/users"
     },
     {
       "path": "./libs/domains/series"
+    },
+    
+    {
+      "path": "./libs/shared/auth"
+    },
+    {
+      "path": "./libs/shared/database"
+    },
+    {
+      "path": "./libs/domains/movies"
+    },
+    {
+      "path": "./libs/domains/contents"
+    },
+    {
+      "path": "./libs/shared/cqrs"
     }
   ]
 }

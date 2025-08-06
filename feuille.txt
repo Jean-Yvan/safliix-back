@@ -1,0 +1,158 @@
+# Architecture Complète de l'Aggrégat Movie (DDD + NestJS + Prisma)
+
+## Structure du Module
+libs/
+└── domains/
+    └── movie/
+        ├── application/
+        │   ├── commands/
+        │   ├── queries/
+        │   └── handlers/
+        ├── domain/
+        │   ├── entities/
+        │   ├── value-objects/
+        │   ├── ports/
+        │   └── exceptions/
+        ├── infra/
+        │   ├── prisma/
+        │   └── dtos/
+        └── interfaces/
+
+## Fichiers Clés
+
+### 1. MovieAggregate (Entité Racine)
+// domains/movie/domain/entities/movie.aggregate.ts
+export class MovieAggregate {
+  private _isPublished = false;
+
+  private constructor(
+    public readonly id: string,
+    private _title: string,
+    private _duration: number,
+    private _metadata: VideoMetadata,
+    private _videoFile: VideoFile,
+    private _tags: string[] = []
+  ) {}
+
+  // Méthodes Métier
+  publish(): void {
+    if (this._isPublished) throw new Error('MOVIE_ALREADY_PUBLISHED');
+    this._isPublished = true;
+  }
+
+  // Factories
+  static create(createDto: { title: string; duration: number }): MovieAggregate {
+    if (createDto.duration > 4 * 3600) throw new Error('MOVIE_TOO_LONG');
+    return new MovieAggregate(uuidv4(), createDto.title, createDto.duration, ...);
+  }
+
+  // Mappers Prisma
+  static fromPrisma(data: Prisma.MovieGetPayload<...>): MovieAggregate { ... }
+  toPrisma(): Prisma.MovieCreateInput { ... }
+}
+
+### 2. VideoMetadata (Value Object)
+// domains/movie/domain/value-objects/video-metadata.value-object.ts
+export class VideoMetadata {
+  private constructor(
+    public readonly id: string,
+    private _title: string,
+    private _description: string,
+    private _thumbnailUrl: string,
+    private _ageRating: AgeRating,
+    private _releaseDate: Date
+  ) {}
+
+  static create(props: { title: string; ageRating: AgeRating }): VideoMetadata {
+    if (props.title.length > 100) throw new Error('TITLE_TOO_LONG');
+    return new VideoMetadata(uuidv4(), ...);
+  }
+}
+
+### 3. Repository Interface
+// domains/movie/domain/ports/movie.repository.ts
+export interface IMovieRepository {
+  findById(id: string): Promise<MovieAggregate | null>;
+  save(movie: MovieAggregate): Promise<void>;
+}
+
+### 4. Implémentation Prisma
+// domains/movie/infra/prisma/movie-prisma.repository.ts
+@Injectable()
+export class MoviePrismaRepository implements IMovieRepository {
+  constructor(private readonly prisma: PrismaService) {}
+
+  async findById(id: string): Promise<MovieAggregate | null> {
+    const data = await this.prisma.movie.findUnique({...});
+    return data ? MovieAggregate.fromPrisma(data) : null;
+  }
+}
+
+### 5. Configuration du Module
+// domains/movie/movie.module.ts
+@Module({
+  providers: [
+    { provide: IMovieRepository, useClass: MoviePrismaRepository }
+  ],
+  exports: [IMovieRepository]
+})
+export class MovieModule {}
+
+### 6. Couche Application (CQRS)
+// domains/movie/application/commands/create-movie.command.ts
+export class CreateMovieCommand {
+  constructor(
+    public readonly title: string,
+    public readonly duration: number
+  ) {}
+}
+
+// domains/movie/application/handlers/create-movie.handler.ts
+@CommandHandler(CreateMovieCommand)
+export class CreateMovieHandler implements ICommandHandler<CreateMovieCommand> {
+  constructor(
+    @Inject(IMovieRepository)
+    private readonly repository: IMovieRepository
+  ) {}
+
+  async execute(command: CreateMovieCommand) {
+    const movie = MovieAggregate.create(command);
+    await this.repository.save(movie);
+    return movie;
+  }
+}
+
+### 7. Controller REST
+// domains/movie/interfaces/rest/movie.controller.ts
+@Controller('movies')
+export class MovieController {
+  constructor(private readonly commandBus: CommandBus) {}
+
+  @Post()
+  async create(@Body() dto: CreateMovieDto) {
+    return this.commandBus.execute(
+      new CreateMovieCommand(dto.title, dto.duration)
+    );
+  }
+}
+
+## Commandes Utiles
+# Générer le client Prisma
+npx prisma generate --schema=libs/shared/database/prisma/schema.prisma
+
+# Builder le module
+npx nx build domains-movie
+
+# Lancer les tests
+npx nx test domains-movie
+
+## Bonnes Pratiques
+1. Toujours passer par l'agrégat racine pour les modifications
+2. Garder la logique métier dans les entités/value objects
+3. Ne jamais exposer les implémentations Prisma à l'extérieur du module
+4. Utiliser des DTOs distincts pour les couches API/Application/Domaine
+
+## Prochaines Étapes Possibles
+1. Ajout d'événements de domaine
+2. Implémentation de projections pour les requêtes complexes
+3. Configuration de tests d'intégration avec une DB réelle
