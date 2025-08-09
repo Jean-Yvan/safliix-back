@@ -1,35 +1,7 @@
 import { Result,Ok,Err } from 'oxide.ts';
 import { Prisma } from '@safliix-back/database';
 import { VideoCategory, VideoFormat } from "@safliix-back/contents";
-
-// Erreurs métier spécifiques
-export class MoviePremiereRequiresPriceError extends Error {
-  constructor() {
-    super('Premiere movies require a rental price');
-    this.name = 'MoviePremiereRequiresPriceError';
-  }
-}
-
-export class InvalidDurationError extends Error {
-  constructor() {
-    super('Duration must be positive');
-    this.name = 'InvalidDurationError';
-  }
-}
-
-export class MissingRequiredFieldError extends Error {
-  constructor(field: string) {
-    super(`Missing required field: ${field}`);
-    this.name = 'MissingRequiredFieldError';
-  }
-}
-
-export class InvalidActorError extends Error {
-  constructor(reason: string) {
-    super(`Invalid actor: ${reason}`);
-    this.name = 'InvalidActorError';
-  }
-}
+import { InvalidActorError, InvalidDurationError, MoviePremiereRequiresPriceError, MissingRequiredFieldError } from '../../errors/movie.errors';
 
 export class CreateMovieCommand {
   private constructor(
@@ -54,8 +26,7 @@ export class CreateMovieCommand {
         isLead?: boolean;
       }[];
     },
-    public readonly videoFileId: string,
-    public readonly url: string,
+    public readonly videoFileUrl: string,
     public readonly rentalPrice?: number
   ) {}
 
@@ -81,8 +52,7 @@ export class CreateMovieCommand {
         isLead?: boolean;
       }[];
     };
-    videoFileId: string;
-    url: string;
+    videoFileUrl: string;
     rentalPrice?: number;
   }): Result<CreateMovieCommand, 
     MoviePremiereRequiresPriceError | 
@@ -95,8 +65,8 @@ export class CreateMovieCommand {
       return Err(new MissingRequiredFieldError('metadata.title'));
     }
 
-    if (!params.videoFileId) {
-      return Err(new MissingRequiredFieldError('videoFileId'));
+    if (!params.videoFileUrl) {
+      return Err(new MissingRequiredFieldError('videoFileUrl'));
     }
 
     // Validation des règles métier
@@ -119,8 +89,7 @@ export class CreateMovieCommand {
       params.movieId,
       params.isPremiere,
       params.metadata,
-      params.videoFileId,
-      params.url,
+      params.videoFileUrl,
       params.rentalPrice
     ));
   }
@@ -173,8 +142,7 @@ export class CreateMovieCommand {
           category: categoryResult.unwrap(),
           actors: actors
         },
-        videoFileId: data.videoFile.id,
-        url: data.videoFile.filePath,
+        videoFileUrl: data.videoFile.filePath,
         rentalPrice: data.rentalPrice ?? undefined
       });
 

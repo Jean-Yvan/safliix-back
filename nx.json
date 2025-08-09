@@ -37,7 +37,9 @@
         "libs/shared/database/*",
         "libs/domains/movies/*",
         "libs/domains/contents/*",
-        "libs/shared/cqrs/*"
+        "libs/shared/cqrs/*",
+        "libs/shared/api/*",
+        "libs/domains/errors/*"
       ]
     },
     {
@@ -74,7 +76,9 @@
         "libs/shared/database/*",
         "libs/domains/movies/*",
         "libs/domains/contents/*",
-        "libs/shared/cqrs/*"
+        "libs/shared/cqrs/*",
+        "libs/shared/api/*",
+        "libs/domains/errors/*"
       ],
       "options": {
         "typecheck": {
