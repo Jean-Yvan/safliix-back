@@ -1,12 +1,14 @@
-import { Body, Controller, Post } from '@nestjs/common';
-import { CreateMovieHandler,CreateMovieDto,CreateMovieMapper } from '@safliix-back/movies';
+import { Body, Controller, Post,Get,Param } from '@nestjs/common';
+import { CreateMovieHandler,CreateMovieDto,CreateMovieMapper,DeleteMovieHandler,UpdateMovieHandler,GetMoviesHandler } from '@safliix-back/movies';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 
 @Controller('admin/movies')
 export class AdminMovieController {
   constructor(
     private readonly createMovieHandler: CreateMovieHandler,
-    private readonly createMovieMapper: CreateMovieMapper
+    private readonly deleteMovieHandler: DeleteMovieHandler,
+    private readonly updateMovieHandler: UpdateMovieHandler,
+    private readonly getMoviesHandler: GetMoviesHandler, 
   ) {}
 
   @Post()
@@ -20,7 +22,7 @@ export class AdminMovieController {
     description: 'Invalid input data'
   })
   async create(@Body() dto: CreateMovieDto) {
-    const commandResult = await this.createMovieMapper.toDomain(dto);
+    const commandResult = await CreateMovieMapper.toDomain(dto);
     if(commandResult.isErr()) {
       throw commandResult.unwrapErr();
     }else{
@@ -39,4 +41,15 @@ export class AdminMovieController {
 
     
   }
+
+  /* @Get()
+  async list() {
+    return this.queryBus.execute(new ListMoviesQuery());
+  }
+
+  @Get(':id')
+  async getById(@Param('id', ParseUUIDPipe) id: string) {
+    return this.queryBus.execute(new GetMovieQuery(id));
+  } */
+
 }

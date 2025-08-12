@@ -4,15 +4,18 @@ import { HttpExceptionFilter } from '@safliix-back/api';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MoviesModule } from './movies/movies.module';
-
+import { CqrsModule } from '@nestjs/cqrs';
 
 
 
 @Module({
   imports: [
+    CqrsModule.forRoot(),
     MoviesModule
   ],
-  controllers: [AppController],
+  controllers: [
+    AppController,
+  ],
   providers: [
     AppService,
     {

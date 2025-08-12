@@ -4,6 +4,12 @@
   "include": [],
   "references": [
     {
+      "path": "../../libs/domains/movies"
+    },
+    {
+      "path": "../../libs/shared/api"
+    },
+    {
       "path": "./tsconfig.app.json"
     },
     {

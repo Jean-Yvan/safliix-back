@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common';
-import { CreateMovieHandler } from '@safliix-back/movies';
 import { CqrsModule } from '@nestjs/cqrs';
 import { AdminMovieController } from './movie.controller';
-
+import { SafliixBackMoviesModule } from '@safliix-back/movies';
 
 @Module({
   imports:[
-    CqrsModule
+    CqrsModule,
+    SafliixBackMoviesModule
   ],
   controllers:[AdminMovieController],
-  providers:[CreateMovieHandler]
+  
 })
 export class MoviesModule {}
