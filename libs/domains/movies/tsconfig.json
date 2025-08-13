@@ -4,6 +4,15 @@
   "include": [],
   "references": [
     {
+      "path": "../../shared/cqrs"
+    },
+    {
+      "path": "../contents"
+    },
+    {
+      "path": "../../shared/database"
+    },
+    {
       "path": "./tsconfig.lib.json"
     }
   ],

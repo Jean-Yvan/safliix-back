@@ -3,13 +3,16 @@ import { AggregateRoot } from '@nestjs/cqrs';
 import { VideoMetadata,VideoFile } from '@safliix-back/contents';
 import { Prisma } from '@safliix-back/database';
 import { Result,Ok,Err } from 'oxide.ts';
-import { CreateMovieCommand } from 'src/lib/application/commands/create-movie.command';
+import { CreateMovieCommand } from '../../application/commands/create-movie.command';
 //import { MoviePublishedEvent } from '../events/movie-published.event';
 
 export type MovieStatus = 'DRAFT' | 'PUBLISHED';
 export type MovieActor = { actorId: string; name: string; role?: string };
 
 export class MovieAggregate extends AggregateRoot {
+  update(payload: { title?: string; status?: "DRAFT" | "PUBLISHED"; }) {
+    throw new Error('Method not implemented.');
+  }
   private _status: MovieStatus = 'DRAFT';
   private _rentalPrice?: number;
   private _actors: MovieActor[] = [];
@@ -64,9 +67,9 @@ export class MovieAggregate extends AggregateRoot {
   static create(command: CreateMovieCommand): Result<MovieAggregate, Error> {
     const metadataResult = VideoMetadata.create(command.metadata);
     const videoFileResult = VideoFile.create({
-      id: command.videoFileId,
+      id: uuidv4(),
       duration: command.metadata.duration,
-      filePath: command.url 
+      filePath: command.videoFileUrl
     });
     if (metadataResult.isErr()) {
       return Err(metadataResult.unwrapErr());
@@ -90,17 +93,7 @@ export class MovieAggregate extends AggregateRoot {
       }
     }
 
-    for (const actor of command.metadata.actors) {
-      const actorResult = movie.addActor({
-        actorId: uuidv4(),
-        name: actor.name,
-        role: actor.role
-      });
-      
-      if (actorResult.isErr()) {
-        return Err(actorResult.unwrapErr());
-      }
-    }
+    
 
     return Ok(movie);
   }
@@ -145,7 +138,6 @@ export class MovieAggregate extends AggregateRoot {
       return Err(Error('Invalid metadata or video file data'));
     }
     return Ok({
-      id: this.id,
       status: this._status,
       isPremiere: this.isPremiere,
       rentalPrice: this._rentalPrice,

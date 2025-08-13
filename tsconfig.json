@@ -41,6 +41,9 @@
     },
     {
       "path": "./libs/domains/errors"
+    },
+    {
+      "path": "./libs/domains/video"
     }
   ]
 }

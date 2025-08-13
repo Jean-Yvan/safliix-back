@@ -8,7 +8,7 @@ import { MissingRequiredFieldError, InvalidActorError, InvalidDurationError, Mov
 
 @Injectable()
 export class CreateMovieMapper {
-  async toDomain(
+  static async toDomain(
     dto: CreateMovieDto,
     existingFormats: string[] = [],
     existingCategories: string[] = []

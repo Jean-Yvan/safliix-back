@@ -31,9 +31,9 @@ export class VideoMetadata {
     private _duration: number,
     private _productionHouse: string,
     private _director: string,
-    private _format: VideoFormat,
-    private _category: VideoCategory,
-    private _actors: { name: string; role?: string; actorId: string }[] = []
+    private _format?: VideoFormat,
+    private _category?: VideoCategory,
+    private _actors: { name: string; role?: string; actorId?: string }[] = []
   ) {}
 
   static create(props: {
@@ -46,8 +46,9 @@ export class VideoMetadata {
     secondaryImage: string | null;
     releaseDate: Date;
     platformDate: Date;
-    format: VideoFormat;
-    category: VideoCategory;
+    format?: VideoFormat;
+    category?: VideoCategory;
+    actors?: { name: string; role?: string | undefined; actorId?: string }[];
   }): Result<VideoMetadata, InvalidDurationError | MissingRequiredFieldError> {
     // Validation des champs requis
     if (!props.title) {
@@ -58,32 +59,45 @@ export class VideoMetadata {
       return Err(new InvalidDurationError());
     }
 
-    return Ok(
-      new VideoMetadata(
-        uuidv4(),
-        props.title,
-        props.description,
-        props.thumbnailUrl,
-        props.secondaryImage,
-        props.releaseDate,
-        props.platformDate,
-        props.duration,
-        props.productionHouse,
-        props.director,
-        props.format,
-        props.category
-      )
+    const instance = new VideoMetadata(
+      uuidv4(),
+      props.title,
+      props.description,
+      props.thumbnailUrl,
+      props.secondaryImage,
+      props.releaseDate,
+      props.platformDate,
+      props.duration,
+      props.productionHouse,
+      props.director,
+      props.format,
+      props.category
     );
+
+    // Ajout des acteurs si fournis
+    if (props.actors) {
+      for (const actor of props.actors) {
+        const actorResult = instance.addActor(actor);
+        if (actorResult.isErr()) {
+          return Err(actorResult.unwrapErr());
+        }
+      }
+    }
+
+    return Ok(instance);
+    
   }
 
   static fromPrisma(
-    data: Prisma.VideoMetadataGetPayload<{ include: { format: true; category: true } }>
+    data: Prisma.VideoMetadataGetPayload<{ include: { format: true; category: true, actors: {
+      include: { actor: true };
+    } } }>
   ): Result<VideoMetadata, Error> {
     try {
-      const formatResult = VideoFormat.fromPrisma(data.format);
-      const categoryResult = VideoCategory.fromPrisma(data.category);
+      const formatResult = data.format ? VideoFormat.fromPrisma(data.format) : undefined;
+      const categoryResult = data.category ? VideoCategory.fromPrisma(data.category) : undefined;
 
-      if (formatResult.isErr() || categoryResult.isErr()) {
+      if ((formatResult && formatResult.isErr()) || (categoryResult && categoryResult.isErr())) {
         return Err(new Error('Invalid format or category data'));
       }
 
@@ -98,9 +112,16 @@ export class VideoMetadata {
         data.duration,
         data.productionHouse,
         data.director,
-        formatResult.unwrap(),
-        categoryResult.unwrap()
+        formatResult && formatResult.unwrap(),
+        categoryResult && categoryResult.unwrap(),
+        data.actors.map(actor => ({
+          name: actor.actor.name,
+          role: actor.role ?? undefined,
+          actorId: actor.actor.id
+        }))
       );
+
+      
 
       return Ok(metadata);
     } catch (error) {
@@ -108,10 +129,10 @@ export class VideoMetadata {
     }
   }
 
-  addActor(actor: { name: string; role?: string; actorId: string }): Result<void, Error> {
+  addActor(actor: { name: string; role?: string; actorId?: string }): Result<void, Error> {
     if (!actor.name) {
       return Err(new Error('Actor name is required'));
-    }
+    } 
 
     this._actors.push(actor);
     return Ok(undefined);
@@ -120,7 +141,6 @@ export class VideoMetadata {
   toPrisma(): Result<Prisma.VideoMetadataCreateInput, Error> {
     try {
       return Ok({
-        id: this.id,
         title: this.title,
         description: this.description,
         thumbnailUrl: this.thumbnail,
@@ -130,8 +150,8 @@ export class VideoMetadata {
         duration: this._duration,
         productionHouse: this._productionHouse,
         director: this._director,
-        format: { connect: { id: this._format.id } },
-        category: { connect: { id: this._category.id } },
+        format: { connect: { id: this._format?.id } },
+        category: { connect: { id: this._category?.id } },
         productionCountry: 'Unknown',
         status: 'DRAFT',
         ageRating: 'G',
@@ -143,11 +163,9 @@ export class VideoMetadata {
                 role: actor.role,
               };
             } else {
-              const newId = uuidv4();
               return {
                 actor: {
                   create: {
-                    id: newId,
                     name: actor.name,
                   },
                 },
@@ -176,7 +194,36 @@ export class VideoMetadata {
   }
 
   // Optionnel: Getter pour les actors en lecture seule
-  get actors(): ReadonlyArray<{ name: string; role?: string; actorId: string }> {
+  get actors(): ReadonlyArray<{ name: string; role?: string; actorId?: string }> {
     return [...this._actors];
   }
+
+  get format(): VideoFormat | undefined {
+    return this._format;
+  }
+
+  get category(): VideoCategory | undefined {
+    return this._category;
+  }
+
+  get secondaryImage(): string | null {
+    return this._secondaryImage;
+  }
+  get releaseDate(): Date {
+    return this._releaseDate;
+  }
+  get platformDate(): Date {
+    return this._platformDate;
+  }
+  get duration(): number {
+    return this._duration;
+  }
+  get productionHouse(): string {
+    return this._productionHouse;
+  }
+  get director(): string {
+    return this._director;
+  }
+
+
 }

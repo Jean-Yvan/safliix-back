@@ -33,9 +33,9 @@ export class VideoFile {
     width?: number;
     height?: number;
   }): Result<VideoFile, InvalidFileFormatError | InvalidDurationError> {
-    if (!params.filePath.endsWith('.mp4')) {
+    /* if (!params.filePath.endsWith('.mp4')) {
       return Err(new InvalidFileFormatError());
-    }
+    } */
 
     if (params.duration <= 0) {
       return Err(new InvalidDurationError());
@@ -89,7 +89,6 @@ export class VideoFile {
   toPrisma(): Result<Prisma.VideoFileCreateInput,Error> {
     try {
       return Ok({
-        id: this.id,
         filePath: this._filePath,
         duration: this._duration,
         width: this._width,

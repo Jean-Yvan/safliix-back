@@ -4,6 +4,9 @@
   "include": [],
   "references": [
     {
+      "path": "../../domains/errors"
+    },
+    {
       "path": "./tsconfig.lib.json"
     }
   ]

@@ -11171,14 +11171,14 @@ export namespace Prisma {
     secondaryImage: string | null
     releaseDate: Date | null
     platformDate: Date | null
-    ageRating: $Enums.AgeRating | null
+    ageRating: string | null
     duration: number | null
     productionHouse: string | null
     productionCountry: string | null
     director: string | null
     formatId: string | null
     categoryid: string | null
-    status: $Enums.ContentStatus | null
+    status: string | null
     production: string | null
   }
 
@@ -11190,14 +11190,14 @@ export namespace Prisma {
     secondaryImage: string | null
     releaseDate: Date | null
     platformDate: Date | null
-    ageRating: $Enums.AgeRating | null
+    ageRating: string | null
     duration: number | null
     productionHouse: string | null
     productionCountry: string | null
     director: string | null
     formatId: string | null
     categoryid: string | null
-    status: $Enums.ContentStatus | null
+    status: string | null
     production: string | null
   }
 
@@ -11382,14 +11382,14 @@ export namespace Prisma {
     secondaryImage: string | null
     releaseDate: Date
     platformDate: Date
-    ageRating: $Enums.AgeRating
+    ageRating: string
     duration: number
     productionHouse: string
     productionCountry: string
     director: string
-    formatId: string
-    categoryid: string
-    status: $Enums.ContentStatus
+    formatId: string | null
+    categoryid: string | null
+    status: string
     production: string
     _count: VideoMetadataCountAggregateOutputType | null
     _avg: VideoMetadataAvgAggregateOutputType | null
@@ -11429,8 +11429,8 @@ export namespace Prisma {
     categoryid?: boolean
     status?: boolean
     production?: boolean
-    format?: boolean | VideoFormatDefaultArgs<ExtArgs>
-    category?: boolean | VideoCategoryDefaultArgs<ExtArgs>
+    format?: boolean | VideoMetadata$formatArgs<ExtArgs>
+    category?: boolean | VideoMetadata$categoryArgs<ExtArgs>
     movie?: boolean | VideoMetadata$movieArgs<ExtArgs>
     episode?: boolean | VideoMetadata$episodeArgs<ExtArgs>
     series?: boolean | VideoMetadata$seriesArgs<ExtArgs>
@@ -11458,8 +11458,8 @@ export namespace Prisma {
     categoryid?: boolean
     status?: boolean
     production?: boolean
-    format?: boolean | VideoFormatDefaultArgs<ExtArgs>
-    category?: boolean | VideoCategoryDefaultArgs<ExtArgs>
+    format?: boolean | VideoMetadata$formatArgs<ExtArgs>
+    category?: boolean | VideoMetadata$categoryArgs<ExtArgs>
   }, ExtArgs["result"]["videoMetadata"]>
 
   export type VideoMetadataSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -11479,8 +11479,8 @@ export namespace Prisma {
     categoryid?: boolean
     status?: boolean
     production?: boolean
-    format?: boolean | VideoFormatDefaultArgs<ExtArgs>
-    category?: boolean | VideoCategoryDefaultArgs<ExtArgs>
+    format?: boolean | VideoMetadata$formatArgs<ExtArgs>
+    category?: boolean | VideoMetadata$categoryArgs<ExtArgs>
   }, ExtArgs["result"]["videoMetadata"]>
 
   export type VideoMetadataSelectScalar = {
@@ -11504,8 +11504,8 @@ export namespace Prisma {
 
   export type VideoMetadataOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "thumbnailUrl" | "secondaryImage" | "releaseDate" | "platformDate" | "ageRating" | "duration" | "productionHouse" | "productionCountry" | "director" | "formatId" | "categoryid" | "status" | "production", ExtArgs["result"]["videoMetadata"]>
   export type VideoMetadataInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    format?: boolean | VideoFormatDefaultArgs<ExtArgs>
-    category?: boolean | VideoCategoryDefaultArgs<ExtArgs>
+    format?: boolean | VideoMetadata$formatArgs<ExtArgs>
+    category?: boolean | VideoMetadata$categoryArgs<ExtArgs>
     movie?: boolean | VideoMetadata$movieArgs<ExtArgs>
     episode?: boolean | VideoMetadata$episodeArgs<ExtArgs>
     series?: boolean | VideoMetadata$seriesArgs<ExtArgs>
@@ -11516,19 +11516,19 @@ export namespace Prisma {
     _count?: boolean | VideoMetadataCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type VideoMetadataIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    format?: boolean | VideoFormatDefaultArgs<ExtArgs>
-    category?: boolean | VideoCategoryDefaultArgs<ExtArgs>
+    format?: boolean | VideoMetadata$formatArgs<ExtArgs>
+    category?: boolean | VideoMetadata$categoryArgs<ExtArgs>
   }
   export type VideoMetadataIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    format?: boolean | VideoFormatDefaultArgs<ExtArgs>
-    category?: boolean | VideoCategoryDefaultArgs<ExtArgs>
+    format?: boolean | VideoMetadata$formatArgs<ExtArgs>
+    category?: boolean | VideoMetadata$categoryArgs<ExtArgs>
   }
 
   export type $VideoMetadataPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "VideoMetadata"
     objects: {
-      format: Prisma.$VideoFormatPayload<ExtArgs>
-      category: Prisma.$VideoCategoryPayload<ExtArgs>
+      format: Prisma.$VideoFormatPayload<ExtArgs> | null
+      category: Prisma.$VideoCategoryPayload<ExtArgs> | null
       movie: Prisma.$MoviePayload<ExtArgs> | null
       episode: Prisma.$EpisodePayload<ExtArgs> | null
       series: Prisma.$SeriesPayload<ExtArgs> | null
@@ -11545,14 +11545,14 @@ export namespace Prisma {
       secondaryImage: string | null
       releaseDate: Date
       platformDate: Date
-      ageRating: $Enums.AgeRating
+      ageRating: string
       duration: number
       productionHouse: string
       productionCountry: string
       director: string
-      formatId: string
-      categoryid: string
-      status: $Enums.ContentStatus
+      formatId: string | null
+      categoryid: string | null
+      status: string
       production: string
     }, ExtArgs["result"]["videoMetadata"]>
     composites: {}
@@ -11948,8 +11948,8 @@ export namespace Prisma {
    */
   export interface Prisma__VideoMetadataClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    format<T extends VideoFormatDefaultArgs<ExtArgs> = {}>(args?: Subset<T, VideoFormatDefaultArgs<ExtArgs>>): Prisma__VideoFormatClient<$Result.GetResult<Prisma.$VideoFormatPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    category<T extends VideoCategoryDefaultArgs<ExtArgs> = {}>(args?: Subset<T, VideoCategoryDefaultArgs<ExtArgs>>): Prisma__VideoCategoryClient<$Result.GetResult<Prisma.$VideoCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    format<T extends VideoMetadata$formatArgs<ExtArgs> = {}>(args?: Subset<T, VideoMetadata$formatArgs<ExtArgs>>): Prisma__VideoFormatClient<$Result.GetResult<Prisma.$VideoFormatPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    category<T extends VideoMetadata$categoryArgs<ExtArgs> = {}>(args?: Subset<T, VideoMetadata$categoryArgs<ExtArgs>>): Prisma__VideoCategoryClient<$Result.GetResult<Prisma.$VideoCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     movie<T extends VideoMetadata$movieArgs<ExtArgs> = {}>(args?: Subset<T, VideoMetadata$movieArgs<ExtArgs>>): Prisma__MovieClient<$Result.GetResult<Prisma.$MoviePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     episode<T extends VideoMetadata$episodeArgs<ExtArgs> = {}>(args?: Subset<T, VideoMetadata$episodeArgs<ExtArgs>>): Prisma__EpisodeClient<$Result.GetResult<Prisma.$EpisodePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     series<T extends VideoMetadata$seriesArgs<ExtArgs> = {}>(args?: Subset<T, VideoMetadata$seriesArgs<ExtArgs>>): Prisma__SeriesClient<$Result.GetResult<Prisma.$SeriesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -11993,14 +11993,14 @@ export namespace Prisma {
     readonly secondaryImage: FieldRef<"VideoMetadata", 'String'>
     readonly releaseDate: FieldRef<"VideoMetadata", 'DateTime'>
     readonly platformDate: FieldRef<"VideoMetadata", 'DateTime'>
-    readonly ageRating: FieldRef<"VideoMetadata", 'AgeRating'>
+    readonly ageRating: FieldRef<"VideoMetadata", 'String'>
     readonly duration: FieldRef<"VideoMetadata", 'Int'>
     readonly productionHouse: FieldRef<"VideoMetadata", 'String'>
     readonly productionCountry: FieldRef<"VideoMetadata", 'String'>
     readonly director: FieldRef<"VideoMetadata", 'String'>
     readonly formatId: FieldRef<"VideoMetadata", 'String'>
     readonly categoryid: FieldRef<"VideoMetadata", 'String'>
-    readonly status: FieldRef<"VideoMetadata", 'ContentStatus'>
+    readonly status: FieldRef<"VideoMetadata", 'String'>
     readonly production: FieldRef<"VideoMetadata", 'String'>
   }
     
@@ -12395,6 +12395,44 @@ export namespace Prisma {
      * Limit how many VideoMetadata to delete.
      */
     limit?: number
+  }
+
+  /**
+   * VideoMetadata.format
+   */
+  export type VideoMetadata$formatArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VideoFormat
+     */
+    select?: VideoFormatSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VideoFormat
+     */
+    omit?: VideoFormatOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VideoFormatInclude<ExtArgs> | null
+    where?: VideoFormatWhereInput
+  }
+
+  /**
+   * VideoMetadata.category
+   */
+  export type VideoMetadata$categoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VideoCategory
+     */
+    select?: VideoCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VideoCategory
+     */
+    omit?: VideoCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VideoCategoryInclude<ExtArgs> | null
+    where?: VideoCategoryWhereInput
   }
 
   /**
@@ -35822,34 +35860,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'AgeRating'
-   */
-  export type EnumAgeRatingFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AgeRating'>
-    
-
-
-  /**
-   * Reference to a field of type 'AgeRating[]'
-   */
-  export type ListEnumAgeRatingFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AgeRating[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'ContentStatus'
-   */
-  export type EnumContentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ContentStatus'>
-    
-
-
-  /**
-   * Reference to a field of type 'ContentStatus[]'
-   */
-  export type ListEnumContentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ContentStatus[]'>
-    
-
-
-  /**
    * Reference to a field of type 'ProfileActivityAction'
    */
   export type EnumProfileActivityActionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProfileActivityAction'>
@@ -36340,17 +36350,17 @@ export namespace Prisma {
     secondaryImage?: StringNullableFilter<"VideoMetadata"> | string | null
     releaseDate?: DateTimeFilter<"VideoMetadata"> | Date | string
     platformDate?: DateTimeFilter<"VideoMetadata"> | Date | string
-    ageRating?: EnumAgeRatingFilter<"VideoMetadata"> | $Enums.AgeRating
+    ageRating?: StringFilter<"VideoMetadata"> | string
     duration?: IntFilter<"VideoMetadata"> | number
     productionHouse?: StringFilter<"VideoMetadata"> | string
     productionCountry?: StringFilter<"VideoMetadata"> | string
     director?: StringFilter<"VideoMetadata"> | string
-    formatId?: StringFilter<"VideoMetadata"> | string
-    categoryid?: StringFilter<"VideoMetadata"> | string
-    status?: EnumContentStatusFilter<"VideoMetadata"> | $Enums.ContentStatus
+    formatId?: StringNullableFilter<"VideoMetadata"> | string | null
+    categoryid?: StringNullableFilter<"VideoMetadata"> | string | null
+    status?: StringFilter<"VideoMetadata"> | string
     production?: StringFilter<"VideoMetadata"> | string
-    format?: XOR<VideoFormatScalarRelationFilter, VideoFormatWhereInput>
-    category?: XOR<VideoCategoryScalarRelationFilter, VideoCategoryWhereInput>
+    format?: XOR<VideoFormatNullableScalarRelationFilter, VideoFormatWhereInput> | null
+    category?: XOR<VideoCategoryNullableScalarRelationFilter, VideoCategoryWhereInput> | null
     movie?: XOR<MovieNullableScalarRelationFilter, MovieWhereInput> | null
     episode?: XOR<EpisodeNullableScalarRelationFilter, EpisodeWhereInput> | null
     series?: XOR<SeriesNullableScalarRelationFilter, SeriesWhereInput> | null
@@ -36373,8 +36383,8 @@ export namespace Prisma {
     productionHouse?: SortOrder
     productionCountry?: SortOrder
     director?: SortOrder
-    formatId?: SortOrder
-    categoryid?: SortOrder
+    formatId?: SortOrderInput | SortOrder
+    categoryid?: SortOrderInput | SortOrder
     status?: SortOrder
     production?: SortOrder
     format?: VideoFormatOrderByWithRelationInput
@@ -36399,17 +36409,17 @@ export namespace Prisma {
     secondaryImage?: StringNullableFilter<"VideoMetadata"> | string | null
     releaseDate?: DateTimeFilter<"VideoMetadata"> | Date | string
     platformDate?: DateTimeFilter<"VideoMetadata"> | Date | string
-    ageRating?: EnumAgeRatingFilter<"VideoMetadata"> | $Enums.AgeRating
+    ageRating?: StringFilter<"VideoMetadata"> | string
     duration?: IntFilter<"VideoMetadata"> | number
     productionHouse?: StringFilter<"VideoMetadata"> | string
     productionCountry?: StringFilter<"VideoMetadata"> | string
     director?: StringFilter<"VideoMetadata"> | string
-    formatId?: StringFilter<"VideoMetadata"> | string
-    categoryid?: StringFilter<"VideoMetadata"> | string
-    status?: EnumContentStatusFilter<"VideoMetadata"> | $Enums.ContentStatus
+    formatId?: StringNullableFilter<"VideoMetadata"> | string | null
+    categoryid?: StringNullableFilter<"VideoMetadata"> | string | null
+    status?: StringFilter<"VideoMetadata"> | string
     production?: StringFilter<"VideoMetadata"> | string
-    format?: XOR<VideoFormatScalarRelationFilter, VideoFormatWhereInput>
-    category?: XOR<VideoCategoryScalarRelationFilter, VideoCategoryWhereInput>
+    format?: XOR<VideoFormatNullableScalarRelationFilter, VideoFormatWhereInput> | null
+    category?: XOR<VideoCategoryNullableScalarRelationFilter, VideoCategoryWhereInput> | null
     movie?: XOR<MovieNullableScalarRelationFilter, MovieWhereInput> | null
     episode?: XOR<EpisodeNullableScalarRelationFilter, EpisodeWhereInput> | null
     series?: XOR<SeriesNullableScalarRelationFilter, SeriesWhereInput> | null
@@ -36432,8 +36442,8 @@ export namespace Prisma {
     productionHouse?: SortOrder
     productionCountry?: SortOrder
     director?: SortOrder
-    formatId?: SortOrder
-    categoryid?: SortOrder
+    formatId?: SortOrderInput | SortOrder
+    categoryid?: SortOrderInput | SortOrder
     status?: SortOrder
     production?: SortOrder
     _count?: VideoMetadataCountOrderByAggregateInput
@@ -36454,14 +36464,14 @@ export namespace Prisma {
     secondaryImage?: StringNullableWithAggregatesFilter<"VideoMetadata"> | string | null
     releaseDate?: DateTimeWithAggregatesFilter<"VideoMetadata"> | Date | string
     platformDate?: DateTimeWithAggregatesFilter<"VideoMetadata"> | Date | string
-    ageRating?: EnumAgeRatingWithAggregatesFilter<"VideoMetadata"> | $Enums.AgeRating
+    ageRating?: StringWithAggregatesFilter<"VideoMetadata"> | string
     duration?: IntWithAggregatesFilter<"VideoMetadata"> | number
     productionHouse?: StringWithAggregatesFilter<"VideoMetadata"> | string
     productionCountry?: StringWithAggregatesFilter<"VideoMetadata"> | string
     director?: StringWithAggregatesFilter<"VideoMetadata"> | string
-    formatId?: StringWithAggregatesFilter<"VideoMetadata"> | string
-    categoryid?: StringWithAggregatesFilter<"VideoMetadata"> | string
-    status?: EnumContentStatusWithAggregatesFilter<"VideoMetadata"> | $Enums.ContentStatus
+    formatId?: StringNullableWithAggregatesFilter<"VideoMetadata"> | string | null
+    categoryid?: StringNullableWithAggregatesFilter<"VideoMetadata"> | string | null
+    status?: StringWithAggregatesFilter<"VideoMetadata"> | string
     production?: StringWithAggregatesFilter<"VideoMetadata"> | string
   }
 
@@ -38095,15 +38105,15 @@ export namespace Prisma {
     secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
-    ageRating: $Enums.AgeRating
+    ageRating: string
     duration: number
     productionHouse: string
     productionCountry: string
     director: string
-    status: $Enums.ContentStatus
+    status?: string
     production?: string
-    format: VideoFormatCreateNestedOneWithoutVideosInput
-    category: VideoCategoryCreateNestedOneWithoutVideosInput
+    format?: VideoFormatCreateNestedOneWithoutVideosInput
+    category?: VideoCategoryCreateNestedOneWithoutVideosInput
     movie?: MovieCreateNestedOneWithoutMetadataInput
     episode?: EpisodeCreateNestedOneWithoutMetadataInput
     series?: SeriesCreateNestedOneWithoutMetadataInput
@@ -38121,14 +38131,14 @@ export namespace Prisma {
     secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
-    ageRating: $Enums.AgeRating
+    ageRating: string
     duration: number
     productionHouse: string
     productionCountry: string
     director: string
-    formatId: string
-    categoryid: string
-    status: $Enums.ContentStatus
+    formatId?: string | null
+    categoryid?: string | null
+    status?: string
     production?: string
     movie?: MovieUncheckedCreateNestedOneWithoutMetadataInput
     episode?: EpisodeUncheckedCreateNestedOneWithoutMetadataInput
@@ -38147,15 +38157,15 @@ export namespace Prisma {
     secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    ageRating?: EnumAgeRatingFieldUpdateOperationsInput | $Enums.AgeRating
+    ageRating?: StringFieldUpdateOperationsInput | string
     duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
-    status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+    status?: StringFieldUpdateOperationsInput | string
     production?: StringFieldUpdateOperationsInput | string
-    format?: VideoFormatUpdateOneRequiredWithoutVideosNestedInput
-    category?: VideoCategoryUpdateOneRequiredWithoutVideosNestedInput
+    format?: VideoFormatUpdateOneWithoutVideosNestedInput
+    category?: VideoCategoryUpdateOneWithoutVideosNestedInput
     movie?: MovieUpdateOneWithoutMetadataNestedInput
     episode?: EpisodeUpdateOneWithoutMetadataNestedInput
     series?: SeriesUpdateOneWithoutMetadataNestedInput
@@ -38173,14 +38183,14 @@ export namespace Prisma {
     secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    ageRating?: EnumAgeRatingFieldUpdateOperationsInput | $Enums.AgeRating
+    ageRating?: StringFieldUpdateOperationsInput | string
     duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
-    formatId?: StringFieldUpdateOperationsInput | string
-    categoryid?: StringFieldUpdateOperationsInput | string
-    status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+    formatId?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryid?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
     production?: StringFieldUpdateOperationsInput | string
     movie?: MovieUncheckedUpdateOneWithoutMetadataNestedInput
     episode?: EpisodeUncheckedUpdateOneWithoutMetadataNestedInput
@@ -38199,14 +38209,14 @@ export namespace Prisma {
     secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
-    ageRating: $Enums.AgeRating
+    ageRating: string
     duration: number
     productionHouse: string
     productionCountry: string
     director: string
-    formatId: string
-    categoryid: string
-    status: $Enums.ContentStatus
+    formatId?: string | null
+    categoryid?: string | null
+    status?: string
     production?: string
   }
 
@@ -38218,12 +38228,12 @@ export namespace Prisma {
     secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    ageRating?: EnumAgeRatingFieldUpdateOperationsInput | $Enums.AgeRating
+    ageRating?: StringFieldUpdateOperationsInput | string
     duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
-    status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+    status?: StringFieldUpdateOperationsInput | string
     production?: StringFieldUpdateOperationsInput | string
   }
 
@@ -38235,14 +38245,14 @@ export namespace Prisma {
     secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    ageRating?: EnumAgeRatingFieldUpdateOperationsInput | $Enums.AgeRating
+    ageRating?: StringFieldUpdateOperationsInput | string
     duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
-    formatId?: StringFieldUpdateOperationsInput | string
-    categoryid?: StringFieldUpdateOperationsInput | string
-    status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+    formatId?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryid?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
     production?: StringFieldUpdateOperationsInput | string
   }
 
@@ -39895,28 +39905,14 @@ export namespace Prisma {
     created_at?: SortOrder
   }
 
-  export type EnumAgeRatingFilter<$PrismaModel = never> = {
-    equals?: $Enums.AgeRating | EnumAgeRatingFieldRefInput<$PrismaModel>
-    in?: $Enums.AgeRating[] | ListEnumAgeRatingFieldRefInput<$PrismaModel>
-    notIn?: $Enums.AgeRating[] | ListEnumAgeRatingFieldRefInput<$PrismaModel>
-    not?: NestedEnumAgeRatingFilter<$PrismaModel> | $Enums.AgeRating
+  export type VideoFormatNullableScalarRelationFilter = {
+    is?: VideoFormatWhereInput | null
+    isNot?: VideoFormatWhereInput | null
   }
 
-  export type EnumContentStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.ContentStatus | EnumContentStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.ContentStatus[] | ListEnumContentStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ContentStatus[] | ListEnumContentStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumContentStatusFilter<$PrismaModel> | $Enums.ContentStatus
-  }
-
-  export type VideoFormatScalarRelationFilter = {
-    is?: VideoFormatWhereInput
-    isNot?: VideoFormatWhereInput
-  }
-
-  export type VideoCategoryScalarRelationFilter = {
-    is?: VideoCategoryWhereInput
-    isNot?: VideoCategoryWhereInput
+  export type VideoCategoryNullableScalarRelationFilter = {
+    is?: VideoCategoryWhereInput | null
+    isNot?: VideoCategoryWhereInput | null
   }
 
   export type MovieNullableScalarRelationFilter = {
@@ -40037,26 +40033,6 @@ export namespace Prisma {
 
   export type VideoMetadataSumOrderByAggregateInput = {
     duration?: SortOrder
-  }
-
-  export type EnumAgeRatingWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.AgeRating | EnumAgeRatingFieldRefInput<$PrismaModel>
-    in?: $Enums.AgeRating[] | ListEnumAgeRatingFieldRefInput<$PrismaModel>
-    notIn?: $Enums.AgeRating[] | ListEnumAgeRatingFieldRefInput<$PrismaModel>
-    not?: NestedEnumAgeRatingWithAggregatesFilter<$PrismaModel> | $Enums.AgeRating
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumAgeRatingFilter<$PrismaModel>
-    _max?: NestedEnumAgeRatingFilter<$PrismaModel>
-  }
-
-  export type EnumContentStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.ContentStatus | EnumContentStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.ContentStatus[] | ListEnumContentStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ContentStatus[] | ListEnumContentStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumContentStatusWithAggregatesFilter<$PrismaModel> | $Enums.ContentStatus
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumContentStatusFilter<$PrismaModel>
-    _max?: NestedEnumContentStatusFilter<$PrismaModel>
   }
 
   export type IntNullableFilter<$PrismaModel = never> = {
@@ -41706,26 +41682,22 @@ export namespace Prisma {
     connect?: VideoLanguageWhereUniqueInput | VideoLanguageWhereUniqueInput[]
   }
 
-  export type EnumAgeRatingFieldUpdateOperationsInput = {
-    set?: $Enums.AgeRating
-  }
-
-  export type EnumContentStatusFieldUpdateOperationsInput = {
-    set?: $Enums.ContentStatus
-  }
-
-  export type VideoFormatUpdateOneRequiredWithoutVideosNestedInput = {
+  export type VideoFormatUpdateOneWithoutVideosNestedInput = {
     create?: XOR<VideoFormatCreateWithoutVideosInput, VideoFormatUncheckedCreateWithoutVideosInput>
     connectOrCreate?: VideoFormatCreateOrConnectWithoutVideosInput
     upsert?: VideoFormatUpsertWithoutVideosInput
+    disconnect?: VideoFormatWhereInput | boolean
+    delete?: VideoFormatWhereInput | boolean
     connect?: VideoFormatWhereUniqueInput
     update?: XOR<XOR<VideoFormatUpdateToOneWithWhereWithoutVideosInput, VideoFormatUpdateWithoutVideosInput>, VideoFormatUncheckedUpdateWithoutVideosInput>
   }
 
-  export type VideoCategoryUpdateOneRequiredWithoutVideosNestedInput = {
+  export type VideoCategoryUpdateOneWithoutVideosNestedInput = {
     create?: XOR<VideoCategoryCreateWithoutVideosInput, VideoCategoryUncheckedCreateWithoutVideosInput>
     connectOrCreate?: VideoCategoryCreateOrConnectWithoutVideosInput
     upsert?: VideoCategoryUpsertWithoutVideosInput
+    disconnect?: VideoCategoryWhereInput | boolean
+    delete?: VideoCategoryWhereInput | boolean
     connect?: VideoCategoryWhereUniqueInput
     update?: XOR<XOR<VideoCategoryUpdateToOneWithWhereWithoutVideosInput, VideoCategoryUpdateWithoutVideosInput>, VideoCategoryUncheckedUpdateWithoutVideosInput>
   }
@@ -43332,40 +43304,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumSharedAccountStatusFilter<$PrismaModel>
     _max?: NestedEnumSharedAccountStatusFilter<$PrismaModel>
-  }
-
-  export type NestedEnumAgeRatingFilter<$PrismaModel = never> = {
-    equals?: $Enums.AgeRating | EnumAgeRatingFieldRefInput<$PrismaModel>
-    in?: $Enums.AgeRating[] | ListEnumAgeRatingFieldRefInput<$PrismaModel>
-    notIn?: $Enums.AgeRating[] | ListEnumAgeRatingFieldRefInput<$PrismaModel>
-    not?: NestedEnumAgeRatingFilter<$PrismaModel> | $Enums.AgeRating
-  }
-
-  export type NestedEnumContentStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.ContentStatus | EnumContentStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.ContentStatus[] | ListEnumContentStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ContentStatus[] | ListEnumContentStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumContentStatusFilter<$PrismaModel> | $Enums.ContentStatus
-  }
-
-  export type NestedEnumAgeRatingWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.AgeRating | EnumAgeRatingFieldRefInput<$PrismaModel>
-    in?: $Enums.AgeRating[] | ListEnumAgeRatingFieldRefInput<$PrismaModel>
-    notIn?: $Enums.AgeRating[] | ListEnumAgeRatingFieldRefInput<$PrismaModel>
-    not?: NestedEnumAgeRatingWithAggregatesFilter<$PrismaModel> | $Enums.AgeRating
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumAgeRatingFilter<$PrismaModel>
-    _max?: NestedEnumAgeRatingFilter<$PrismaModel>
-  }
-
-  export type NestedEnumContentStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.ContentStatus | EnumContentStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.ContentStatus[] | ListEnumContentStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ContentStatus[] | ListEnumContentStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumContentStatusWithAggregatesFilter<$PrismaModel> | $Enums.ContentStatus
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumContentStatusFilter<$PrismaModel>
-    _max?: NestedEnumContentStatusFilter<$PrismaModel>
   }
 
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -45544,15 +45482,15 @@ export namespace Prisma {
     secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
-    ageRating: $Enums.AgeRating
+    ageRating: string
     duration: number
     productionHouse: string
     productionCountry: string
     director: string
-    status: $Enums.ContentStatus
+    status?: string
     production?: string
-    format: VideoFormatCreateNestedOneWithoutVideosInput
-    category: VideoCategoryCreateNestedOneWithoutVideosInput
+    format?: VideoFormatCreateNestedOneWithoutVideosInput
+    category?: VideoCategoryCreateNestedOneWithoutVideosInput
     movie?: MovieCreateNestedOneWithoutMetadataInput
     episode?: EpisodeCreateNestedOneWithoutMetadataInput
     series?: SeriesCreateNestedOneWithoutMetadataInput
@@ -45569,14 +45507,14 @@ export namespace Prisma {
     secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
-    ageRating: $Enums.AgeRating
+    ageRating: string
     duration: number
     productionHouse: string
     productionCountry: string
     director: string
-    formatId: string
-    categoryid: string
-    status: $Enums.ContentStatus
+    formatId?: string | null
+    categoryid?: string | null
+    status?: string
     production?: string
     movie?: MovieUncheckedCreateNestedOneWithoutMetadataInput
     episode?: EpisodeUncheckedCreateNestedOneWithoutMetadataInput
@@ -45618,14 +45556,14 @@ export namespace Prisma {
     secondaryImage?: StringNullableFilter<"VideoMetadata"> | string | null
     releaseDate?: DateTimeFilter<"VideoMetadata"> | Date | string
     platformDate?: DateTimeFilter<"VideoMetadata"> | Date | string
-    ageRating?: EnumAgeRatingFilter<"VideoMetadata"> | $Enums.AgeRating
+    ageRating?: StringFilter<"VideoMetadata"> | string
     duration?: IntFilter<"VideoMetadata"> | number
     productionHouse?: StringFilter<"VideoMetadata"> | string
     productionCountry?: StringFilter<"VideoMetadata"> | string
     director?: StringFilter<"VideoMetadata"> | string
-    formatId?: StringFilter<"VideoMetadata"> | string
-    categoryid?: StringFilter<"VideoMetadata"> | string
-    status?: EnumContentStatusFilter<"VideoMetadata"> | $Enums.ContentStatus
+    formatId?: StringNullableFilter<"VideoMetadata"> | string | null
+    categoryid?: StringNullableFilter<"VideoMetadata"> | string | null
+    status?: StringFilter<"VideoMetadata"> | string
     production?: StringFilter<"VideoMetadata"> | string
   }
 
@@ -45673,15 +45611,15 @@ export namespace Prisma {
     secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
-    ageRating: $Enums.AgeRating
+    ageRating: string
     duration: number
     productionHouse: string
     productionCountry: string
     director: string
-    status: $Enums.ContentStatus
+    status?: string
     production?: string
-    format: VideoFormatCreateNestedOneWithoutVideosInput
-    category: VideoCategoryCreateNestedOneWithoutVideosInput
+    format?: VideoFormatCreateNestedOneWithoutVideosInput
+    category?: VideoCategoryCreateNestedOneWithoutVideosInput
     movie?: MovieCreateNestedOneWithoutMetadataInput
     episode?: EpisodeCreateNestedOneWithoutMetadataInput
     series?: SeriesCreateNestedOneWithoutMetadataInput
@@ -45698,14 +45636,14 @@ export namespace Prisma {
     secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
-    ageRating: $Enums.AgeRating
+    ageRating: string
     duration: number
     productionHouse: string
     productionCountry: string
     director: string
-    formatId: string
-    categoryid: string
-    status: $Enums.ContentStatus
+    formatId?: string | null
+    categoryid?: string | null
+    status?: string
     production?: string
     movie?: MovieUncheckedCreateNestedOneWithoutMetadataInput
     episode?: EpisodeUncheckedCreateNestedOneWithoutMetadataInput
@@ -45754,15 +45692,15 @@ export namespace Prisma {
     secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    ageRating?: EnumAgeRatingFieldUpdateOperationsInput | $Enums.AgeRating
+    ageRating?: StringFieldUpdateOperationsInput | string
     duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
-    status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+    status?: StringFieldUpdateOperationsInput | string
     production?: StringFieldUpdateOperationsInput | string
-    format?: VideoFormatUpdateOneRequiredWithoutVideosNestedInput
-    category?: VideoCategoryUpdateOneRequiredWithoutVideosNestedInput
+    format?: VideoFormatUpdateOneWithoutVideosNestedInput
+    category?: VideoCategoryUpdateOneWithoutVideosNestedInput
     movie?: MovieUpdateOneWithoutMetadataNestedInput
     episode?: EpisodeUpdateOneWithoutMetadataNestedInput
     series?: SeriesUpdateOneWithoutMetadataNestedInput
@@ -45779,14 +45717,14 @@ export namespace Prisma {
     secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    ageRating?: EnumAgeRatingFieldUpdateOperationsInput | $Enums.AgeRating
+    ageRating?: StringFieldUpdateOperationsInput | string
     duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
-    formatId?: StringFieldUpdateOperationsInput | string
-    categoryid?: StringFieldUpdateOperationsInput | string
-    status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+    formatId?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryid?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
     production?: StringFieldUpdateOperationsInput | string
     movie?: MovieUncheckedUpdateOneWithoutMetadataNestedInput
     episode?: EpisodeUncheckedUpdateOneWithoutMetadataNestedInput
@@ -45825,15 +45763,15 @@ export namespace Prisma {
     secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
-    ageRating: $Enums.AgeRating
+    ageRating: string
     duration: number
     productionHouse: string
     productionCountry: string
     director: string
-    status: $Enums.ContentStatus
+    status?: string
     production?: string
-    format: VideoFormatCreateNestedOneWithoutVideosInput
-    category: VideoCategoryCreateNestedOneWithoutVideosInput
+    format?: VideoFormatCreateNestedOneWithoutVideosInput
+    category?: VideoCategoryCreateNestedOneWithoutVideosInput
     movie?: MovieCreateNestedOneWithoutMetadataInput
     episode?: EpisodeCreateNestedOneWithoutMetadataInput
     series?: SeriesCreateNestedOneWithoutMetadataInput
@@ -45850,14 +45788,14 @@ export namespace Prisma {
     secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
-    ageRating: $Enums.AgeRating
+    ageRating: string
     duration: number
     productionHouse: string
     productionCountry: string
     director: string
-    formatId: string
-    categoryid: string
-    status: $Enums.ContentStatus
+    formatId?: string | null
+    categoryid?: string | null
+    status?: string
     production?: string
     movie?: MovieUncheckedCreateNestedOneWithoutMetadataInput
     episode?: EpisodeUncheckedCreateNestedOneWithoutMetadataInput
@@ -45896,14 +45834,14 @@ export namespace Prisma {
     secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
-    ageRating: $Enums.AgeRating
+    ageRating: string
     duration: number
     productionHouse: string
     productionCountry: string
     director: string
-    status: $Enums.ContentStatus
+    status?: string
     production?: string
-    category: VideoCategoryCreateNestedOneWithoutVideosInput
+    category?: VideoCategoryCreateNestedOneWithoutVideosInput
     movie?: MovieCreateNestedOneWithoutMetadataInput
     episode?: EpisodeCreateNestedOneWithoutMetadataInput
     series?: SeriesCreateNestedOneWithoutMetadataInput
@@ -45921,13 +45859,13 @@ export namespace Prisma {
     secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
-    ageRating: $Enums.AgeRating
+    ageRating: string
     duration: number
     productionHouse: string
     productionCountry: string
     director: string
-    categoryid: string
-    status: $Enums.ContentStatus
+    categoryid?: string | null
+    status?: string
     production?: string
     movie?: MovieUncheckedCreateNestedOneWithoutMetadataInput
     episode?: EpisodeUncheckedCreateNestedOneWithoutMetadataInput
@@ -45972,14 +45910,14 @@ export namespace Prisma {
     secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
-    ageRating: $Enums.AgeRating
+    ageRating: string
     duration: number
     productionHouse: string
     productionCountry: string
     director: string
-    status: $Enums.ContentStatus
+    status?: string
     production?: string
-    format: VideoFormatCreateNestedOneWithoutVideosInput
+    format?: VideoFormatCreateNestedOneWithoutVideosInput
     movie?: MovieCreateNestedOneWithoutMetadataInput
     episode?: EpisodeCreateNestedOneWithoutMetadataInput
     series?: SeriesCreateNestedOneWithoutMetadataInput
@@ -45997,13 +45935,13 @@ export namespace Prisma {
     secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
-    ageRating: $Enums.AgeRating
+    ageRating: string
     duration: number
     productionHouse: string
     productionCountry: string
     director: string
-    formatId: string
-    status: $Enums.ContentStatus
+    formatId?: string | null
+    status?: string
     production?: string
     movie?: MovieUncheckedCreateNestedOneWithoutMetadataInput
     episode?: EpisodeUncheckedCreateNestedOneWithoutMetadataInput
@@ -46048,15 +45986,15 @@ export namespace Prisma {
     secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
-    ageRating: $Enums.AgeRating
+    ageRating: string
     duration: number
     productionHouse: string
     productionCountry: string
     director: string
-    status: $Enums.ContentStatus
+    status?: string
     production?: string
-    format: VideoFormatCreateNestedOneWithoutVideosInput
-    category: VideoCategoryCreateNestedOneWithoutVideosInput
+    format?: VideoFormatCreateNestedOneWithoutVideosInput
+    category?: VideoCategoryCreateNestedOneWithoutVideosInput
     episode?: EpisodeCreateNestedOneWithoutMetadataInput
     series?: SeriesCreateNestedOneWithoutMetadataInput
     genres?: VideoGenreCreateNestedManyWithoutVideosInput
@@ -46073,14 +46011,14 @@ export namespace Prisma {
     secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
-    ageRating: $Enums.AgeRating
+    ageRating: string
     duration: number
     productionHouse: string
     productionCountry: string
     director: string
-    formatId: string
-    categoryid: string
-    status: $Enums.ContentStatus
+    formatId?: string | null
+    categoryid?: string | null
+    status?: string
     production?: string
     episode?: EpisodeUncheckedCreateNestedOneWithoutMetadataInput
     series?: SeriesUncheckedCreateNestedOneWithoutMetadataInput
@@ -46165,15 +46103,15 @@ export namespace Prisma {
     secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    ageRating?: EnumAgeRatingFieldUpdateOperationsInput | $Enums.AgeRating
+    ageRating?: StringFieldUpdateOperationsInput | string
     duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
-    status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+    status?: StringFieldUpdateOperationsInput | string
     production?: StringFieldUpdateOperationsInput | string
-    format?: VideoFormatUpdateOneRequiredWithoutVideosNestedInput
-    category?: VideoCategoryUpdateOneRequiredWithoutVideosNestedInput
+    format?: VideoFormatUpdateOneWithoutVideosNestedInput
+    category?: VideoCategoryUpdateOneWithoutVideosNestedInput
     episode?: EpisodeUpdateOneWithoutMetadataNestedInput
     series?: SeriesUpdateOneWithoutMetadataNestedInput
     genres?: VideoGenreUpdateManyWithoutVideosNestedInput
@@ -46190,14 +46128,14 @@ export namespace Prisma {
     secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    ageRating?: EnumAgeRatingFieldUpdateOperationsInput | $Enums.AgeRating
+    ageRating?: StringFieldUpdateOperationsInput | string
     duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
-    formatId?: StringFieldUpdateOperationsInput | string
-    categoryid?: StringFieldUpdateOperationsInput | string
-    status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+    formatId?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryid?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
     production?: StringFieldUpdateOperationsInput | string
     episode?: EpisodeUncheckedUpdateOneWithoutMetadataNestedInput
     series?: SeriesUncheckedUpdateOneWithoutMetadataNestedInput
@@ -46278,15 +46216,15 @@ export namespace Prisma {
     secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
-    ageRating: $Enums.AgeRating
+    ageRating: string
     duration: number
     productionHouse: string
     productionCountry: string
     director: string
-    status: $Enums.ContentStatus
+    status?: string
     production?: string
-    format: VideoFormatCreateNestedOneWithoutVideosInput
-    category: VideoCategoryCreateNestedOneWithoutVideosInput
+    format?: VideoFormatCreateNestedOneWithoutVideosInput
+    category?: VideoCategoryCreateNestedOneWithoutVideosInput
     movie?: MovieCreateNestedOneWithoutMetadataInput
     episode?: EpisodeCreateNestedOneWithoutMetadataInput
     genres?: VideoGenreCreateNestedManyWithoutVideosInput
@@ -46303,14 +46241,14 @@ export namespace Prisma {
     secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
-    ageRating: $Enums.AgeRating
+    ageRating: string
     duration: number
     productionHouse: string
     productionCountry: string
     director: string
-    formatId: string
-    categoryid: string
-    status: $Enums.ContentStatus
+    formatId?: string | null
+    categoryid?: string | null
+    status?: string
     production?: string
     movie?: MovieUncheckedCreateNestedOneWithoutMetadataInput
     episode?: EpisodeUncheckedCreateNestedOneWithoutMetadataInput
@@ -46384,15 +46322,15 @@ export namespace Prisma {
     secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    ageRating?: EnumAgeRatingFieldUpdateOperationsInput | $Enums.AgeRating
+    ageRating?: StringFieldUpdateOperationsInput | string
     duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
-    status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+    status?: StringFieldUpdateOperationsInput | string
     production?: StringFieldUpdateOperationsInput | string
-    format?: VideoFormatUpdateOneRequiredWithoutVideosNestedInput
-    category?: VideoCategoryUpdateOneRequiredWithoutVideosNestedInput
+    format?: VideoFormatUpdateOneWithoutVideosNestedInput
+    category?: VideoCategoryUpdateOneWithoutVideosNestedInput
     movie?: MovieUpdateOneWithoutMetadataNestedInput
     episode?: EpisodeUpdateOneWithoutMetadataNestedInput
     genres?: VideoGenreUpdateManyWithoutVideosNestedInput
@@ -46409,14 +46347,14 @@ export namespace Prisma {
     secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    ageRating?: EnumAgeRatingFieldUpdateOperationsInput | $Enums.AgeRating
+    ageRating?: StringFieldUpdateOperationsInput | string
     duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
-    formatId?: StringFieldUpdateOperationsInput | string
-    categoryid?: StringFieldUpdateOperationsInput | string
-    status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+    formatId?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryid?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
     production?: StringFieldUpdateOperationsInput | string
     movie?: MovieUncheckedUpdateOneWithoutMetadataNestedInput
     episode?: EpisodeUncheckedUpdateOneWithoutMetadataNestedInput
@@ -46632,15 +46570,15 @@ export namespace Prisma {
     secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
-    ageRating: $Enums.AgeRating
+    ageRating: string
     duration: number
     productionHouse: string
     productionCountry: string
     director: string
-    status: $Enums.ContentStatus
+    status?: string
     production?: string
-    format: VideoFormatCreateNestedOneWithoutVideosInput
-    category: VideoCategoryCreateNestedOneWithoutVideosInput
+    format?: VideoFormatCreateNestedOneWithoutVideosInput
+    category?: VideoCategoryCreateNestedOneWithoutVideosInput
     movie?: MovieCreateNestedOneWithoutMetadataInput
     series?: SeriesCreateNestedOneWithoutMetadataInput
     genres?: VideoGenreCreateNestedManyWithoutVideosInput
@@ -46657,14 +46595,14 @@ export namespace Prisma {
     secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
-    ageRating: $Enums.AgeRating
+    ageRating: string
     duration: number
     productionHouse: string
     productionCountry: string
     director: string
-    formatId: string
-    categoryid: string
-    status: $Enums.ContentStatus
+    formatId?: string | null
+    categoryid?: string | null
+    status?: string
     production?: string
     movie?: MovieUncheckedCreateNestedOneWithoutMetadataInput
     series?: SeriesUncheckedCreateNestedOneWithoutMetadataInput
@@ -46760,15 +46698,15 @@ export namespace Prisma {
     secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    ageRating?: EnumAgeRatingFieldUpdateOperationsInput | $Enums.AgeRating
+    ageRating?: StringFieldUpdateOperationsInput | string
     duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
-    status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+    status?: StringFieldUpdateOperationsInput | string
     production?: StringFieldUpdateOperationsInput | string
-    format?: VideoFormatUpdateOneRequiredWithoutVideosNestedInput
-    category?: VideoCategoryUpdateOneRequiredWithoutVideosNestedInput
+    format?: VideoFormatUpdateOneWithoutVideosNestedInput
+    category?: VideoCategoryUpdateOneWithoutVideosNestedInput
     movie?: MovieUpdateOneWithoutMetadataNestedInput
     series?: SeriesUpdateOneWithoutMetadataNestedInput
     genres?: VideoGenreUpdateManyWithoutVideosNestedInput
@@ -46785,14 +46723,14 @@ export namespace Prisma {
     secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    ageRating?: EnumAgeRatingFieldUpdateOperationsInput | $Enums.AgeRating
+    ageRating?: StringFieldUpdateOperationsInput | string
     duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
-    formatId?: StringFieldUpdateOperationsInput | string
-    categoryid?: StringFieldUpdateOperationsInput | string
-    status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+    formatId?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryid?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
     production?: StringFieldUpdateOperationsInput | string
     movie?: MovieUncheckedUpdateOneWithoutMetadataNestedInput
     series?: SeriesUncheckedUpdateOneWithoutMetadataNestedInput
@@ -47091,15 +47029,15 @@ export namespace Prisma {
     secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
-    ageRating: $Enums.AgeRating
+    ageRating: string
     duration: number
     productionHouse: string
     productionCountry: string
     director: string
-    status: $Enums.ContentStatus
+    status?: string
     production?: string
-    format: VideoFormatCreateNestedOneWithoutVideosInput
-    category: VideoCategoryCreateNestedOneWithoutVideosInput
+    format?: VideoFormatCreateNestedOneWithoutVideosInput
+    category?: VideoCategoryCreateNestedOneWithoutVideosInput
     movie?: MovieCreateNestedOneWithoutMetadataInput
     episode?: EpisodeCreateNestedOneWithoutMetadataInput
     series?: SeriesCreateNestedOneWithoutMetadataInput
@@ -47116,14 +47054,14 @@ export namespace Prisma {
     secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
-    ageRating: $Enums.AgeRating
+    ageRating: string
     duration: number
     productionHouse: string
     productionCountry: string
     director: string
-    formatId: string
-    categoryid: string
-    status: $Enums.ContentStatus
+    formatId?: string | null
+    categoryid?: string | null
+    status?: string
     production?: string
     movie?: MovieUncheckedCreateNestedOneWithoutMetadataInput
     episode?: EpisodeUncheckedCreateNestedOneWithoutMetadataInput
@@ -47196,15 +47134,15 @@ export namespace Prisma {
     secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    ageRating?: EnumAgeRatingFieldUpdateOperationsInput | $Enums.AgeRating
+    ageRating?: StringFieldUpdateOperationsInput | string
     duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
-    status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+    status?: StringFieldUpdateOperationsInput | string
     production?: StringFieldUpdateOperationsInput | string
-    format?: VideoFormatUpdateOneRequiredWithoutVideosNestedInput
-    category?: VideoCategoryUpdateOneRequiredWithoutVideosNestedInput
+    format?: VideoFormatUpdateOneWithoutVideosNestedInput
+    category?: VideoCategoryUpdateOneWithoutVideosNestedInput
     movie?: MovieUpdateOneWithoutMetadataNestedInput
     episode?: EpisodeUpdateOneWithoutMetadataNestedInput
     series?: SeriesUpdateOneWithoutMetadataNestedInput
@@ -47221,14 +47159,14 @@ export namespace Prisma {
     secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    ageRating?: EnumAgeRatingFieldUpdateOperationsInput | $Enums.AgeRating
+    ageRating?: StringFieldUpdateOperationsInput | string
     duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
-    formatId?: StringFieldUpdateOperationsInput | string
-    categoryid?: StringFieldUpdateOperationsInput | string
-    status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+    formatId?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryid?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
     production?: StringFieldUpdateOperationsInput | string
     movie?: MovieUncheckedUpdateOneWithoutMetadataNestedInput
     episode?: EpisodeUncheckedUpdateOneWithoutMetadataNestedInput
@@ -48973,15 +48911,15 @@ export namespace Prisma {
     secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    ageRating?: EnumAgeRatingFieldUpdateOperationsInput | $Enums.AgeRating
+    ageRating?: StringFieldUpdateOperationsInput | string
     duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
-    status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+    status?: StringFieldUpdateOperationsInput | string
     production?: StringFieldUpdateOperationsInput | string
-    format?: VideoFormatUpdateOneRequiredWithoutVideosNestedInput
-    category?: VideoCategoryUpdateOneRequiredWithoutVideosNestedInput
+    format?: VideoFormatUpdateOneWithoutVideosNestedInput
+    category?: VideoCategoryUpdateOneWithoutVideosNestedInput
     movie?: MovieUpdateOneWithoutMetadataNestedInput
     episode?: EpisodeUpdateOneWithoutMetadataNestedInput
     series?: SeriesUpdateOneWithoutMetadataNestedInput
@@ -48998,14 +48936,14 @@ export namespace Prisma {
     secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    ageRating?: EnumAgeRatingFieldUpdateOperationsInput | $Enums.AgeRating
+    ageRating?: StringFieldUpdateOperationsInput | string
     duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
-    formatId?: StringFieldUpdateOperationsInput | string
-    categoryid?: StringFieldUpdateOperationsInput | string
-    status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+    formatId?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryid?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
     production?: StringFieldUpdateOperationsInput | string
     movie?: MovieUncheckedUpdateOneWithoutMetadataNestedInput
     episode?: EpisodeUncheckedUpdateOneWithoutMetadataNestedInput
@@ -49023,14 +48961,14 @@ export namespace Prisma {
     secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    ageRating?: EnumAgeRatingFieldUpdateOperationsInput | $Enums.AgeRating
+    ageRating?: StringFieldUpdateOperationsInput | string
     duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
-    formatId?: StringFieldUpdateOperationsInput | string
-    categoryid?: StringFieldUpdateOperationsInput | string
-    status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+    formatId?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryid?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
     production?: StringFieldUpdateOperationsInput | string
   }
 
@@ -49062,15 +49000,15 @@ export namespace Prisma {
     secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    ageRating?: EnumAgeRatingFieldUpdateOperationsInput | $Enums.AgeRating
+    ageRating?: StringFieldUpdateOperationsInput | string
     duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
-    status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+    status?: StringFieldUpdateOperationsInput | string
     production?: StringFieldUpdateOperationsInput | string
-    format?: VideoFormatUpdateOneRequiredWithoutVideosNestedInput
-    category?: VideoCategoryUpdateOneRequiredWithoutVideosNestedInput
+    format?: VideoFormatUpdateOneWithoutVideosNestedInput
+    category?: VideoCategoryUpdateOneWithoutVideosNestedInput
     movie?: MovieUpdateOneWithoutMetadataNestedInput
     episode?: EpisodeUpdateOneWithoutMetadataNestedInput
     series?: SeriesUpdateOneWithoutMetadataNestedInput
@@ -49087,14 +49025,14 @@ export namespace Prisma {
     secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    ageRating?: EnumAgeRatingFieldUpdateOperationsInput | $Enums.AgeRating
+    ageRating?: StringFieldUpdateOperationsInput | string
     duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
-    formatId?: StringFieldUpdateOperationsInput | string
-    categoryid?: StringFieldUpdateOperationsInput | string
-    status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+    formatId?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryid?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
     production?: StringFieldUpdateOperationsInput | string
     movie?: MovieUncheckedUpdateOneWithoutMetadataNestedInput
     episode?: EpisodeUncheckedUpdateOneWithoutMetadataNestedInput
@@ -49112,14 +49050,14 @@ export namespace Prisma {
     secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    ageRating?: EnumAgeRatingFieldUpdateOperationsInput | $Enums.AgeRating
+    ageRating?: StringFieldUpdateOperationsInput | string
     duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
-    formatId?: StringFieldUpdateOperationsInput | string
-    categoryid?: StringFieldUpdateOperationsInput | string
-    status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+    formatId?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryid?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
     production?: StringFieldUpdateOperationsInput | string
   }
 
@@ -49131,13 +49069,13 @@ export namespace Prisma {
     secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
-    ageRating: $Enums.AgeRating
+    ageRating: string
     duration: number
     productionHouse: string
     productionCountry: string
     director: string
-    categoryid: string
-    status: $Enums.ContentStatus
+    categoryid?: string | null
+    status?: string
     production?: string
   }
 
@@ -49149,14 +49087,14 @@ export namespace Prisma {
     secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    ageRating?: EnumAgeRatingFieldUpdateOperationsInput | $Enums.AgeRating
+    ageRating?: StringFieldUpdateOperationsInput | string
     duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
-    status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+    status?: StringFieldUpdateOperationsInput | string
     production?: StringFieldUpdateOperationsInput | string
-    category?: VideoCategoryUpdateOneRequiredWithoutVideosNestedInput
+    category?: VideoCategoryUpdateOneWithoutVideosNestedInput
     movie?: MovieUpdateOneWithoutMetadataNestedInput
     episode?: EpisodeUpdateOneWithoutMetadataNestedInput
     series?: SeriesUpdateOneWithoutMetadataNestedInput
@@ -49174,13 +49112,13 @@ export namespace Prisma {
     secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    ageRating?: EnumAgeRatingFieldUpdateOperationsInput | $Enums.AgeRating
+    ageRating?: StringFieldUpdateOperationsInput | string
     duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
-    categoryid?: StringFieldUpdateOperationsInput | string
-    status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+    categoryid?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
     production?: StringFieldUpdateOperationsInput | string
     movie?: MovieUncheckedUpdateOneWithoutMetadataNestedInput
     episode?: EpisodeUncheckedUpdateOneWithoutMetadataNestedInput
@@ -49199,13 +49137,13 @@ export namespace Prisma {
     secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    ageRating?: EnumAgeRatingFieldUpdateOperationsInput | $Enums.AgeRating
+    ageRating?: StringFieldUpdateOperationsInput | string
     duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
-    categoryid?: StringFieldUpdateOperationsInput | string
-    status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+    categoryid?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
     production?: StringFieldUpdateOperationsInput | string
   }
 
@@ -49217,13 +49155,13 @@ export namespace Prisma {
     secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
-    ageRating: $Enums.AgeRating
+    ageRating: string
     duration: number
     productionHouse: string
     productionCountry: string
     director: string
-    formatId: string
-    status: $Enums.ContentStatus
+    formatId?: string | null
+    status?: string
     production?: string
   }
 
@@ -49235,14 +49173,14 @@ export namespace Prisma {
     secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    ageRating?: EnumAgeRatingFieldUpdateOperationsInput | $Enums.AgeRating
+    ageRating?: StringFieldUpdateOperationsInput | string
     duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
-    status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+    status?: StringFieldUpdateOperationsInput | string
     production?: StringFieldUpdateOperationsInput | string
-    format?: VideoFormatUpdateOneRequiredWithoutVideosNestedInput
+    format?: VideoFormatUpdateOneWithoutVideosNestedInput
     movie?: MovieUpdateOneWithoutMetadataNestedInput
     episode?: EpisodeUpdateOneWithoutMetadataNestedInput
     series?: SeriesUpdateOneWithoutMetadataNestedInput
@@ -49260,13 +49198,13 @@ export namespace Prisma {
     secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    ageRating?: EnumAgeRatingFieldUpdateOperationsInput | $Enums.AgeRating
+    ageRating?: StringFieldUpdateOperationsInput | string
     duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
-    formatId?: StringFieldUpdateOperationsInput | string
-    status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+    formatId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
     production?: StringFieldUpdateOperationsInput | string
     movie?: MovieUncheckedUpdateOneWithoutMetadataNestedInput
     episode?: EpisodeUncheckedUpdateOneWithoutMetadataNestedInput
@@ -49285,13 +49223,13 @@ export namespace Prisma {
     secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    ageRating?: EnumAgeRatingFieldUpdateOperationsInput | $Enums.AgeRating
+    ageRating?: StringFieldUpdateOperationsInput | string
     duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
-    formatId?: StringFieldUpdateOperationsInput | string
-    status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+    formatId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
     production?: StringFieldUpdateOperationsInput | string
   }
 

@@ -6,7 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/client"
+  output   = "../src/lib/generated/client"
 }
 
 datasource db {
@@ -144,24 +144,24 @@ model SharedAccountUser {
 // =============================================
 
 model VideoMetadata {
-  id                String        @id @default(uuid())
+  id                String         @id @default(uuid())
   title             String
   description       String
-  thumbnailUrl      String        @map("main_image")
+  thumbnailUrl      String         @map("main_image")
   secondaryImage    String?
-  releaseDate       DateTime      @map("theater_release")
-  platformDate      DateTime      @map("platform_publish")
-  ageRating         AgeRating
-  duration          Int           @map("duration_seconds")
+  releaseDate       DateTime       @map("theater_release")
+  platformDate      DateTime       @map("platform_publish")
+  ageRating         String
+  duration          Int            @map("duration_seconds")
   productionHouse   String
   productionCountry String
   director          String
-  format            VideoFormat   @relation(fields: [formatId], references: [id])
-  formatId          String
-  category          VideoCategory @relation(fields: [categoryid], references: [id])
-  categoryid        String
-  status            ContentStatus
-  production        String        @default("Safliix")
+  format            VideoFormat?   @relation(fields: [formatId], references: [id])
+  formatId          String?
+  category          VideoCategory? @relation(fields: [categoryid], references: [id])
+  categoryid        String?
+  status            String         @default("DRAFT")
+  production        String         @default("Safliix")
 
   // Relations
   movie     Movie?

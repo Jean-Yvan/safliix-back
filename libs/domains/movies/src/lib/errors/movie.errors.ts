@@ -69,3 +69,10 @@ export class InvalidFormatError extends Error {
     this.name = 'InvalidFormatError';
   }
 }
+
+export class MovieNotFoundError extends Error {
+  constructor(movieId: string) {
+    super(`Movie with ID ${movieId} not found`);
+    this.name = 'MovieNotFoundError';
+  }
+}

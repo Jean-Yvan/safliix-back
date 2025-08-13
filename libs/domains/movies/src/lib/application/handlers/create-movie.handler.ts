@@ -2,8 +2,8 @@ import { CommandHandler, EventBus } from '@nestjs/cqrs';
 import { BaseHandler } from '@safliix-back/cqrs';
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Result, Err, Ok } from 'oxide.ts';
-import type { IMovieRepository } from 'src/lib/domain/ports/movie.repository';
-import { MovieAggregate } from 'src/lib/domain/entities/movie.aggregate';
+import type { IMovieRepository } from '../../domain/ports/movie.repository';
+import { MovieAggregate } from '../../domain/entities/movie.aggregate';
 import { CreateMovieCommand } from '../commands/create-movie.command';
 import { MOVIE_REPOSITORY } from '../../utils/types';
 //import { MovieCreatedEvent } from '../events/movie-created.event';
@@ -11,7 +11,7 @@ import {
   MovieCreationError,
   MovieValidationError,
   MovieSaveError 
-} from 'src/lib/errors/movie.errors'; 
+} from '../../errors/movie.errors'; 
 
 @Injectable()
 @CommandHandler(CreateMovieCommand)

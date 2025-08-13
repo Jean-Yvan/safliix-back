@@ -100,7 +100,6 @@ export class VideoFormat {
   // === Persistence ===
   toPrisma(): Prisma.VideoFormatCreateInput {
     return {
-      id: this.id,
       format: this._format,
       description: this._description,
     };

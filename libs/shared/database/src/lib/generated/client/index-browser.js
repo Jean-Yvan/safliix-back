@@ -396,20 +396,6 @@ exports.SharedAccountStatus = exports.$Enums.SharedAccountStatus = {
   REVOKED: 'REVOKED'
 };
 
-exports.AgeRating = exports.$Enums.AgeRating = {
-  G: 'G',
-  PG: 'PG',
-  PG_13: 'PG_13',
-  R: 'R',
-  NC_17: 'NC_17'
-};
-
-exports.ContentStatus = exports.$Enums.ContentStatus = {
-  DRAFT: 'DRAFT',
-  PUBLISHED: 'PUBLISHED',
-  ARCHIVED: 'ARCHIVED'
-};
-
 exports.ProfileActivityAction = exports.$Enums.ProfileActivityAction = {
   LOGIN: 'LOGIN',
   CONTENT_ACCESS: 'CONTENT_ACCESS',
