@@ -8,5 +8,5 @@ export * from './lib/application/handlers/delete-movie.handler';
 export * from './lib/application/handlers/update-movie.handler';
 export * from './lib/application/handlers/get-movies.handler';
 
-export * from './lib/mappers/create-movie.mapper';
+export * from './lib/mappers/movie.mapper';
 

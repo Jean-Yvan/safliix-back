@@ -152,7 +152,6 @@ model VideoMetadata {
   releaseDate       DateTime       @map("theater_release")
   platformDate      DateTime       @map("platform_publish")
   ageRating         String
-  duration          Int            @map("duration_seconds")
   productionHouse   String
   productionCountry String
   director          String
@@ -161,7 +160,6 @@ model VideoMetadata {
   category          VideoCategory? @relation(fields: [categoryid], references: [id])
   categoryid        String?
   status            String         @default("DRAFT")
-  production        String         @default("Safliix")
 
   // Relations
   movie     Movie?
@@ -266,9 +264,10 @@ model Movie {
   videoFile   VideoFile     @relation(fields: [videoFileId], references: [id])
   videoFileId String        @unique
   tags        MovieTag[]
-  isPremiere  Boolean       @default(false)
+  status      String        @default("draft")
+  type        String        @default("location")
+  seasonCount Int           @default(0)
   rentalPrice Float?        @default(0)
-  status      String
 
   // Règles métier (ex: durée max)
   @@map("movies")
@@ -281,7 +280,9 @@ model Series {
   metadataId  String        @unique
   seasons     Season[]
   tags        SeriesTag[]
-  isPremiere  Boolean       @default(false)
+  status      String        @default("draft")
+  type        String        @default("location")
+  seasonCount Int           @default(0)
   rentalPrice Float?        @default(0)
 
   @@map("series")

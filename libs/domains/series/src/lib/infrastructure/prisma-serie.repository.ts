@@ -2,65 +2,75 @@ import { Injectable } from "@nestjs/common";
 import { Episode } from "../domain/entities/episode.entity";
 import { Season } from "../domain/entities/season.entity";
 import { Serie } from "../domain/entities/serie.entity";
-import { SerieRepository } from "../domain/ports/serie.repository";
-import { PrismaService } from "@safliix-back/database";
+import { ISerieRepository } from "../domain/ports/serie.repository";
+import { 
+  PrismaService, 
+  SerieWithRelations,
+  serieInclude,
+  serieWithMetadataAndSeasonCountInclude,
+  SerieWithMetadataAndSeasonCount, 
+  SerieToPrisma
+} from "@safliix-back/database";
 import { SerieMapper } from "../mappers/serie.mapper";
 
 @Injectable()
-export class PrismaSerieRepository implements SerieRepository{
+export class PrismaSerieRepository implements ISerieRepository{
 
   constructor(
-    private readonly prisma: PrismaService 
+    private readonly prisma: PrismaService  
   ){}
 
   async findById(id: string): Promise<Serie | null> {
-    const serie = this.prisma.series.findUnique({
+    const serie: SerieWithRelations | null = await this.prisma.series.findUnique({
       where: { id },
-      include: {
-        metadata: {
-          include: {
-            format: true,
-            category: true,
-            actors: {
-              include: {
-                actor: true
-              }
-            }
-          } 
-        },
-        seasons: {
-          include: {
-            episodes:{
-              include: {
-                videoFile: true,
-                metadata: {
-                  include: {
-                    format: true,
-                    category: true,
-                    actors: {
-                      include: {
-                        actor: true
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-      }
+      include: serieInclude,
     });
 
     if (!serie) return null;
 
-    const serieResult = SerieMapper.toDomain(serie);
+    const result = SerieMapper.toDomain(serie);
 
+    if (result.isErr()) {
+      
+      throw result.unwrapErr();
+    }
+
+    return result.unwrap();
   }
-  findAll(): Promise<Serie[]> {
-    throw new Error("Method not implemented.");
+
+  async findAll(): Promise<Serie[] | null> {
+    const series : SerieWithMetadataAndSeasonCount[] = await this.prisma.series.findMany({
+      include: serieWithMetadataAndSeasonCountInclude,
+    });
+
+    if(!series) return null;
+
+    return series.map(serie => {
+      const result = SerieMapper.toDomain(serie);
+      if (result.isErr()) {
+        throw result.unwrapErr();
+      }
+      return result.unwrap();
+    });
   }
-  save(serie: Serie): Promise<void> {
-    throw new Error("Method not implemented.");
+
+  async save(serie: Serie): Promise<Serie> {
+    const data: SerieToPrisma = SerieMapper.toPrisma(serie); // typé grâce à nos types
+
+    const id = data.id == null ? undefined : data.id;
+    const serieResult = await this.prisma.series.upsert({
+      where: { id },
+      create: data,
+      update: data,
+      include: serieInclude // Use the correct include object compatible with SeriesInclude<DefaultArgs>
+    });
+
+    const s = SerieMapper.toDomain(serieResult);
+    if(s.isErr()){
+      throw s.unwrapErr()
+    }
+
+    return s.unwrap();
   }
   deleteById(id: string): Promise<void> {
     throw new Error("Method not implemented.");

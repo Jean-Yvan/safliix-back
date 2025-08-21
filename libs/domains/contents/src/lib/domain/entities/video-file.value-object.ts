@@ -1,5 +1,5 @@
 import { Result, Ok, Err } from 'oxide.ts';
-import { Prisma } from '@safliix-back/database';
+
 
 // Définition des erreurs métier
 export class InvalidFileFormatError extends Error {
@@ -18,49 +18,44 @@ export class InvalidDurationError extends Error {
 
 export class VideoFile {
   private constructor(
-    public readonly id: string,
+    public readonly id: string | null,
     private _filePath: string,
-    private _duration: number, // en secondes
-    private _width?: number,
-    private _height?: number
+    private _duration: number,
+    private _trailerPath: string | null,
+    private _width: number | null,
+    private _height: number | null
   ) {}
 
   // === Factory Methods ===
-  static create(params: {
-    id?: string;
-    filePath: string;
-    duration: number;
-    width?: number;
-    height?: number;
-  }): Result<VideoFile, InvalidFileFormatError | InvalidDurationError> {
+  static create(
+    id: string | null,
+    filePath: string,
+    duration: number,
+    trailerPath: string | null,
+    width: number | null,
+    height: number | null,
+  ): Result<VideoFile, InvalidFileFormatError | InvalidDurationError> {
     /* if (!params.filePath.endsWith('.mp4')) {
       return Err(new InvalidFileFormatError());
     } */
 
-    if (params.duration <= 0) {
+    if (duration <= 0) {
       return Err(new InvalidDurationError());
     }
 
     return Ok(
       new VideoFile(
-        params.id || '',
-        params.filePath,
-        params.duration,
-        params.width,
-        params.height
+        id,
+        filePath,
+        duration,
+        trailerPath,
+        width,
+        height
       )
     );
   }
 
-  static fromPrisma(
-    data: Prisma.VideoFileGetPayload<object>
-  ): Result<VideoFile, Error> {
-    return VideoFile.create({
-      id: data.id,
-      filePath: data.filePath,
-      duration: data.duration,
-    });
-  }
+  
 
   // === Méthodes d'accès ===
   get filePath(): string {
@@ -85,17 +80,18 @@ export class VideoFile {
       : undefined;
   }
 
-  // === Persistence ===
-  toPrisma(): Result<Prisma.VideoFileCreateInput,Error> {
-    try {
-      return Ok({
-        filePath: this._filePath,
-        duration: this._duration,
-        width: this._width,
-        height: this._height
-      });
-    }catch (error) {
-      return Err(new Error('Failed to convert VideoFile to Prisma format'));
-    }
+  get trailerPath(): string | null {
+    return this._trailerPath;
   }
+
+  get width(): number | null {
+    return this._width;
+  }
+
+  get height(): number | null {
+    return this._height;
+  }
+
+  // === Persistence ===
+  
 }

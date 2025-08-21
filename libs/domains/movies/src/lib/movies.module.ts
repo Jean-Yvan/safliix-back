@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MovieRepository } from './infra/prisma/movie-prisma.repository';
 import { CreateMovieHandler } from './application/handlers/create-movie.handler';
-import { CreateMovieMapper } from './mappers/create-movie.mapper';
+import { CreateMovieMapper } from './mappers/movie.mapper';
 import { MOVIE_REPOSITORY } from './utils/types';
 import { SafliixBackDatabaseModule } from "@safliix-back/database";
 import { UpdateMovieHandler } from './application/handlers/update-movie.handler';

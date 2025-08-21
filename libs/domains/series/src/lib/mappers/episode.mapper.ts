@@ -1,38 +1,22 @@
 import { Episode } from "../domain/entities/episode.entity";
-import { VideoFile, VideoMetadata } from "@safliix-back/contents";
-import { Prisma } from "@safliix-back/database";
+import { EpisodeWithRelations, EpisodeToPrisma } from "@safliix-back/database";
 import { Err, Ok, Result } from "oxide.ts";
-
+import { VideoMetadataMapper,VideoFileMapper } from "@safliix-back/contents"
 
 export class EpisodeMapper {
   static toDomain(
-    prismaEpisode: Prisma.EpisodeGetPayload<{
-      include: { 
-        metadata: { 
-          include: { 
-            format: true; 
-            category: true,
-            actors: {
-              include:{
-                actor:true
-              }
-            } 
-          } 
-        },
-        videoFile: true 
-      }
-    }>
+    prismaEpisode: EpisodeWithRelations
   ): Result<Episode, Error> {
     try {
       const metadataResult = prismaEpisode.metadata 
-        ? VideoMetadata.fromPrisma(prismaEpisode.metadata)
+        ? VideoMetadataMapper.toDomain(prismaEpisode.metadata)
         : undefined;
 
       if (metadataResult?.isErr()) {
         return Err(metadataResult.unwrapErr());
       }
 
-      const videoFile = VideoFile.fromPrisma(prismaEpisode.videoFile);
+      const videoFile = VideoFileMapper.toDomain(prismaEpisode.videoFile);
       if (videoFile.isErr()) {
         return Err(videoFile.unwrapErr());
       }
@@ -50,14 +34,27 @@ export class EpisodeMapper {
     }
   }
 
-  static toPrisma(episode: Episode): Prisma.EpisodeCreateInput {
-    return {
-      //id: episode.id,
+  static toPrisma(episode: Episode): EpisodeToPrisma {
+    const prismaEpisode: EpisodeToPrisma = {
       number: episode.number,
       season: { connect: { id: episode.seasonId } },
-      metadata: { connect: { id: episode.metadata?.id } },
-      videoFile: { connect: { id: episode.videoFile.id } },
-      
+      videoFile: {
+        create: VideoFileMapper.toPrisma(episode.videoFile),
+        
+      },
+      title: episode.title,
+      metadata: undefined as any, // placeholder, will be set below
     };
+
+    if (episode.metadata) {
+      prismaEpisode.metadata = {
+        create: VideoMetadataMapper.toPrisma(episode.metadata),
+      };
+    } 
+
+    return prismaEpisode;
   }
 }
+
+ 
+

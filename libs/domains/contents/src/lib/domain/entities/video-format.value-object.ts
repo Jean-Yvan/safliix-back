@@ -1,6 +1,6 @@
 import { Result,Ok,Err } from 'oxide.ts';
-import { v4 as uuidv4 } from 'uuid';
-import { Prisma } from '@safliix-back/database';
+
+
 
 // Définition des erreurs métier
 export class EmptyFormatError extends Error {
@@ -26,15 +26,16 @@ export class InvalidFormatError extends Error {
 
 export class VideoFormat {
   private constructor(
-    public readonly id: string,
+    public readonly id: string | undefined,
     private _format: string,
-    private _description?: string
+    private _description: string | null
   ) {}
 
   // === Factory Methods ===
   static create(
+    id: string | undefined,
     format: string,
-    description?: string,
+    description: string | null,
     existingFormats: string[] = []
   ): Result<VideoFormat, EmptyFormatError | DuplicateFormatError | InvalidFormatError> {
     const normalizedFormat = format.trim().toUpperCase();
@@ -53,39 +54,21 @@ export class VideoFormat {
 
     return Ok(
       new VideoFormat(
-        uuidv4(),
+        id,
         normalizedFormat,
         description
       )
     );
   }
 
-  static fromPrisma(
-    data: Prisma.VideoFormatGetPayload<object>
-  ): Result<VideoFormat, Error> {
-    try {
-      const createResult = VideoFormat.create(data.format, data.description ?? undefined);
-      
-      if (createResult.isErr()) {
-        return Err(createResult.unwrapErr());
-      }
-
-      const format = createResult.unwrap();
-      // Override the generated ID with the one from Prisma
-      (format as any).id = data.id;
-      
-      return Ok(format);
-    } catch (error) {
-      return Err(error instanceof Error ? error : new Error('Failed to create from Prisma'));
-    }
-  }
+  
 
   // === Accessors ===
   get format(): string {
     return this._format;
   }
 
-  get description(): string | undefined {
+  get description(): string | null {
     return this._description;
   }
 
@@ -98,12 +81,7 @@ export class VideoFormat {
   }
 
   // === Persistence ===
-  toPrisma(): Prisma.VideoFormatCreateInput {
-    return {
-      format: this._format,
-      description: this._description,
-    };
-  }
+  
 
   // === Business Logic ===
   matches(searchTerm: string): boolean {

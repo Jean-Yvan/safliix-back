@@ -1,34 +1,42 @@
-import { v4 as uuidv4 } from 'uuid';
 import { AggregateRoot } from '@nestjs/cqrs';
-import { VideoMetadata,VideoFile } from '@safliix-back/contents';
-import { Prisma } from '@safliix-back/database';
+import { VideoMetadata,VideoFile,VideoCategory,VideoFormat } from '@safliix-back/contents';
 import { Result,Ok,Err } from 'oxide.ts';
-import { CreateMovieCommand } from '../../application/commands/create-movie.command';
+import { CreateMovieDto } from '../../interface/rest/dto/create-movie.dto';
+
 //import { MoviePublishedEvent } from '../events/movie-published.event';
 
 export type MovieStatus = 'DRAFT' | 'PUBLISHED';
 export type MovieActor = { actorId: string; name: string; role?: string };
 
+export class InvalidDurationError extends Error {
+  constructor() {
+    super('Duration must be positive');
+    this.name = 'InvalidDurationError';
+  }
+}
+
+
 export class MovieAggregate extends AggregateRoot {
   update(payload: { title?: string; status?: "DRAFT" | "PUBLISHED"; }) {
     throw new Error('Method not implemented.');
   }
-  private _status: MovieStatus = 'DRAFT';
-  private _rentalPrice?: number;
-  private _actors: MovieActor[] = [];
-
+  
+  
   private constructor(
-    public readonly id: string,
+    public readonly id: string | undefined,
     public readonly metadata: VideoMetadata,
     public readonly  videoFile: VideoFile,
-    public readonly isPremiere: boolean
+    public status: MovieStatus = 'DRAFT',
+    public rentalPrice: number,
+    public type: string
+    
   ) {
     super();
   }
 
   // === Méthodes Métier ===
   publishMovie(publicationDate: Date = new Date()): Result<void, Error> {
-    if (this._status === 'PUBLISHED') {
+    if (this.status === 'PUBLISHED') {
       return Err(new Error('MOVIE_ALREADY_PUBLISHED'));
     }
 
@@ -36,7 +44,7 @@ export class MovieAggregate extends AggregateRoot {
       return Err(new Error('INCOMPLETE_METADATA_FOR_PUBLISHING'));
     } */
 
-    this._status = 'PUBLISHED';
+    this.status = 'PUBLISHED';
     //this.addDomainEvent(new MoviePublishedEvent(this.id, publicationDate));
     
     return Ok(undefined);
@@ -44,33 +52,48 @@ export class MovieAggregate extends AggregateRoot {
 
   setRentalPrice(price: number): Result<void, Error> {
     if (price <= 0) return Err(new Error('INVALID_PRICE'));
-    if (!this.isPremiere) return Err(new Error('RENTAL_PRICE_ONLY_FOR_PREMIERES'));
     
-    this._rentalPrice = price;
+    
+    this.rentalPrice = price;
     return Ok(undefined);
   }
 
-  addActor(actor: MovieActor): Result<void, Error> {
-    if (this._actors.length >= 20) {
-      return Err(new Error('MAX_ACTORS_EXCEEDED'));
-    }
-    
-    if (this._actors.some(a => a.actorId === actor.actorId)) {
-      return Err(new Error('ACTOR_ALREADY_ADDED'));
-    }
-
-    this._actors.push(actor);
-    return Ok(undefined);
-  }
+  
 
   // === Factory Method ===
-  static create(command: CreateMovieCommand): Result<MovieAggregate, Error> {
-    const metadataResult = VideoMetadata.create(command.metadata);
-    const videoFileResult = VideoFile.create({
-      id: uuidv4(),
-      duration: command.metadata.duration,
-      filePath: command.videoFileUrl
-    });
+  static create(data:CreateMovieDto): Result<MovieAggregate, Error> {
+
+    const categoryResult = VideoCategory.create(
+      undefined,
+      data.category,
+      ''
+    );
+
+    if (categoryResult.isErr()) {
+      return Err(categoryResult.unwrapErr());
+    }
+    const metadataResult = VideoMetadata.create(
+      null,
+      data.title,
+      data.description,
+      data.thumbnailUrl,
+      data.productionHouse,
+      data.director,
+      data.secondaryImageUrl ?? '',
+      new Date(data.releaseDate),
+      new Date(data.plateformDate),
+      categoryResult.unwrap(),
+      
+    );
+    const videoFileResult = VideoFile.create(
+      null,
+      data.movieUrl,
+      data.duration,
+      data.thumbnailUrl,
+      0,
+      0
+      
+    );
     if (metadataResult.isErr()) {
       return Err(metadataResult.unwrapErr());
     }
@@ -79,89 +102,43 @@ export class MovieAggregate extends AggregateRoot {
       return Err(videoFileResult.unwrapErr());
     }
 
+    const status: MovieStatus = data.status === 'PUBLISHED' ? 'PUBLISHED' : 'DRAFT';
     const movie = new MovieAggregate(
-      command.movieId,
+      undefined,
       metadataResult.unwrap(),
       videoFileResult.unwrap(),
-      command.isPremiere
+      status,
+      data.rentalPrice || 0,
+      data.type
     );
 
-    if (command.isPremiere) {
-      const priceResult = movie.setRentalPrice(command.rentalPrice!);
-      if (priceResult.isErr()) {
-        return Err(priceResult.unwrapErr());
-      }
-    }
+    
 
     
 
     return Ok(movie);
   }
+  
+  static restore(props: {
+    id: string;
+    metadata: VideoMetadata;
+    videoFile: VideoFile;
+    rentalPrice: number;
+    status : string;
+    type : string;
+  }): MovieAggregate {
 
-  // === Mappers ===
-  static fromPrisma(data: Prisma.MovieGetPayload<{include: { 
-        metadata: { 
-          include: { 
-            format: true, 
-            category: true,
-            actors: { include: { actor: true } }
-          } 
-        },
-        videoFile: true 
-      }}>): Result<MovieAggregate, Error> {
-    const commandResult = CreateMovieCommand.fromPrisma(data);
-    if (commandResult.isErr()) {
-      return Err(commandResult.unwrapErr());
-    }
-
-    const movieResult = MovieAggregate.create(commandResult.unwrap());
-    if (movieResult.isErr()) {
-      return Err(movieResult.unwrapErr());
-    }
-
-    const movie = movieResult.unwrap();
-    if (data.status === 'PUBLISHED' && data.metadata.releaseDate) {
-      const publishResult = movie.publishMovie(data.metadata.releaseDate);
-      if (publishResult.isErr()) {
-        return Err(publishResult.unwrapErr());
-      }
-    }
-
-    return Ok(movie);
-  }
-
-  toPrisma(): Result<Prisma.MovieCreateInput,Error> {
-
-    const metadataPrisma = this.metadata.toPrisma();
-    const videoFilePrisma = this.videoFile.toPrisma();
-    if(metadataPrisma.isErr() || videoFilePrisma.isErr()) {
-      return Err(Error('Invalid metadata or video file data'));
-    }
-    return Ok({
-      status: this._status,
-      isPremiere: this.isPremiere,
-      rentalPrice: this._rentalPrice,
-      metadata: {
-        create: metadataPrisma.unwrap()
-      },
-      videoFile: { create: videoFilePrisma.unwrap() },
-    });
-  }
-
-  // === Getters ===
-  get title(): string {
-    return this.metadata.title;
-  }
-
-  get status(): MovieStatus {
-    return this._status;
-  }
-
-  get rentalPrice(): number | undefined {
-    return this._rentalPrice;
-  }
-
-  get actors(): ReadonlyArray<MovieActor> {
-    return [...this._actors]; // Retourne une copie pour immutabilité
+    const s = props.status == "DRAFT" ? 'DRAFT' : 'PUBLISHED'
+    const movie = new MovieAggregate(
+      props.id,
+      props.metadata,
+      props.videoFile,
+      s,
+      props.rentalPrice,
+      props.type
+    );
+    
+    return movie;
   }
 }
+

@@ -1,31 +1,11 @@
-import { Prisma } from "@safliix-back/database";
 import { Season } from "../domain/entities/season.entity";
 import { Episode } from "../domain/entities/episode.entity";
 import { VideoFile, VideoMetadata } from "@safliix-back/contents";
 import { Result, Err, Ok } from "oxide.ts";
-
+import { SeasonWithRelations,SeasonToPrisma } from "@safliix-back/database";
 export class SeasonMapper{
 
-  toDomain (prismaSeason: Prisma.SeasonGetPayload<{
-    include: {
-      episodes: {
-        include: {
-          videoFile: true;
-          metadata: {
-            include: {
-              format: true;
-              category: true;
-              actors: {
-                include: {
-                  actor: true;
-                };
-              };
-            };
-          };
-        };
-      };
-    };
-  }>): Result<Season, Error> {
+  static toDomain (prismaSeason: SeasonWithRelations): Result<Season, Error> {
     try {
       const season = new Season(
         prismaSeason.id,
@@ -56,4 +36,29 @@ export class SeasonMapper{
       return Err(error instanceof Error ? error : new Error('Season mapping failed'));
     }
   }
+
+  static toPrisma(season: Season, includeEpisodes = false): SeasonToPrisma {
+    const data: SeasonToPrisma = {
+      id: season.id,
+      number: season.number,
+      serieId: season.serieId,
+      title: season.title,
+    };
+
+    if (includeEpisodes && season.episodes.length > 0) {
+      data.episodes = {
+        create: season.episodes.map((ep) => ({
+          id: ep.id,
+          number: ep.number,
+          seasonId: ep.seasonId,
+          title: ep.title,
+          videoFileId: ep.videoFile?.id,
+          metadataId: ep.metadata?.id
+        })),
+      };
+    }
+
+    return data;
+  }
+
 }

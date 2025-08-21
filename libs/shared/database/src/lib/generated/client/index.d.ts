@@ -11149,18 +11149,8 @@ export namespace Prisma {
 
   export type AggregateVideoMetadata = {
     _count: VideoMetadataCountAggregateOutputType | null
-    _avg: VideoMetadataAvgAggregateOutputType | null
-    _sum: VideoMetadataSumAggregateOutputType | null
     _min: VideoMetadataMinAggregateOutputType | null
     _max: VideoMetadataMaxAggregateOutputType | null
-  }
-
-  export type VideoMetadataAvgAggregateOutputType = {
-    duration: number | null
-  }
-
-  export type VideoMetadataSumAggregateOutputType = {
-    duration: number | null
   }
 
   export type VideoMetadataMinAggregateOutputType = {
@@ -11172,14 +11162,12 @@ export namespace Prisma {
     releaseDate: Date | null
     platformDate: Date | null
     ageRating: string | null
-    duration: number | null
     productionHouse: string | null
     productionCountry: string | null
     director: string | null
     formatId: string | null
     categoryid: string | null
     status: string | null
-    production: string | null
   }
 
   export type VideoMetadataMaxAggregateOutputType = {
@@ -11191,14 +11179,12 @@ export namespace Prisma {
     releaseDate: Date | null
     platformDate: Date | null
     ageRating: string | null
-    duration: number | null
     productionHouse: string | null
     productionCountry: string | null
     director: string | null
     formatId: string | null
     categoryid: string | null
     status: string | null
-    production: string | null
   }
 
   export type VideoMetadataCountAggregateOutputType = {
@@ -11210,25 +11196,15 @@ export namespace Prisma {
     releaseDate: number
     platformDate: number
     ageRating: number
-    duration: number
     productionHouse: number
     productionCountry: number
     director: number
     formatId: number
     categoryid: number
     status: number
-    production: number
     _all: number
   }
 
-
-  export type VideoMetadataAvgAggregateInputType = {
-    duration?: true
-  }
-
-  export type VideoMetadataSumAggregateInputType = {
-    duration?: true
-  }
 
   export type VideoMetadataMinAggregateInputType = {
     id?: true
@@ -11239,14 +11215,12 @@ export namespace Prisma {
     releaseDate?: true
     platformDate?: true
     ageRating?: true
-    duration?: true
     productionHouse?: true
     productionCountry?: true
     director?: true
     formatId?: true
     categoryid?: true
     status?: true
-    production?: true
   }
 
   export type VideoMetadataMaxAggregateInputType = {
@@ -11258,14 +11232,12 @@ export namespace Prisma {
     releaseDate?: true
     platformDate?: true
     ageRating?: true
-    duration?: true
     productionHouse?: true
     productionCountry?: true
     director?: true
     formatId?: true
     categoryid?: true
     status?: true
-    production?: true
   }
 
   export type VideoMetadataCountAggregateInputType = {
@@ -11277,14 +11249,12 @@ export namespace Prisma {
     releaseDate?: true
     platformDate?: true
     ageRating?: true
-    duration?: true
     productionHouse?: true
     productionCountry?: true
     director?: true
     formatId?: true
     categoryid?: true
     status?: true
-    production?: true
     _all?: true
   }
 
@@ -11326,18 +11296,6 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Select which fields to average
-    **/
-    _avg?: VideoMetadataAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: VideoMetadataSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
      * Select which fields to find the minimum value
     **/
     _min?: VideoMetadataMinAggregateInputType
@@ -11368,8 +11326,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: VideoMetadataCountAggregateInputType | true
-    _avg?: VideoMetadataAvgAggregateInputType
-    _sum?: VideoMetadataSumAggregateInputType
     _min?: VideoMetadataMinAggregateInputType
     _max?: VideoMetadataMaxAggregateInputType
   }
@@ -11383,17 +11339,13 @@ export namespace Prisma {
     releaseDate: Date
     platformDate: Date
     ageRating: string
-    duration: number
     productionHouse: string
     productionCountry: string
     director: string
     formatId: string | null
     categoryid: string | null
     status: string
-    production: string
     _count: VideoMetadataCountAggregateOutputType | null
-    _avg: VideoMetadataAvgAggregateOutputType | null
-    _sum: VideoMetadataSumAggregateOutputType | null
     _min: VideoMetadataMinAggregateOutputType | null
     _max: VideoMetadataMaxAggregateOutputType | null
   }
@@ -11421,14 +11373,12 @@ export namespace Prisma {
     releaseDate?: boolean
     platformDate?: boolean
     ageRating?: boolean
-    duration?: boolean
     productionHouse?: boolean
     productionCountry?: boolean
     director?: boolean
     formatId?: boolean
     categoryid?: boolean
     status?: boolean
-    production?: boolean
     format?: boolean | VideoMetadata$formatArgs<ExtArgs>
     category?: boolean | VideoMetadata$categoryArgs<ExtArgs>
     movie?: boolean | VideoMetadata$movieArgs<ExtArgs>
@@ -11450,14 +11400,12 @@ export namespace Prisma {
     releaseDate?: boolean
     platformDate?: boolean
     ageRating?: boolean
-    duration?: boolean
     productionHouse?: boolean
     productionCountry?: boolean
     director?: boolean
     formatId?: boolean
     categoryid?: boolean
     status?: boolean
-    production?: boolean
     format?: boolean | VideoMetadata$formatArgs<ExtArgs>
     category?: boolean | VideoMetadata$categoryArgs<ExtArgs>
   }, ExtArgs["result"]["videoMetadata"]>
@@ -11471,14 +11419,12 @@ export namespace Prisma {
     releaseDate?: boolean
     platformDate?: boolean
     ageRating?: boolean
-    duration?: boolean
     productionHouse?: boolean
     productionCountry?: boolean
     director?: boolean
     formatId?: boolean
     categoryid?: boolean
     status?: boolean
-    production?: boolean
     format?: boolean | VideoMetadata$formatArgs<ExtArgs>
     category?: boolean | VideoMetadata$categoryArgs<ExtArgs>
   }, ExtArgs["result"]["videoMetadata"]>
@@ -11492,17 +11438,15 @@ export namespace Prisma {
     releaseDate?: boolean
     platformDate?: boolean
     ageRating?: boolean
-    duration?: boolean
     productionHouse?: boolean
     productionCountry?: boolean
     director?: boolean
     formatId?: boolean
     categoryid?: boolean
     status?: boolean
-    production?: boolean
   }
 
-  export type VideoMetadataOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "thumbnailUrl" | "secondaryImage" | "releaseDate" | "platformDate" | "ageRating" | "duration" | "productionHouse" | "productionCountry" | "director" | "formatId" | "categoryid" | "status" | "production", ExtArgs["result"]["videoMetadata"]>
+  export type VideoMetadataOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "thumbnailUrl" | "secondaryImage" | "releaseDate" | "platformDate" | "ageRating" | "productionHouse" | "productionCountry" | "director" | "formatId" | "categoryid" | "status", ExtArgs["result"]["videoMetadata"]>
   export type VideoMetadataInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     format?: boolean | VideoMetadata$formatArgs<ExtArgs>
     category?: boolean | VideoMetadata$categoryArgs<ExtArgs>
@@ -11546,14 +11490,12 @@ export namespace Prisma {
       releaseDate: Date
       platformDate: Date
       ageRating: string
-      duration: number
       productionHouse: string
       productionCountry: string
       director: string
       formatId: string | null
       categoryid: string | null
       status: string
-      production: string
     }, ExtArgs["result"]["videoMetadata"]>
     composites: {}
   }
@@ -11994,14 +11936,12 @@ export namespace Prisma {
     readonly releaseDate: FieldRef<"VideoMetadata", 'DateTime'>
     readonly platformDate: FieldRef<"VideoMetadata", 'DateTime'>
     readonly ageRating: FieldRef<"VideoMetadata", 'String'>
-    readonly duration: FieldRef<"VideoMetadata", 'Int'>
     readonly productionHouse: FieldRef<"VideoMetadata", 'String'>
     readonly productionCountry: FieldRef<"VideoMetadata", 'String'>
     readonly director: FieldRef<"VideoMetadata", 'String'>
     readonly formatId: FieldRef<"VideoMetadata", 'String'>
     readonly categoryid: FieldRef<"VideoMetadata", 'String'>
     readonly status: FieldRef<"VideoMetadata", 'String'>
-    readonly production: FieldRef<"VideoMetadata", 'String'>
   }
     
 
@@ -20109,10 +20049,12 @@ export namespace Prisma {
   }
 
   export type MovieAvgAggregateOutputType = {
+    seasonCount: number | null
     rentalPrice: number | null
   }
 
   export type MovieSumAggregateOutputType = {
+    seasonCount: number | null
     rentalPrice: number | null
   }
 
@@ -20120,36 +20062,41 @@ export namespace Prisma {
     id: string | null
     metadataId: string | null
     videoFileId: string | null
-    isPremiere: boolean | null
-    rentalPrice: number | null
     status: string | null
+    type: string | null
+    seasonCount: number | null
+    rentalPrice: number | null
   }
 
   export type MovieMaxAggregateOutputType = {
     id: string | null
     metadataId: string | null
     videoFileId: string | null
-    isPremiere: boolean | null
-    rentalPrice: number | null
     status: string | null
+    type: string | null
+    seasonCount: number | null
+    rentalPrice: number | null
   }
 
   export type MovieCountAggregateOutputType = {
     id: number
     metadataId: number
     videoFileId: number
-    isPremiere: number
-    rentalPrice: number
     status: number
+    type: number
+    seasonCount: number
+    rentalPrice: number
     _all: number
   }
 
 
   export type MovieAvgAggregateInputType = {
+    seasonCount?: true
     rentalPrice?: true
   }
 
   export type MovieSumAggregateInputType = {
+    seasonCount?: true
     rentalPrice?: true
   }
 
@@ -20157,27 +20104,30 @@ export namespace Prisma {
     id?: true
     metadataId?: true
     videoFileId?: true
-    isPremiere?: true
-    rentalPrice?: true
     status?: true
+    type?: true
+    seasonCount?: true
+    rentalPrice?: true
   }
 
   export type MovieMaxAggregateInputType = {
     id?: true
     metadataId?: true
     videoFileId?: true
-    isPremiere?: true
-    rentalPrice?: true
     status?: true
+    type?: true
+    seasonCount?: true
+    rentalPrice?: true
   }
 
   export type MovieCountAggregateInputType = {
     id?: true
     metadataId?: true
     videoFileId?: true
-    isPremiere?: true
-    rentalPrice?: true
     status?: true
+    type?: true
+    seasonCount?: true
+    rentalPrice?: true
     _all?: true
   }
 
@@ -20271,9 +20221,10 @@ export namespace Prisma {
     id: string
     metadataId: string
     videoFileId: string
-    isPremiere: boolean
-    rentalPrice: number | null
     status: string
+    type: string
+    seasonCount: number
+    rentalPrice: number | null
     _count: MovieCountAggregateOutputType | null
     _avg: MovieAvgAggregateOutputType | null
     _sum: MovieSumAggregateOutputType | null
@@ -20299,9 +20250,10 @@ export namespace Prisma {
     id?: boolean
     metadataId?: boolean
     videoFileId?: boolean
-    isPremiere?: boolean
-    rentalPrice?: boolean
     status?: boolean
+    type?: boolean
+    seasonCount?: boolean
+    rentalPrice?: boolean
     metadata?: boolean | VideoMetadataDefaultArgs<ExtArgs>
     videoFile?: boolean | VideoFileDefaultArgs<ExtArgs>
     tags?: boolean | Movie$tagsArgs<ExtArgs>
@@ -20312,9 +20264,10 @@ export namespace Prisma {
     id?: boolean
     metadataId?: boolean
     videoFileId?: boolean
-    isPremiere?: boolean
-    rentalPrice?: boolean
     status?: boolean
+    type?: boolean
+    seasonCount?: boolean
+    rentalPrice?: boolean
     metadata?: boolean | VideoMetadataDefaultArgs<ExtArgs>
     videoFile?: boolean | VideoFileDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["movie"]>
@@ -20323,9 +20276,10 @@ export namespace Prisma {
     id?: boolean
     metadataId?: boolean
     videoFileId?: boolean
-    isPremiere?: boolean
-    rentalPrice?: boolean
     status?: boolean
+    type?: boolean
+    seasonCount?: boolean
+    rentalPrice?: boolean
     metadata?: boolean | VideoMetadataDefaultArgs<ExtArgs>
     videoFile?: boolean | VideoFileDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["movie"]>
@@ -20334,12 +20288,13 @@ export namespace Prisma {
     id?: boolean
     metadataId?: boolean
     videoFileId?: boolean
-    isPremiere?: boolean
-    rentalPrice?: boolean
     status?: boolean
+    type?: boolean
+    seasonCount?: boolean
+    rentalPrice?: boolean
   }
 
-  export type MovieOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "metadataId" | "videoFileId" | "isPremiere" | "rentalPrice" | "status", ExtArgs["result"]["movie"]>
+  export type MovieOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "metadataId" | "videoFileId" | "status" | "type" | "seasonCount" | "rentalPrice", ExtArgs["result"]["movie"]>
   export type MovieInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     metadata?: boolean | VideoMetadataDefaultArgs<ExtArgs>
     videoFile?: boolean | VideoFileDefaultArgs<ExtArgs>
@@ -20366,9 +20321,10 @@ export namespace Prisma {
       id: string
       metadataId: string
       videoFileId: string
-      isPremiere: boolean
-      rentalPrice: number | null
       status: string
+      type: string
+      seasonCount: number
+      rentalPrice: number | null
     }, ExtArgs["result"]["movie"]>
     composites: {}
   }
@@ -20798,9 +20754,10 @@ export namespace Prisma {
     readonly id: FieldRef<"Movie", 'String'>
     readonly metadataId: FieldRef<"Movie", 'String'>
     readonly videoFileId: FieldRef<"Movie", 'String'>
-    readonly isPremiere: FieldRef<"Movie", 'Boolean'>
-    readonly rentalPrice: FieldRef<"Movie", 'Float'>
     readonly status: FieldRef<"Movie", 'String'>
+    readonly type: FieldRef<"Movie", 'String'>
+    readonly seasonCount: FieldRef<"Movie", 'Int'>
+    readonly rentalPrice: FieldRef<"Movie", 'Float'>
   }
     
 
@@ -21252,62 +21209,78 @@ export namespace Prisma {
   }
 
   export type SeriesAvgAggregateOutputType = {
+    seasonCount: number | null
     rentalPrice: number | null
   }
 
   export type SeriesSumAggregateOutputType = {
+    seasonCount: number | null
     rentalPrice: number | null
   }
 
   export type SeriesMinAggregateOutputType = {
     id: string | null
     metadataId: string | null
-    isPremiere: boolean | null
+    status: string | null
+    type: string | null
+    seasonCount: number | null
     rentalPrice: number | null
   }
 
   export type SeriesMaxAggregateOutputType = {
     id: string | null
     metadataId: string | null
-    isPremiere: boolean | null
+    status: string | null
+    type: string | null
+    seasonCount: number | null
     rentalPrice: number | null
   }
 
   export type SeriesCountAggregateOutputType = {
     id: number
     metadataId: number
-    isPremiere: number
+    status: number
+    type: number
+    seasonCount: number
     rentalPrice: number
     _all: number
   }
 
 
   export type SeriesAvgAggregateInputType = {
+    seasonCount?: true
     rentalPrice?: true
   }
 
   export type SeriesSumAggregateInputType = {
+    seasonCount?: true
     rentalPrice?: true
   }
 
   export type SeriesMinAggregateInputType = {
     id?: true
     metadataId?: true
-    isPremiere?: true
+    status?: true
+    type?: true
+    seasonCount?: true
     rentalPrice?: true
   }
 
   export type SeriesMaxAggregateInputType = {
     id?: true
     metadataId?: true
-    isPremiere?: true
+    status?: true
+    type?: true
+    seasonCount?: true
     rentalPrice?: true
   }
 
   export type SeriesCountAggregateInputType = {
     id?: true
     metadataId?: true
-    isPremiere?: true
+    status?: true
+    type?: true
+    seasonCount?: true
     rentalPrice?: true
     _all?: true
   }
@@ -21401,7 +21374,9 @@ export namespace Prisma {
   export type SeriesGroupByOutputType = {
     id: string
     metadataId: string
-    isPremiere: boolean
+    status: string
+    type: string
+    seasonCount: number
     rentalPrice: number | null
     _count: SeriesCountAggregateOutputType | null
     _avg: SeriesAvgAggregateOutputType | null
@@ -21427,7 +21402,9 @@ export namespace Prisma {
   export type SeriesSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     metadataId?: boolean
-    isPremiere?: boolean
+    status?: boolean
+    type?: boolean
+    seasonCount?: boolean
     rentalPrice?: boolean
     metadata?: boolean | VideoMetadataDefaultArgs<ExtArgs>
     seasons?: boolean | Series$seasonsArgs<ExtArgs>
@@ -21438,7 +21415,9 @@ export namespace Prisma {
   export type SeriesSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     metadataId?: boolean
-    isPremiere?: boolean
+    status?: boolean
+    type?: boolean
+    seasonCount?: boolean
     rentalPrice?: boolean
     metadata?: boolean | VideoMetadataDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["series"]>
@@ -21446,7 +21425,9 @@ export namespace Prisma {
   export type SeriesSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     metadataId?: boolean
-    isPremiere?: boolean
+    status?: boolean
+    type?: boolean
+    seasonCount?: boolean
     rentalPrice?: boolean
     metadata?: boolean | VideoMetadataDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["series"]>
@@ -21454,11 +21435,13 @@ export namespace Prisma {
   export type SeriesSelectScalar = {
     id?: boolean
     metadataId?: boolean
-    isPremiere?: boolean
+    status?: boolean
+    type?: boolean
+    seasonCount?: boolean
     rentalPrice?: boolean
   }
 
-  export type SeriesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "metadataId" | "isPremiere" | "rentalPrice", ExtArgs["result"]["series"]>
+  export type SeriesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "metadataId" | "status" | "type" | "seasonCount" | "rentalPrice", ExtArgs["result"]["series"]>
   export type SeriesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     metadata?: boolean | VideoMetadataDefaultArgs<ExtArgs>
     seasons?: boolean | Series$seasonsArgs<ExtArgs>
@@ -21482,7 +21465,9 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       metadataId: string
-      isPremiere: boolean
+      status: string
+      type: string
+      seasonCount: number
       rentalPrice: number | null
     }, ExtArgs["result"]["series"]>
     composites: {}
@@ -21912,7 +21897,9 @@ export namespace Prisma {
   interface SeriesFieldRefs {
     readonly id: FieldRef<"Series", 'String'>
     readonly metadataId: FieldRef<"Series", 'String'>
-    readonly isPremiere: FieldRef<"Series", 'Boolean'>
+    readonly status: FieldRef<"Series", 'String'>
+    readonly type: FieldRef<"Series", 'String'>
+    readonly seasonCount: FieldRef<"Series", 'Int'>
     readonly rentalPrice: FieldRef<"Series", 'Float'>
   }
     
@@ -35471,14 +35458,12 @@ export namespace Prisma {
     releaseDate: 'releaseDate',
     platformDate: 'platformDate',
     ageRating: 'ageRating',
-    duration: 'duration',
     productionHouse: 'productionHouse',
     productionCountry: 'productionCountry',
     director: 'director',
     formatId: 'formatId',
     categoryid: 'categoryid',
-    status: 'status',
-    production: 'production'
+    status: 'status'
   };
 
   export type VideoMetadataScalarFieldEnum = (typeof VideoMetadataScalarFieldEnum)[keyof typeof VideoMetadataScalarFieldEnum]
@@ -35552,9 +35537,10 @@ export namespace Prisma {
     id: 'id',
     metadataId: 'metadataId',
     videoFileId: 'videoFileId',
-    isPremiere: 'isPremiere',
-    rentalPrice: 'rentalPrice',
-    status: 'status'
+    status: 'status',
+    type: 'type',
+    seasonCount: 'seasonCount',
+    rentalPrice: 'rentalPrice'
   };
 
   export type MovieScalarFieldEnum = (typeof MovieScalarFieldEnum)[keyof typeof MovieScalarFieldEnum]
@@ -35563,7 +35549,9 @@ export namespace Prisma {
   export const SeriesScalarFieldEnum: {
     id: 'id',
     metadataId: 'metadataId',
-    isPremiere: 'isPremiere',
+    status: 'status',
+    type: 'type',
+    seasonCount: 'seasonCount',
     rentalPrice: 'rentalPrice'
   };
 
@@ -36351,14 +36339,12 @@ export namespace Prisma {
     releaseDate?: DateTimeFilter<"VideoMetadata"> | Date | string
     platformDate?: DateTimeFilter<"VideoMetadata"> | Date | string
     ageRating?: StringFilter<"VideoMetadata"> | string
-    duration?: IntFilter<"VideoMetadata"> | number
     productionHouse?: StringFilter<"VideoMetadata"> | string
     productionCountry?: StringFilter<"VideoMetadata"> | string
     director?: StringFilter<"VideoMetadata"> | string
     formatId?: StringNullableFilter<"VideoMetadata"> | string | null
     categoryid?: StringNullableFilter<"VideoMetadata"> | string | null
     status?: StringFilter<"VideoMetadata"> | string
-    production?: StringFilter<"VideoMetadata"> | string
     format?: XOR<VideoFormatNullableScalarRelationFilter, VideoFormatWhereInput> | null
     category?: XOR<VideoCategoryNullableScalarRelationFilter, VideoCategoryWhereInput> | null
     movie?: XOR<MovieNullableScalarRelationFilter, MovieWhereInput> | null
@@ -36379,14 +36365,12 @@ export namespace Prisma {
     releaseDate?: SortOrder
     platformDate?: SortOrder
     ageRating?: SortOrder
-    duration?: SortOrder
     productionHouse?: SortOrder
     productionCountry?: SortOrder
     director?: SortOrder
     formatId?: SortOrderInput | SortOrder
     categoryid?: SortOrderInput | SortOrder
     status?: SortOrder
-    production?: SortOrder
     format?: VideoFormatOrderByWithRelationInput
     category?: VideoCategoryOrderByWithRelationInput
     movie?: MovieOrderByWithRelationInput
@@ -36410,14 +36394,12 @@ export namespace Prisma {
     releaseDate?: DateTimeFilter<"VideoMetadata"> | Date | string
     platformDate?: DateTimeFilter<"VideoMetadata"> | Date | string
     ageRating?: StringFilter<"VideoMetadata"> | string
-    duration?: IntFilter<"VideoMetadata"> | number
     productionHouse?: StringFilter<"VideoMetadata"> | string
     productionCountry?: StringFilter<"VideoMetadata"> | string
     director?: StringFilter<"VideoMetadata"> | string
     formatId?: StringNullableFilter<"VideoMetadata"> | string | null
     categoryid?: StringNullableFilter<"VideoMetadata"> | string | null
     status?: StringFilter<"VideoMetadata"> | string
-    production?: StringFilter<"VideoMetadata"> | string
     format?: XOR<VideoFormatNullableScalarRelationFilter, VideoFormatWhereInput> | null
     category?: XOR<VideoCategoryNullableScalarRelationFilter, VideoCategoryWhereInput> | null
     movie?: XOR<MovieNullableScalarRelationFilter, MovieWhereInput> | null
@@ -36438,19 +36420,15 @@ export namespace Prisma {
     releaseDate?: SortOrder
     platformDate?: SortOrder
     ageRating?: SortOrder
-    duration?: SortOrder
     productionHouse?: SortOrder
     productionCountry?: SortOrder
     director?: SortOrder
     formatId?: SortOrderInput | SortOrder
     categoryid?: SortOrderInput | SortOrder
     status?: SortOrder
-    production?: SortOrder
     _count?: VideoMetadataCountOrderByAggregateInput
-    _avg?: VideoMetadataAvgOrderByAggregateInput
     _max?: VideoMetadataMaxOrderByAggregateInput
     _min?: VideoMetadataMinOrderByAggregateInput
-    _sum?: VideoMetadataSumOrderByAggregateInput
   }
 
   export type VideoMetadataScalarWhereWithAggregatesInput = {
@@ -36465,14 +36443,12 @@ export namespace Prisma {
     releaseDate?: DateTimeWithAggregatesFilter<"VideoMetadata"> | Date | string
     platformDate?: DateTimeWithAggregatesFilter<"VideoMetadata"> | Date | string
     ageRating?: StringWithAggregatesFilter<"VideoMetadata"> | string
-    duration?: IntWithAggregatesFilter<"VideoMetadata"> | number
     productionHouse?: StringWithAggregatesFilter<"VideoMetadata"> | string
     productionCountry?: StringWithAggregatesFilter<"VideoMetadata"> | string
     director?: StringWithAggregatesFilter<"VideoMetadata"> | string
     formatId?: StringNullableWithAggregatesFilter<"VideoMetadata"> | string | null
     categoryid?: StringNullableWithAggregatesFilter<"VideoMetadata"> | string | null
     status?: StringWithAggregatesFilter<"VideoMetadata"> | string
-    production?: StringWithAggregatesFilter<"VideoMetadata"> | string
   }
 
   export type VideoFileWhereInput = {
@@ -36823,9 +36799,10 @@ export namespace Prisma {
     id?: StringFilter<"Movie"> | string
     metadataId?: StringFilter<"Movie"> | string
     videoFileId?: StringFilter<"Movie"> | string
-    isPremiere?: BoolFilter<"Movie"> | boolean
-    rentalPrice?: FloatNullableFilter<"Movie"> | number | null
     status?: StringFilter<"Movie"> | string
+    type?: StringFilter<"Movie"> | string
+    seasonCount?: IntFilter<"Movie"> | number
+    rentalPrice?: FloatNullableFilter<"Movie"> | number | null
     metadata?: XOR<VideoMetadataScalarRelationFilter, VideoMetadataWhereInput>
     videoFile?: XOR<VideoFileScalarRelationFilter, VideoFileWhereInput>
     tags?: MovieTagListRelationFilter
@@ -36835,9 +36812,10 @@ export namespace Prisma {
     id?: SortOrder
     metadataId?: SortOrder
     videoFileId?: SortOrder
-    isPremiere?: SortOrder
-    rentalPrice?: SortOrderInput | SortOrder
     status?: SortOrder
+    type?: SortOrder
+    seasonCount?: SortOrder
+    rentalPrice?: SortOrderInput | SortOrder
     metadata?: VideoMetadataOrderByWithRelationInput
     videoFile?: VideoFileOrderByWithRelationInput
     tags?: MovieTagOrderByRelationAggregateInput
@@ -36850,9 +36828,10 @@ export namespace Prisma {
     AND?: MovieWhereInput | MovieWhereInput[]
     OR?: MovieWhereInput[]
     NOT?: MovieWhereInput | MovieWhereInput[]
-    isPremiere?: BoolFilter<"Movie"> | boolean
-    rentalPrice?: FloatNullableFilter<"Movie"> | number | null
     status?: StringFilter<"Movie"> | string
+    type?: StringFilter<"Movie"> | string
+    seasonCount?: IntFilter<"Movie"> | number
+    rentalPrice?: FloatNullableFilter<"Movie"> | number | null
     metadata?: XOR<VideoMetadataScalarRelationFilter, VideoMetadataWhereInput>
     videoFile?: XOR<VideoFileScalarRelationFilter, VideoFileWhereInput>
     tags?: MovieTagListRelationFilter
@@ -36862,9 +36841,10 @@ export namespace Prisma {
     id?: SortOrder
     metadataId?: SortOrder
     videoFileId?: SortOrder
-    isPremiere?: SortOrder
-    rentalPrice?: SortOrderInput | SortOrder
     status?: SortOrder
+    type?: SortOrder
+    seasonCount?: SortOrder
+    rentalPrice?: SortOrderInput | SortOrder
     _count?: MovieCountOrderByAggregateInput
     _avg?: MovieAvgOrderByAggregateInput
     _max?: MovieMaxOrderByAggregateInput
@@ -36879,9 +36859,10 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Movie"> | string
     metadataId?: StringWithAggregatesFilter<"Movie"> | string
     videoFileId?: StringWithAggregatesFilter<"Movie"> | string
-    isPremiere?: BoolWithAggregatesFilter<"Movie"> | boolean
-    rentalPrice?: FloatNullableWithAggregatesFilter<"Movie"> | number | null
     status?: StringWithAggregatesFilter<"Movie"> | string
+    type?: StringWithAggregatesFilter<"Movie"> | string
+    seasonCount?: IntWithAggregatesFilter<"Movie"> | number
+    rentalPrice?: FloatNullableWithAggregatesFilter<"Movie"> | number | null
   }
 
   export type SeriesWhereInput = {
@@ -36890,7 +36871,9 @@ export namespace Prisma {
     NOT?: SeriesWhereInput | SeriesWhereInput[]
     id?: StringFilter<"Series"> | string
     metadataId?: StringFilter<"Series"> | string
-    isPremiere?: BoolFilter<"Series"> | boolean
+    status?: StringFilter<"Series"> | string
+    type?: StringFilter<"Series"> | string
+    seasonCount?: IntFilter<"Series"> | number
     rentalPrice?: FloatNullableFilter<"Series"> | number | null
     metadata?: XOR<VideoMetadataScalarRelationFilter, VideoMetadataWhereInput>
     seasons?: SeasonListRelationFilter
@@ -36900,7 +36883,9 @@ export namespace Prisma {
   export type SeriesOrderByWithRelationInput = {
     id?: SortOrder
     metadataId?: SortOrder
-    isPremiere?: SortOrder
+    status?: SortOrder
+    type?: SortOrder
+    seasonCount?: SortOrder
     rentalPrice?: SortOrderInput | SortOrder
     metadata?: VideoMetadataOrderByWithRelationInput
     seasons?: SeasonOrderByRelationAggregateInput
@@ -36913,7 +36898,9 @@ export namespace Prisma {
     AND?: SeriesWhereInput | SeriesWhereInput[]
     OR?: SeriesWhereInput[]
     NOT?: SeriesWhereInput | SeriesWhereInput[]
-    isPremiere?: BoolFilter<"Series"> | boolean
+    status?: StringFilter<"Series"> | string
+    type?: StringFilter<"Series"> | string
+    seasonCount?: IntFilter<"Series"> | number
     rentalPrice?: FloatNullableFilter<"Series"> | number | null
     metadata?: XOR<VideoMetadataScalarRelationFilter, VideoMetadataWhereInput>
     seasons?: SeasonListRelationFilter
@@ -36923,7 +36910,9 @@ export namespace Prisma {
   export type SeriesOrderByWithAggregationInput = {
     id?: SortOrder
     metadataId?: SortOrder
-    isPremiere?: SortOrder
+    status?: SortOrder
+    type?: SortOrder
+    seasonCount?: SortOrder
     rentalPrice?: SortOrderInput | SortOrder
     _count?: SeriesCountOrderByAggregateInput
     _avg?: SeriesAvgOrderByAggregateInput
@@ -36938,7 +36927,9 @@ export namespace Prisma {
     NOT?: SeriesScalarWhereWithAggregatesInput | SeriesScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Series"> | string
     metadataId?: StringWithAggregatesFilter<"Series"> | string
-    isPremiere?: BoolWithAggregatesFilter<"Series"> | boolean
+    status?: StringWithAggregatesFilter<"Series"> | string
+    type?: StringWithAggregatesFilter<"Series"> | string
+    seasonCount?: IntWithAggregatesFilter<"Series"> | number
     rentalPrice?: FloatNullableWithAggregatesFilter<"Series"> | number | null
   }
 
@@ -38106,12 +38097,10 @@ export namespace Prisma {
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
-    duration: number
     productionHouse: string
     productionCountry: string
     director: string
     status?: string
-    production?: string
     format?: VideoFormatCreateNestedOneWithoutVideosInput
     category?: VideoCategoryCreateNestedOneWithoutVideosInput
     movie?: MovieCreateNestedOneWithoutMetadataInput
@@ -38132,14 +38121,12 @@ export namespace Prisma {
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
-    duration: number
     productionHouse: string
     productionCountry: string
     director: string
     formatId?: string | null
     categoryid?: string | null
     status?: string
-    production?: string
     movie?: MovieUncheckedCreateNestedOneWithoutMetadataInput
     episode?: EpisodeUncheckedCreateNestedOneWithoutMetadataInput
     series?: SeriesUncheckedCreateNestedOneWithoutMetadataInput
@@ -38158,12 +38145,10 @@ export namespace Prisma {
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
-    duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
-    production?: StringFieldUpdateOperationsInput | string
     format?: VideoFormatUpdateOneWithoutVideosNestedInput
     category?: VideoCategoryUpdateOneWithoutVideosNestedInput
     movie?: MovieUpdateOneWithoutMetadataNestedInput
@@ -38184,14 +38169,12 @@ export namespace Prisma {
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
-    duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
     formatId?: NullableStringFieldUpdateOperationsInput | string | null
     categoryid?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
-    production?: StringFieldUpdateOperationsInput | string
     movie?: MovieUncheckedUpdateOneWithoutMetadataNestedInput
     episode?: EpisodeUncheckedUpdateOneWithoutMetadataNestedInput
     series?: SeriesUncheckedUpdateOneWithoutMetadataNestedInput
@@ -38210,14 +38193,12 @@ export namespace Prisma {
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
-    duration: number
     productionHouse: string
     productionCountry: string
     director: string
     formatId?: string | null
     categoryid?: string | null
     status?: string
-    production?: string
   }
 
   export type VideoMetadataUpdateManyMutationInput = {
@@ -38229,12 +38210,10 @@ export namespace Prisma {
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
-    duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
-    production?: StringFieldUpdateOperationsInput | string
   }
 
   export type VideoMetadataUncheckedUpdateManyInput = {
@@ -38246,14 +38225,12 @@ export namespace Prisma {
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
-    duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
     formatId?: NullableStringFieldUpdateOperationsInput | string | null
     categoryid?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
-    production?: StringFieldUpdateOperationsInput | string
   }
 
   export type VideoFileCreateInput = {
@@ -38601,9 +38578,10 @@ export namespace Prisma {
 
   export type MovieCreateInput = {
     id?: string
-    isPremiere?: boolean
+    status?: string
+    type?: string
+    seasonCount?: number
     rentalPrice?: number | null
-    status: string
     metadata: VideoMetadataCreateNestedOneWithoutMovieInput
     videoFile: VideoFileCreateNestedOneWithoutMovieInput
     tags?: MovieTagCreateNestedManyWithoutMovieInput
@@ -38613,17 +38591,19 @@ export namespace Prisma {
     id?: string
     metadataId: string
     videoFileId: string
-    isPremiere?: boolean
+    status?: string
+    type?: string
+    seasonCount?: number
     rentalPrice?: number | null
-    status: string
     tags?: MovieTagUncheckedCreateNestedManyWithoutMovieInput
   }
 
   export type MovieUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    isPremiere?: BoolFieldUpdateOperationsInput | boolean
-    rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
     status?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    seasonCount?: IntFieldUpdateOperationsInput | number
+    rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
     metadata?: VideoMetadataUpdateOneRequiredWithoutMovieNestedInput
     videoFile?: VideoFileUpdateOneRequiredWithoutMovieNestedInput
     tags?: MovieTagUpdateManyWithoutMovieNestedInput
@@ -38633,9 +38613,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     metadataId?: StringFieldUpdateOperationsInput | string
     videoFileId?: StringFieldUpdateOperationsInput | string
-    isPremiere?: BoolFieldUpdateOperationsInput | boolean
-    rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
     status?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    seasonCount?: IntFieldUpdateOperationsInput | number
+    rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
     tags?: MovieTagUncheckedUpdateManyWithoutMovieNestedInput
   }
 
@@ -38643,30 +38624,35 @@ export namespace Prisma {
     id?: string
     metadataId: string
     videoFileId: string
-    isPremiere?: boolean
+    status?: string
+    type?: string
+    seasonCount?: number
     rentalPrice?: number | null
-    status: string
   }
 
   export type MovieUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    isPremiere?: BoolFieldUpdateOperationsInput | boolean
-    rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
     status?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    seasonCount?: IntFieldUpdateOperationsInput | number
+    rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
   }
 
   export type MovieUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     metadataId?: StringFieldUpdateOperationsInput | string
     videoFileId?: StringFieldUpdateOperationsInput | string
-    isPremiere?: BoolFieldUpdateOperationsInput | boolean
-    rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
     status?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    seasonCount?: IntFieldUpdateOperationsInput | number
+    rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
   }
 
   export type SeriesCreateInput = {
     id?: string
-    isPremiere?: boolean
+    status?: string
+    type?: string
+    seasonCount?: number
     rentalPrice?: number | null
     metadata: VideoMetadataCreateNestedOneWithoutSeriesInput
     seasons?: SeasonCreateNestedManyWithoutSeriesInput
@@ -38676,7 +38662,9 @@ export namespace Prisma {
   export type SeriesUncheckedCreateInput = {
     id?: string
     metadataId: string
-    isPremiere?: boolean
+    status?: string
+    type?: string
+    seasonCount?: number
     rentalPrice?: number | null
     seasons?: SeasonUncheckedCreateNestedManyWithoutSeriesInput
     tags?: SeriesTagUncheckedCreateNestedManyWithoutSeriesInput
@@ -38684,7 +38672,9 @@ export namespace Prisma {
 
   export type SeriesUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    isPremiere?: BoolFieldUpdateOperationsInput | boolean
+    status?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    seasonCount?: IntFieldUpdateOperationsInput | number
     rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
     metadata?: VideoMetadataUpdateOneRequiredWithoutSeriesNestedInput
     seasons?: SeasonUpdateManyWithoutSeriesNestedInput
@@ -38694,7 +38684,9 @@ export namespace Prisma {
   export type SeriesUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     metadataId?: StringFieldUpdateOperationsInput | string
-    isPremiere?: BoolFieldUpdateOperationsInput | boolean
+    status?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    seasonCount?: IntFieldUpdateOperationsInput | number
     rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
     seasons?: SeasonUncheckedUpdateManyWithoutSeriesNestedInput
     tags?: SeriesTagUncheckedUpdateManyWithoutSeriesNestedInput
@@ -38703,20 +38695,26 @@ export namespace Prisma {
   export type SeriesCreateManyInput = {
     id?: string
     metadataId: string
-    isPremiere?: boolean
+    status?: string
+    type?: string
+    seasonCount?: number
     rentalPrice?: number | null
   }
 
   export type SeriesUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    isPremiere?: BoolFieldUpdateOperationsInput | boolean
+    status?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    seasonCount?: IntFieldUpdateOperationsInput | number
     rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
   }
 
   export type SeriesUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     metadataId?: StringFieldUpdateOperationsInput | string
-    isPremiere?: BoolFieldUpdateOperationsInput | boolean
+    status?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    seasonCount?: IntFieldUpdateOperationsInput | number
     rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
   }
 
@@ -39979,18 +39977,12 @@ export namespace Prisma {
     releaseDate?: SortOrder
     platformDate?: SortOrder
     ageRating?: SortOrder
-    duration?: SortOrder
     productionHouse?: SortOrder
     productionCountry?: SortOrder
     director?: SortOrder
     formatId?: SortOrder
     categoryid?: SortOrder
     status?: SortOrder
-    production?: SortOrder
-  }
-
-  export type VideoMetadataAvgOrderByAggregateInput = {
-    duration?: SortOrder
   }
 
   export type VideoMetadataMaxOrderByAggregateInput = {
@@ -40002,14 +39994,12 @@ export namespace Prisma {
     releaseDate?: SortOrder
     platformDate?: SortOrder
     ageRating?: SortOrder
-    duration?: SortOrder
     productionHouse?: SortOrder
     productionCountry?: SortOrder
     director?: SortOrder
     formatId?: SortOrder
     categoryid?: SortOrder
     status?: SortOrder
-    production?: SortOrder
   }
 
   export type VideoMetadataMinOrderByAggregateInput = {
@@ -40021,18 +40011,12 @@ export namespace Prisma {
     releaseDate?: SortOrder
     platformDate?: SortOrder
     ageRating?: SortOrder
-    duration?: SortOrder
     productionHouse?: SortOrder
     productionCountry?: SortOrder
     director?: SortOrder
     formatId?: SortOrder
     categoryid?: SortOrder
     status?: SortOrder
-    production?: SortOrder
-  }
-
-  export type VideoMetadataSumOrderByAggregateInput = {
-    duration?: SortOrder
   }
 
   export type IntNullableFilter<$PrismaModel = never> = {
@@ -40258,12 +40242,14 @@ export namespace Prisma {
     id?: SortOrder
     metadataId?: SortOrder
     videoFileId?: SortOrder
-    isPremiere?: SortOrder
-    rentalPrice?: SortOrder
     status?: SortOrder
+    type?: SortOrder
+    seasonCount?: SortOrder
+    rentalPrice?: SortOrder
   }
 
   export type MovieAvgOrderByAggregateInput = {
+    seasonCount?: SortOrder
     rentalPrice?: SortOrder
   }
 
@@ -40271,21 +40257,24 @@ export namespace Prisma {
     id?: SortOrder
     metadataId?: SortOrder
     videoFileId?: SortOrder
-    isPremiere?: SortOrder
-    rentalPrice?: SortOrder
     status?: SortOrder
+    type?: SortOrder
+    seasonCount?: SortOrder
+    rentalPrice?: SortOrder
   }
 
   export type MovieMinOrderByAggregateInput = {
     id?: SortOrder
     metadataId?: SortOrder
     videoFileId?: SortOrder
-    isPremiere?: SortOrder
-    rentalPrice?: SortOrder
     status?: SortOrder
+    type?: SortOrder
+    seasonCount?: SortOrder
+    rentalPrice?: SortOrder
   }
 
   export type MovieSumOrderByAggregateInput = {
+    seasonCount?: SortOrder
     rentalPrice?: SortOrder
   }
 
@@ -40328,29 +40317,37 @@ export namespace Prisma {
   export type SeriesCountOrderByAggregateInput = {
     id?: SortOrder
     metadataId?: SortOrder
-    isPremiere?: SortOrder
+    status?: SortOrder
+    type?: SortOrder
+    seasonCount?: SortOrder
     rentalPrice?: SortOrder
   }
 
   export type SeriesAvgOrderByAggregateInput = {
+    seasonCount?: SortOrder
     rentalPrice?: SortOrder
   }
 
   export type SeriesMaxOrderByAggregateInput = {
     id?: SortOrder
     metadataId?: SortOrder
-    isPremiere?: SortOrder
+    status?: SortOrder
+    type?: SortOrder
+    seasonCount?: SortOrder
     rentalPrice?: SortOrder
   }
 
   export type SeriesMinOrderByAggregateInput = {
     id?: SortOrder
     metadataId?: SortOrder
-    isPremiere?: SortOrder
+    status?: SortOrder
+    type?: SortOrder
+    seasonCount?: SortOrder
     rentalPrice?: SortOrder
   }
 
   export type SeriesSumOrderByAggregateInput = {
+    seasonCount?: SortOrder
     rentalPrice?: SortOrder
   }
 
@@ -44852,9 +44849,10 @@ export namespace Prisma {
 
   export type MovieCreateWithoutMetadataInput = {
     id?: string
-    isPremiere?: boolean
+    status?: string
+    type?: string
+    seasonCount?: number
     rentalPrice?: number | null
-    status: string
     videoFile: VideoFileCreateNestedOneWithoutMovieInput
     tags?: MovieTagCreateNestedManyWithoutMovieInput
   }
@@ -44862,9 +44860,10 @@ export namespace Prisma {
   export type MovieUncheckedCreateWithoutMetadataInput = {
     id?: string
     videoFileId: string
-    isPremiere?: boolean
+    status?: string
+    type?: string
+    seasonCount?: number
     rentalPrice?: number | null
-    status: string
     tags?: MovieTagUncheckedCreateNestedManyWithoutMovieInput
   }
 
@@ -44894,7 +44893,9 @@ export namespace Prisma {
 
   export type SeriesCreateWithoutMetadataInput = {
     id?: string
-    isPremiere?: boolean
+    status?: string
+    type?: string
+    seasonCount?: number
     rentalPrice?: number | null
     seasons?: SeasonCreateNestedManyWithoutSeriesInput
     tags?: SeriesTagCreateNestedManyWithoutSeriesInput
@@ -44902,7 +44903,9 @@ export namespace Prisma {
 
   export type SeriesUncheckedCreateWithoutMetadataInput = {
     id?: string
-    isPremiere?: boolean
+    status?: string
+    type?: string
+    seasonCount?: number
     rentalPrice?: number | null
     seasons?: SeasonUncheckedCreateNestedManyWithoutSeriesInput
     tags?: SeriesTagUncheckedCreateNestedManyWithoutSeriesInput
@@ -45046,9 +45049,10 @@ export namespace Prisma {
 
   export type MovieUpdateWithoutMetadataInput = {
     id?: StringFieldUpdateOperationsInput | string
-    isPremiere?: BoolFieldUpdateOperationsInput | boolean
-    rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
     status?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    seasonCount?: IntFieldUpdateOperationsInput | number
+    rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
     videoFile?: VideoFileUpdateOneRequiredWithoutMovieNestedInput
     tags?: MovieTagUpdateManyWithoutMovieNestedInput
   }
@@ -45056,9 +45060,10 @@ export namespace Prisma {
   export type MovieUncheckedUpdateWithoutMetadataInput = {
     id?: StringFieldUpdateOperationsInput | string
     videoFileId?: StringFieldUpdateOperationsInput | string
-    isPremiere?: BoolFieldUpdateOperationsInput | boolean
-    rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
     status?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    seasonCount?: IntFieldUpdateOperationsInput | number
+    rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
     tags?: MovieTagUncheckedUpdateManyWithoutMovieNestedInput
   }
 
@@ -45100,7 +45105,9 @@ export namespace Prisma {
 
   export type SeriesUpdateWithoutMetadataInput = {
     id?: StringFieldUpdateOperationsInput | string
-    isPremiere?: BoolFieldUpdateOperationsInput | boolean
+    status?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    seasonCount?: IntFieldUpdateOperationsInput | number
     rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
     seasons?: SeasonUpdateManyWithoutSeriesNestedInput
     tags?: SeriesTagUpdateManyWithoutSeriesNestedInput
@@ -45108,7 +45115,9 @@ export namespace Prisma {
 
   export type SeriesUncheckedUpdateWithoutMetadataInput = {
     id?: StringFieldUpdateOperationsInput | string
-    isPremiere?: BoolFieldUpdateOperationsInput | boolean
+    status?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    seasonCount?: IntFieldUpdateOperationsInput | number
     rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
     seasons?: SeasonUncheckedUpdateManyWithoutSeriesNestedInput
     tags?: SeriesTagUncheckedUpdateManyWithoutSeriesNestedInput
@@ -45216,9 +45225,10 @@ export namespace Prisma {
 
   export type MovieCreateWithoutVideoFileInput = {
     id?: string
-    isPremiere?: boolean
+    status?: string
+    type?: string
+    seasonCount?: number
     rentalPrice?: number | null
-    status: string
     metadata: VideoMetadataCreateNestedOneWithoutMovieInput
     tags?: MovieTagCreateNestedManyWithoutMovieInput
   }
@@ -45226,9 +45236,10 @@ export namespace Prisma {
   export type MovieUncheckedCreateWithoutVideoFileInput = {
     id?: string
     metadataId: string
-    isPremiere?: boolean
+    status?: string
+    type?: string
+    seasonCount?: number
     rentalPrice?: number | null
-    status: string
     tags?: MovieTagUncheckedCreateNestedManyWithoutMovieInput
   }
 
@@ -45369,9 +45380,10 @@ export namespace Prisma {
 
   export type MovieUpdateWithoutVideoFileInput = {
     id?: StringFieldUpdateOperationsInput | string
-    isPremiere?: BoolFieldUpdateOperationsInput | boolean
-    rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
     status?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    seasonCount?: IntFieldUpdateOperationsInput | number
+    rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
     metadata?: VideoMetadataUpdateOneRequiredWithoutMovieNestedInput
     tags?: MovieTagUpdateManyWithoutMovieNestedInput
   }
@@ -45379,9 +45391,10 @@ export namespace Prisma {
   export type MovieUncheckedUpdateWithoutVideoFileInput = {
     id?: StringFieldUpdateOperationsInput | string
     metadataId?: StringFieldUpdateOperationsInput | string
-    isPremiere?: BoolFieldUpdateOperationsInput | boolean
-    rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
     status?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    seasonCount?: IntFieldUpdateOperationsInput | number
+    rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
     tags?: MovieTagUncheckedUpdateManyWithoutMovieNestedInput
   }
 
@@ -45483,12 +45496,10 @@ export namespace Prisma {
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
-    duration: number
     productionHouse: string
     productionCountry: string
     director: string
     status?: string
-    production?: string
     format?: VideoFormatCreateNestedOneWithoutVideosInput
     category?: VideoCategoryCreateNestedOneWithoutVideosInput
     movie?: MovieCreateNestedOneWithoutMetadataInput
@@ -45508,14 +45519,12 @@ export namespace Prisma {
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
-    duration: number
     productionHouse: string
     productionCountry: string
     director: string
     formatId?: string | null
     categoryid?: string | null
     status?: string
-    production?: string
     movie?: MovieUncheckedCreateNestedOneWithoutMetadataInput
     episode?: EpisodeUncheckedCreateNestedOneWithoutMetadataInput
     series?: SeriesUncheckedCreateNestedOneWithoutMetadataInput
@@ -45557,14 +45566,12 @@ export namespace Prisma {
     releaseDate?: DateTimeFilter<"VideoMetadata"> | Date | string
     platformDate?: DateTimeFilter<"VideoMetadata"> | Date | string
     ageRating?: StringFilter<"VideoMetadata"> | string
-    duration?: IntFilter<"VideoMetadata"> | number
     productionHouse?: StringFilter<"VideoMetadata"> | string
     productionCountry?: StringFilter<"VideoMetadata"> | string
     director?: StringFilter<"VideoMetadata"> | string
     formatId?: StringNullableFilter<"VideoMetadata"> | string | null
     categoryid?: StringNullableFilter<"VideoMetadata"> | string | null
     status?: StringFilter<"VideoMetadata"> | string
-    production?: StringFilter<"VideoMetadata"> | string
   }
 
   export type VideoActorCreateWithoutActorInput = {
@@ -45612,12 +45619,10 @@ export namespace Prisma {
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
-    duration: number
     productionHouse: string
     productionCountry: string
     director: string
     status?: string
-    production?: string
     format?: VideoFormatCreateNestedOneWithoutVideosInput
     category?: VideoCategoryCreateNestedOneWithoutVideosInput
     movie?: MovieCreateNestedOneWithoutMetadataInput
@@ -45637,14 +45642,12 @@ export namespace Prisma {
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
-    duration: number
     productionHouse: string
     productionCountry: string
     director: string
     formatId?: string | null
     categoryid?: string | null
     status?: string
-    production?: string
     movie?: MovieUncheckedCreateNestedOneWithoutMetadataInput
     episode?: EpisodeUncheckedCreateNestedOneWithoutMetadataInput
     series?: SeriesUncheckedCreateNestedOneWithoutMetadataInput
@@ -45693,12 +45696,10 @@ export namespace Prisma {
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
-    duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
-    production?: StringFieldUpdateOperationsInput | string
     format?: VideoFormatUpdateOneWithoutVideosNestedInput
     category?: VideoCategoryUpdateOneWithoutVideosNestedInput
     movie?: MovieUpdateOneWithoutMetadataNestedInput
@@ -45718,14 +45719,12 @@ export namespace Prisma {
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
-    duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
     formatId?: NullableStringFieldUpdateOperationsInput | string | null
     categoryid?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
-    production?: StringFieldUpdateOperationsInput | string
     movie?: MovieUncheckedUpdateOneWithoutMetadataNestedInput
     episode?: EpisodeUncheckedUpdateOneWithoutMetadataNestedInput
     series?: SeriesUncheckedUpdateOneWithoutMetadataNestedInput
@@ -45764,12 +45763,10 @@ export namespace Prisma {
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
-    duration: number
     productionHouse: string
     productionCountry: string
     director: string
     status?: string
-    production?: string
     format?: VideoFormatCreateNestedOneWithoutVideosInput
     category?: VideoCategoryCreateNestedOneWithoutVideosInput
     movie?: MovieCreateNestedOneWithoutMetadataInput
@@ -45789,14 +45786,12 @@ export namespace Prisma {
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
-    duration: number
     productionHouse: string
     productionCountry: string
     director: string
     formatId?: string | null
     categoryid?: string | null
     status?: string
-    production?: string
     movie?: MovieUncheckedCreateNestedOneWithoutMetadataInput
     episode?: EpisodeUncheckedCreateNestedOneWithoutMetadataInput
     series?: SeriesUncheckedCreateNestedOneWithoutMetadataInput
@@ -45835,12 +45830,10 @@ export namespace Prisma {
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
-    duration: number
     productionHouse: string
     productionCountry: string
     director: string
     status?: string
-    production?: string
     category?: VideoCategoryCreateNestedOneWithoutVideosInput
     movie?: MovieCreateNestedOneWithoutMetadataInput
     episode?: EpisodeCreateNestedOneWithoutMetadataInput
@@ -45860,13 +45853,11 @@ export namespace Prisma {
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
-    duration: number
     productionHouse: string
     productionCountry: string
     director: string
     categoryid?: string | null
     status?: string
-    production?: string
     movie?: MovieUncheckedCreateNestedOneWithoutMetadataInput
     episode?: EpisodeUncheckedCreateNestedOneWithoutMetadataInput
     series?: SeriesUncheckedCreateNestedOneWithoutMetadataInput
@@ -45911,12 +45902,10 @@ export namespace Prisma {
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
-    duration: number
     productionHouse: string
     productionCountry: string
     director: string
     status?: string
-    production?: string
     format?: VideoFormatCreateNestedOneWithoutVideosInput
     movie?: MovieCreateNestedOneWithoutMetadataInput
     episode?: EpisodeCreateNestedOneWithoutMetadataInput
@@ -45936,13 +45925,11 @@ export namespace Prisma {
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
-    duration: number
     productionHouse: string
     productionCountry: string
     director: string
     formatId?: string | null
     status?: string
-    production?: string
     movie?: MovieUncheckedCreateNestedOneWithoutMetadataInput
     episode?: EpisodeUncheckedCreateNestedOneWithoutMetadataInput
     series?: SeriesUncheckedCreateNestedOneWithoutMetadataInput
@@ -45987,12 +45974,10 @@ export namespace Prisma {
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
-    duration: number
     productionHouse: string
     productionCountry: string
     director: string
     status?: string
-    production?: string
     format?: VideoFormatCreateNestedOneWithoutVideosInput
     category?: VideoCategoryCreateNestedOneWithoutVideosInput
     episode?: EpisodeCreateNestedOneWithoutMetadataInput
@@ -46012,14 +45997,12 @@ export namespace Prisma {
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
-    duration: number
     productionHouse: string
     productionCountry: string
     director: string
     formatId?: string | null
     categoryid?: string | null
     status?: string
-    production?: string
     episode?: EpisodeUncheckedCreateNestedOneWithoutMetadataInput
     series?: SeriesUncheckedCreateNestedOneWithoutMetadataInput
     genres?: VideoGenreUncheckedCreateNestedManyWithoutVideosInput
@@ -46104,12 +46087,10 @@ export namespace Prisma {
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
-    duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
-    production?: StringFieldUpdateOperationsInput | string
     format?: VideoFormatUpdateOneWithoutVideosNestedInput
     category?: VideoCategoryUpdateOneWithoutVideosNestedInput
     episode?: EpisodeUpdateOneWithoutMetadataNestedInput
@@ -46129,14 +46110,12 @@ export namespace Prisma {
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
-    duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
     formatId?: NullableStringFieldUpdateOperationsInput | string | null
     categoryid?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
-    production?: StringFieldUpdateOperationsInput | string
     episode?: EpisodeUncheckedUpdateOneWithoutMetadataNestedInput
     series?: SeriesUncheckedUpdateOneWithoutMetadataNestedInput
     genres?: VideoGenreUncheckedUpdateManyWithoutVideosNestedInput
@@ -46217,12 +46196,10 @@ export namespace Prisma {
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
-    duration: number
     productionHouse: string
     productionCountry: string
     director: string
     status?: string
-    production?: string
     format?: VideoFormatCreateNestedOneWithoutVideosInput
     category?: VideoCategoryCreateNestedOneWithoutVideosInput
     movie?: MovieCreateNestedOneWithoutMetadataInput
@@ -46242,14 +46219,12 @@ export namespace Prisma {
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
-    duration: number
     productionHouse: string
     productionCountry: string
     director: string
     formatId?: string | null
     categoryid?: string | null
     status?: string
-    production?: string
     movie?: MovieUncheckedCreateNestedOneWithoutMetadataInput
     episode?: EpisodeUncheckedCreateNestedOneWithoutMetadataInput
     genres?: VideoGenreUncheckedCreateNestedManyWithoutVideosInput
@@ -46323,12 +46298,10 @@ export namespace Prisma {
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
-    duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
-    production?: StringFieldUpdateOperationsInput | string
     format?: VideoFormatUpdateOneWithoutVideosNestedInput
     category?: VideoCategoryUpdateOneWithoutVideosNestedInput
     movie?: MovieUpdateOneWithoutMetadataNestedInput
@@ -46348,14 +46321,12 @@ export namespace Prisma {
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
-    duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
     formatId?: NullableStringFieldUpdateOperationsInput | string | null
     categoryid?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
-    production?: StringFieldUpdateOperationsInput | string
     movie?: MovieUncheckedUpdateOneWithoutMetadataNestedInput
     episode?: EpisodeUncheckedUpdateOneWithoutMetadataNestedInput
     genres?: VideoGenreUncheckedUpdateManyWithoutVideosNestedInput
@@ -46415,7 +46386,9 @@ export namespace Prisma {
 
   export type SeriesCreateWithoutSeasonsInput = {
     id?: string
-    isPremiere?: boolean
+    status?: string
+    type?: string
+    seasonCount?: number
     rentalPrice?: number | null
     metadata: VideoMetadataCreateNestedOneWithoutSeriesInput
     tags?: SeriesTagCreateNestedManyWithoutSeriesInput
@@ -46424,7 +46397,9 @@ export namespace Prisma {
   export type SeriesUncheckedCreateWithoutSeasonsInput = {
     id?: string
     metadataId: string
-    isPremiere?: boolean
+    status?: string
+    type?: string
+    seasonCount?: number
     rentalPrice?: number | null
     tags?: SeriesTagUncheckedCreateNestedManyWithoutSeriesInput
   }
@@ -46471,7 +46446,9 @@ export namespace Prisma {
 
   export type SeriesUpdateWithoutSeasonsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    isPremiere?: BoolFieldUpdateOperationsInput | boolean
+    status?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    seasonCount?: IntFieldUpdateOperationsInput | number
     rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
     metadata?: VideoMetadataUpdateOneRequiredWithoutSeriesNestedInput
     tags?: SeriesTagUpdateManyWithoutSeriesNestedInput
@@ -46480,7 +46457,9 @@ export namespace Prisma {
   export type SeriesUncheckedUpdateWithoutSeasonsInput = {
     id?: StringFieldUpdateOperationsInput | string
     metadataId?: StringFieldUpdateOperationsInput | string
-    isPremiere?: BoolFieldUpdateOperationsInput | boolean
+    status?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    seasonCount?: IntFieldUpdateOperationsInput | number
     rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
     tags?: SeriesTagUncheckedUpdateManyWithoutSeriesNestedInput
   }
@@ -46571,12 +46550,10 @@ export namespace Prisma {
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
-    duration: number
     productionHouse: string
     productionCountry: string
     director: string
     status?: string
-    production?: string
     format?: VideoFormatCreateNestedOneWithoutVideosInput
     category?: VideoCategoryCreateNestedOneWithoutVideosInput
     movie?: MovieCreateNestedOneWithoutMetadataInput
@@ -46596,14 +46573,12 @@ export namespace Prisma {
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
-    duration: number
     productionHouse: string
     productionCountry: string
     director: string
     formatId?: string | null
     categoryid?: string | null
     status?: string
-    production?: string
     movie?: MovieUncheckedCreateNestedOneWithoutMetadataInput
     series?: SeriesUncheckedCreateNestedOneWithoutMetadataInput
     genres?: VideoGenreUncheckedCreateNestedManyWithoutVideosInput
@@ -46699,12 +46674,10 @@ export namespace Prisma {
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
-    duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
-    production?: StringFieldUpdateOperationsInput | string
     format?: VideoFormatUpdateOneWithoutVideosNestedInput
     category?: VideoCategoryUpdateOneWithoutVideosNestedInput
     movie?: MovieUpdateOneWithoutMetadataNestedInput
@@ -46724,14 +46697,12 @@ export namespace Prisma {
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
-    duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
     formatId?: NullableStringFieldUpdateOperationsInput | string | null
     categoryid?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
-    production?: StringFieldUpdateOperationsInput | string
     movie?: MovieUncheckedUpdateOneWithoutMetadataNestedInput
     series?: SeriesUncheckedUpdateOneWithoutMetadataNestedInput
     genres?: VideoGenreUncheckedUpdateManyWithoutVideosNestedInput
@@ -46810,9 +46781,10 @@ export namespace Prisma {
 
   export type MovieCreateWithoutTagsInput = {
     id?: string
-    isPremiere?: boolean
+    status?: string
+    type?: string
+    seasonCount?: number
     rentalPrice?: number | null
-    status: string
     metadata: VideoMetadataCreateNestedOneWithoutMovieInput
     videoFile: VideoFileCreateNestedOneWithoutMovieInput
   }
@@ -46821,9 +46793,10 @@ export namespace Prisma {
     id?: string
     metadataId: string
     videoFileId: string
-    isPremiere?: boolean
+    status?: string
+    type?: string
+    seasonCount?: number
     rentalPrice?: number | null
-    status: string
   }
 
   export type MovieCreateOrConnectWithoutTagsInput = {
@@ -46861,9 +46834,10 @@ export namespace Prisma {
 
   export type MovieUpdateWithoutTagsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    isPremiere?: BoolFieldUpdateOperationsInput | boolean
-    rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
     status?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    seasonCount?: IntFieldUpdateOperationsInput | number
+    rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
     metadata?: VideoMetadataUpdateOneRequiredWithoutMovieNestedInput
     videoFile?: VideoFileUpdateOneRequiredWithoutMovieNestedInput
   }
@@ -46872,9 +46846,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     metadataId?: StringFieldUpdateOperationsInput | string
     videoFileId?: StringFieldUpdateOperationsInput | string
-    isPremiere?: BoolFieldUpdateOperationsInput | boolean
-    rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
     status?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    seasonCount?: IntFieldUpdateOperationsInput | number
+    rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
   }
 
   export type TagUpsertWithoutMovieTagsInput = {
@@ -46902,7 +46877,9 @@ export namespace Prisma {
 
   export type SeriesCreateWithoutTagsInput = {
     id?: string
-    isPremiere?: boolean
+    status?: string
+    type?: string
+    seasonCount?: number
     rentalPrice?: number | null
     metadata: VideoMetadataCreateNestedOneWithoutSeriesInput
     seasons?: SeasonCreateNestedManyWithoutSeriesInput
@@ -46911,7 +46888,9 @@ export namespace Prisma {
   export type SeriesUncheckedCreateWithoutTagsInput = {
     id?: string
     metadataId: string
-    isPremiere?: boolean
+    status?: string
+    type?: string
+    seasonCount?: number
     rentalPrice?: number | null
     seasons?: SeasonUncheckedCreateNestedManyWithoutSeriesInput
   }
@@ -46951,7 +46930,9 @@ export namespace Prisma {
 
   export type SeriesUpdateWithoutTagsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    isPremiere?: BoolFieldUpdateOperationsInput | boolean
+    status?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    seasonCount?: IntFieldUpdateOperationsInput | number
     rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
     metadata?: VideoMetadataUpdateOneRequiredWithoutSeriesNestedInput
     seasons?: SeasonUpdateManyWithoutSeriesNestedInput
@@ -46960,7 +46941,9 @@ export namespace Prisma {
   export type SeriesUncheckedUpdateWithoutTagsInput = {
     id?: StringFieldUpdateOperationsInput | string
     metadataId?: StringFieldUpdateOperationsInput | string
-    isPremiere?: BoolFieldUpdateOperationsInput | boolean
+    status?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    seasonCount?: IntFieldUpdateOperationsInput | number
     rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
     seasons?: SeasonUncheckedUpdateManyWithoutSeriesNestedInput
   }
@@ -47030,12 +47013,10 @@ export namespace Prisma {
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
-    duration: number
     productionHouse: string
     productionCountry: string
     director: string
     status?: string
-    production?: string
     format?: VideoFormatCreateNestedOneWithoutVideosInput
     category?: VideoCategoryCreateNestedOneWithoutVideosInput
     movie?: MovieCreateNestedOneWithoutMetadataInput
@@ -47055,14 +47036,12 @@ export namespace Prisma {
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
-    duration: number
     productionHouse: string
     productionCountry: string
     director: string
     formatId?: string | null
     categoryid?: string | null
     status?: string
-    production?: string
     movie?: MovieUncheckedCreateNestedOneWithoutMetadataInput
     episode?: EpisodeUncheckedCreateNestedOneWithoutMetadataInput
     series?: SeriesUncheckedCreateNestedOneWithoutMetadataInput
@@ -47135,12 +47114,10 @@ export namespace Prisma {
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
-    duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
-    production?: StringFieldUpdateOperationsInput | string
     format?: VideoFormatUpdateOneWithoutVideosNestedInput
     category?: VideoCategoryUpdateOneWithoutVideosNestedInput
     movie?: MovieUpdateOneWithoutMetadataNestedInput
@@ -47160,14 +47137,12 @@ export namespace Prisma {
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
-    duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
     formatId?: NullableStringFieldUpdateOperationsInput | string | null
     categoryid?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
-    production?: StringFieldUpdateOperationsInput | string
     movie?: MovieUncheckedUpdateOneWithoutMetadataNestedInput
     episode?: EpisodeUncheckedUpdateOneWithoutMetadataNestedInput
     series?: SeriesUncheckedUpdateOneWithoutMetadataNestedInput
@@ -48912,12 +48887,10 @@ export namespace Prisma {
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
-    duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
-    production?: StringFieldUpdateOperationsInput | string
     format?: VideoFormatUpdateOneWithoutVideosNestedInput
     category?: VideoCategoryUpdateOneWithoutVideosNestedInput
     movie?: MovieUpdateOneWithoutMetadataNestedInput
@@ -48937,14 +48910,12 @@ export namespace Prisma {
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
-    duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
     formatId?: NullableStringFieldUpdateOperationsInput | string | null
     categoryid?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
-    production?: StringFieldUpdateOperationsInput | string
     movie?: MovieUncheckedUpdateOneWithoutMetadataNestedInput
     episode?: EpisodeUncheckedUpdateOneWithoutMetadataNestedInput
     series?: SeriesUncheckedUpdateOneWithoutMetadataNestedInput
@@ -48962,14 +48933,12 @@ export namespace Prisma {
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
-    duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
     formatId?: NullableStringFieldUpdateOperationsInput | string | null
     categoryid?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
-    production?: StringFieldUpdateOperationsInput | string
   }
 
   export type VideoActorCreateManyActorInput = {
@@ -49001,12 +48970,10 @@ export namespace Prisma {
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
-    duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
-    production?: StringFieldUpdateOperationsInput | string
     format?: VideoFormatUpdateOneWithoutVideosNestedInput
     category?: VideoCategoryUpdateOneWithoutVideosNestedInput
     movie?: MovieUpdateOneWithoutMetadataNestedInput
@@ -49026,14 +48993,12 @@ export namespace Prisma {
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
-    duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
     formatId?: NullableStringFieldUpdateOperationsInput | string | null
     categoryid?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
-    production?: StringFieldUpdateOperationsInput | string
     movie?: MovieUncheckedUpdateOneWithoutMetadataNestedInput
     episode?: EpisodeUncheckedUpdateOneWithoutMetadataNestedInput
     series?: SeriesUncheckedUpdateOneWithoutMetadataNestedInput
@@ -49051,14 +49016,12 @@ export namespace Prisma {
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
-    duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
     formatId?: NullableStringFieldUpdateOperationsInput | string | null
     categoryid?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
-    production?: StringFieldUpdateOperationsInput | string
   }
 
   export type VideoMetadataCreateManyFormatInput = {
@@ -49070,13 +49033,11 @@ export namespace Prisma {
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
-    duration: number
     productionHouse: string
     productionCountry: string
     director: string
     categoryid?: string | null
     status?: string
-    production?: string
   }
 
   export type VideoMetadataUpdateWithoutFormatInput = {
@@ -49088,12 +49049,10 @@ export namespace Prisma {
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
-    duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
-    production?: StringFieldUpdateOperationsInput | string
     category?: VideoCategoryUpdateOneWithoutVideosNestedInput
     movie?: MovieUpdateOneWithoutMetadataNestedInput
     episode?: EpisodeUpdateOneWithoutMetadataNestedInput
@@ -49113,13 +49072,11 @@ export namespace Prisma {
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
-    duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
     categoryid?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
-    production?: StringFieldUpdateOperationsInput | string
     movie?: MovieUncheckedUpdateOneWithoutMetadataNestedInput
     episode?: EpisodeUncheckedUpdateOneWithoutMetadataNestedInput
     series?: SeriesUncheckedUpdateOneWithoutMetadataNestedInput
@@ -49138,13 +49095,11 @@ export namespace Prisma {
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
-    duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
     categoryid?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
-    production?: StringFieldUpdateOperationsInput | string
   }
 
   export type VideoMetadataCreateManyCategoryInput = {
@@ -49156,13 +49111,11 @@ export namespace Prisma {
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
-    duration: number
     productionHouse: string
     productionCountry: string
     director: string
     formatId?: string | null
     status?: string
-    production?: string
   }
 
   export type VideoMetadataUpdateWithoutCategoryInput = {
@@ -49174,12 +49127,10 @@ export namespace Prisma {
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
-    duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
-    production?: StringFieldUpdateOperationsInput | string
     format?: VideoFormatUpdateOneWithoutVideosNestedInput
     movie?: MovieUpdateOneWithoutMetadataNestedInput
     episode?: EpisodeUpdateOneWithoutMetadataNestedInput
@@ -49199,13 +49150,11 @@ export namespace Prisma {
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
-    duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
     formatId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
-    production?: StringFieldUpdateOperationsInput | string
     movie?: MovieUncheckedUpdateOneWithoutMetadataNestedInput
     episode?: EpisodeUncheckedUpdateOneWithoutMetadataNestedInput
     series?: SeriesUncheckedUpdateOneWithoutMetadataNestedInput
@@ -49224,13 +49173,11 @@ export namespace Prisma {
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
-    duration?: IntFieldUpdateOperationsInput | number
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
     formatId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
-    production?: StringFieldUpdateOperationsInput | string
   }
 
   export type MovieTagCreateManyMovieInput = {

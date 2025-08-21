@@ -1,15 +1,18 @@
-import { VideoCategory, VideoFormat, VideoMetadata } from "@safliix-back/contents";
+import { VideoCategory, VideoMetadata } from "@safliix-back/contents";
 import { Season } from "./season.entity";
 import { CreateSerieDto } from "../../interfaces/create-serie.dto";
 import { Result,Err,Ok } from "oxide.ts";
 
 export class Serie {
   private seasons: Season[] = [];
-
+  
   constructor(
-    public readonly id: string,
+    public readonly id: string | null,
     public metadata: VideoMetadata,
-    public isPremiere = false,
+    public rentalPrice: number | null,
+    public seasonCount: number,
+    public type: string,
+    public status: string
   ) {}
 
   addSeason(season: Season) {
@@ -23,41 +26,41 @@ export class Serie {
     return [...this.seasons]; // copie pour éviter la modification externe
   }
 
+  
+
   static create(data: CreateSerieDto): Result<Serie, Error> {
-    try {
-
-      const format = VideoFormat.create(data.format);
-      if (format.isErr()) {
-        return Err(format.unwrapErr());
-      }
-
-      const category = VideoCategory.create(data.category);
-      if (category.isErr()) {
-        return Err(category.unwrapErr());
-      }
-      const metadata = VideoMetadata.create({
-        title: data.title,
-        description: data.description ?? '',
-        releaseDate: new Date(data.releaseDate),
-        platformDate: new Date(data.plateformDate),
-        director: data.director,
-        thumbnailUrl: data.thumbnailUrl,
-        duration: data.duration,
-        productionHouse: data.productionHouse,
-        secondaryImage: data.secondaryImageUrl ?? null,
-        format: format.unwrap(),
-        category: category.unwrap()
-      });
-
-      if (metadata.isErr()) {
-        return Err(metadata.unwrapErr());
-      }
-
-      const serie = new Serie('', metadata.unwrap(),data.isPremiere);
-
-      return Ok(serie);
-    } catch (error) {
-      return Err(new Error(`Failed to create Serie: ${error}`));
+    const category = VideoCategory.create(undefined,data.category,null);
+    if (category.isErr()) {
+      return Err(category.unwrapErr());
     }
+    const metadata = VideoMetadata.create(
+      null,
+      data.title,
+      data.description ?? '',
+      data.thumbnailUrl,
+      data.productionHouse,
+      data.director,
+      data.secondaryImageUrl ?? null,
+      new Date(data.releaseDate),
+      new Date(data.plateformDate),
+      category.unwrap()
+    );
+
+    if (metadata.isErr()) {
+      return Err(metadata.unwrapErr());
+    }
+
+    // Removed stray if statement to fix block error
+    const serie = new Serie(
+      null, 
+      metadata.unwrap(),
+      data.rentalPrice ?? null,
+      data.seasonCount,
+      data.type,
+      data.status
+    );
+
+    return Ok(serie);
+    
   }
 }

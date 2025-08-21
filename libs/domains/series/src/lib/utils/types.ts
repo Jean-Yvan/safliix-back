@@ -1,0 +1,1 @@
+export const SERIE_REPOSITORY = 'serie_repo';

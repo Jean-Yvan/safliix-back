@@ -21,40 +21,53 @@ export class CreateSerieDto {
   @IsNotEmpty({ message: 'Le titre est requis.' })
   title!: string;
 
-  @ApiProperty({required:true})
-  @IsString()
-  @IsNotEmpty({ message: 'La description est requise.' })
-  description!: string;
+  @ApiProperty({example:"Safliix",required:true})
+  @IsString({message:'La maison de production est requise'})
+  productionHouse!: string;
 
-  @ApiProperty({example:120,required:true})
-  @IsInt({ message: 'La durée doit être un entier (en secondes).' })
-  duration!: number;
+  @ApiProperty({example:"Bénin",required:true})
+  @IsString({message:'Le pays de production est requise'})
+  productionCountry!: string;
+
+  @ApiProperty({example:"location",required:true})
+  @IsIn(['location', 'abonnement'], {
+    message: 'Le type doit être soit "location" soit "abonnemment".',
+  })
+  @IsNotEmpty({ message: 'Le type est requis.' })
+  @IsString({message:'Le type est requis'})
+  type!: string;
+
+  @ApiProperty({example:"30000",required:false})
+  @IsOptional()
+  @IsInt({ message: 'Le prix de location doit être un entier.' })
+  rentalPrice?: number;
 
   @ApiProperty({example:"2024-06-07",required:true})
   @IsDateString({},{message:'La date de publication est incorrecte'})
   releaseDate!: string;
 
-  
   @ApiProperty({example:"2024-06-07",required:true})
   @IsDateString({},{message:'La date de publication sur Safflix est incorrecte'})
   plateformDate!: string;
 
-  @ApiProperty({example:"court-métrage",required:true})
-  @IsString()
-  @IsNotEmpty({ message: 'Le format est requis.' })
-  format!: string;
+  @ApiProperty({example:"2",required:true})
+  @IsInt({message:'Le nombre de saisons doit être un entier.'})
+  seasonCount!: number;
 
-  @ApiProperty({example:"horreur",required:true})
+  @ApiProperty({example:"fiction",required:true})
   @IsString()
   @IsNotEmpty({ message: 'La catégorie est requise.' })
   category!: string;
 
-  @ApiProperty({example:"R",required:false})
-  @IsOptional()
-  @IsIn(['G', 'PG', 'PG-13', 'R', 'NC-17'], {
-    message: 'La classification d’âge est invalide.',
-  })
-  ageRating!: 'G' | 'PG' | 'PG-13' | 'R' | 'NC-17';
+  @ApiProperty({example:"horreur",required:true})
+  @IsString()
+  @IsNotEmpty({ message: 'Le genre est requis.' })
+  gender!: string;
+
+  @ApiProperty({example:"John Doe",required:true})
+  @IsString()
+  @IsNotEmpty({ message: 'Le nom du réalisateur est requis.' })
+  director!: string;
 
   @ApiProperty({example:"https://www.exemple.com",required:true})
   @IsUrl({}, { message: 'L’URL de la miniature est invalide.' })
@@ -63,7 +76,12 @@ export class CreateSerieDto {
   @ApiProperty({example:"https://www.exemple.com",required:false})
   @IsOptional()
   @IsUrl({}, { message: 'L’URL de l’image secondaire est invalide.' })
-  secondaryImageUrl!: string;
+  secondaryImageUrl?: string;
+
+  @ApiProperty({example:"https://www.exemple.com",required:false})
+  @IsOptional()
+  @IsUrl({}, { message: 'L’URL de la bande annonce est invalide.' })
+  thrailerPath?: string;
 
   @ApiProperty({required:false})
   @IsArray({ message: 'Les noms des acteurs doivent être un tableau.' })
@@ -71,29 +89,44 @@ export class CreateSerieDto {
   @ArrayNotEmpty({ message: 'La liste des acteurs ne peut pas être vide.' })
   actorNames!: string[];
 
-  @ApiProperty({example:"John Doe",required:true})
-  @IsString()
-  @IsNotEmpty({ message: 'Le nom du réalisateur est requis.' })
-  director!: string;
-
   @ApiProperty({required:false})
-  @IsBoolean({ message: 'Le champ isPremiere doit être un booléen.' })
-  isPremiere!: boolean;
-
-  @ApiProperty({example:"30000",required:false})
+  @IsString()
   @IsOptional()
-  @IsInt({ message: 'Le prix de location doit être un entier.' })
-  rentalPrice?: number;
+  @IsNotEmpty({ message: 'La description est requise.' })
+  description!: string;
+
+  @ApiProperty({example:true,required:false})
+  @IsBoolean({ message: 'Indiquez si la série est produite par SaFliix ou pas.' })
+  @IsOptional()
+  isSafliixProd?: boolean;
+
+  @ApiProperty({example:false,required:false})
+  @IsBoolean()
+  @IsOptional()
+  haveSubtitles?: boolean;
 
   @ApiProperty({required:false})
   @IsArray({ message: 'Les langues des sous-titres doivent être un tableau.' })
   @IsString({ each: true, message: 'Chaque langue doit être une chaîne.' })
   subtitleLanguages!: string[];
 
+  @ApiProperty({example:"fr",required:false})
+  @IsString({ message: 'La langue principale doit être une chaîne.' })
+  @IsOptional()
+  mainLanguage?: string;
+
+  @ApiProperty({example:"actif",required:true})
+  @IsString({ message: 'Le statut doit être une chaîne.' })
+  @IsOptional()
+  status!: string;
   
 
-  @ApiProperty({example:"Safliix",required:true})
-  @IsString({message:'La maison de production est requise'})
-  productionHouse!: string;
+  @ApiProperty({example:"R",required:false})
+  @IsOptional()
+  @IsIn(['G', 'PG', 'PG-13', 'R', 'NC-17'], {
+    message: 'La classification d’âge est invalide.',
+  })
+  ageRating!: 'G' | 'PG' | 'PG-13' | 'R' | 'NC-17';
 
+  
 }

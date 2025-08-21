@@ -190,14 +190,12 @@ exports.Prisma.VideoMetadataScalarFieldEnum = {
   releaseDate: 'releaseDate',
   platformDate: 'platformDate',
   ageRating: 'ageRating',
-  duration: 'duration',
   productionHouse: 'productionHouse',
   productionCountry: 'productionCountry',
   director: 'director',
   formatId: 'formatId',
   categoryid: 'categoryid',
-  status: 'status',
-  production: 'production'
+  status: 'status'
 };
 
 exports.Prisma.VideoFileScalarFieldEnum = {
@@ -247,15 +245,18 @@ exports.Prisma.MovieScalarFieldEnum = {
   id: 'id',
   metadataId: 'metadataId',
   videoFileId: 'videoFileId',
-  isPremiere: 'isPremiere',
-  rentalPrice: 'rentalPrice',
-  status: 'status'
+  status: 'status',
+  type: 'type',
+  seasonCount: 'seasonCount',
+  rentalPrice: 'rentalPrice'
 };
 
 exports.Prisma.SeriesScalarFieldEnum = {
   id: 'id',
   metadataId: 'metadataId',
-  isPremiere: 'isPremiere',
+  status: 'status',
+  type: 'type',
+  seasonCount: 'seasonCount',
   rentalPrice: 'rentalPrice'
 };
 
