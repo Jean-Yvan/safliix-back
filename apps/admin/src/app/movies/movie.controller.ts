@@ -1,5 +1,13 @@
-import { Body, Controller, Post,Get,Param } from '@nestjs/common';
-import { CreateMovieHandler,CreateMovieDto,CreateMovieMapper,DeleteMovieHandler,UpdateMovieHandler,GetMoviesHandler } from '@safliix-back/movies';
+import { Body, Controller, Post,Get,Query } from '@nestjs/common';
+import { 
+  CreateMovieHandler,
+  CreateMovieDto,
+  MovieFilterDto,  
+  DeleteMovieHandler,
+  GetMoviesHandler,
+  CreateMovieCommand, 
+  GetMoviesQuery
+   } from '@safliix-back/movies';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 
 @Controller('admin/movies')
@@ -7,7 +15,7 @@ export class AdminMovieController {
   constructor(
     private readonly createMovieHandler: CreateMovieHandler,
     private readonly deleteMovieHandler: DeleteMovieHandler,
-    private readonly updateMovieHandler: UpdateMovieHandler,
+    //private readonly updateMovieHandler: UpdateMovieHandler,
     private readonly getMoviesHandler: GetMoviesHandler, 
   ) {}
 
@@ -22,11 +30,10 @@ export class AdminMovieController {
     description: 'Invalid input data'
   })
   async create(@Body() dto: CreateMovieDto) {
-    const commandResult = await CreateMovieMapper.toDomain(dto);
-    if(commandResult.isErr()) {
-      throw commandResult.unwrapErr();
-    }else{
-      const result = await this.createMovieHandler.execute(commandResult.unwrap());
+    const command = new CreateMovieCommand(dto);
+    
+    
+      const result = await this.createMovieHandler.execute(command);
       if(result.isErr()){
         throw result.unwrapErr();
       }else{
@@ -39,17 +46,25 @@ export class AdminMovieController {
     }
     
 
-    
+  @Get()
+  @ApiOperation({ summary: 'List movies with filters' })
+  async list(@Query() filters: MovieFilterDto) {
+    const query = new GetMoviesQuery(filters);
+    const result = await this.getMoviesHandler.execute(query);
+
+    if (result.isErr()) {
+      throw result.unwrapErr();
+    }
+
+    return {
+      success: true,
+      data: result.unwrap(),
+    };
   }
 
-  /* @Get()
-  async list() {
-    return this.queryBus.execute(new ListMoviesQuery());
-  }
-
-  @Get(':id')
+  /* @Get(':id')
   async getById(@Param('id', ParseUUIDPipe) id: string) {
     return this.queryBus.execute(new GetMovieQuery(id));
-  } */
+  } */ 
 
 }

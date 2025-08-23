@@ -144,22 +144,22 @@ model SharedAccountUser {
 // =============================================
 
 model VideoMetadata {
-  id                String         @id @default(uuid())
+  id                String        @id @default(uuid())
   title             String
   description       String
-  thumbnailUrl      String         @map("main_image")
+  thumbnailUrl      String        @map("main_image")
   secondaryImage    String?
-  releaseDate       DateTime       @map("theater_release")
-  platformDate      DateTime       @map("platform_publish")
+  releaseDate       DateTime      @map("theater_release")
+  platformDate      DateTime      @map("platform_publish")
   ageRating         String
   productionHouse   String
   productionCountry String
   director          String
-  format            VideoFormat?   @relation(fields: [formatId], references: [id])
-  formatId          String?
-  category          VideoCategory? @relation(fields: [categoryid], references: [id])
-  categoryid        String?
-  status            String         @default("DRAFT")
+  format            VideoFormat   @relation(fields: [formatId], references: [id])
+  formatId          String
+  category          VideoCategory @relation(fields: [categoryId], references: [id])
+  categoryId        String
+  status            String        @default("DRAFT")
 
   // Relations
   movie     Movie?

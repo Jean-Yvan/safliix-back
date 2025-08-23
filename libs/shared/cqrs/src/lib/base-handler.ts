@@ -3,7 +3,7 @@ import { Logger } from '@nestjs/common';
 import { EventBus, ICommand } from '@nestjs/cqrs';
 
 export abstract class BaseHandler<Command extends ICommand, Response = void> {
-  protected abstract logger: Logger;
+  //protected abstract logger: Logger;
 
   constructor(protected readonly eventBus?: EventBus) {}
 
@@ -25,10 +25,10 @@ export abstract class BaseHandler<Command extends ICommand, Response = void> {
       timestamp: new Date().toISOString()
     };
 
-    this.logger.error(`Handler failed: ${errorMessage}`, {
+    /* this.logger.error(`Handler failed: ${errorMessage}`, {
       context,
       stack: error instanceof Error ? error.stack : undefined
-    });
+    }); */
   }
 
   private getErrorMessage(error: unknown): string {

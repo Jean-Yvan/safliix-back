@@ -1,5 +1,5 @@
 // libs/movie/interfaces/rest/dto/movie-filter.dto.ts
-import { IsOptional, IsInt, Min, Max } from 'class-validator';
+import { IsOptional, IsInt, Min, Max, IsString } from 'class-validator';
 
 export class MovieFilterDto {
   @IsOptional()
@@ -22,4 +22,8 @@ export class MovieFilterDto {
   @IsOptional()
   @IsInt()
   minDuration?: number; // en secondes
+
+  @IsOptional()
+  @IsString()
+  status?: string; // e.g., 'published', 'draft'
 }

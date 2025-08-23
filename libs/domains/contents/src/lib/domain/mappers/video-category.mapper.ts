@@ -23,9 +23,9 @@ export class VideoCategoryMapper {
   }
 
   static toPrisma(category: VideoCategory): VideoCategoryToPrisma {
-    const id = category.id ? category.id : null;
+    
     return {
-      id: id,
+      id: category.id, 
       category: category.category,
       description: category.description,
     };

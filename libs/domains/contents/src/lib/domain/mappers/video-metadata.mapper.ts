@@ -76,20 +76,20 @@ export class VideoMetadataMapper {
 
       format: {
         connectOrCreate: {
-          where: { id: metadata.format?.id },
+          where: { format: metadata.format.format },
           create: {
-            format: metadata.format?.format,
-            description: metadata.format?.description,
+            format: metadata.format.format,
+            description: metadata.format.description,
           } as VideoFormatToPrisma,
         },
       },
 
       category: {
         connectOrCreate: {
-          where: { id: metadata.category?.id },
+          where: { category: metadata.category.category },
           create: {
-            category: metadata.category?.category,
-            description: metadata.category?.description,
+            category: metadata.category.category,
+            description: metadata.category.description,
           } as VideoCategoryToPrisma,
         },
       },

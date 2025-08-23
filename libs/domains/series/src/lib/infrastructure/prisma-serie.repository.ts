@@ -21,7 +21,7 @@ export class PrismaSerieRepository implements ISerieRepository{
   ){}
 
   async findById(id: string): Promise<Serie | null> {
-    const serie: SerieWithRelations | null = await this.prisma.series.findUnique({
+    const serie: SerieWithRelations | null = await this.prisma.client.series.findUnique({
       where: { id },
       include: serieInclude,
     });
@@ -39,7 +39,7 @@ export class PrismaSerieRepository implements ISerieRepository{
   }
 
   async findAll(): Promise<Serie[] | null> {
-    const series : SerieWithMetadataAndSeasonCount[] = await this.prisma.series.findMany({
+    const series : SerieWithMetadataAndSeasonCount[] = await this.prisma.client.series.findMany({
       include: serieWithMetadataAndSeasonCountInclude,
     });
 
@@ -58,7 +58,7 @@ export class PrismaSerieRepository implements ISerieRepository{
     const data: SerieToPrisma = SerieMapper.toPrisma(serie); // typé grâce à nos types
 
     const id = data.id == null ? undefined : data.id;
-    const serieResult = await this.prisma.series.upsert({
+    const serieResult = await this.prisma.client.series.upsert({
       where: { id },
       create: data,
       update: data,

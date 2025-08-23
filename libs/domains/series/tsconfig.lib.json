@@ -17,7 +17,13 @@
   "include": ["src/**/*.ts"],
   "references": [
     {
+      "path": "../../shared/database/tsconfig.lib.json"
+    },
+    {
       "path": "../contents/tsconfig.lib.json"
+    },
+    {
+      "path": "../../shared/cqrs/tsconfig.lib.json"
     }
   ]
 }

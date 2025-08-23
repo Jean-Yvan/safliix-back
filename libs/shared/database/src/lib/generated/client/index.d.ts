@@ -11166,7 +11166,7 @@ export namespace Prisma {
     productionCountry: string | null
     director: string | null
     formatId: string | null
-    categoryid: string | null
+    categoryId: string | null
     status: string | null
   }
 
@@ -11183,7 +11183,7 @@ export namespace Prisma {
     productionCountry: string | null
     director: string | null
     formatId: string | null
-    categoryid: string | null
+    categoryId: string | null
     status: string | null
   }
 
@@ -11200,7 +11200,7 @@ export namespace Prisma {
     productionCountry: number
     director: number
     formatId: number
-    categoryid: number
+    categoryId: number
     status: number
     _all: number
   }
@@ -11219,7 +11219,7 @@ export namespace Prisma {
     productionCountry?: true
     director?: true
     formatId?: true
-    categoryid?: true
+    categoryId?: true
     status?: true
   }
 
@@ -11236,7 +11236,7 @@ export namespace Prisma {
     productionCountry?: true
     director?: true
     formatId?: true
-    categoryid?: true
+    categoryId?: true
     status?: true
   }
 
@@ -11253,7 +11253,7 @@ export namespace Prisma {
     productionCountry?: true
     director?: true
     formatId?: true
-    categoryid?: true
+    categoryId?: true
     status?: true
     _all?: true
   }
@@ -11342,8 +11342,8 @@ export namespace Prisma {
     productionHouse: string
     productionCountry: string
     director: string
-    formatId: string | null
-    categoryid: string | null
+    formatId: string
+    categoryId: string
     status: string
     _count: VideoMetadataCountAggregateOutputType | null
     _min: VideoMetadataMinAggregateOutputType | null
@@ -11377,10 +11377,10 @@ export namespace Prisma {
     productionCountry?: boolean
     director?: boolean
     formatId?: boolean
-    categoryid?: boolean
+    categoryId?: boolean
     status?: boolean
-    format?: boolean | VideoMetadata$formatArgs<ExtArgs>
-    category?: boolean | VideoMetadata$categoryArgs<ExtArgs>
+    format?: boolean | VideoFormatDefaultArgs<ExtArgs>
+    category?: boolean | VideoCategoryDefaultArgs<ExtArgs>
     movie?: boolean | VideoMetadata$movieArgs<ExtArgs>
     episode?: boolean | VideoMetadata$episodeArgs<ExtArgs>
     series?: boolean | VideoMetadata$seriesArgs<ExtArgs>
@@ -11404,10 +11404,10 @@ export namespace Prisma {
     productionCountry?: boolean
     director?: boolean
     formatId?: boolean
-    categoryid?: boolean
+    categoryId?: boolean
     status?: boolean
-    format?: boolean | VideoMetadata$formatArgs<ExtArgs>
-    category?: boolean | VideoMetadata$categoryArgs<ExtArgs>
+    format?: boolean | VideoFormatDefaultArgs<ExtArgs>
+    category?: boolean | VideoCategoryDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["videoMetadata"]>
 
   export type VideoMetadataSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -11423,10 +11423,10 @@ export namespace Prisma {
     productionCountry?: boolean
     director?: boolean
     formatId?: boolean
-    categoryid?: boolean
+    categoryId?: boolean
     status?: boolean
-    format?: boolean | VideoMetadata$formatArgs<ExtArgs>
-    category?: boolean | VideoMetadata$categoryArgs<ExtArgs>
+    format?: boolean | VideoFormatDefaultArgs<ExtArgs>
+    category?: boolean | VideoCategoryDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["videoMetadata"]>
 
   export type VideoMetadataSelectScalar = {
@@ -11442,14 +11442,14 @@ export namespace Prisma {
     productionCountry?: boolean
     director?: boolean
     formatId?: boolean
-    categoryid?: boolean
+    categoryId?: boolean
     status?: boolean
   }
 
-  export type VideoMetadataOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "thumbnailUrl" | "secondaryImage" | "releaseDate" | "platformDate" | "ageRating" | "productionHouse" | "productionCountry" | "director" | "formatId" | "categoryid" | "status", ExtArgs["result"]["videoMetadata"]>
+  export type VideoMetadataOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "thumbnailUrl" | "secondaryImage" | "releaseDate" | "platformDate" | "ageRating" | "productionHouse" | "productionCountry" | "director" | "formatId" | "categoryId" | "status", ExtArgs["result"]["videoMetadata"]>
   export type VideoMetadataInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    format?: boolean | VideoMetadata$formatArgs<ExtArgs>
-    category?: boolean | VideoMetadata$categoryArgs<ExtArgs>
+    format?: boolean | VideoFormatDefaultArgs<ExtArgs>
+    category?: boolean | VideoCategoryDefaultArgs<ExtArgs>
     movie?: boolean | VideoMetadata$movieArgs<ExtArgs>
     episode?: boolean | VideoMetadata$episodeArgs<ExtArgs>
     series?: boolean | VideoMetadata$seriesArgs<ExtArgs>
@@ -11460,19 +11460,19 @@ export namespace Prisma {
     _count?: boolean | VideoMetadataCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type VideoMetadataIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    format?: boolean | VideoMetadata$formatArgs<ExtArgs>
-    category?: boolean | VideoMetadata$categoryArgs<ExtArgs>
+    format?: boolean | VideoFormatDefaultArgs<ExtArgs>
+    category?: boolean | VideoCategoryDefaultArgs<ExtArgs>
   }
   export type VideoMetadataIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    format?: boolean | VideoMetadata$formatArgs<ExtArgs>
-    category?: boolean | VideoMetadata$categoryArgs<ExtArgs>
+    format?: boolean | VideoFormatDefaultArgs<ExtArgs>
+    category?: boolean | VideoCategoryDefaultArgs<ExtArgs>
   }
 
   export type $VideoMetadataPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "VideoMetadata"
     objects: {
-      format: Prisma.$VideoFormatPayload<ExtArgs> | null
-      category: Prisma.$VideoCategoryPayload<ExtArgs> | null
+      format: Prisma.$VideoFormatPayload<ExtArgs>
+      category: Prisma.$VideoCategoryPayload<ExtArgs>
       movie: Prisma.$MoviePayload<ExtArgs> | null
       episode: Prisma.$EpisodePayload<ExtArgs> | null
       series: Prisma.$SeriesPayload<ExtArgs> | null
@@ -11493,8 +11493,8 @@ export namespace Prisma {
       productionHouse: string
       productionCountry: string
       director: string
-      formatId: string | null
-      categoryid: string | null
+      formatId: string
+      categoryId: string
       status: string
     }, ExtArgs["result"]["videoMetadata"]>
     composites: {}
@@ -11890,8 +11890,8 @@ export namespace Prisma {
    */
   export interface Prisma__VideoMetadataClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    format<T extends VideoMetadata$formatArgs<ExtArgs> = {}>(args?: Subset<T, VideoMetadata$formatArgs<ExtArgs>>): Prisma__VideoFormatClient<$Result.GetResult<Prisma.$VideoFormatPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    category<T extends VideoMetadata$categoryArgs<ExtArgs> = {}>(args?: Subset<T, VideoMetadata$categoryArgs<ExtArgs>>): Prisma__VideoCategoryClient<$Result.GetResult<Prisma.$VideoCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    format<T extends VideoFormatDefaultArgs<ExtArgs> = {}>(args?: Subset<T, VideoFormatDefaultArgs<ExtArgs>>): Prisma__VideoFormatClient<$Result.GetResult<Prisma.$VideoFormatPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    category<T extends VideoCategoryDefaultArgs<ExtArgs> = {}>(args?: Subset<T, VideoCategoryDefaultArgs<ExtArgs>>): Prisma__VideoCategoryClient<$Result.GetResult<Prisma.$VideoCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     movie<T extends VideoMetadata$movieArgs<ExtArgs> = {}>(args?: Subset<T, VideoMetadata$movieArgs<ExtArgs>>): Prisma__MovieClient<$Result.GetResult<Prisma.$MoviePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     episode<T extends VideoMetadata$episodeArgs<ExtArgs> = {}>(args?: Subset<T, VideoMetadata$episodeArgs<ExtArgs>>): Prisma__EpisodeClient<$Result.GetResult<Prisma.$EpisodePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     series<T extends VideoMetadata$seriesArgs<ExtArgs> = {}>(args?: Subset<T, VideoMetadata$seriesArgs<ExtArgs>>): Prisma__SeriesClient<$Result.GetResult<Prisma.$SeriesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -11940,7 +11940,7 @@ export namespace Prisma {
     readonly productionCountry: FieldRef<"VideoMetadata", 'String'>
     readonly director: FieldRef<"VideoMetadata", 'String'>
     readonly formatId: FieldRef<"VideoMetadata", 'String'>
-    readonly categoryid: FieldRef<"VideoMetadata", 'String'>
+    readonly categoryId: FieldRef<"VideoMetadata", 'String'>
     readonly status: FieldRef<"VideoMetadata", 'String'>
   }
     
@@ -12335,44 +12335,6 @@ export namespace Prisma {
      * Limit how many VideoMetadata to delete.
      */
     limit?: number
-  }
-
-  /**
-   * VideoMetadata.format
-   */
-  export type VideoMetadata$formatArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the VideoFormat
-     */
-    select?: VideoFormatSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the VideoFormat
-     */
-    omit?: VideoFormatOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: VideoFormatInclude<ExtArgs> | null
-    where?: VideoFormatWhereInput
-  }
-
-  /**
-   * VideoMetadata.category
-   */
-  export type VideoMetadata$categoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the VideoCategory
-     */
-    select?: VideoCategorySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the VideoCategory
-     */
-    omit?: VideoCategoryOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: VideoCategoryInclude<ExtArgs> | null
-    where?: VideoCategoryWhereInput
   }
 
   /**
@@ -35462,7 +35424,7 @@ export namespace Prisma {
     productionCountry: 'productionCountry',
     director: 'director',
     formatId: 'formatId',
-    categoryid: 'categoryid',
+    categoryId: 'categoryId',
     status: 'status'
   };
 
@@ -36342,11 +36304,11 @@ export namespace Prisma {
     productionHouse?: StringFilter<"VideoMetadata"> | string
     productionCountry?: StringFilter<"VideoMetadata"> | string
     director?: StringFilter<"VideoMetadata"> | string
-    formatId?: StringNullableFilter<"VideoMetadata"> | string | null
-    categoryid?: StringNullableFilter<"VideoMetadata"> | string | null
+    formatId?: StringFilter<"VideoMetadata"> | string
+    categoryId?: StringFilter<"VideoMetadata"> | string
     status?: StringFilter<"VideoMetadata"> | string
-    format?: XOR<VideoFormatNullableScalarRelationFilter, VideoFormatWhereInput> | null
-    category?: XOR<VideoCategoryNullableScalarRelationFilter, VideoCategoryWhereInput> | null
+    format?: XOR<VideoFormatScalarRelationFilter, VideoFormatWhereInput>
+    category?: XOR<VideoCategoryScalarRelationFilter, VideoCategoryWhereInput>
     movie?: XOR<MovieNullableScalarRelationFilter, MovieWhereInput> | null
     episode?: XOR<EpisodeNullableScalarRelationFilter, EpisodeWhereInput> | null
     series?: XOR<SeriesNullableScalarRelationFilter, SeriesWhereInput> | null
@@ -36368,8 +36330,8 @@ export namespace Prisma {
     productionHouse?: SortOrder
     productionCountry?: SortOrder
     director?: SortOrder
-    formatId?: SortOrderInput | SortOrder
-    categoryid?: SortOrderInput | SortOrder
+    formatId?: SortOrder
+    categoryId?: SortOrder
     status?: SortOrder
     format?: VideoFormatOrderByWithRelationInput
     category?: VideoCategoryOrderByWithRelationInput
@@ -36397,11 +36359,11 @@ export namespace Prisma {
     productionHouse?: StringFilter<"VideoMetadata"> | string
     productionCountry?: StringFilter<"VideoMetadata"> | string
     director?: StringFilter<"VideoMetadata"> | string
-    formatId?: StringNullableFilter<"VideoMetadata"> | string | null
-    categoryid?: StringNullableFilter<"VideoMetadata"> | string | null
+    formatId?: StringFilter<"VideoMetadata"> | string
+    categoryId?: StringFilter<"VideoMetadata"> | string
     status?: StringFilter<"VideoMetadata"> | string
-    format?: XOR<VideoFormatNullableScalarRelationFilter, VideoFormatWhereInput> | null
-    category?: XOR<VideoCategoryNullableScalarRelationFilter, VideoCategoryWhereInput> | null
+    format?: XOR<VideoFormatScalarRelationFilter, VideoFormatWhereInput>
+    category?: XOR<VideoCategoryScalarRelationFilter, VideoCategoryWhereInput>
     movie?: XOR<MovieNullableScalarRelationFilter, MovieWhereInput> | null
     episode?: XOR<EpisodeNullableScalarRelationFilter, EpisodeWhereInput> | null
     series?: XOR<SeriesNullableScalarRelationFilter, SeriesWhereInput> | null
@@ -36423,8 +36385,8 @@ export namespace Prisma {
     productionHouse?: SortOrder
     productionCountry?: SortOrder
     director?: SortOrder
-    formatId?: SortOrderInput | SortOrder
-    categoryid?: SortOrderInput | SortOrder
+    formatId?: SortOrder
+    categoryId?: SortOrder
     status?: SortOrder
     _count?: VideoMetadataCountOrderByAggregateInput
     _max?: VideoMetadataMaxOrderByAggregateInput
@@ -36446,8 +36408,8 @@ export namespace Prisma {
     productionHouse?: StringWithAggregatesFilter<"VideoMetadata"> | string
     productionCountry?: StringWithAggregatesFilter<"VideoMetadata"> | string
     director?: StringWithAggregatesFilter<"VideoMetadata"> | string
-    formatId?: StringNullableWithAggregatesFilter<"VideoMetadata"> | string | null
-    categoryid?: StringNullableWithAggregatesFilter<"VideoMetadata"> | string | null
+    formatId?: StringWithAggregatesFilter<"VideoMetadata"> | string
+    categoryId?: StringWithAggregatesFilter<"VideoMetadata"> | string
     status?: StringWithAggregatesFilter<"VideoMetadata"> | string
   }
 
@@ -38101,8 +38063,8 @@ export namespace Prisma {
     productionCountry: string
     director: string
     status?: string
-    format?: VideoFormatCreateNestedOneWithoutVideosInput
-    category?: VideoCategoryCreateNestedOneWithoutVideosInput
+    format: VideoFormatCreateNestedOneWithoutVideosInput
+    category: VideoCategoryCreateNestedOneWithoutVideosInput
     movie?: MovieCreateNestedOneWithoutMetadataInput
     episode?: EpisodeCreateNestedOneWithoutMetadataInput
     series?: SeriesCreateNestedOneWithoutMetadataInput
@@ -38124,8 +38086,8 @@ export namespace Prisma {
     productionHouse: string
     productionCountry: string
     director: string
-    formatId?: string | null
-    categoryid?: string | null
+    formatId: string
+    categoryId: string
     status?: string
     movie?: MovieUncheckedCreateNestedOneWithoutMetadataInput
     episode?: EpisodeUncheckedCreateNestedOneWithoutMetadataInput
@@ -38149,8 +38111,8 @@ export namespace Prisma {
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
-    format?: VideoFormatUpdateOneWithoutVideosNestedInput
-    category?: VideoCategoryUpdateOneWithoutVideosNestedInput
+    format?: VideoFormatUpdateOneRequiredWithoutVideosNestedInput
+    category?: VideoCategoryUpdateOneRequiredWithoutVideosNestedInput
     movie?: MovieUpdateOneWithoutMetadataNestedInput
     episode?: EpisodeUpdateOneWithoutMetadataNestedInput
     series?: SeriesUpdateOneWithoutMetadataNestedInput
@@ -38172,8 +38134,8 @@ export namespace Prisma {
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
-    formatId?: NullableStringFieldUpdateOperationsInput | string | null
-    categoryid?: NullableStringFieldUpdateOperationsInput | string | null
+    formatId?: StringFieldUpdateOperationsInput | string
+    categoryId?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     movie?: MovieUncheckedUpdateOneWithoutMetadataNestedInput
     episode?: EpisodeUncheckedUpdateOneWithoutMetadataNestedInput
@@ -38196,8 +38158,8 @@ export namespace Prisma {
     productionHouse: string
     productionCountry: string
     director: string
-    formatId?: string | null
-    categoryid?: string | null
+    formatId: string
+    categoryId: string
     status?: string
   }
 
@@ -38228,8 +38190,8 @@ export namespace Prisma {
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
-    formatId?: NullableStringFieldUpdateOperationsInput | string | null
-    categoryid?: NullableStringFieldUpdateOperationsInput | string | null
+    formatId?: StringFieldUpdateOperationsInput | string
+    categoryId?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
   }
 
@@ -39903,14 +39865,14 @@ export namespace Prisma {
     created_at?: SortOrder
   }
 
-  export type VideoFormatNullableScalarRelationFilter = {
-    is?: VideoFormatWhereInput | null
-    isNot?: VideoFormatWhereInput | null
+  export type VideoFormatScalarRelationFilter = {
+    is?: VideoFormatWhereInput
+    isNot?: VideoFormatWhereInput
   }
 
-  export type VideoCategoryNullableScalarRelationFilter = {
-    is?: VideoCategoryWhereInput | null
-    isNot?: VideoCategoryWhereInput | null
+  export type VideoCategoryScalarRelationFilter = {
+    is?: VideoCategoryWhereInput
+    isNot?: VideoCategoryWhereInput
   }
 
   export type MovieNullableScalarRelationFilter = {
@@ -39981,7 +39943,7 @@ export namespace Prisma {
     productionCountry?: SortOrder
     director?: SortOrder
     formatId?: SortOrder
-    categoryid?: SortOrder
+    categoryId?: SortOrder
     status?: SortOrder
   }
 
@@ -39998,7 +39960,7 @@ export namespace Prisma {
     productionCountry?: SortOrder
     director?: SortOrder
     formatId?: SortOrder
-    categoryid?: SortOrder
+    categoryId?: SortOrder
     status?: SortOrder
   }
 
@@ -40015,7 +39977,7 @@ export namespace Prisma {
     productionCountry?: SortOrder
     director?: SortOrder
     formatId?: SortOrder
-    categoryid?: SortOrder
+    categoryId?: SortOrder
     status?: SortOrder
   }
 
@@ -41679,22 +41641,18 @@ export namespace Prisma {
     connect?: VideoLanguageWhereUniqueInput | VideoLanguageWhereUniqueInput[]
   }
 
-  export type VideoFormatUpdateOneWithoutVideosNestedInput = {
+  export type VideoFormatUpdateOneRequiredWithoutVideosNestedInput = {
     create?: XOR<VideoFormatCreateWithoutVideosInput, VideoFormatUncheckedCreateWithoutVideosInput>
     connectOrCreate?: VideoFormatCreateOrConnectWithoutVideosInput
     upsert?: VideoFormatUpsertWithoutVideosInput
-    disconnect?: VideoFormatWhereInput | boolean
-    delete?: VideoFormatWhereInput | boolean
     connect?: VideoFormatWhereUniqueInput
     update?: XOR<XOR<VideoFormatUpdateToOneWithWhereWithoutVideosInput, VideoFormatUpdateWithoutVideosInput>, VideoFormatUncheckedUpdateWithoutVideosInput>
   }
 
-  export type VideoCategoryUpdateOneWithoutVideosNestedInput = {
+  export type VideoCategoryUpdateOneRequiredWithoutVideosNestedInput = {
     create?: XOR<VideoCategoryCreateWithoutVideosInput, VideoCategoryUncheckedCreateWithoutVideosInput>
     connectOrCreate?: VideoCategoryCreateOrConnectWithoutVideosInput
     upsert?: VideoCategoryUpsertWithoutVideosInput
-    disconnect?: VideoCategoryWhereInput | boolean
-    delete?: VideoCategoryWhereInput | boolean
     connect?: VideoCategoryWhereUniqueInput
     update?: XOR<XOR<VideoCategoryUpdateToOneWithWhereWithoutVideosInput, VideoCategoryUpdateWithoutVideosInput>, VideoCategoryUncheckedUpdateWithoutVideosInput>
   }
@@ -45500,8 +45458,8 @@ export namespace Prisma {
     productionCountry: string
     director: string
     status?: string
-    format?: VideoFormatCreateNestedOneWithoutVideosInput
-    category?: VideoCategoryCreateNestedOneWithoutVideosInput
+    format: VideoFormatCreateNestedOneWithoutVideosInput
+    category: VideoCategoryCreateNestedOneWithoutVideosInput
     movie?: MovieCreateNestedOneWithoutMetadataInput
     episode?: EpisodeCreateNestedOneWithoutMetadataInput
     series?: SeriesCreateNestedOneWithoutMetadataInput
@@ -45522,8 +45480,8 @@ export namespace Prisma {
     productionHouse: string
     productionCountry: string
     director: string
-    formatId?: string | null
-    categoryid?: string | null
+    formatId: string
+    categoryId: string
     status?: string
     movie?: MovieUncheckedCreateNestedOneWithoutMetadataInput
     episode?: EpisodeUncheckedCreateNestedOneWithoutMetadataInput
@@ -45569,8 +45527,8 @@ export namespace Prisma {
     productionHouse?: StringFilter<"VideoMetadata"> | string
     productionCountry?: StringFilter<"VideoMetadata"> | string
     director?: StringFilter<"VideoMetadata"> | string
-    formatId?: StringNullableFilter<"VideoMetadata"> | string | null
-    categoryid?: StringNullableFilter<"VideoMetadata"> | string | null
+    formatId?: StringFilter<"VideoMetadata"> | string
+    categoryId?: StringFilter<"VideoMetadata"> | string
     status?: StringFilter<"VideoMetadata"> | string
   }
 
@@ -45623,8 +45581,8 @@ export namespace Prisma {
     productionCountry: string
     director: string
     status?: string
-    format?: VideoFormatCreateNestedOneWithoutVideosInput
-    category?: VideoCategoryCreateNestedOneWithoutVideosInput
+    format: VideoFormatCreateNestedOneWithoutVideosInput
+    category: VideoCategoryCreateNestedOneWithoutVideosInput
     movie?: MovieCreateNestedOneWithoutMetadataInput
     episode?: EpisodeCreateNestedOneWithoutMetadataInput
     series?: SeriesCreateNestedOneWithoutMetadataInput
@@ -45645,8 +45603,8 @@ export namespace Prisma {
     productionHouse: string
     productionCountry: string
     director: string
-    formatId?: string | null
-    categoryid?: string | null
+    formatId: string
+    categoryId: string
     status?: string
     movie?: MovieUncheckedCreateNestedOneWithoutMetadataInput
     episode?: EpisodeUncheckedCreateNestedOneWithoutMetadataInput
@@ -45700,8 +45658,8 @@ export namespace Prisma {
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
-    format?: VideoFormatUpdateOneWithoutVideosNestedInput
-    category?: VideoCategoryUpdateOneWithoutVideosNestedInput
+    format?: VideoFormatUpdateOneRequiredWithoutVideosNestedInput
+    category?: VideoCategoryUpdateOneRequiredWithoutVideosNestedInput
     movie?: MovieUpdateOneWithoutMetadataNestedInput
     episode?: EpisodeUpdateOneWithoutMetadataNestedInput
     series?: SeriesUpdateOneWithoutMetadataNestedInput
@@ -45722,8 +45680,8 @@ export namespace Prisma {
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
-    formatId?: NullableStringFieldUpdateOperationsInput | string | null
-    categoryid?: NullableStringFieldUpdateOperationsInput | string | null
+    formatId?: StringFieldUpdateOperationsInput | string
+    categoryId?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     movie?: MovieUncheckedUpdateOneWithoutMetadataNestedInput
     episode?: EpisodeUncheckedUpdateOneWithoutMetadataNestedInput
@@ -45767,8 +45725,8 @@ export namespace Prisma {
     productionCountry: string
     director: string
     status?: string
-    format?: VideoFormatCreateNestedOneWithoutVideosInput
-    category?: VideoCategoryCreateNestedOneWithoutVideosInput
+    format: VideoFormatCreateNestedOneWithoutVideosInput
+    category: VideoCategoryCreateNestedOneWithoutVideosInput
     movie?: MovieCreateNestedOneWithoutMetadataInput
     episode?: EpisodeCreateNestedOneWithoutMetadataInput
     series?: SeriesCreateNestedOneWithoutMetadataInput
@@ -45789,8 +45747,8 @@ export namespace Prisma {
     productionHouse: string
     productionCountry: string
     director: string
-    formatId?: string | null
-    categoryid?: string | null
+    formatId: string
+    categoryId: string
     status?: string
     movie?: MovieUncheckedCreateNestedOneWithoutMetadataInput
     episode?: EpisodeUncheckedCreateNestedOneWithoutMetadataInput
@@ -45834,7 +45792,7 @@ export namespace Prisma {
     productionCountry: string
     director: string
     status?: string
-    category?: VideoCategoryCreateNestedOneWithoutVideosInput
+    category: VideoCategoryCreateNestedOneWithoutVideosInput
     movie?: MovieCreateNestedOneWithoutMetadataInput
     episode?: EpisodeCreateNestedOneWithoutMetadataInput
     series?: SeriesCreateNestedOneWithoutMetadataInput
@@ -45856,7 +45814,7 @@ export namespace Prisma {
     productionHouse: string
     productionCountry: string
     director: string
-    categoryid?: string | null
+    categoryId: string
     status?: string
     movie?: MovieUncheckedCreateNestedOneWithoutMetadataInput
     episode?: EpisodeUncheckedCreateNestedOneWithoutMetadataInput
@@ -45906,7 +45864,7 @@ export namespace Prisma {
     productionCountry: string
     director: string
     status?: string
-    format?: VideoFormatCreateNestedOneWithoutVideosInput
+    format: VideoFormatCreateNestedOneWithoutVideosInput
     movie?: MovieCreateNestedOneWithoutMetadataInput
     episode?: EpisodeCreateNestedOneWithoutMetadataInput
     series?: SeriesCreateNestedOneWithoutMetadataInput
@@ -45928,7 +45886,7 @@ export namespace Prisma {
     productionHouse: string
     productionCountry: string
     director: string
-    formatId?: string | null
+    formatId: string
     status?: string
     movie?: MovieUncheckedCreateNestedOneWithoutMetadataInput
     episode?: EpisodeUncheckedCreateNestedOneWithoutMetadataInput
@@ -45978,8 +45936,8 @@ export namespace Prisma {
     productionCountry: string
     director: string
     status?: string
-    format?: VideoFormatCreateNestedOneWithoutVideosInput
-    category?: VideoCategoryCreateNestedOneWithoutVideosInput
+    format: VideoFormatCreateNestedOneWithoutVideosInput
+    category: VideoCategoryCreateNestedOneWithoutVideosInput
     episode?: EpisodeCreateNestedOneWithoutMetadataInput
     series?: SeriesCreateNestedOneWithoutMetadataInput
     genres?: VideoGenreCreateNestedManyWithoutVideosInput
@@ -46000,8 +45958,8 @@ export namespace Prisma {
     productionHouse: string
     productionCountry: string
     director: string
-    formatId?: string | null
-    categoryid?: string | null
+    formatId: string
+    categoryId: string
     status?: string
     episode?: EpisodeUncheckedCreateNestedOneWithoutMetadataInput
     series?: SeriesUncheckedCreateNestedOneWithoutMetadataInput
@@ -46091,8 +46049,8 @@ export namespace Prisma {
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
-    format?: VideoFormatUpdateOneWithoutVideosNestedInput
-    category?: VideoCategoryUpdateOneWithoutVideosNestedInput
+    format?: VideoFormatUpdateOneRequiredWithoutVideosNestedInput
+    category?: VideoCategoryUpdateOneRequiredWithoutVideosNestedInput
     episode?: EpisodeUpdateOneWithoutMetadataNestedInput
     series?: SeriesUpdateOneWithoutMetadataNestedInput
     genres?: VideoGenreUpdateManyWithoutVideosNestedInput
@@ -46113,8 +46071,8 @@ export namespace Prisma {
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
-    formatId?: NullableStringFieldUpdateOperationsInput | string | null
-    categoryid?: NullableStringFieldUpdateOperationsInput | string | null
+    formatId?: StringFieldUpdateOperationsInput | string
+    categoryId?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     episode?: EpisodeUncheckedUpdateOneWithoutMetadataNestedInput
     series?: SeriesUncheckedUpdateOneWithoutMetadataNestedInput
@@ -46200,8 +46158,8 @@ export namespace Prisma {
     productionCountry: string
     director: string
     status?: string
-    format?: VideoFormatCreateNestedOneWithoutVideosInput
-    category?: VideoCategoryCreateNestedOneWithoutVideosInput
+    format: VideoFormatCreateNestedOneWithoutVideosInput
+    category: VideoCategoryCreateNestedOneWithoutVideosInput
     movie?: MovieCreateNestedOneWithoutMetadataInput
     episode?: EpisodeCreateNestedOneWithoutMetadataInput
     genres?: VideoGenreCreateNestedManyWithoutVideosInput
@@ -46222,8 +46180,8 @@ export namespace Prisma {
     productionHouse: string
     productionCountry: string
     director: string
-    formatId?: string | null
-    categoryid?: string | null
+    formatId: string
+    categoryId: string
     status?: string
     movie?: MovieUncheckedCreateNestedOneWithoutMetadataInput
     episode?: EpisodeUncheckedCreateNestedOneWithoutMetadataInput
@@ -46302,8 +46260,8 @@ export namespace Prisma {
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
-    format?: VideoFormatUpdateOneWithoutVideosNestedInput
-    category?: VideoCategoryUpdateOneWithoutVideosNestedInput
+    format?: VideoFormatUpdateOneRequiredWithoutVideosNestedInput
+    category?: VideoCategoryUpdateOneRequiredWithoutVideosNestedInput
     movie?: MovieUpdateOneWithoutMetadataNestedInput
     episode?: EpisodeUpdateOneWithoutMetadataNestedInput
     genres?: VideoGenreUpdateManyWithoutVideosNestedInput
@@ -46324,8 +46282,8 @@ export namespace Prisma {
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
-    formatId?: NullableStringFieldUpdateOperationsInput | string | null
-    categoryid?: NullableStringFieldUpdateOperationsInput | string | null
+    formatId?: StringFieldUpdateOperationsInput | string
+    categoryId?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     movie?: MovieUncheckedUpdateOneWithoutMetadataNestedInput
     episode?: EpisodeUncheckedUpdateOneWithoutMetadataNestedInput
@@ -46554,8 +46512,8 @@ export namespace Prisma {
     productionCountry: string
     director: string
     status?: string
-    format?: VideoFormatCreateNestedOneWithoutVideosInput
-    category?: VideoCategoryCreateNestedOneWithoutVideosInput
+    format: VideoFormatCreateNestedOneWithoutVideosInput
+    category: VideoCategoryCreateNestedOneWithoutVideosInput
     movie?: MovieCreateNestedOneWithoutMetadataInput
     series?: SeriesCreateNestedOneWithoutMetadataInput
     genres?: VideoGenreCreateNestedManyWithoutVideosInput
@@ -46576,8 +46534,8 @@ export namespace Prisma {
     productionHouse: string
     productionCountry: string
     director: string
-    formatId?: string | null
-    categoryid?: string | null
+    formatId: string
+    categoryId: string
     status?: string
     movie?: MovieUncheckedCreateNestedOneWithoutMetadataInput
     series?: SeriesUncheckedCreateNestedOneWithoutMetadataInput
@@ -46678,8 +46636,8 @@ export namespace Prisma {
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
-    format?: VideoFormatUpdateOneWithoutVideosNestedInput
-    category?: VideoCategoryUpdateOneWithoutVideosNestedInput
+    format?: VideoFormatUpdateOneRequiredWithoutVideosNestedInput
+    category?: VideoCategoryUpdateOneRequiredWithoutVideosNestedInput
     movie?: MovieUpdateOneWithoutMetadataNestedInput
     series?: SeriesUpdateOneWithoutMetadataNestedInput
     genres?: VideoGenreUpdateManyWithoutVideosNestedInput
@@ -46700,8 +46658,8 @@ export namespace Prisma {
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
-    formatId?: NullableStringFieldUpdateOperationsInput | string | null
-    categoryid?: NullableStringFieldUpdateOperationsInput | string | null
+    formatId?: StringFieldUpdateOperationsInput | string
+    categoryId?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     movie?: MovieUncheckedUpdateOneWithoutMetadataNestedInput
     series?: SeriesUncheckedUpdateOneWithoutMetadataNestedInput
@@ -47017,8 +46975,8 @@ export namespace Prisma {
     productionCountry: string
     director: string
     status?: string
-    format?: VideoFormatCreateNestedOneWithoutVideosInput
-    category?: VideoCategoryCreateNestedOneWithoutVideosInput
+    format: VideoFormatCreateNestedOneWithoutVideosInput
+    category: VideoCategoryCreateNestedOneWithoutVideosInput
     movie?: MovieCreateNestedOneWithoutMetadataInput
     episode?: EpisodeCreateNestedOneWithoutMetadataInput
     series?: SeriesCreateNestedOneWithoutMetadataInput
@@ -47039,8 +46997,8 @@ export namespace Prisma {
     productionHouse: string
     productionCountry: string
     director: string
-    formatId?: string | null
-    categoryid?: string | null
+    formatId: string
+    categoryId: string
     status?: string
     movie?: MovieUncheckedCreateNestedOneWithoutMetadataInput
     episode?: EpisodeUncheckedCreateNestedOneWithoutMetadataInput
@@ -47118,8 +47076,8 @@ export namespace Prisma {
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
-    format?: VideoFormatUpdateOneWithoutVideosNestedInput
-    category?: VideoCategoryUpdateOneWithoutVideosNestedInput
+    format?: VideoFormatUpdateOneRequiredWithoutVideosNestedInput
+    category?: VideoCategoryUpdateOneRequiredWithoutVideosNestedInput
     movie?: MovieUpdateOneWithoutMetadataNestedInput
     episode?: EpisodeUpdateOneWithoutMetadataNestedInput
     series?: SeriesUpdateOneWithoutMetadataNestedInput
@@ -47140,8 +47098,8 @@ export namespace Prisma {
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
-    formatId?: NullableStringFieldUpdateOperationsInput | string | null
-    categoryid?: NullableStringFieldUpdateOperationsInput | string | null
+    formatId?: StringFieldUpdateOperationsInput | string
+    categoryId?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     movie?: MovieUncheckedUpdateOneWithoutMetadataNestedInput
     episode?: EpisodeUncheckedUpdateOneWithoutMetadataNestedInput
@@ -48891,8 +48849,8 @@ export namespace Prisma {
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
-    format?: VideoFormatUpdateOneWithoutVideosNestedInput
-    category?: VideoCategoryUpdateOneWithoutVideosNestedInput
+    format?: VideoFormatUpdateOneRequiredWithoutVideosNestedInput
+    category?: VideoCategoryUpdateOneRequiredWithoutVideosNestedInput
     movie?: MovieUpdateOneWithoutMetadataNestedInput
     episode?: EpisodeUpdateOneWithoutMetadataNestedInput
     series?: SeriesUpdateOneWithoutMetadataNestedInput
@@ -48913,8 +48871,8 @@ export namespace Prisma {
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
-    formatId?: NullableStringFieldUpdateOperationsInput | string | null
-    categoryid?: NullableStringFieldUpdateOperationsInput | string | null
+    formatId?: StringFieldUpdateOperationsInput | string
+    categoryId?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     movie?: MovieUncheckedUpdateOneWithoutMetadataNestedInput
     episode?: EpisodeUncheckedUpdateOneWithoutMetadataNestedInput
@@ -48936,8 +48894,8 @@ export namespace Prisma {
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
-    formatId?: NullableStringFieldUpdateOperationsInput | string | null
-    categoryid?: NullableStringFieldUpdateOperationsInput | string | null
+    formatId?: StringFieldUpdateOperationsInput | string
+    categoryId?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
   }
 
@@ -48974,8 +48932,8 @@ export namespace Prisma {
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
-    format?: VideoFormatUpdateOneWithoutVideosNestedInput
-    category?: VideoCategoryUpdateOneWithoutVideosNestedInput
+    format?: VideoFormatUpdateOneRequiredWithoutVideosNestedInput
+    category?: VideoCategoryUpdateOneRequiredWithoutVideosNestedInput
     movie?: MovieUpdateOneWithoutMetadataNestedInput
     episode?: EpisodeUpdateOneWithoutMetadataNestedInput
     series?: SeriesUpdateOneWithoutMetadataNestedInput
@@ -48996,8 +48954,8 @@ export namespace Prisma {
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
-    formatId?: NullableStringFieldUpdateOperationsInput | string | null
-    categoryid?: NullableStringFieldUpdateOperationsInput | string | null
+    formatId?: StringFieldUpdateOperationsInput | string
+    categoryId?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     movie?: MovieUncheckedUpdateOneWithoutMetadataNestedInput
     episode?: EpisodeUncheckedUpdateOneWithoutMetadataNestedInput
@@ -49019,8 +48977,8 @@ export namespace Prisma {
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
-    formatId?: NullableStringFieldUpdateOperationsInput | string | null
-    categoryid?: NullableStringFieldUpdateOperationsInput | string | null
+    formatId?: StringFieldUpdateOperationsInput | string
+    categoryId?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
   }
 
@@ -49036,7 +48994,7 @@ export namespace Prisma {
     productionHouse: string
     productionCountry: string
     director: string
-    categoryid?: string | null
+    categoryId: string
     status?: string
   }
 
@@ -49053,7 +49011,7 @@ export namespace Prisma {
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
-    category?: VideoCategoryUpdateOneWithoutVideosNestedInput
+    category?: VideoCategoryUpdateOneRequiredWithoutVideosNestedInput
     movie?: MovieUpdateOneWithoutMetadataNestedInput
     episode?: EpisodeUpdateOneWithoutMetadataNestedInput
     series?: SeriesUpdateOneWithoutMetadataNestedInput
@@ -49075,7 +49033,7 @@ export namespace Prisma {
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
-    categoryid?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryId?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     movie?: MovieUncheckedUpdateOneWithoutMetadataNestedInput
     episode?: EpisodeUncheckedUpdateOneWithoutMetadataNestedInput
@@ -49098,7 +49056,7 @@ export namespace Prisma {
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
-    categoryid?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryId?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
   }
 
@@ -49114,7 +49072,7 @@ export namespace Prisma {
     productionHouse: string
     productionCountry: string
     director: string
-    formatId?: string | null
+    formatId: string
     status?: string
   }
 
@@ -49131,7 +49089,7 @@ export namespace Prisma {
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
-    format?: VideoFormatUpdateOneWithoutVideosNestedInput
+    format?: VideoFormatUpdateOneRequiredWithoutVideosNestedInput
     movie?: MovieUpdateOneWithoutMetadataNestedInput
     episode?: EpisodeUpdateOneWithoutMetadataNestedInput
     series?: SeriesUpdateOneWithoutMetadataNestedInput
@@ -49153,7 +49111,7 @@ export namespace Prisma {
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
-    formatId?: NullableStringFieldUpdateOperationsInput | string | null
+    formatId?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     movie?: MovieUncheckedUpdateOneWithoutMetadataNestedInput
     episode?: EpisodeUncheckedUpdateOneWithoutMetadataNestedInput
@@ -49176,7 +49134,7 @@ export namespace Prisma {
     productionHouse?: StringFieldUpdateOperationsInput | string
     productionCountry?: StringFieldUpdateOperationsInput | string
     director?: StringFieldUpdateOperationsInput | string
-    formatId?: NullableStringFieldUpdateOperationsInput | string | null
+    formatId?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
   }
 

@@ -12,7 +12,7 @@ export class MissingRequiredFieldError extends Error {
 
 export class VideoMetadata {
   private constructor(
-    public readonly id: string | null,
+    public readonly id: string | undefined,
     private _title: string,
     private _description: string,
     private _thumbnailUrl: string,
@@ -21,13 +21,13 @@ export class VideoMetadata {
     private _platformDate: Date,
     private _productionHouse: string,
     private _director: string,
-    private _category?: VideoCategory,
-    private _format?: VideoFormat, 
+    private _category: VideoCategory,
+    private _format: VideoFormat, 
     private _actors: { name: string; role?: string; actorId?: string; id?:string }[] = []
   ) {}
 
   static create(
-    id: string | null,
+    id: string | undefined,
     title: string,
     description: string,
     thumbnailUrl: string,
@@ -36,8 +36,8 @@ export class VideoMetadata {
     secondaryImage: string | null,
     releaseDate: Date,
     platformDate: Date,
-    category?: VideoCategory,
-    format?: VideoFormat,
+    category: VideoCategory,
+    format: VideoFormat,
     actors?: { name: string; role?: string | undefined; actorId?: string }[],
   ): Result<VideoMetadata, MissingRequiredFieldError> {
     // Validation des champs requis
@@ -76,7 +76,7 @@ export class VideoMetadata {
   }
 
   static restore(
-    id: string | null,
+    id: string | undefined,
     title: string,
     description: string,
     thumbnailUrl: string,
@@ -85,8 +85,8 @@ export class VideoMetadata {
     secondaryImage: string | null,
     releaseDate: Date,
     platformDate: Date,
-    category?: VideoCategory,
-    format?: VideoFormat,
+    category: VideoCategory,
+    format: VideoFormat,
     actors?: {name: string; role: string | undefined; actorId: string }[],
   ): VideoMetadata {
     
@@ -152,11 +152,11 @@ export class VideoMetadata {
 
   
 
-  get category(): VideoCategory | undefined {
+  get category(): VideoCategory  {
     return this._category;
   }
 
-  get format(): VideoFormat | undefined {
+  get format(): VideoFormat  {
     return this._format;
   }
 

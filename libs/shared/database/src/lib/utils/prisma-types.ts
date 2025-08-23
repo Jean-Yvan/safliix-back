@@ -45,7 +45,7 @@ export type SerieToPrisma = {
 };
 
 export type MovieToPrisma = {
-  id: string | null; // optional if Prisma should generate the id
+  id: string | undefined; // optional if Prisma should generate the id
   metadata: {
     create: MetadataToPrisma;
   };
@@ -71,15 +71,15 @@ export type EpisodeToPrisma = {
 
 
 export type SeasonToPrisma = {
-  id: string;
+  id: string | undefined; // optional if Prisma should generate the id
   number: number;
   serieId: string;
-  title?: string;
+  title: string | undefined;
   episodes?: { create: EpisodeToPrisma[] };
 };
 
 export type VideoFileToPrisma = {
-  id: string | null; // optional if Prisma should generate the id
+  id: string | undefined; // optional if Prisma should generate the id
   filePath: string;
   duration: number;
   trailerPath: string | null;
@@ -88,7 +88,7 @@ export type VideoFileToPrisma = {
 };
 
 export type VideoCategoryToPrisma = {
-  id: string | null; // optional if Prisma should generate the id
+  id: string | undefined; // optional if Prisma should generate the id
   category: string;
   description: string | null;
 };
@@ -100,16 +100,16 @@ export type VideoFormatToPrisma = {
 };
 
 export type VideoActorToPrisma = {
-  id: string | null;       // optionnel
+  id: string | undefined;       // optionnel
   name: string;
-  bio?: string;
-  dateOfBirth?: Date;
+  bio: string | null;
+  dateOfBirth: Date | null; // peut être null si pas de date de naissance
 };
 
 
 
 export type MetadataToPrisma = {
-  id?: string; // optionnel si on veut laisser Prisma générer l'id
+  id: string | undefined; // optionnel si on veut laisser Prisma générer l'id
   title: string;
   description: string;
   thumbnailUrl: string;
@@ -123,13 +123,13 @@ export type MetadataToPrisma = {
   status: string;
   format: {
     connectOrCreate: {
-      where: { id: string | undefined };
+      where: { format : string };
       create: VideoFormatToPrisma;
     };
   };
   category: {
     connectOrCreate: {
-      where: { id: string | undefined};
+      where: { category: string };
       create: VideoCategoryToPrisma;
     };
   };

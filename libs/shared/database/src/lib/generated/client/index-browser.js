@@ -194,7 +194,7 @@ exports.Prisma.VideoMetadataScalarFieldEnum = {
   productionCountry: 'productionCountry',
   director: 'director',
   formatId: 'formatId',
-  categoryid: 'categoryid',
+  categoryId: 'categoryId',
   status: 'status'
 };
 

@@ -69,11 +69,21 @@ export class MovieAggregate extends AggregateRoot {
       ''
     );
 
+    const formatResult = VideoFormat.create(
+      undefined,
+      data.format,
+      ''
+    );
+
     if (categoryResult.isErr()) {
       return Err(categoryResult.unwrapErr());
     }
+
+    if (formatResult.isErr()) {
+      return Err(formatResult.unwrapErr());
+    }
     const metadataResult = VideoMetadata.create(
-      null,
+      undefined,
       data.title,
       data.description,
       data.thumbnailUrl,
@@ -83,10 +93,10 @@ export class MovieAggregate extends AggregateRoot {
       new Date(data.releaseDate),
       new Date(data.plateformDate),
       categoryResult.unwrap(),
-      
+      formatResult.unwrap() 
     );
     const videoFileResult = VideoFile.create(
-      null,
+      undefined,
       data.movieUrl,
       data.duration,
       data.thumbnailUrl,

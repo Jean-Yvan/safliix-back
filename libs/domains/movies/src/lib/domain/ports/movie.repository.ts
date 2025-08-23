@@ -1,5 +1,5 @@
 import { MovieAggregate } from "../entities/movie.aggregate";
-import { MovieFilters } from "../../utils/types";
+import { MovieFilter } from "../../utils/types";
 
 export interface IMovieRepository {
   create(movie: MovieAggregate): Promise<void>;
@@ -8,5 +8,5 @@ export interface IMovieRepository {
   save(movie: MovieAggregate): Promise<void>;
   delete(id: string): Promise<boolean>;
   findById(id: string): Promise<MovieAggregate | null>;
-  findAll(filters?: MovieFilters): Promise<MovieAggregate[]>;
+  findAll(filters?: MovieFilter): Promise<MovieAggregate[]>;
 }

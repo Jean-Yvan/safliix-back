@@ -38,7 +38,7 @@ export class MovieMapper {
 
   static toPrisma(data: MovieAggregate): MovieToPrisma {
     return {
-      id: data.id ?? null, // Si l'id est undefined, Prisma le générera
+      id: data.id, // Si l'id est undefined, Prisma le générera
       metadata: {
         create: VideoMetadataMapper.toPrisma(data.metadata),
       },

@@ -1,7 +1,8 @@
-import { MovieFilters } from "../../utils/types";
+import { MovieFilterDto } from "src/lib/interface/rest/dto/movie-filter.dto";
+
 
 export class GetMoviesQuery {
   constructor(
-    public readonly filters? : MovieFilters
+    public readonly filters? : MovieFilterDto
   ) {}
 }

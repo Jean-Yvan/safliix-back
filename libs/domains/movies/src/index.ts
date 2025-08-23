@@ -7,6 +7,7 @@ export * from './lib/application/handlers/create-movie.handler';
 export * from './lib/application/handlers/delete-movie.handler';
 export * from './lib/application/handlers/update-movie.handler';
 export * from './lib/application/handlers/get-movies.handler';
-
+export * from './lib/interface/rest/dto/movie-filter.dto';
 export * from './lib/mappers/movie.mapper';
+export * from './lib/application/queries/get-movies.query';
 

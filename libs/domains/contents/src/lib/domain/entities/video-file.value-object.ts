@@ -18,17 +18,17 @@ export class InvalidDurationError extends Error {
 
 export class VideoFile {
   private constructor(
-    public readonly id: string | null,
+    public readonly id: string | undefined,
     private _filePath: string,
     private _duration: number,
     private _trailerPath: string | null,
     private _width: number | null,
-    private _height: number | null
+    private _height: number | null,
   ) {}
 
   // === Factory Methods ===
   static create(
-    id: string | null,
+    id: string | undefined,
     filePath: string,
     duration: number,
     trailerPath: string | null,
@@ -74,10 +74,10 @@ export class VideoFile {
     return this._duration;
   }
 
-  get resolution(): string | undefined {
+  get resolution(): string | null {
     return this._width && this._height 
       ? `${this._width}x${this._height}` 
-      : undefined;
+      : null;
   }
 
   get trailerPath(): string | null {
