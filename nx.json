@@ -39,7 +39,8 @@
         "libs/domains/contents/*",
         "libs/shared/cqrs/*",
         "libs/shared/api/*",
-        "libs/domains/errors/*"
+        "libs/domains/errors/*",
+        "libs/shared/metric/*"
       ]
     },
     {
@@ -78,7 +79,8 @@
         "libs/domains/contents/*",
         "libs/shared/cqrs/*",
         "libs/shared/api/*",
-        "libs/domains/errors/*"
+        "libs/domains/errors/*",
+        "libs/shared/metric/*"
       ],
       "options": {
         "typecheck": {
@@ -92,6 +94,5 @@
       "dependsOn": ["^build"]
     }
   },
-  
   "projects": {}
 }

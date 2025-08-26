@@ -145,3 +145,44 @@ export type MetadataToPrisma = {
   };
 };
 
+
+
+export type SerieViewToPrisma = {
+  id: string;
+  seriesId: string;
+  userId: string;
+  viewAt: Date;
+  seasonWatched: number;
+  episodeWatched: number;
+  totalTimeSpent: number;
+  rating: number; // in seconds
+  
+};
+
+
+export type UserVideoViewToPrisma = {
+  id: string | undefined;
+  userId: string;
+  profileId: string | null;
+  videoId: string;
+  progress: number;
+  completed: boolean;
+  country: string | null;
+  device: string | null;
+  rating: number | null; // note ou appréciation de l’utilisateur
+  startedAt: Date;
+  endedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
+
+}
+
+export type SeasonViewToPrisma = {
+  id: string | undefined;
+  seasonId: string;
+  userId: string;
+  viewAt: Date;
+  episodesWatched: number;
+  totalTimeSpent: number; // in seconds
+  rating: number; // in seconds
+};

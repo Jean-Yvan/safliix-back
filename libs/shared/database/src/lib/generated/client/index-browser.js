@@ -155,9 +155,10 @@ exports.Prisma.SubscriptionScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   planId: 'planId',
-  start_date: 'start_date',
-  end_date: 'end_date',
-  renewal_status: 'renewal_status'
+  startDate: 'startDate',
+  endDate: 'endDate',
+  renewalStatus: 'renewalStatus',
+  country: 'country'
 };
 
 exports.Prisma.SharedAccountScalarFieldEnum = {
@@ -165,20 +166,20 @@ exports.Prisma.SharedAccountScalarFieldEnum = {
   ownerUserId: 'ownerUserId',
   sharedUserId: 'sharedUserId',
   subscriptionId: 'subscriptionId',
-  shared_on: 'shared_on',
+  sharedOn: 'sharedOn',
   status: 'status',
-  is_active: 'is_active'
+  isActive: 'isActive'
 };
 
 exports.Prisma.SharedAccountUserScalarFieldEnum = {
   id: 'id',
   sharedAccountId: 'sharedAccountId',
   userId: 'userId',
-  profile_name: 'profile_name',
-  is_kid_profile: 'is_kid_profile',
-  avatar_url: 'avatar_url',
-  pin_code: 'pin_code',
-  created_at: 'created_at'
+  profileName: 'profileName',
+  iskidProfile: 'iskidProfile',
+  avatarUrl: 'avatarUrl',
+  pinCode: 'pinCode',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.VideoMetadataScalarFieldEnum = {
@@ -274,6 +275,49 @@ exports.Prisma.EpisodeScalarFieldEnum = {
   metadataId: 'metadataId'
 };
 
+exports.Prisma.ViewScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  country: 'country',
+  profileId: 'profileId',
+  videoId: 'videoId',
+  viewedAt: 'viewedAt',
+  progressSeconds: 'progressSeconds'
+};
+
+exports.Prisma.MovieViewScalarFieldEnum = {
+  id: 'id',
+  viewId: 'viewId',
+  movieId: 'movieId'
+};
+
+exports.Prisma.EpisodeViewScalarFieldEnum = {
+  id: 'id',
+  viewId: 'viewId',
+  episodeId: 'episodeId'
+};
+
+exports.Prisma.SeasonViewScalarFieldEnum = {
+  id: 'id',
+  seasonId: 'seasonId',
+  userId: 'userId',
+  viewedAt: 'viewedAt',
+  episodesWatched: 'episodesWatched',
+  totalTimeSpent: 'totalTimeSpent',
+  rating: 'rating'
+};
+
+exports.Prisma.SeriesViewScalarFieldEnum = {
+  id: 'id',
+  seriesId: 'seriesId',
+  userId: 'userId',
+  viewedAt: 'viewedAt',
+  seasonsWatched: 'seasonsWatched',
+  episodesWatched: 'episodesWatched',
+  totalTimeSpent: 'totalTimeSpent',
+  rating: 'rating'
+};
+
 exports.Prisma.TagScalarFieldEnum = {
   id: 'id',
   name: 'name'
@@ -292,7 +336,7 @@ exports.Prisma.SeriesTagScalarFieldEnum = {
 exports.Prisma.SubtitleScalarFieldEnum = {
   videoId: 'videoId',
   language: 'language',
-  subtitle_url: 'subtitle_url',
+  subtitleUrl: 'subtitleUrl',
   videoMetadataId: 'videoMetadataId'
 };
 
@@ -300,17 +344,9 @@ exports.Prisma.PurchaseScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   videoId: 'videoId',
-  purchase_date: 'purchase_date',
-  expiration_date: 'expiration_date'
-};
-
-exports.Prisma.ViewScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  profileId: 'profileId',
-  videoId: 'videoId',
-  viewed_at: 'viewed_at',
-  progress_seconds: 'progress_seconds'
+  purchaseDate: 'purchaseDate',
+  expirationDate: 'expirationDate',
+  country: 'country'
 };
 
 exports.Prisma.CommentScalarFieldEnum = {
@@ -318,7 +354,7 @@ exports.Prisma.CommentScalarFieldEnum = {
   userId: 'userId',
   videoId: 'videoId',
   text: 'text',
-  created_at: 'created_at',
+  createdAt: 'createdAt',
   parentCommentId: 'parentCommentId'
 };
 
@@ -422,12 +458,16 @@ exports.Prisma.ModelName = {
   Series: 'Series',
   Season: 'Season',
   Episode: 'Episode',
+  View: 'View',
+  MovieView: 'MovieView',
+  EpisodeView: 'EpisodeView',
+  SeasonView: 'SeasonView',
+  SeriesView: 'SeriesView',
   Tag: 'Tag',
   MovieTag: 'MovieTag',
   SeriesTag: 'SeriesTag',
   Subtitle: 'Subtitle',
   Purchase: 'Purchase',
-  View: 'View',
   Comment: 'Comment',
   Ad: 'Ad',
   AdView: 'AdView',

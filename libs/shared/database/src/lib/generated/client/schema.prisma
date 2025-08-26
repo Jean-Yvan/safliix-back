@@ -87,10 +87,11 @@ model Subscription {
   userId         String
   plan           SubscriptionPlan @relation(fields: [planId], references: [id])
   planId         String
-  start_date     DateTime
-  end_date       DateTime
-  renewal_status RenewalStatus    @default(AUTO_RENEW)
+  startDate      DateTime
+  endDate        DateTime
+  renewalStatus  RenewalStatus    @default(AUTO_RENEW)
   sharedAccounts SharedAccount[]
+  country        String
 }
 
 enum RenewalStatus {
@@ -107,9 +108,9 @@ model SharedAccount {
   sharedUserId   String?
   subscription   Subscription        @relation(fields: [subscriptionId], references: [id])
   subscriptionId String
-  shared_on      DateTime            @default(now())
+  sharedOn       DateTime            @default(now())
   status         SharedAccountStatus @default(PENDING)
-  is_active      Boolean             @default(true)
+  isActive       Boolean             @default(true)
   profiles       SharedAccountUser[]
 }
 
@@ -125,18 +126,18 @@ model SharedAccountUser {
   sharedAccountId String
   user            User          @relation(fields: [userId], references: [id])
   userId          String
-  profile_name    String
-  is_kid_profile  Boolean       @default(false)
-  avatar_url      String?
-  pin_code        String?
-  created_at      DateTime      @default(now())
+  profileName     String
+  iskidProfile    Boolean       @default(false)
+  avatarUrl       String?
+  pinCode         String?
+  createdAt       DateTime      @default(now())
 
   // Relations
   views      View[]
   adViews    AdView[]
   activities SharedProfileActivity[]
 
-  @@unique([sharedAccountId, profile_name])
+  @@unique([sharedAccountId, profileName])
 }
 
 // =============================================
@@ -268,6 +269,7 @@ model Movie {
   type        String        @default("location")
   seasonCount Int           @default(0)
   rentalPrice Float?        @default(0)
+  MovieView   MovieView[]
 
   // Règles métier (ex: durée max)
   @@map("movies")
@@ -284,16 +286,18 @@ model Series {
   type        String        @default("location")
   seasonCount Int           @default(0)
   rentalPrice Float?        @default(0)
+  SeriesView  SeriesView[]
 
   @@map("series")
 }
 
 model Season {
-  id       String    @id @default(uuid())
-  series   Series    @relation(fields: [seriesId], references: [id])
-  seriesId String
-  number   Int
-  episodes Episode[]
+  id         String       @id @default(uuid())
+  series     Series       @relation(fields: [seriesId], references: [id])
+  seriesId   String
+  number     Int
+  episodes   Episode[]
+  SeasonView SeasonView[]
 
   @@unique([seriesId, number])
 }
@@ -307,9 +311,75 @@ model Episode {
   videoFileId String        @unique
   metadata    VideoMetadata @relation(fields: [metadataId], references: [id])
   metadataId  String        @unique
+  EpisodeView EpisodeView[]
 
   @@unique([seasonId, number])
   @@map("episodes")
+}
+
+// ====================================
+// Vues
+// ====================================
+// Table de base pour tous les types de vues
+model View {
+  id              String   @id @default(uuid())
+  userId          String?
+  country         String? // On stocke le pays directement
+  profileId       String?
+  videoId         String
+  viewedAt        DateTime @default(now())
+  progressSeconds Int      @default(0)
+
+  // Relations
+  user    User?              @relation(fields: [userId], references: [id])
+  profile SharedAccountUser? @relation(fields: [profileId], references: [id])
+  video   VideoFile          @relation(fields: [videoId], references: [id])
+
+  movieView   MovieView?
+  episodeView EpisodeView?
+}
+
+// Table spécifique aux films
+model MovieView {
+  id      String @id @default(uuid())
+  viewId  String @unique
+  view    View   @relation(fields: [viewId], references: [id])
+  movieId String
+  movie   Movie  @relation(fields: [movieId], references: [id])
+}
+
+// Table spécifique aux épisodes
+model EpisodeView {
+  id        String  @id @default(uuid())
+  viewId    String  @unique
+  view      View    @relation(fields: [viewId], references: [id])
+  episodeId String
+  episode   Episode @relation(fields: [episodeId], references: [id])
+}
+
+model SeasonView {
+  id       String   @id @default(uuid())
+  seasonId String
+  season   Season   @relation(fields: [seasonId], references: [id])
+  userId   String
+  viewedAt DateTime @default(now())
+
+  episodesWatched Int? // nombre d’épisodes vus dans cette saison
+  totalTimeSpent  Int? // secondes totales passées à regarder cette saison
+  rating          Float? // note ou appréciation de l’utilisateur
+}
+
+model SeriesView {
+  id       String   @id @default(uuid())
+  seriesId String
+  series   Series   @relation(fields: [seriesId], references: [id])
+  userId   String
+  viewedAt DateTime @default(now())
+
+  seasonsWatched  Int? // nombre de saisons suivies
+  episodesWatched Int? // total épisodes vus dans la série
+  totalTimeSpent  Int? // temps total passé sur la série
+  rating          Float? // appréciation globale de la série
 }
 
 // =============================================
@@ -344,10 +414,10 @@ model SeriesTag {
 }
 
 model Subtitle {
-  video        VideoFile @relation(fields: [videoId], references: [id])
-  videoId      String
-  language     String
-  subtitle_url String
+  video       VideoFile @relation(fields: [videoId], references: [id])
+  videoId     String
+  language    String
+  subtitleUrl String
 
   videoMetadata   VideoMetadata? @relation("VideoMetadataToSubtitle", fields: [videoMetadataId], references: [id])
   videoMetadataId String?
@@ -360,25 +430,14 @@ model Subtitle {
 // =============================================
 
 model Purchase {
-  id              String    @id @default(uuid())
-  user            User      @relation(fields: [userId], references: [id])
-  userId          String
-  video           VideoFile @relation(fields: [videoId], references: [id])
-  videoId         String
-  purchase_date   DateTime  @default(now())
-  expiration_date DateTime?
-}
-
-model View {
-  id               String             @id @default(uuid())
-  user             User               @relation(fields: [userId], references: [id])
-  userId           String
-  profile          SharedAccountUser? @relation(fields: [profileId], references: [id])
-  profileId        String?
-  video            VideoFile          @relation(fields: [videoId], references: [id])
-  videoId          String
-  viewed_at        DateTime           @default(now())
-  progress_seconds Int                @default(0)
+  id             String    @id @default(uuid())
+  user           User      @relation(fields: [userId], references: [id])
+  userId         String
+  video          VideoFile @relation(fields: [videoId], references: [id])
+  videoId        String
+  purchaseDate   DateTime  @default(now())
+  expirationDate DateTime?
+  country        String
 }
 
 model Comment {
@@ -388,7 +447,7 @@ model Comment {
   video           VideoFile @relation(fields: [videoId], references: [id])
   videoId         String
   text            String
-  created_at      DateTime  @default(now())
+  createdAt       DateTime  @default(now())
   parent          Comment?  @relation("CommentReplies", fields: [parentCommentId], references: [id])
   parentCommentId String?
   replies         Comment[] @relation("CommentReplies")
