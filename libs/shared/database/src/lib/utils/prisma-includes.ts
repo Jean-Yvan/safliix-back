@@ -47,3 +47,9 @@ export const serieWithMetadataAndSeasonCountInclude = {
     select: { seasons: true },
   },
 } as const;
+
+export const sessionInclude = {
+  include: {
+    user:true
+  }
+} as const;

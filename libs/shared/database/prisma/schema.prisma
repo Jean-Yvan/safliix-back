@@ -24,7 +24,6 @@ model User {
   password_hash String
   name          String?
   avatarUrl     String?
-  createdAt     DateTime  @default(now())
   lastLoginAt   DateTime?
   isVerified    Boolean   @default(false)
   isMainAccount Boolean   @default(true)
@@ -43,6 +42,27 @@ model User {
   adViews       AdView[] // Added opposite relation for AdView
 
   userVideoView UserVideoView[]
+
+  SeasonView SeasonView[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  EmailValidation EmailValidation[]
+}
+
+model EmailValidation {
+  id        String   @id @default(uuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  used      Boolean  @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
 }
 
 model Session {
@@ -52,8 +72,10 @@ model Session {
   refreshToken String   @unique
   ipAddress    String?
   userAgent    String?
-  createdAt    DateTime @default(now())
   expiresAt    DateTime
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([userId, refreshToken])
 }
@@ -75,6 +97,9 @@ model SubscriptionPlan {
   maxSharedAccounts Int            @default(0)
   videoQuality      VideoQuality
   subscriptions     Subscription[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 enum VideoQuality {
@@ -94,6 +119,9 @@ model Subscription {
   renewalStatus  RenewalStatus    @default(AUTO_RENEW)
   sharedAccounts SharedAccount[]
   country        String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 enum RenewalStatus {
@@ -114,6 +142,9 @@ model SharedAccount {
   status         SharedAccountStatus @default(PENDING)
   isActive       Boolean             @default(true)
   profiles       SharedAccountUser[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 enum SharedAccountStatus {
@@ -132,12 +163,14 @@ model SharedAccountUser {
   iskidProfile    Boolean       @default(false)
   avatarUrl       String?
   pinCode         String?
-  createdAt       DateTime      @default(now())
 
   // Relations
 
   adViews    AdView[]
   activities SharedProfileActivity[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@unique([sharedAccountId, profileName])
 }
@@ -173,6 +206,9 @@ model VideoMetadata {
   subtitles Subtitle[]      @relation("VideoMetadataToSubtitle")
   languages VideoLanguage[]
 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@map("video_metadata")
 }
 
@@ -192,6 +228,9 @@ model VideoFile {
   comments          Comment[] // Opposite relation for Comment
   UserVideoProgress UserVideoView[]
 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@map("video_files")
 }
 
@@ -200,6 +239,9 @@ model VideoGenre {
   name   String          @unique
   videos VideoMetadata[]
 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@map("video_genres")
 }
 
@@ -207,6 +249,9 @@ model Actor {
   id         String       @id @default(uuid())
   name       String
   VideoActor VideoActor[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("video_actors")
 }
@@ -218,6 +263,9 @@ model VideoActor {
   actorId String
   role    String?
 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@id([videoId, actorId])
 }
 
@@ -226,6 +274,9 @@ model VideoLanguage {
   code   String          @unique
   name   String
   videos VideoMetadata[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("video_languages")
 }
@@ -244,6 +295,9 @@ model VideoFormat {
   format      String          @unique
   description String?
   videos      VideoMetadata[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model VideoCategory {
@@ -251,6 +305,9 @@ model VideoCategory {
   category    String          @unique
   description String?
   videos      VideoMetadata[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 enum ContentStatus {
@@ -272,6 +329,9 @@ model Movie {
   seasonCount Int           @default(0)
   rentalPrice Float?        @default(0)
 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   // Règles métier (ex: durée max)
   @@map("movies")
 }
@@ -289,6 +349,9 @@ model Series {
   rentalPrice Float?        @default(0)
   SeriesView  SeriesView[]
 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@map("series")
 }
 
@@ -299,6 +362,9 @@ model Season {
   number     Int
   episodes   Episode[]
   SeasonView SeasonView[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@unique([seriesId, number])
 }
@@ -312,6 +378,9 @@ model Episode {
   videoFileId String        @unique
   metadata    VideoMetadata @relation(fields: [metadataId], references: [id])
   metadataId  String        @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@unique([seasonId, number])
   @@map("episodes")
@@ -332,7 +401,7 @@ model UserVideoView {
   country   String?
   device    String?
   rating    Float? // note ou appréciation de l’utilisateur
-  startedAt DateTime  @default(now())
+  startedAt DateTime?
   endedAt   DateTime?
 
   createdAt DateTime @default(now())
@@ -350,11 +419,17 @@ model SeasonView {
   seasonId String
   season   Season   @relation(fields: [seasonId], references: [id])
   userId   String
+  user     User     @relation(fields: [userId], references: [id])
   viewedAt DateTime @default(now())
 
   episodesWatched Int? // nombre d’épisodes vus dans cette saison
   totalTimeSpent  Int? // secondes totales passées à regarder cette saison
   rating          Float? // note ou appréciation de l’utilisateur
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([seasonId, userId])
 }
 
 model SeriesView {
@@ -368,6 +443,11 @@ model SeriesView {
   episodesWatched Int? // total épisodes vus dans la série
   totalTimeSpent  Int? // temps total passé sur la série
   rating          Float? // appréciation globale de la série
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([seriesId, userId])
 }
 
 // =============================================

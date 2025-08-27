@@ -6,7 +6,8 @@ import {
   seasonInclude,
   serieInclude,
   serieWithMetadataAndSeasonCountInclude,
-  movieInclude
+  movieInclude,
+  sessionInclude
 } from "./prisma-includes";
 
 export type MetadataWithRelations = Prisma.VideoMetadataGetPayload<{
@@ -33,6 +34,10 @@ export type SerieWithMetadataAndSeasonCount = Prisma.SeriesGetPayload<{
   include: typeof serieWithMetadataAndSeasonCountInclude;
 }>;
 
+/* export type SessionWithUser = Prisma.SessionGetPayload<{
+  include: typeof sessionInclude; 
+}>; */
+
 export type SerieToPrisma = {
   id: string | undefined;
   metadata: {
@@ -41,7 +46,9 @@ export type SerieToPrisma = {
   rentalPrice?: number | null;
   status: string;
   type: string;
-  seasonCount: number
+  seasonCount: number;
+  createdAt?: Date;
+  updatedAt?: Date;
 };
 
 export type MovieToPrisma = {
@@ -55,6 +62,9 @@ export type MovieToPrisma = {
   rentalPrice?: number | null;
   status: string;
   type: string;
+
+  createdAt?: Date;
+  updatedAt?: Date;
 };
 
 export type EpisodeToPrisma = {
@@ -67,6 +77,9 @@ export type EpisodeToPrisma = {
   videoFile: {
     create: VideoFileToPrisma;
   };
+
+  createdAt?: Date;
+  updatedAt?: Date;
 };
 
 
@@ -76,6 +89,9 @@ export type SeasonToPrisma = {
   serieId: string;
   title: string | undefined;
   episodes?: { create: EpisodeToPrisma[] };
+
+  createdAt?: Date;
+  updatedAt?: Date;
 };
 
 export type VideoFileToPrisma = {
@@ -85,12 +101,17 @@ export type VideoFileToPrisma = {
   trailerPath: string | null;
   width: number | null;
   height: number | null;
+
+  createdAt?: Date;
+  updatedAt?: Date;
 };
 
 export type VideoCategoryToPrisma = {
   id: string | undefined; // optional if Prisma should generate the id
   category: string;
   description: string | null;
+  createdAt?: Date;
+  updatedAt?: Date;
 };
 
 export type VideoFormatToPrisma = {
@@ -104,6 +125,8 @@ export type VideoActorToPrisma = {
   name: string;
   bio: string | null;
   dateOfBirth: Date | null; // peut être null si pas de date de naissance
+  createdAt?: Date;
+  updatedAt?: Date;
 };
 
 
@@ -143,20 +166,25 @@ export type MetadataToPrisma = {
       };
     }[];
   };
+
+  createdAt?: Date;
+  updatedAt?: Date;
 };
 
 
 
 export type SerieViewToPrisma = {
-  id: string;
+  id: string | undefined;
   seriesId: string;
   userId: string;
-  viewAt: Date;
-  seasonWatched: number;
-  episodeWatched: number;
-  totalTimeSpent: number;
-  rating: number; // in seconds
+  viewedAt: Date;
+  seasonsWatched: number | null;
+  episodesWatched: number | null;
+  totalTimeSpent: number | null;
+  rating: number | null; // in seconds
   
+  createdAt?: Date;
+  updatedAt?: Date;
 };
 
 
@@ -170,8 +198,8 @@ export type UserVideoViewToPrisma = {
   country: string | null;
   device: string | null;
   rating: number | null; // note ou appréciation de l’utilisateur
-  startedAt: Date;
-  endedAt: Date;
+  startedAt: Date | null;
+  endedAt: Date | null;
   createdAt?: Date;
   updatedAt?: Date;
 
@@ -181,8 +209,62 @@ export type SeasonViewToPrisma = {
   id: string | undefined;
   seasonId: string;
   userId: string;
-  viewAt: Date;
-  episodesWatched: number;
-  totalTimeSpent: number; // in seconds
-  rating: number; // in seconds
+  viewedAt: Date;
+  episodesWatched: number | null;
+  totalTimeSpent: number | null; // in seconds
+  rating: number | null; // in seconds
+  createdAt?: Date;
+  updatedAt?: Date;
 };
+
+export type UserToPrisma = {
+  id: string | undefined;
+  email: string;
+  password_hash: string;
+  name?: string;
+  avatarUrl?: string;
+  lastLoginAt?: Date | null;
+  isVerified: boolean;
+  isMainAccount: boolean;
+  role: string; // UserRole
+  createdAt?: Date;
+  updatedAt?: Date;
+};
+
+export type SessionToPrisma = {
+  id: string | undefined;
+  user:{
+    connect: {
+      id: string
+    }
+  };
+  refreshToken: string;
+  ipAddress?: string | null;
+  userAgent?: string | null;
+  expiresAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
+};
+
+export type EmailValidationToPrisma = {
+  id: string | undefined;
+  userId: string;
+  token: string;
+  expiresAt: Date;
+  used: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
+};
+
+export type SharedAccountToPrisma = {
+  id: string | undefined;
+  ownerUserId: string;
+  sharedUserId?: string | null;
+  subscriptionId: string;
+  sharedOn: Date;
+  status: string; // SharedAccountStatus
+  isActive: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
+};
+

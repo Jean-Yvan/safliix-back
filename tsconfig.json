@@ -47,6 +47,9 @@
     },
     {
       "path": "./libs/shared/metric"
+    },
+    {
+      "path": "./libs/domains/users"
     }
   ]
 }

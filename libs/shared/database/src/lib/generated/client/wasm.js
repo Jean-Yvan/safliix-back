@@ -126,11 +126,22 @@ exports.Prisma.UserScalarFieldEnum = {
   password_hash: 'password_hash',
   name: 'name',
   avatarUrl: 'avatarUrl',
-  createdAt: 'createdAt',
   lastLoginAt: 'lastLoginAt',
   isVerified: 'isVerified',
   isMainAccount: 'isMainAccount',
-  role: 'role'
+  role: 'role',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.EmailValidationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  token: 'token',
+  expiresAt: 'expiresAt',
+  used: 'used',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.SessionScalarFieldEnum = {
@@ -139,8 +150,9 @@ exports.Prisma.SessionScalarFieldEnum = {
   refreshToken: 'refreshToken',
   ipAddress: 'ipAddress',
   userAgent: 'userAgent',
+  expiresAt: 'expiresAt',
   createdAt: 'createdAt',
-  expiresAt: 'expiresAt'
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.SubscriptionPlanScalarFieldEnum = {
@@ -148,7 +160,9 @@ exports.Prisma.SubscriptionPlanScalarFieldEnum = {
   name: 'name',
   price: 'price',
   maxSharedAccounts: 'maxSharedAccounts',
-  videoQuality: 'videoQuality'
+  videoQuality: 'videoQuality',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.SubscriptionScalarFieldEnum = {
@@ -158,7 +172,9 @@ exports.Prisma.SubscriptionScalarFieldEnum = {
   startDate: 'startDate',
   endDate: 'endDate',
   renewalStatus: 'renewalStatus',
-  country: 'country'
+  country: 'country',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.SharedAccountScalarFieldEnum = {
@@ -168,7 +184,9 @@ exports.Prisma.SharedAccountScalarFieldEnum = {
   subscriptionId: 'subscriptionId',
   sharedOn: 'sharedOn',
   status: 'status',
-  isActive: 'isActive'
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.SharedAccountUserScalarFieldEnum = {
@@ -179,7 +197,8 @@ exports.Prisma.SharedAccountUserScalarFieldEnum = {
   iskidProfile: 'iskidProfile',
   avatarUrl: 'avatarUrl',
   pinCode: 'pinCode',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.VideoMetadataScalarFieldEnum = {
@@ -196,7 +215,9 @@ exports.Prisma.VideoMetadataScalarFieldEnum = {
   director: 'director',
   formatId: 'formatId',
   categoryId: 'categoryId',
-  status: 'status'
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.VideoFileScalarFieldEnum = {
@@ -205,41 +226,55 @@ exports.Prisma.VideoFileScalarFieldEnum = {
   trailerPath: 'trailerPath',
   duration: 'duration',
   width: 'width',
-  height: 'height'
+  height: 'height',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.VideoGenreScalarFieldEnum = {
   id: 'id',
-  name: 'name'
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.ActorScalarFieldEnum = {
   id: 'id',
-  name: 'name'
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.VideoActorScalarFieldEnum = {
   videoId: 'videoId',
   actorId: 'actorId',
-  role: 'role'
+  role: 'role',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.VideoLanguageScalarFieldEnum = {
   id: 'id',
   code: 'code',
-  name: 'name'
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.VideoFormatScalarFieldEnum = {
   id: 'id',
   format: 'format',
-  description: 'description'
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.VideoCategoryScalarFieldEnum = {
   id: 'id',
   category: 'category',
-  description: 'description'
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.MovieScalarFieldEnum = {
@@ -249,7 +284,9 @@ exports.Prisma.MovieScalarFieldEnum = {
   status: 'status',
   type: 'type',
   seasonCount: 'seasonCount',
-  rentalPrice: 'rentalPrice'
+  rentalPrice: 'rentalPrice',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.SeriesScalarFieldEnum = {
@@ -258,13 +295,17 @@ exports.Prisma.SeriesScalarFieldEnum = {
   status: 'status',
   type: 'type',
   seasonCount: 'seasonCount',
-  rentalPrice: 'rentalPrice'
+  rentalPrice: 'rentalPrice',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.SeasonScalarFieldEnum = {
   id: 'id',
   seriesId: 'seriesId',
-  number: 'number'
+  number: 'number',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.EpisodeScalarFieldEnum = {
@@ -272,29 +313,25 @@ exports.Prisma.EpisodeScalarFieldEnum = {
   seasonId: 'seasonId',
   number: 'number',
   videoFileId: 'videoFileId',
-  metadataId: 'metadataId'
+  metadataId: 'metadataId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
-exports.Prisma.ViewScalarFieldEnum = {
+exports.Prisma.UserVideoViewScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  country: 'country',
   profileId: 'profileId',
   videoId: 'videoId',
-  viewedAt: 'viewedAt',
-  progressSeconds: 'progressSeconds'
-};
-
-exports.Prisma.MovieViewScalarFieldEnum = {
-  id: 'id',
-  viewId: 'viewId',
-  movieId: 'movieId'
-};
-
-exports.Prisma.EpisodeViewScalarFieldEnum = {
-  id: 'id',
-  viewId: 'viewId',
-  episodeId: 'episodeId'
+  progress: 'progress',
+  completed: 'completed',
+  country: 'country',
+  device: 'device',
+  rating: 'rating',
+  startedAt: 'startedAt',
+  endedAt: 'endedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.SeasonViewScalarFieldEnum = {
@@ -304,7 +341,9 @@ exports.Prisma.SeasonViewScalarFieldEnum = {
   viewedAt: 'viewedAt',
   episodesWatched: 'episodesWatched',
   totalTimeSpent: 'totalTimeSpent',
-  rating: 'rating'
+  rating: 'rating',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.SeriesViewScalarFieldEnum = {
@@ -315,7 +354,9 @@ exports.Prisma.SeriesViewScalarFieldEnum = {
   seasonsWatched: 'seasonsWatched',
   episodesWatched: 'episodesWatched',
   totalTimeSpent: 'totalTimeSpent',
-  rating: 'rating'
+  rating: 'rating',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.TagScalarFieldEnum = {
@@ -441,6 +482,7 @@ exports.ProfileActivityAction = exports.$Enums.ProfileActivityAction = {
 
 exports.Prisma.ModelName = {
   User: 'User',
+  EmailValidation: 'EmailValidation',
   Session: 'Session',
   SubscriptionPlan: 'SubscriptionPlan',
   Subscription: 'Subscription',
@@ -458,9 +500,7 @@ exports.Prisma.ModelName = {
   Series: 'Series',
   Season: 'Season',
   Episode: 'Episode',
-  View: 'View',
-  MovieView: 'MovieView',
-  EpisodeView: 'EpisodeView',
+  UserVideoView: 'UserVideoView',
   SeasonView: 'SeasonView',
   SeriesView: 'SeriesView',
   Tag: 'Tag',

@@ -13,7 +13,7 @@ export class VideoViewMapper {
   
 
   // Conversion en objet Prisma pour persistance
-  static toPrisma(entity: UserVideoView): Partial<UserVideoViewToPrisma> {
+  static toPrisma(entity: UserVideoView): UserVideoViewToPrisma {
     return {
       id: entity.id,
       videoId: entity.videoId,
