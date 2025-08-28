@@ -1,21 +1,9 @@
 import { User } from "../entities/user.entity";
-import { UserToPrisma } from "@safliix-back/database";
+import { UserToPrisma, UserWithoutRelation, UserWithRelation } from "@safliix-back/database";
 
 export class UserMapper {
-  static toDomain(prisma: UserToPrisma): User {
-    return User.restore({
-      id: prisma.id,
-      email: prisma.email,
-      passwordHash: prisma.password_hash,
-      name: prisma.name,
-      avatarUrl: prisma.avatarUrl,
-      lastLoginAt: prisma.lastLoginAt ?? undefined,
-      isVerified: prisma.isVerified,
-      isMainAccount: prisma.isMainAccount,
-      role: prisma.role,
-      createdAt: prisma.createdAt,
-      updatedAt: prisma.updatedAt,
-    });
+  static toDomain(data: UserWithRelation | UserWithoutRelation): User {
+    return User.restore(data);
   }
 
   static toPrisma(user: User): UserToPrisma {

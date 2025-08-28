@@ -129,7 +129,6 @@ exports.Prisma.UserScalarFieldEnum = {
   lastLoginAt: 'lastLoginAt',
   isVerified: 'isVerified',
   isMainAccount: 'isMainAccount',
-  role: 'role',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -180,11 +179,8 @@ exports.Prisma.SubscriptionScalarFieldEnum = {
 exports.Prisma.SharedAccountScalarFieldEnum = {
   id: 'id',
   ownerUserId: 'ownerUserId',
-  sharedUserId: 'sharedUserId',
   subscriptionId: 'subscriptionId',
-  sharedOn: 'sharedOn',
   status: 'status',
-  isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -192,7 +188,6 @@ exports.Prisma.SharedAccountScalarFieldEnum = {
 exports.Prisma.SharedAccountUserScalarFieldEnum = {
   id: 'id',
   sharedAccountId: 'sharedAccountId',
-  userId: 'userId',
   profileName: 'profileName',
   iskidProfile: 'iskidProfile',
   avatarUrl: 'avatarUrl',
@@ -450,12 +445,6 @@ exports.Prisma.JsonNullValueFilter = {
   JsonNull: Prisma.JsonNull,
   AnyNull: Prisma.AnyNull
 };
-exports.UserRole = exports.$Enums.UserRole = {
-  USER: 'USER',
-  ADMIN: 'ADMIN',
-  SUPER_ADMIN: 'SUPER_ADMIN'
-};
-
 exports.VideoQuality = exports.$Enums.VideoQuality = {
   SD: 'SD',
   HD: 'HD',

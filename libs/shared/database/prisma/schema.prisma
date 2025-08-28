@@ -27,19 +27,15 @@ model User {
   lastLoginAt   DateTime?
   isVerified    Boolean   @default(false)
   isMainAccount Boolean   @default(true)
-  role          UserRole  @default(USER)
 
   // Relations
   sessions            Session[]
   subscriptions       Subscription[]
-  ownedSharedAccounts SharedAccount[]     @relation("OwnerAccounts")
-  sharedProfiles      SharedAccountUser[]
+  ownedSharedAccounts SharedAccount[] @relation("OwnerAccounts")
   purchases           Purchase[]
 
   comments Comment[]
-
-  SharedAccount SharedAccount[]
-  adViews       AdView[] // Added opposite relation for AdView
+  adViews  AdView[] // Added opposite relation for AdView
 
   userVideoView UserVideoView[]
 
@@ -134,13 +130,9 @@ model SharedAccount {
   id             String              @id @default(uuid())
   owner          User                @relation("OwnerAccounts", fields: [ownerUserId], references: [id])
   ownerUserId    String
-  sharedUser     User?               @relation(fields: [sharedUserId], references: [id])
-  sharedUserId   String?
   subscription   Subscription        @relation(fields: [subscriptionId], references: [id])
   subscriptionId String
-  sharedOn       DateTime            @default(now())
   status         SharedAccountStatus @default(PENDING)
-  isActive       Boolean             @default(true)
   profiles       SharedAccountUser[]
 
   createdAt DateTime @default(now())
@@ -157,12 +149,10 @@ model SharedAccountUser {
   id              String        @id @default(uuid())
   sharedAccount   SharedAccount @relation(fields: [sharedAccountId], references: [id])
   sharedAccountId String
-  user            User          @relation(fields: [userId], references: [id])
-  userId          String
   profileName     String
   iskidProfile    Boolean       @default(false)
   avatarUrl       String?
-  pinCode         String?
+  pinCode         Int
 
   // Relations
 

@@ -49,7 +49,47 @@ export const serieWithMetadataAndSeasonCountInclude = {
 } as const;
 
 export const sessionInclude = {
-  include: {
+  
     user:true
-  }
+  
+} as const;
+
+// Type sans relations incluses
+export const userWithoutRelationsSelect = {
+  id: true,
+  email: true,
+  password_hash: true,
+  name: true,
+  avatarUrl: true,
+  lastLoginAt: true,
+  isVerified: true,
+  isMainAccount: true,
+  createdAt: true,
+  updatedAt: true,
+  
+} as const;
+
+// Type avec relations incluses
+export const userWithRelationsInclude = {
+  sessions: true,
+  subscriptions: true,
+  ownedSharedAccounts: true,
+  sharedProfiles: true,
+  purchases: true,
+  comments: true,
+  SharedAccount: true,
+  adViews: true,
+  userVideoView: true,
+  SeasonView: true,
+  EmailValidation: true
+} as const;
+
+export const sharedAccountUserInclude = {
+ sharedAccount:true 
+} as const;
+
+export const sharedAccountInclude = {
+  owner:true,
+  subscription:true,
+  profiles:true
 } as const;

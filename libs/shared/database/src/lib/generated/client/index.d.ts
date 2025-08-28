@@ -3700,10 +3700,8 @@ export namespace Prisma {
     sessions: number
     subscriptions: number
     ownedSharedAccounts: number
-    sharedProfiles: number
     purchases: number
     comments: number
-    SharedAccount: number
     adViews: number
     userVideoView: number
     SeasonView: number
@@ -3714,10 +3712,8 @@ export namespace Prisma {
     sessions?: boolean | UserCountOutputTypeCountSessionsArgs
     subscriptions?: boolean | UserCountOutputTypeCountSubscriptionsArgs
     ownedSharedAccounts?: boolean | UserCountOutputTypeCountOwnedSharedAccountsArgs
-    sharedProfiles?: boolean | UserCountOutputTypeCountSharedProfilesArgs
     purchases?: boolean | UserCountOutputTypeCountPurchasesArgs
     comments?: boolean | UserCountOutputTypeCountCommentsArgs
-    SharedAccount?: boolean | UserCountOutputTypeCountSharedAccountArgs
     adViews?: boolean | UserCountOutputTypeCountAdViewsArgs
     userVideoView?: boolean | UserCountOutputTypeCountUserVideoViewArgs
     SeasonView?: boolean | UserCountOutputTypeCountSeasonViewArgs
@@ -3759,13 +3755,6 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountSharedProfilesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: SharedAccountUserWhereInput
-  }
-
-  /**
-   * UserCountOutputType without action
-   */
   export type UserCountOutputTypeCountPurchasesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: PurchaseWhereInput
   }
@@ -3775,13 +3764,6 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountCommentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: CommentWhereInput
-  }
-
-  /**
-   * UserCountOutputType without action
-   */
-  export type UserCountOutputTypeCountSharedAccountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: SharedAccountWhereInput
   }
 
   /**
@@ -4462,7 +4444,6 @@ export namespace Prisma {
     lastLoginAt: Date | null
     isVerified: boolean | null
     isMainAccount: boolean | null
-    role: $Enums.UserRole | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -4476,7 +4457,6 @@ export namespace Prisma {
     lastLoginAt: Date | null
     isVerified: boolean | null
     isMainAccount: boolean | null
-    role: $Enums.UserRole | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -4490,7 +4470,6 @@ export namespace Prisma {
     lastLoginAt: number
     isVerified: number
     isMainAccount: number
-    role: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -4506,7 +4485,6 @@ export namespace Prisma {
     lastLoginAt?: true
     isVerified?: true
     isMainAccount?: true
-    role?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -4520,7 +4498,6 @@ export namespace Prisma {
     lastLoginAt?: true
     isVerified?: true
     isMainAccount?: true
-    role?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -4534,7 +4511,6 @@ export namespace Prisma {
     lastLoginAt?: true
     isVerified?: true
     isMainAccount?: true
-    role?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -4621,7 +4597,6 @@ export namespace Prisma {
     lastLoginAt: Date | null
     isVerified: boolean
     isMainAccount: boolean
-    role: $Enums.UserRole
     createdAt: Date
     updatedAt: Date
     _count: UserCountAggregateOutputType | null
@@ -4652,16 +4627,13 @@ export namespace Prisma {
     lastLoginAt?: boolean
     isVerified?: boolean
     isMainAccount?: boolean
-    role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     subscriptions?: boolean | User$subscriptionsArgs<ExtArgs>
     ownedSharedAccounts?: boolean | User$ownedSharedAccountsArgs<ExtArgs>
-    sharedProfiles?: boolean | User$sharedProfilesArgs<ExtArgs>
     purchases?: boolean | User$purchasesArgs<ExtArgs>
     comments?: boolean | User$commentsArgs<ExtArgs>
-    SharedAccount?: boolean | User$SharedAccountArgs<ExtArgs>
     adViews?: boolean | User$adViewsArgs<ExtArgs>
     userVideoView?: boolean | User$userVideoViewArgs<ExtArgs>
     SeasonView?: boolean | User$SeasonViewArgs<ExtArgs>
@@ -4678,7 +4650,6 @@ export namespace Prisma {
     lastLoginAt?: boolean
     isVerified?: boolean
     isMainAccount?: boolean
-    role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -4692,7 +4663,6 @@ export namespace Prisma {
     lastLoginAt?: boolean
     isVerified?: boolean
     isMainAccount?: boolean
-    role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -4706,20 +4676,17 @@ export namespace Prisma {
     lastLoginAt?: boolean
     isVerified?: boolean
     isMainAccount?: boolean
-    role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "password_hash" | "name" | "avatarUrl" | "lastLoginAt" | "isVerified" | "isMainAccount" | "role" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "password_hash" | "name" | "avatarUrl" | "lastLoginAt" | "isVerified" | "isMainAccount" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     subscriptions?: boolean | User$subscriptionsArgs<ExtArgs>
     ownedSharedAccounts?: boolean | User$ownedSharedAccountsArgs<ExtArgs>
-    sharedProfiles?: boolean | User$sharedProfilesArgs<ExtArgs>
     purchases?: boolean | User$purchasesArgs<ExtArgs>
     comments?: boolean | User$commentsArgs<ExtArgs>
-    SharedAccount?: boolean | User$SharedAccountArgs<ExtArgs>
     adViews?: boolean | User$adViewsArgs<ExtArgs>
     userVideoView?: boolean | User$userVideoViewArgs<ExtArgs>
     SeasonView?: boolean | User$SeasonViewArgs<ExtArgs>
@@ -4735,10 +4702,8 @@ export namespace Prisma {
       sessions: Prisma.$SessionPayload<ExtArgs>[]
       subscriptions: Prisma.$SubscriptionPayload<ExtArgs>[]
       ownedSharedAccounts: Prisma.$SharedAccountPayload<ExtArgs>[]
-      sharedProfiles: Prisma.$SharedAccountUserPayload<ExtArgs>[]
       purchases: Prisma.$PurchasePayload<ExtArgs>[]
       comments: Prisma.$CommentPayload<ExtArgs>[]
-      SharedAccount: Prisma.$SharedAccountPayload<ExtArgs>[]
       adViews: Prisma.$AdViewPayload<ExtArgs>[]
       userVideoView: Prisma.$UserVideoViewPayload<ExtArgs>[]
       SeasonView: Prisma.$SeasonViewPayload<ExtArgs>[]
@@ -4753,7 +4718,6 @@ export namespace Prisma {
       lastLoginAt: Date | null
       isVerified: boolean
       isMainAccount: boolean
-      role: $Enums.UserRole
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["user"]>
@@ -5153,10 +5117,8 @@ export namespace Prisma {
     sessions<T extends User$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     subscriptions<T extends User$subscriptionsArgs<ExtArgs> = {}>(args?: Subset<T, User$subscriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     ownedSharedAccounts<T extends User$ownedSharedAccountsArgs<ExtArgs> = {}>(args?: Subset<T, User$ownedSharedAccountsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SharedAccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    sharedProfiles<T extends User$sharedProfilesArgs<ExtArgs> = {}>(args?: Subset<T, User$sharedProfilesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SharedAccountUserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     purchases<T extends User$purchasesArgs<ExtArgs> = {}>(args?: Subset<T, User$purchasesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PurchasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     comments<T extends User$commentsArgs<ExtArgs> = {}>(args?: Subset<T, User$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    SharedAccount<T extends User$SharedAccountArgs<ExtArgs> = {}>(args?: Subset<T, User$SharedAccountArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SharedAccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     adViews<T extends User$adViewsArgs<ExtArgs> = {}>(args?: Subset<T, User$adViewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdViewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     userVideoView<T extends User$userVideoViewArgs<ExtArgs> = {}>(args?: Subset<T, User$userVideoViewArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserVideoViewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     SeasonView<T extends User$SeasonViewArgs<ExtArgs> = {}>(args?: Subset<T, User$SeasonViewArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SeasonViewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -5198,7 +5160,6 @@ export namespace Prisma {
     readonly lastLoginAt: FieldRef<"User", 'DateTime'>
     readonly isVerified: FieldRef<"User", 'Boolean'>
     readonly isMainAccount: FieldRef<"User", 'Boolean'>
-    readonly role: FieldRef<"User", 'UserRole'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
   }
@@ -5661,30 +5622,6 @@ export namespace Prisma {
   }
 
   /**
-   * User.sharedProfiles
-   */
-  export type User$sharedProfilesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the SharedAccountUser
-     */
-    select?: SharedAccountUserSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the SharedAccountUser
-     */
-    omit?: SharedAccountUserOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SharedAccountUserInclude<ExtArgs> | null
-    where?: SharedAccountUserWhereInput
-    orderBy?: SharedAccountUserOrderByWithRelationInput | SharedAccountUserOrderByWithRelationInput[]
-    cursor?: SharedAccountUserWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: SharedAccountUserScalarFieldEnum | SharedAccountUserScalarFieldEnum[]
-  }
-
-  /**
    * User.purchases
    */
   export type User$purchasesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5730,30 +5667,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: CommentScalarFieldEnum | CommentScalarFieldEnum[]
-  }
-
-  /**
-   * User.SharedAccount
-   */
-  export type User$SharedAccountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the SharedAccount
-     */
-    select?: SharedAccountSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the SharedAccount
-     */
-    omit?: SharedAccountOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SharedAccountInclude<ExtArgs> | null
-    where?: SharedAccountWhereInput
-    orderBy?: SharedAccountOrderByWithRelationInput | SharedAccountOrderByWithRelationInput[]
-    cursor?: SharedAccountWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: SharedAccountScalarFieldEnum | SharedAccountScalarFieldEnum[]
   }
 
   /**
@@ -10347,11 +10260,8 @@ export namespace Prisma {
   export type SharedAccountMinAggregateOutputType = {
     id: string | null
     ownerUserId: string | null
-    sharedUserId: string | null
     subscriptionId: string | null
-    sharedOn: Date | null
     status: $Enums.SharedAccountStatus | null
-    isActive: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -10359,11 +10269,8 @@ export namespace Prisma {
   export type SharedAccountMaxAggregateOutputType = {
     id: string | null
     ownerUserId: string | null
-    sharedUserId: string | null
     subscriptionId: string | null
-    sharedOn: Date | null
     status: $Enums.SharedAccountStatus | null
-    isActive: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -10371,11 +10278,8 @@ export namespace Prisma {
   export type SharedAccountCountAggregateOutputType = {
     id: number
     ownerUserId: number
-    sharedUserId: number
     subscriptionId: number
-    sharedOn: number
     status: number
-    isActive: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -10385,11 +10289,8 @@ export namespace Prisma {
   export type SharedAccountMinAggregateInputType = {
     id?: true
     ownerUserId?: true
-    sharedUserId?: true
     subscriptionId?: true
-    sharedOn?: true
     status?: true
-    isActive?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -10397,11 +10298,8 @@ export namespace Prisma {
   export type SharedAccountMaxAggregateInputType = {
     id?: true
     ownerUserId?: true
-    sharedUserId?: true
     subscriptionId?: true
-    sharedOn?: true
     status?: true
-    isActive?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -10409,11 +10307,8 @@ export namespace Prisma {
   export type SharedAccountCountAggregateInputType = {
     id?: true
     ownerUserId?: true
-    sharedUserId?: true
     subscriptionId?: true
-    sharedOn?: true
     status?: true
-    isActive?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -10494,11 +10389,8 @@ export namespace Prisma {
   export type SharedAccountGroupByOutputType = {
     id: string
     ownerUserId: string
-    sharedUserId: string | null
     subscriptionId: string
-    sharedOn: Date
     status: $Enums.SharedAccountStatus
-    isActive: boolean
     createdAt: Date
     updatedAt: Date
     _count: SharedAccountCountAggregateOutputType | null
@@ -10523,15 +10415,11 @@ export namespace Prisma {
   export type SharedAccountSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     ownerUserId?: boolean
-    sharedUserId?: boolean
     subscriptionId?: boolean
-    sharedOn?: boolean
     status?: boolean
-    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     owner?: boolean | UserDefaultArgs<ExtArgs>
-    sharedUser?: boolean | SharedAccount$sharedUserArgs<ExtArgs>
     subscription?: boolean | SubscriptionDefaultArgs<ExtArgs>
     profiles?: boolean | SharedAccount$profilesArgs<ExtArgs>
     _count?: boolean | SharedAccountCountOutputTypeDefaultArgs<ExtArgs>
@@ -10540,61 +10428,47 @@ export namespace Prisma {
   export type SharedAccountSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     ownerUserId?: boolean
-    sharedUserId?: boolean
     subscriptionId?: boolean
-    sharedOn?: boolean
     status?: boolean
-    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     owner?: boolean | UserDefaultArgs<ExtArgs>
-    sharedUser?: boolean | SharedAccount$sharedUserArgs<ExtArgs>
     subscription?: boolean | SubscriptionDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["sharedAccount"]>
 
   export type SharedAccountSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     ownerUserId?: boolean
-    sharedUserId?: boolean
     subscriptionId?: boolean
-    sharedOn?: boolean
     status?: boolean
-    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     owner?: boolean | UserDefaultArgs<ExtArgs>
-    sharedUser?: boolean | SharedAccount$sharedUserArgs<ExtArgs>
     subscription?: boolean | SubscriptionDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["sharedAccount"]>
 
   export type SharedAccountSelectScalar = {
     id?: boolean
     ownerUserId?: boolean
-    sharedUserId?: boolean
     subscriptionId?: boolean
-    sharedOn?: boolean
     status?: boolean
-    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type SharedAccountOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "ownerUserId" | "sharedUserId" | "subscriptionId" | "sharedOn" | "status" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["sharedAccount"]>
+  export type SharedAccountOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "ownerUserId" | "subscriptionId" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["sharedAccount"]>
   export type SharedAccountInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     owner?: boolean | UserDefaultArgs<ExtArgs>
-    sharedUser?: boolean | SharedAccount$sharedUserArgs<ExtArgs>
     subscription?: boolean | SubscriptionDefaultArgs<ExtArgs>
     profiles?: boolean | SharedAccount$profilesArgs<ExtArgs>
     _count?: boolean | SharedAccountCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type SharedAccountIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     owner?: boolean | UserDefaultArgs<ExtArgs>
-    sharedUser?: boolean | SharedAccount$sharedUserArgs<ExtArgs>
     subscription?: boolean | SubscriptionDefaultArgs<ExtArgs>
   }
   export type SharedAccountIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     owner?: boolean | UserDefaultArgs<ExtArgs>
-    sharedUser?: boolean | SharedAccount$sharedUserArgs<ExtArgs>
     subscription?: boolean | SubscriptionDefaultArgs<ExtArgs>
   }
 
@@ -10602,18 +10476,14 @@ export namespace Prisma {
     name: "SharedAccount"
     objects: {
       owner: Prisma.$UserPayload<ExtArgs>
-      sharedUser: Prisma.$UserPayload<ExtArgs> | null
       subscription: Prisma.$SubscriptionPayload<ExtArgs>
       profiles: Prisma.$SharedAccountUserPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       ownerUserId: string
-      sharedUserId: string | null
       subscriptionId: string
-      sharedOn: Date
       status: $Enums.SharedAccountStatus
-      isActive: boolean
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["sharedAccount"]>
@@ -11011,7 +10881,6 @@ export namespace Prisma {
   export interface Prisma__SharedAccountClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     owner<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    sharedUser<T extends SharedAccount$sharedUserArgs<ExtArgs> = {}>(args?: Subset<T, SharedAccount$sharedUserArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     subscription<T extends SubscriptionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SubscriptionDefaultArgs<ExtArgs>>): Prisma__SubscriptionClient<$Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     profiles<T extends SharedAccount$profilesArgs<ExtArgs> = {}>(args?: Subset<T, SharedAccount$profilesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SharedAccountUserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
@@ -11045,11 +10914,8 @@ export namespace Prisma {
   interface SharedAccountFieldRefs {
     readonly id: FieldRef<"SharedAccount", 'String'>
     readonly ownerUserId: FieldRef<"SharedAccount", 'String'>
-    readonly sharedUserId: FieldRef<"SharedAccount", 'String'>
     readonly subscriptionId: FieldRef<"SharedAccount", 'String'>
-    readonly sharedOn: FieldRef<"SharedAccount", 'DateTime'>
     readonly status: FieldRef<"SharedAccount", 'SharedAccountStatus'>
-    readonly isActive: FieldRef<"SharedAccount", 'Boolean'>
     readonly createdAt: FieldRef<"SharedAccount", 'DateTime'>
     readonly updatedAt: FieldRef<"SharedAccount", 'DateTime'>
   }
@@ -11448,25 +11314,6 @@ export namespace Prisma {
   }
 
   /**
-   * SharedAccount.sharedUser
-   */
-  export type SharedAccount$sharedUserArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the User
-     */
-    select?: UserSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the User
-     */
-    omit?: UserOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
-    where?: UserWhereInput
-  }
-
-  /**
    * SharedAccount.profiles
    */
   export type SharedAccount$profilesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -11515,18 +11362,27 @@ export namespace Prisma {
 
   export type AggregateSharedAccountUser = {
     _count: SharedAccountUserCountAggregateOutputType | null
+    _avg: SharedAccountUserAvgAggregateOutputType | null
+    _sum: SharedAccountUserSumAggregateOutputType | null
     _min: SharedAccountUserMinAggregateOutputType | null
     _max: SharedAccountUserMaxAggregateOutputType | null
+  }
+
+  export type SharedAccountUserAvgAggregateOutputType = {
+    pinCode: number | null
+  }
+
+  export type SharedAccountUserSumAggregateOutputType = {
+    pinCode: number | null
   }
 
   export type SharedAccountUserMinAggregateOutputType = {
     id: string | null
     sharedAccountId: string | null
-    userId: string | null
     profileName: string | null
     iskidProfile: boolean | null
     avatarUrl: string | null
-    pinCode: string | null
+    pinCode: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -11534,11 +11390,10 @@ export namespace Prisma {
   export type SharedAccountUserMaxAggregateOutputType = {
     id: string | null
     sharedAccountId: string | null
-    userId: string | null
     profileName: string | null
     iskidProfile: boolean | null
     avatarUrl: string | null
-    pinCode: string | null
+    pinCode: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -11546,7 +11401,6 @@ export namespace Prisma {
   export type SharedAccountUserCountAggregateOutputType = {
     id: number
     sharedAccountId: number
-    userId: number
     profileName: number
     iskidProfile: number
     avatarUrl: number
@@ -11557,10 +11411,17 @@ export namespace Prisma {
   }
 
 
+  export type SharedAccountUserAvgAggregateInputType = {
+    pinCode?: true
+  }
+
+  export type SharedAccountUserSumAggregateInputType = {
+    pinCode?: true
+  }
+
   export type SharedAccountUserMinAggregateInputType = {
     id?: true
     sharedAccountId?: true
-    userId?: true
     profileName?: true
     iskidProfile?: true
     avatarUrl?: true
@@ -11572,7 +11433,6 @@ export namespace Prisma {
   export type SharedAccountUserMaxAggregateInputType = {
     id?: true
     sharedAccountId?: true
-    userId?: true
     profileName?: true
     iskidProfile?: true
     avatarUrl?: true
@@ -11584,7 +11444,6 @@ export namespace Prisma {
   export type SharedAccountUserCountAggregateInputType = {
     id?: true
     sharedAccountId?: true
-    userId?: true
     profileName?: true
     iskidProfile?: true
     avatarUrl?: true
@@ -11632,6 +11491,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: SharedAccountUserAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SharedAccountUserSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: SharedAccountUserMinAggregateInputType
@@ -11662,6 +11533,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: SharedAccountUserCountAggregateInputType | true
+    _avg?: SharedAccountUserAvgAggregateInputType
+    _sum?: SharedAccountUserSumAggregateInputType
     _min?: SharedAccountUserMinAggregateInputType
     _max?: SharedAccountUserMaxAggregateInputType
   }
@@ -11669,14 +11542,15 @@ export namespace Prisma {
   export type SharedAccountUserGroupByOutputType = {
     id: string
     sharedAccountId: string
-    userId: string
     profileName: string
     iskidProfile: boolean
     avatarUrl: string | null
-    pinCode: string | null
+    pinCode: number
     createdAt: Date
     updatedAt: Date
     _count: SharedAccountUserCountAggregateOutputType | null
+    _avg: SharedAccountUserAvgAggregateOutputType | null
+    _sum: SharedAccountUserSumAggregateOutputType | null
     _min: SharedAccountUserMinAggregateOutputType | null
     _max: SharedAccountUserMaxAggregateOutputType | null
   }
@@ -11698,7 +11572,6 @@ export namespace Prisma {
   export type SharedAccountUserSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     sharedAccountId?: boolean
-    userId?: boolean
     profileName?: boolean
     iskidProfile?: boolean
     avatarUrl?: boolean
@@ -11706,7 +11579,6 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     sharedAccount?: boolean | SharedAccountDefaultArgs<ExtArgs>
-    user?: boolean | UserDefaultArgs<ExtArgs>
     adViews?: boolean | SharedAccountUser$adViewsArgs<ExtArgs>
     activities?: boolean | SharedAccountUser$activitiesArgs<ExtArgs>
     _count?: boolean | SharedAccountUserCountOutputTypeDefaultArgs<ExtArgs>
@@ -11715,7 +11587,6 @@ export namespace Prisma {
   export type SharedAccountUserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     sharedAccountId?: boolean
-    userId?: boolean
     profileName?: boolean
     iskidProfile?: boolean
     avatarUrl?: boolean
@@ -11723,13 +11594,11 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     sharedAccount?: boolean | SharedAccountDefaultArgs<ExtArgs>
-    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["sharedAccountUser"]>
 
   export type SharedAccountUserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     sharedAccountId?: boolean
-    userId?: boolean
     profileName?: boolean
     iskidProfile?: boolean
     avatarUrl?: boolean
@@ -11737,13 +11606,11 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     sharedAccount?: boolean | SharedAccountDefaultArgs<ExtArgs>
-    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["sharedAccountUser"]>
 
   export type SharedAccountUserSelectScalar = {
     id?: boolean
     sharedAccountId?: boolean
-    userId?: boolean
     profileName?: boolean
     iskidProfile?: boolean
     avatarUrl?: boolean
@@ -11752,39 +11619,34 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type SharedAccountUserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "sharedAccountId" | "userId" | "profileName" | "iskidProfile" | "avatarUrl" | "pinCode" | "createdAt" | "updatedAt", ExtArgs["result"]["sharedAccountUser"]>
+  export type SharedAccountUserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "sharedAccountId" | "profileName" | "iskidProfile" | "avatarUrl" | "pinCode" | "createdAt" | "updatedAt", ExtArgs["result"]["sharedAccountUser"]>
   export type SharedAccountUserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     sharedAccount?: boolean | SharedAccountDefaultArgs<ExtArgs>
-    user?: boolean | UserDefaultArgs<ExtArgs>
     adViews?: boolean | SharedAccountUser$adViewsArgs<ExtArgs>
     activities?: boolean | SharedAccountUser$activitiesArgs<ExtArgs>
     _count?: boolean | SharedAccountUserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type SharedAccountUserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     sharedAccount?: boolean | SharedAccountDefaultArgs<ExtArgs>
-    user?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type SharedAccountUserIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     sharedAccount?: boolean | SharedAccountDefaultArgs<ExtArgs>
-    user?: boolean | UserDefaultArgs<ExtArgs>
   }
 
   export type $SharedAccountUserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "SharedAccountUser"
     objects: {
       sharedAccount: Prisma.$SharedAccountPayload<ExtArgs>
-      user: Prisma.$UserPayload<ExtArgs>
       adViews: Prisma.$AdViewPayload<ExtArgs>[]
       activities: Prisma.$SharedProfileActivityPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       sharedAccountId: string
-      userId: string
       profileName: string
       iskidProfile: boolean
       avatarUrl: string | null
-      pinCode: string | null
+      pinCode: number
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["sharedAccountUser"]>
@@ -12182,7 +12044,6 @@ export namespace Prisma {
   export interface Prisma__SharedAccountUserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     sharedAccount<T extends SharedAccountDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SharedAccountDefaultArgs<ExtArgs>>): Prisma__SharedAccountClient<$Result.GetResult<Prisma.$SharedAccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     adViews<T extends SharedAccountUser$adViewsArgs<ExtArgs> = {}>(args?: Subset<T, SharedAccountUser$adViewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdViewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     activities<T extends SharedAccountUser$activitiesArgs<ExtArgs> = {}>(args?: Subset<T, SharedAccountUser$activitiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SharedProfileActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
@@ -12216,11 +12077,10 @@ export namespace Prisma {
   interface SharedAccountUserFieldRefs {
     readonly id: FieldRef<"SharedAccountUser", 'String'>
     readonly sharedAccountId: FieldRef<"SharedAccountUser", 'String'>
-    readonly userId: FieldRef<"SharedAccountUser", 'String'>
     readonly profileName: FieldRef<"SharedAccountUser", 'String'>
     readonly iskidProfile: FieldRef<"SharedAccountUser", 'Boolean'>
     readonly avatarUrl: FieldRef<"SharedAccountUser", 'String'>
-    readonly pinCode: FieldRef<"SharedAccountUser", 'String'>
+    readonly pinCode: FieldRef<"SharedAccountUser", 'Int'>
     readonly createdAt: FieldRef<"SharedAccountUser", 'DateTime'>
     readonly updatedAt: FieldRef<"SharedAccountUser", 'DateTime'>
   }
@@ -39661,7 +39521,6 @@ export namespace Prisma {
     lastLoginAt: 'lastLoginAt',
     isVerified: 'isVerified',
     isMainAccount: 'isMainAccount',
-    role: 'role',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -39727,11 +39586,8 @@ export namespace Prisma {
   export const SharedAccountScalarFieldEnum: {
     id: 'id',
     ownerUserId: 'ownerUserId',
-    sharedUserId: 'sharedUserId',
     subscriptionId: 'subscriptionId',
-    sharedOn: 'sharedOn',
     status: 'status',
-    isActive: 'isActive',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -39742,7 +39598,6 @@ export namespace Prisma {
   export const SharedAccountUserScalarFieldEnum: {
     id: 'id',
     sharedAccountId: 'sharedAccountId',
-    userId: 'userId',
     profileName: 'profileName',
     iskidProfile: 'iskidProfile',
     avatarUrl: 'avatarUrl',
@@ -40132,20 +39987,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'UserRole'
-   */
-  export type EnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserRole'>
-    
-
-
-  /**
-   * Reference to a field of type 'UserRole[]'
-   */
-  export type ListEnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserRole[]'>
-    
-
-
-  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -40258,16 +40099,13 @@ export namespace Prisma {
     lastLoginAt?: DateTimeNullableFilter<"User"> | Date | string | null
     isVerified?: BoolFilter<"User"> | boolean
     isMainAccount?: BoolFilter<"User"> | boolean
-    role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     sessions?: SessionListRelationFilter
     subscriptions?: SubscriptionListRelationFilter
     ownedSharedAccounts?: SharedAccountListRelationFilter
-    sharedProfiles?: SharedAccountUserListRelationFilter
     purchases?: PurchaseListRelationFilter
     comments?: CommentListRelationFilter
-    SharedAccount?: SharedAccountListRelationFilter
     adViews?: AdViewListRelationFilter
     userVideoView?: UserVideoViewListRelationFilter
     SeasonView?: SeasonViewListRelationFilter
@@ -40283,16 +40121,13 @@ export namespace Prisma {
     lastLoginAt?: SortOrderInput | SortOrder
     isVerified?: SortOrder
     isMainAccount?: SortOrder
-    role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     sessions?: SessionOrderByRelationAggregateInput
     subscriptions?: SubscriptionOrderByRelationAggregateInput
     ownedSharedAccounts?: SharedAccountOrderByRelationAggregateInput
-    sharedProfiles?: SharedAccountUserOrderByRelationAggregateInput
     purchases?: PurchaseOrderByRelationAggregateInput
     comments?: CommentOrderByRelationAggregateInput
-    SharedAccount?: SharedAccountOrderByRelationAggregateInput
     adViews?: AdViewOrderByRelationAggregateInput
     userVideoView?: UserVideoViewOrderByRelationAggregateInput
     SeasonView?: SeasonViewOrderByRelationAggregateInput
@@ -40311,16 +40146,13 @@ export namespace Prisma {
     lastLoginAt?: DateTimeNullableFilter<"User"> | Date | string | null
     isVerified?: BoolFilter<"User"> | boolean
     isMainAccount?: BoolFilter<"User"> | boolean
-    role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     sessions?: SessionListRelationFilter
     subscriptions?: SubscriptionListRelationFilter
     ownedSharedAccounts?: SharedAccountListRelationFilter
-    sharedProfiles?: SharedAccountUserListRelationFilter
     purchases?: PurchaseListRelationFilter
     comments?: CommentListRelationFilter
-    SharedAccount?: SharedAccountListRelationFilter
     adViews?: AdViewListRelationFilter
     userVideoView?: UserVideoViewListRelationFilter
     SeasonView?: SeasonViewListRelationFilter
@@ -40336,7 +40168,6 @@ export namespace Prisma {
     lastLoginAt?: SortOrderInput | SortOrder
     isVerified?: SortOrder
     isMainAccount?: SortOrder
-    role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
@@ -40356,7 +40187,6 @@ export namespace Prisma {
     lastLoginAt?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
     isVerified?: BoolWithAggregatesFilter<"User"> | boolean
     isMainAccount?: BoolWithAggregatesFilter<"User"> | boolean
-    role?: EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
@@ -40650,15 +40480,11 @@ export namespace Prisma {
     NOT?: SharedAccountWhereInput | SharedAccountWhereInput[]
     id?: StringFilter<"SharedAccount"> | string
     ownerUserId?: StringFilter<"SharedAccount"> | string
-    sharedUserId?: StringNullableFilter<"SharedAccount"> | string | null
     subscriptionId?: StringFilter<"SharedAccount"> | string
-    sharedOn?: DateTimeFilter<"SharedAccount"> | Date | string
     status?: EnumSharedAccountStatusFilter<"SharedAccount"> | $Enums.SharedAccountStatus
-    isActive?: BoolFilter<"SharedAccount"> | boolean
     createdAt?: DateTimeFilter<"SharedAccount"> | Date | string
     updatedAt?: DateTimeFilter<"SharedAccount"> | Date | string
     owner?: XOR<UserScalarRelationFilter, UserWhereInput>
-    sharedUser?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     subscription?: XOR<SubscriptionScalarRelationFilter, SubscriptionWhereInput>
     profiles?: SharedAccountUserListRelationFilter
   }
@@ -40666,15 +40492,11 @@ export namespace Prisma {
   export type SharedAccountOrderByWithRelationInput = {
     id?: SortOrder
     ownerUserId?: SortOrder
-    sharedUserId?: SortOrderInput | SortOrder
     subscriptionId?: SortOrder
-    sharedOn?: SortOrder
     status?: SortOrder
-    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     owner?: UserOrderByWithRelationInput
-    sharedUser?: UserOrderByWithRelationInput
     subscription?: SubscriptionOrderByWithRelationInput
     profiles?: SharedAccountUserOrderByRelationAggregateInput
   }
@@ -40685,15 +40507,11 @@ export namespace Prisma {
     OR?: SharedAccountWhereInput[]
     NOT?: SharedAccountWhereInput | SharedAccountWhereInput[]
     ownerUserId?: StringFilter<"SharedAccount"> | string
-    sharedUserId?: StringNullableFilter<"SharedAccount"> | string | null
     subscriptionId?: StringFilter<"SharedAccount"> | string
-    sharedOn?: DateTimeFilter<"SharedAccount"> | Date | string
     status?: EnumSharedAccountStatusFilter<"SharedAccount"> | $Enums.SharedAccountStatus
-    isActive?: BoolFilter<"SharedAccount"> | boolean
     createdAt?: DateTimeFilter<"SharedAccount"> | Date | string
     updatedAt?: DateTimeFilter<"SharedAccount"> | Date | string
     owner?: XOR<UserScalarRelationFilter, UserWhereInput>
-    sharedUser?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     subscription?: XOR<SubscriptionScalarRelationFilter, SubscriptionWhereInput>
     profiles?: SharedAccountUserListRelationFilter
   }, "id">
@@ -40701,11 +40519,8 @@ export namespace Prisma {
   export type SharedAccountOrderByWithAggregationInput = {
     id?: SortOrder
     ownerUserId?: SortOrder
-    sharedUserId?: SortOrderInput | SortOrder
     subscriptionId?: SortOrder
-    sharedOn?: SortOrder
     status?: SortOrder
-    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: SharedAccountCountOrderByAggregateInput
@@ -40719,11 +40534,8 @@ export namespace Prisma {
     NOT?: SharedAccountScalarWhereWithAggregatesInput | SharedAccountScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"SharedAccount"> | string
     ownerUserId?: StringWithAggregatesFilter<"SharedAccount"> | string
-    sharedUserId?: StringNullableWithAggregatesFilter<"SharedAccount"> | string | null
     subscriptionId?: StringWithAggregatesFilter<"SharedAccount"> | string
-    sharedOn?: DateTimeWithAggregatesFilter<"SharedAccount"> | Date | string
     status?: EnumSharedAccountStatusWithAggregatesFilter<"SharedAccount"> | $Enums.SharedAccountStatus
-    isActive?: BoolWithAggregatesFilter<"SharedAccount"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"SharedAccount"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"SharedAccount"> | Date | string
   }
@@ -40734,15 +40546,13 @@ export namespace Prisma {
     NOT?: SharedAccountUserWhereInput | SharedAccountUserWhereInput[]
     id?: StringFilter<"SharedAccountUser"> | string
     sharedAccountId?: StringFilter<"SharedAccountUser"> | string
-    userId?: StringFilter<"SharedAccountUser"> | string
     profileName?: StringFilter<"SharedAccountUser"> | string
     iskidProfile?: BoolFilter<"SharedAccountUser"> | boolean
     avatarUrl?: StringNullableFilter<"SharedAccountUser"> | string | null
-    pinCode?: StringNullableFilter<"SharedAccountUser"> | string | null
+    pinCode?: IntFilter<"SharedAccountUser"> | number
     createdAt?: DateTimeFilter<"SharedAccountUser"> | Date | string
     updatedAt?: DateTimeFilter<"SharedAccountUser"> | Date | string
     sharedAccount?: XOR<SharedAccountScalarRelationFilter, SharedAccountWhereInput>
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
     adViews?: AdViewListRelationFilter
     activities?: SharedProfileActivityListRelationFilter
   }
@@ -40750,15 +40560,13 @@ export namespace Prisma {
   export type SharedAccountUserOrderByWithRelationInput = {
     id?: SortOrder
     sharedAccountId?: SortOrder
-    userId?: SortOrder
     profileName?: SortOrder
     iskidProfile?: SortOrder
     avatarUrl?: SortOrderInput | SortOrder
-    pinCode?: SortOrderInput | SortOrder
+    pinCode?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     sharedAccount?: SharedAccountOrderByWithRelationInput
-    user?: UserOrderByWithRelationInput
     adViews?: AdViewOrderByRelationAggregateInput
     activities?: SharedProfileActivityOrderByRelationAggregateInput
   }
@@ -40770,15 +40578,13 @@ export namespace Prisma {
     OR?: SharedAccountUserWhereInput[]
     NOT?: SharedAccountUserWhereInput | SharedAccountUserWhereInput[]
     sharedAccountId?: StringFilter<"SharedAccountUser"> | string
-    userId?: StringFilter<"SharedAccountUser"> | string
     profileName?: StringFilter<"SharedAccountUser"> | string
     iskidProfile?: BoolFilter<"SharedAccountUser"> | boolean
     avatarUrl?: StringNullableFilter<"SharedAccountUser"> | string | null
-    pinCode?: StringNullableFilter<"SharedAccountUser"> | string | null
+    pinCode?: IntFilter<"SharedAccountUser"> | number
     createdAt?: DateTimeFilter<"SharedAccountUser"> | Date | string
     updatedAt?: DateTimeFilter<"SharedAccountUser"> | Date | string
     sharedAccount?: XOR<SharedAccountScalarRelationFilter, SharedAccountWhereInput>
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
     adViews?: AdViewListRelationFilter
     activities?: SharedProfileActivityListRelationFilter
   }, "id" | "sharedAccountId_profileName">
@@ -40786,16 +40592,17 @@ export namespace Prisma {
   export type SharedAccountUserOrderByWithAggregationInput = {
     id?: SortOrder
     sharedAccountId?: SortOrder
-    userId?: SortOrder
     profileName?: SortOrder
     iskidProfile?: SortOrder
     avatarUrl?: SortOrderInput | SortOrder
-    pinCode?: SortOrderInput | SortOrder
+    pinCode?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: SharedAccountUserCountOrderByAggregateInput
+    _avg?: SharedAccountUserAvgOrderByAggregateInput
     _max?: SharedAccountUserMaxOrderByAggregateInput
     _min?: SharedAccountUserMinOrderByAggregateInput
+    _sum?: SharedAccountUserSumOrderByAggregateInput
   }
 
   export type SharedAccountUserScalarWhereWithAggregatesInput = {
@@ -40804,11 +40611,10 @@ export namespace Prisma {
     NOT?: SharedAccountUserScalarWhereWithAggregatesInput | SharedAccountUserScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"SharedAccountUser"> | string
     sharedAccountId?: StringWithAggregatesFilter<"SharedAccountUser"> | string
-    userId?: StringWithAggregatesFilter<"SharedAccountUser"> | string
     profileName?: StringWithAggregatesFilter<"SharedAccountUser"> | string
     iskidProfile?: BoolWithAggregatesFilter<"SharedAccountUser"> | boolean
     avatarUrl?: StringNullableWithAggregatesFilter<"SharedAccountUser"> | string | null
-    pinCode?: StringNullableWithAggregatesFilter<"SharedAccountUser"> | string | null
+    pinCode?: IntWithAggregatesFilter<"SharedAccountUser"> | number
     createdAt?: DateTimeWithAggregatesFilter<"SharedAccountUser"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"SharedAccountUser"> | Date | string
   }
@@ -42431,16 +42237,13 @@ export namespace Prisma {
     lastLoginAt?: Date | string | null
     isVerified?: boolean
     isMainAccount?: boolean
-    role?: $Enums.UserRole
     createdAt?: Date | string
     updatedAt?: Date | string
     sessions?: SessionCreateNestedManyWithoutUserInput
     subscriptions?: SubscriptionCreateNestedManyWithoutUserInput
     ownedSharedAccounts?: SharedAccountCreateNestedManyWithoutOwnerInput
-    sharedProfiles?: SharedAccountUserCreateNestedManyWithoutUserInput
     purchases?: PurchaseCreateNestedManyWithoutUserInput
     comments?: CommentCreateNestedManyWithoutUserInput
-    SharedAccount?: SharedAccountCreateNestedManyWithoutSharedUserInput
     adViews?: AdViewCreateNestedManyWithoutUserInput
     userVideoView?: UserVideoViewCreateNestedManyWithoutUserInput
     SeasonView?: SeasonViewCreateNestedManyWithoutUserInput
@@ -42456,16 +42259,13 @@ export namespace Prisma {
     lastLoginAt?: Date | string | null
     isVerified?: boolean
     isMainAccount?: boolean
-    role?: $Enums.UserRole
     createdAt?: Date | string
     updatedAt?: Date | string
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     subscriptions?: SubscriptionUncheckedCreateNestedManyWithoutUserInput
     ownedSharedAccounts?: SharedAccountUncheckedCreateNestedManyWithoutOwnerInput
-    sharedProfiles?: SharedAccountUserUncheckedCreateNestedManyWithoutUserInput
     purchases?: PurchaseUncheckedCreateNestedManyWithoutUserInput
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
-    SharedAccount?: SharedAccountUncheckedCreateNestedManyWithoutSharedUserInput
     adViews?: AdViewUncheckedCreateNestedManyWithoutUserInput
     userVideoView?: UserVideoViewUncheckedCreateNestedManyWithoutUserInput
     SeasonView?: SeasonViewUncheckedCreateNestedManyWithoutUserInput
@@ -42481,16 +42281,13 @@ export namespace Prisma {
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isMainAccount?: BoolFieldUpdateOperationsInput | boolean
-    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUpdateManyWithoutUserNestedInput
     subscriptions?: SubscriptionUpdateManyWithoutUserNestedInput
     ownedSharedAccounts?: SharedAccountUpdateManyWithoutOwnerNestedInput
-    sharedProfiles?: SharedAccountUserUpdateManyWithoutUserNestedInput
     purchases?: PurchaseUpdateManyWithoutUserNestedInput
     comments?: CommentUpdateManyWithoutUserNestedInput
-    SharedAccount?: SharedAccountUpdateManyWithoutSharedUserNestedInput
     adViews?: AdViewUpdateManyWithoutUserNestedInput
     userVideoView?: UserVideoViewUpdateManyWithoutUserNestedInput
     SeasonView?: SeasonViewUpdateManyWithoutUserNestedInput
@@ -42506,16 +42303,13 @@ export namespace Prisma {
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isMainAccount?: BoolFieldUpdateOperationsInput | boolean
-    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     subscriptions?: SubscriptionUncheckedUpdateManyWithoutUserNestedInput
     ownedSharedAccounts?: SharedAccountUncheckedUpdateManyWithoutOwnerNestedInput
-    sharedProfiles?: SharedAccountUserUncheckedUpdateManyWithoutUserNestedInput
     purchases?: PurchaseUncheckedUpdateManyWithoutUserNestedInput
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
-    SharedAccount?: SharedAccountUncheckedUpdateManyWithoutSharedUserNestedInput
     adViews?: AdViewUncheckedUpdateManyWithoutUserNestedInput
     userVideoView?: UserVideoViewUncheckedUpdateManyWithoutUserNestedInput
     SeasonView?: SeasonViewUncheckedUpdateManyWithoutUserNestedInput
@@ -42531,7 +42325,6 @@ export namespace Prisma {
     lastLoginAt?: Date | string | null
     isVerified?: boolean
     isMainAccount?: boolean
-    role?: $Enums.UserRole
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -42545,7 +42338,6 @@ export namespace Prisma {
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isMainAccount?: BoolFieldUpdateOperationsInput | boolean
-    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -42559,7 +42351,6 @@ export namespace Prisma {
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isMainAccount?: BoolFieldUpdateOperationsInput | boolean
-    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -42871,13 +42662,10 @@ export namespace Prisma {
 
   export type SharedAccountCreateInput = {
     id?: string
-    sharedOn?: Date | string
     status?: $Enums.SharedAccountStatus
-    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     owner: UserCreateNestedOneWithoutOwnedSharedAccountsInput
-    sharedUser?: UserCreateNestedOneWithoutSharedAccountInput
     subscription: SubscriptionCreateNestedOneWithoutSharedAccountsInput
     profiles?: SharedAccountUserCreateNestedManyWithoutSharedAccountInput
   }
@@ -42885,11 +42673,8 @@ export namespace Prisma {
   export type SharedAccountUncheckedCreateInput = {
     id?: string
     ownerUserId: string
-    sharedUserId?: string | null
     subscriptionId: string
-    sharedOn?: Date | string
     status?: $Enums.SharedAccountStatus
-    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     profiles?: SharedAccountUserUncheckedCreateNestedManyWithoutSharedAccountInput
@@ -42897,13 +42682,10 @@ export namespace Prisma {
 
   export type SharedAccountUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    sharedOn?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumSharedAccountStatusFieldUpdateOperationsInput | $Enums.SharedAccountStatus
-    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: UserUpdateOneRequiredWithoutOwnedSharedAccountsNestedInput
-    sharedUser?: UserUpdateOneWithoutSharedAccountNestedInput
     subscription?: SubscriptionUpdateOneRequiredWithoutSharedAccountsNestedInput
     profiles?: SharedAccountUserUpdateManyWithoutSharedAccountNestedInput
   }
@@ -42911,11 +42693,8 @@ export namespace Prisma {
   export type SharedAccountUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     ownerUserId?: StringFieldUpdateOperationsInput | string
-    sharedUserId?: NullableStringFieldUpdateOperationsInput | string | null
     subscriptionId?: StringFieldUpdateOperationsInput | string
-    sharedOn?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumSharedAccountStatusFieldUpdateOperationsInput | $Enums.SharedAccountStatus
-    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     profiles?: SharedAccountUserUncheckedUpdateManyWithoutSharedAccountNestedInput
@@ -42924,20 +42703,15 @@ export namespace Prisma {
   export type SharedAccountCreateManyInput = {
     id?: string
     ownerUserId: string
-    sharedUserId?: string | null
     subscriptionId: string
-    sharedOn?: Date | string
     status?: $Enums.SharedAccountStatus
-    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type SharedAccountUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    sharedOn?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumSharedAccountStatusFieldUpdateOperationsInput | $Enums.SharedAccountStatus
-    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -42945,11 +42719,8 @@ export namespace Prisma {
   export type SharedAccountUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     ownerUserId?: StringFieldUpdateOperationsInput | string
-    sharedUserId?: NullableStringFieldUpdateOperationsInput | string | null
     subscriptionId?: StringFieldUpdateOperationsInput | string
-    sharedOn?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumSharedAccountStatusFieldUpdateOperationsInput | $Enums.SharedAccountStatus
-    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -42959,11 +42730,10 @@ export namespace Prisma {
     profileName: string
     iskidProfile?: boolean
     avatarUrl?: string | null
-    pinCode?: string | null
+    pinCode: number
     createdAt?: Date | string
     updatedAt?: Date | string
     sharedAccount: SharedAccountCreateNestedOneWithoutProfilesInput
-    user: UserCreateNestedOneWithoutSharedProfilesInput
     adViews?: AdViewCreateNestedManyWithoutProfileInput
     activities?: SharedProfileActivityCreateNestedManyWithoutProfileInput
   }
@@ -42971,11 +42741,10 @@ export namespace Prisma {
   export type SharedAccountUserUncheckedCreateInput = {
     id?: string
     sharedAccountId: string
-    userId: string
     profileName: string
     iskidProfile?: boolean
     avatarUrl?: string | null
-    pinCode?: string | null
+    pinCode: number
     createdAt?: Date | string
     updatedAt?: Date | string
     adViews?: AdViewUncheckedCreateNestedManyWithoutProfileInput
@@ -42987,11 +42756,10 @@ export namespace Prisma {
     profileName?: StringFieldUpdateOperationsInput | string
     iskidProfile?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    pinCode?: NullableStringFieldUpdateOperationsInput | string | null
+    pinCode?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sharedAccount?: SharedAccountUpdateOneRequiredWithoutProfilesNestedInput
-    user?: UserUpdateOneRequiredWithoutSharedProfilesNestedInput
     adViews?: AdViewUpdateManyWithoutProfileNestedInput
     activities?: SharedProfileActivityUpdateManyWithoutProfileNestedInput
   }
@@ -42999,11 +42767,10 @@ export namespace Prisma {
   export type SharedAccountUserUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     sharedAccountId?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
     profileName?: StringFieldUpdateOperationsInput | string
     iskidProfile?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    pinCode?: NullableStringFieldUpdateOperationsInput | string | null
+    pinCode?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     adViews?: AdViewUncheckedUpdateManyWithoutProfileNestedInput
@@ -43013,11 +42780,10 @@ export namespace Prisma {
   export type SharedAccountUserCreateManyInput = {
     id?: string
     sharedAccountId: string
-    userId: string
     profileName: string
     iskidProfile?: boolean
     avatarUrl?: string | null
-    pinCode?: string | null
+    pinCode: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -43027,7 +42793,7 @@ export namespace Prisma {
     profileName?: StringFieldUpdateOperationsInput | string
     iskidProfile?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    pinCode?: NullableStringFieldUpdateOperationsInput | string | null
+    pinCode?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -43035,11 +42801,10 @@ export namespace Prisma {
   export type SharedAccountUserUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     sharedAccountId?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
     profileName?: StringFieldUpdateOperationsInput | string
     iskidProfile?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    pinCode?: NullableStringFieldUpdateOperationsInput | string | null
+    pinCode?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -44741,13 +44506,6 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
-  export type EnumUserRoleFilter<$PrismaModel = never> = {
-    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
-    in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
-    notIn?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
-    not?: NestedEnumUserRoleFilter<$PrismaModel> | $Enums.UserRole
-  }
-
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -44775,12 +44533,6 @@ export namespace Prisma {
     every?: SharedAccountWhereInput
     some?: SharedAccountWhereInput
     none?: SharedAccountWhereInput
-  }
-
-  export type SharedAccountUserListRelationFilter = {
-    every?: SharedAccountUserWhereInput
-    some?: SharedAccountUserWhereInput
-    none?: SharedAccountUserWhereInput
   }
 
   export type PurchaseListRelationFilter = {
@@ -44836,10 +44588,6 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type SharedAccountUserOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
   export type PurchaseOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -44873,7 +44621,6 @@ export namespace Prisma {
     lastLoginAt?: SortOrder
     isVerified?: SortOrder
     isMainAccount?: SortOrder
-    role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -44887,7 +44634,6 @@ export namespace Prisma {
     lastLoginAt?: SortOrder
     isVerified?: SortOrder
     isMainAccount?: SortOrder
-    role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -44901,7 +44647,6 @@ export namespace Prisma {
     lastLoginAt?: SortOrder
     isVerified?: SortOrder
     isMainAccount?: SortOrder
-    role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -44962,16 +44707,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
-  }
-
-  export type EnumUserRoleWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
-    in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
-    notIn?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
-    not?: NestedEnumUserRoleWithAggregatesFilter<$PrismaModel> | $Enums.UserRole
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumUserRoleFilter<$PrismaModel>
-    _max?: NestedEnumUserRoleFilter<$PrismaModel>
   }
 
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -45232,24 +44967,26 @@ export namespace Prisma {
     not?: NestedEnumSharedAccountStatusFilter<$PrismaModel> | $Enums.SharedAccountStatus
   }
 
-  export type UserNullableScalarRelationFilter = {
-    is?: UserWhereInput | null
-    isNot?: UserWhereInput | null
-  }
-
   export type SubscriptionScalarRelationFilter = {
     is?: SubscriptionWhereInput
     isNot?: SubscriptionWhereInput
   }
 
+  export type SharedAccountUserListRelationFilter = {
+    every?: SharedAccountUserWhereInput
+    some?: SharedAccountUserWhereInput
+    none?: SharedAccountUserWhereInput
+  }
+
+  export type SharedAccountUserOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type SharedAccountCountOrderByAggregateInput = {
     id?: SortOrder
     ownerUserId?: SortOrder
-    sharedUserId?: SortOrder
     subscriptionId?: SortOrder
-    sharedOn?: SortOrder
     status?: SortOrder
-    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -45257,11 +44994,8 @@ export namespace Prisma {
   export type SharedAccountMaxOrderByAggregateInput = {
     id?: SortOrder
     ownerUserId?: SortOrder
-    sharedUserId?: SortOrder
     subscriptionId?: SortOrder
-    sharedOn?: SortOrder
     status?: SortOrder
-    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -45269,11 +45003,8 @@ export namespace Prisma {
   export type SharedAccountMinOrderByAggregateInput = {
     id?: SortOrder
     ownerUserId?: SortOrder
-    sharedUserId?: SortOrder
     subscriptionId?: SortOrder
-    sharedOn?: SortOrder
     status?: SortOrder
-    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -45311,7 +45042,6 @@ export namespace Prisma {
   export type SharedAccountUserCountOrderByAggregateInput = {
     id?: SortOrder
     sharedAccountId?: SortOrder
-    userId?: SortOrder
     profileName?: SortOrder
     iskidProfile?: SortOrder
     avatarUrl?: SortOrder
@@ -45320,10 +45050,13 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
+  export type SharedAccountUserAvgOrderByAggregateInput = {
+    pinCode?: SortOrder
+  }
+
   export type SharedAccountUserMaxOrderByAggregateInput = {
     id?: SortOrder
     sharedAccountId?: SortOrder
-    userId?: SortOrder
     profileName?: SortOrder
     iskidProfile?: SortOrder
     avatarUrl?: SortOrder
@@ -45335,13 +45068,16 @@ export namespace Prisma {
   export type SharedAccountUserMinOrderByAggregateInput = {
     id?: SortOrder
     sharedAccountId?: SortOrder
-    userId?: SortOrder
     profileName?: SortOrder
     iskidProfile?: SortOrder
     avatarUrl?: SortOrder
     pinCode?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type SharedAccountUserSumOrderByAggregateInput = {
+    pinCode?: SortOrder
   }
 
   export type VideoFormatScalarRelationFilter = {
@@ -46321,6 +46057,11 @@ export namespace Prisma {
     isNot?: AdWhereInput
   }
 
+  export type UserNullableScalarRelationFilter = {
+    is?: UserWhereInput | null
+    isNot?: UserWhereInput | null
+  }
+
   export type SharedAccountUserNullableScalarRelationFilter = {
     is?: SharedAccountUserWhereInput | null
     isNot?: SharedAccountUserWhereInput | null
@@ -46464,13 +46205,6 @@ export namespace Prisma {
     connect?: SharedAccountWhereUniqueInput | SharedAccountWhereUniqueInput[]
   }
 
-  export type SharedAccountUserCreateNestedManyWithoutUserInput = {
-    create?: XOR<SharedAccountUserCreateWithoutUserInput, SharedAccountUserUncheckedCreateWithoutUserInput> | SharedAccountUserCreateWithoutUserInput[] | SharedAccountUserUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: SharedAccountUserCreateOrConnectWithoutUserInput | SharedAccountUserCreateOrConnectWithoutUserInput[]
-    createMany?: SharedAccountUserCreateManyUserInputEnvelope
-    connect?: SharedAccountUserWhereUniqueInput | SharedAccountUserWhereUniqueInput[]
-  }
-
   export type PurchaseCreateNestedManyWithoutUserInput = {
     create?: XOR<PurchaseCreateWithoutUserInput, PurchaseUncheckedCreateWithoutUserInput> | PurchaseCreateWithoutUserInput[] | PurchaseUncheckedCreateWithoutUserInput[]
     connectOrCreate?: PurchaseCreateOrConnectWithoutUserInput | PurchaseCreateOrConnectWithoutUserInput[]
@@ -46483,13 +46217,6 @@ export namespace Prisma {
     connectOrCreate?: CommentCreateOrConnectWithoutUserInput | CommentCreateOrConnectWithoutUserInput[]
     createMany?: CommentCreateManyUserInputEnvelope
     connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
-  }
-
-  export type SharedAccountCreateNestedManyWithoutSharedUserInput = {
-    create?: XOR<SharedAccountCreateWithoutSharedUserInput, SharedAccountUncheckedCreateWithoutSharedUserInput> | SharedAccountCreateWithoutSharedUserInput[] | SharedAccountUncheckedCreateWithoutSharedUserInput[]
-    connectOrCreate?: SharedAccountCreateOrConnectWithoutSharedUserInput | SharedAccountCreateOrConnectWithoutSharedUserInput[]
-    createMany?: SharedAccountCreateManySharedUserInputEnvelope
-    connect?: SharedAccountWhereUniqueInput | SharedAccountWhereUniqueInput[]
   }
 
   export type AdViewCreateNestedManyWithoutUserInput = {
@@ -46541,13 +46268,6 @@ export namespace Prisma {
     connect?: SharedAccountWhereUniqueInput | SharedAccountWhereUniqueInput[]
   }
 
-  export type SharedAccountUserUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<SharedAccountUserCreateWithoutUserInput, SharedAccountUserUncheckedCreateWithoutUserInput> | SharedAccountUserCreateWithoutUserInput[] | SharedAccountUserUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: SharedAccountUserCreateOrConnectWithoutUserInput | SharedAccountUserCreateOrConnectWithoutUserInput[]
-    createMany?: SharedAccountUserCreateManyUserInputEnvelope
-    connect?: SharedAccountUserWhereUniqueInput | SharedAccountUserWhereUniqueInput[]
-  }
-
   export type PurchaseUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<PurchaseCreateWithoutUserInput, PurchaseUncheckedCreateWithoutUserInput> | PurchaseCreateWithoutUserInput[] | PurchaseUncheckedCreateWithoutUserInput[]
     connectOrCreate?: PurchaseCreateOrConnectWithoutUserInput | PurchaseCreateOrConnectWithoutUserInput[]
@@ -46560,13 +46280,6 @@ export namespace Prisma {
     connectOrCreate?: CommentCreateOrConnectWithoutUserInput | CommentCreateOrConnectWithoutUserInput[]
     createMany?: CommentCreateManyUserInputEnvelope
     connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
-  }
-
-  export type SharedAccountUncheckedCreateNestedManyWithoutSharedUserInput = {
-    create?: XOR<SharedAccountCreateWithoutSharedUserInput, SharedAccountUncheckedCreateWithoutSharedUserInput> | SharedAccountCreateWithoutSharedUserInput[] | SharedAccountUncheckedCreateWithoutSharedUserInput[]
-    connectOrCreate?: SharedAccountCreateOrConnectWithoutSharedUserInput | SharedAccountCreateOrConnectWithoutSharedUserInput[]
-    createMany?: SharedAccountCreateManySharedUserInputEnvelope
-    connect?: SharedAccountWhereUniqueInput | SharedAccountWhereUniqueInput[]
   }
 
   export type AdViewUncheckedCreateNestedManyWithoutUserInput = {
@@ -46611,10 +46324,6 @@ export namespace Prisma {
 
   export type BoolFieldUpdateOperationsInput = {
     set?: boolean
-  }
-
-  export type EnumUserRoleFieldUpdateOperationsInput = {
-    set?: $Enums.UserRole
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
@@ -46663,20 +46372,6 @@ export namespace Prisma {
     deleteMany?: SharedAccountScalarWhereInput | SharedAccountScalarWhereInput[]
   }
 
-  export type SharedAccountUserUpdateManyWithoutUserNestedInput = {
-    create?: XOR<SharedAccountUserCreateWithoutUserInput, SharedAccountUserUncheckedCreateWithoutUserInput> | SharedAccountUserCreateWithoutUserInput[] | SharedAccountUserUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: SharedAccountUserCreateOrConnectWithoutUserInput | SharedAccountUserCreateOrConnectWithoutUserInput[]
-    upsert?: SharedAccountUserUpsertWithWhereUniqueWithoutUserInput | SharedAccountUserUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: SharedAccountUserCreateManyUserInputEnvelope
-    set?: SharedAccountUserWhereUniqueInput | SharedAccountUserWhereUniqueInput[]
-    disconnect?: SharedAccountUserWhereUniqueInput | SharedAccountUserWhereUniqueInput[]
-    delete?: SharedAccountUserWhereUniqueInput | SharedAccountUserWhereUniqueInput[]
-    connect?: SharedAccountUserWhereUniqueInput | SharedAccountUserWhereUniqueInput[]
-    update?: SharedAccountUserUpdateWithWhereUniqueWithoutUserInput | SharedAccountUserUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: SharedAccountUserUpdateManyWithWhereWithoutUserInput | SharedAccountUserUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: SharedAccountUserScalarWhereInput | SharedAccountUserScalarWhereInput[]
-  }
-
   export type PurchaseUpdateManyWithoutUserNestedInput = {
     create?: XOR<PurchaseCreateWithoutUserInput, PurchaseUncheckedCreateWithoutUserInput> | PurchaseCreateWithoutUserInput[] | PurchaseUncheckedCreateWithoutUserInput[]
     connectOrCreate?: PurchaseCreateOrConnectWithoutUserInput | PurchaseCreateOrConnectWithoutUserInput[]
@@ -46703,20 +46398,6 @@ export namespace Prisma {
     update?: CommentUpdateWithWhereUniqueWithoutUserInput | CommentUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: CommentUpdateManyWithWhereWithoutUserInput | CommentUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: CommentScalarWhereInput | CommentScalarWhereInput[]
-  }
-
-  export type SharedAccountUpdateManyWithoutSharedUserNestedInput = {
-    create?: XOR<SharedAccountCreateWithoutSharedUserInput, SharedAccountUncheckedCreateWithoutSharedUserInput> | SharedAccountCreateWithoutSharedUserInput[] | SharedAccountUncheckedCreateWithoutSharedUserInput[]
-    connectOrCreate?: SharedAccountCreateOrConnectWithoutSharedUserInput | SharedAccountCreateOrConnectWithoutSharedUserInput[]
-    upsert?: SharedAccountUpsertWithWhereUniqueWithoutSharedUserInput | SharedAccountUpsertWithWhereUniqueWithoutSharedUserInput[]
-    createMany?: SharedAccountCreateManySharedUserInputEnvelope
-    set?: SharedAccountWhereUniqueInput | SharedAccountWhereUniqueInput[]
-    disconnect?: SharedAccountWhereUniqueInput | SharedAccountWhereUniqueInput[]
-    delete?: SharedAccountWhereUniqueInput | SharedAccountWhereUniqueInput[]
-    connect?: SharedAccountWhereUniqueInput | SharedAccountWhereUniqueInput[]
-    update?: SharedAccountUpdateWithWhereUniqueWithoutSharedUserInput | SharedAccountUpdateWithWhereUniqueWithoutSharedUserInput[]
-    updateMany?: SharedAccountUpdateManyWithWhereWithoutSharedUserInput | SharedAccountUpdateManyWithWhereWithoutSharedUserInput[]
-    deleteMany?: SharedAccountScalarWhereInput | SharedAccountScalarWhereInput[]
   }
 
   export type AdViewUpdateManyWithoutUserNestedInput = {
@@ -46817,20 +46498,6 @@ export namespace Prisma {
     deleteMany?: SharedAccountScalarWhereInput | SharedAccountScalarWhereInput[]
   }
 
-  export type SharedAccountUserUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<SharedAccountUserCreateWithoutUserInput, SharedAccountUserUncheckedCreateWithoutUserInput> | SharedAccountUserCreateWithoutUserInput[] | SharedAccountUserUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: SharedAccountUserCreateOrConnectWithoutUserInput | SharedAccountUserCreateOrConnectWithoutUserInput[]
-    upsert?: SharedAccountUserUpsertWithWhereUniqueWithoutUserInput | SharedAccountUserUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: SharedAccountUserCreateManyUserInputEnvelope
-    set?: SharedAccountUserWhereUniqueInput | SharedAccountUserWhereUniqueInput[]
-    disconnect?: SharedAccountUserWhereUniqueInput | SharedAccountUserWhereUniqueInput[]
-    delete?: SharedAccountUserWhereUniqueInput | SharedAccountUserWhereUniqueInput[]
-    connect?: SharedAccountUserWhereUniqueInput | SharedAccountUserWhereUniqueInput[]
-    update?: SharedAccountUserUpdateWithWhereUniqueWithoutUserInput | SharedAccountUserUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: SharedAccountUserUpdateManyWithWhereWithoutUserInput | SharedAccountUserUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: SharedAccountUserScalarWhereInput | SharedAccountUserScalarWhereInput[]
-  }
-
   export type PurchaseUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<PurchaseCreateWithoutUserInput, PurchaseUncheckedCreateWithoutUserInput> | PurchaseCreateWithoutUserInput[] | PurchaseUncheckedCreateWithoutUserInput[]
     connectOrCreate?: PurchaseCreateOrConnectWithoutUserInput | PurchaseCreateOrConnectWithoutUserInput[]
@@ -46857,20 +46524,6 @@ export namespace Prisma {
     update?: CommentUpdateWithWhereUniqueWithoutUserInput | CommentUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: CommentUpdateManyWithWhereWithoutUserInput | CommentUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: CommentScalarWhereInput | CommentScalarWhereInput[]
-  }
-
-  export type SharedAccountUncheckedUpdateManyWithoutSharedUserNestedInput = {
-    create?: XOR<SharedAccountCreateWithoutSharedUserInput, SharedAccountUncheckedCreateWithoutSharedUserInput> | SharedAccountCreateWithoutSharedUserInput[] | SharedAccountUncheckedCreateWithoutSharedUserInput[]
-    connectOrCreate?: SharedAccountCreateOrConnectWithoutSharedUserInput | SharedAccountCreateOrConnectWithoutSharedUserInput[]
-    upsert?: SharedAccountUpsertWithWhereUniqueWithoutSharedUserInput | SharedAccountUpsertWithWhereUniqueWithoutSharedUserInput[]
-    createMany?: SharedAccountCreateManySharedUserInputEnvelope
-    set?: SharedAccountWhereUniqueInput | SharedAccountWhereUniqueInput[]
-    disconnect?: SharedAccountWhereUniqueInput | SharedAccountWhereUniqueInput[]
-    delete?: SharedAccountWhereUniqueInput | SharedAccountWhereUniqueInput[]
-    connect?: SharedAccountWhereUniqueInput | SharedAccountWhereUniqueInput[]
-    update?: SharedAccountUpdateWithWhereUniqueWithoutSharedUserInput | SharedAccountUpdateWithWhereUniqueWithoutSharedUserInput[]
-    updateMany?: SharedAccountUpdateManyWithWhereWithoutSharedUserInput | SharedAccountUpdateManyWithWhereWithoutSharedUserInput[]
-    deleteMany?: SharedAccountScalarWhereInput | SharedAccountScalarWhereInput[]
   }
 
   export type AdViewUncheckedUpdateManyWithoutUserNestedInput = {
@@ -47099,12 +46752,6 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
-  export type UserCreateNestedOneWithoutSharedAccountInput = {
-    create?: XOR<UserCreateWithoutSharedAccountInput, UserUncheckedCreateWithoutSharedAccountInput>
-    connectOrCreate?: UserCreateOrConnectWithoutSharedAccountInput
-    connect?: UserWhereUniqueInput
-  }
-
   export type SubscriptionCreateNestedOneWithoutSharedAccountsInput = {
     create?: XOR<SubscriptionCreateWithoutSharedAccountsInput, SubscriptionUncheckedCreateWithoutSharedAccountsInput>
     connectOrCreate?: SubscriptionCreateOrConnectWithoutSharedAccountsInput
@@ -47135,16 +46782,6 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutOwnedSharedAccountsInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutOwnedSharedAccountsInput, UserUpdateWithoutOwnedSharedAccountsInput>, UserUncheckedUpdateWithoutOwnedSharedAccountsInput>
-  }
-
-  export type UserUpdateOneWithoutSharedAccountNestedInput = {
-    create?: XOR<UserCreateWithoutSharedAccountInput, UserUncheckedCreateWithoutSharedAccountInput>
-    connectOrCreate?: UserCreateOrConnectWithoutSharedAccountInput
-    upsert?: UserUpsertWithoutSharedAccountInput
-    disconnect?: UserWhereInput | boolean
-    delete?: UserWhereInput | boolean
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSharedAccountInput, UserUpdateWithoutSharedAccountInput>, UserUncheckedUpdateWithoutSharedAccountInput>
   }
 
   export type SubscriptionUpdateOneRequiredWithoutSharedAccountsNestedInput = {
@@ -47189,12 +46826,6 @@ export namespace Prisma {
     connect?: SharedAccountWhereUniqueInput
   }
 
-  export type UserCreateNestedOneWithoutSharedProfilesInput = {
-    create?: XOR<UserCreateWithoutSharedProfilesInput, UserUncheckedCreateWithoutSharedProfilesInput>
-    connectOrCreate?: UserCreateOrConnectWithoutSharedProfilesInput
-    connect?: UserWhereUniqueInput
-  }
-
   export type AdViewCreateNestedManyWithoutProfileInput = {
     create?: XOR<AdViewCreateWithoutProfileInput, AdViewUncheckedCreateWithoutProfileInput> | AdViewCreateWithoutProfileInput[] | AdViewUncheckedCreateWithoutProfileInput[]
     connectOrCreate?: AdViewCreateOrConnectWithoutProfileInput | AdViewCreateOrConnectWithoutProfileInput[]
@@ -47229,14 +46860,6 @@ export namespace Prisma {
     upsert?: SharedAccountUpsertWithoutProfilesInput
     connect?: SharedAccountWhereUniqueInput
     update?: XOR<XOR<SharedAccountUpdateToOneWithWhereWithoutProfilesInput, SharedAccountUpdateWithoutProfilesInput>, SharedAccountUncheckedUpdateWithoutProfilesInput>
-  }
-
-  export type UserUpdateOneRequiredWithoutSharedProfilesNestedInput = {
-    create?: XOR<UserCreateWithoutSharedProfilesInput, UserUncheckedCreateWithoutSharedProfilesInput>
-    connectOrCreate?: UserCreateOrConnectWithoutSharedProfilesInput
-    upsert?: UserUpsertWithoutSharedProfilesInput
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSharedProfilesInput, UserUpdateWithoutSharedProfilesInput>, UserUncheckedUpdateWithoutSharedProfilesInput>
   }
 
   export type AdViewUpdateManyWithoutProfileNestedInput = {
@@ -48911,13 +48534,6 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
-  export type NestedEnumUserRoleFilter<$PrismaModel = never> = {
-    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
-    in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
-    notIn?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
-    not?: NestedEnumUserRoleFilter<$PrismaModel> | $Enums.UserRole
-  }
-
   export type NestedDateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -49005,16 +48621,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
-  }
-
-  export type NestedEnumUserRoleWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
-    in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
-    notIn?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
-    not?: NestedEnumUserRoleWithAggregatesFilter<$PrismaModel> | $Enums.UserRole
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumUserRoleFilter<$PrismaModel>
-    _max?: NestedEnumUserRoleFilter<$PrismaModel>
   }
 
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -49274,23 +48880,17 @@ export namespace Prisma {
 
   export type SharedAccountCreateWithoutOwnerInput = {
     id?: string
-    sharedOn?: Date | string
     status?: $Enums.SharedAccountStatus
-    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    sharedUser?: UserCreateNestedOneWithoutSharedAccountInput
     subscription: SubscriptionCreateNestedOneWithoutSharedAccountsInput
     profiles?: SharedAccountUserCreateNestedManyWithoutSharedAccountInput
   }
 
   export type SharedAccountUncheckedCreateWithoutOwnerInput = {
     id?: string
-    sharedUserId?: string | null
     subscriptionId: string
-    sharedOn?: Date | string
     status?: $Enums.SharedAccountStatus
-    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     profiles?: SharedAccountUserUncheckedCreateNestedManyWithoutSharedAccountInput
@@ -49303,42 +48903,6 @@ export namespace Prisma {
 
   export type SharedAccountCreateManyOwnerInputEnvelope = {
     data: SharedAccountCreateManyOwnerInput | SharedAccountCreateManyOwnerInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type SharedAccountUserCreateWithoutUserInput = {
-    id?: string
-    profileName: string
-    iskidProfile?: boolean
-    avatarUrl?: string | null
-    pinCode?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    sharedAccount: SharedAccountCreateNestedOneWithoutProfilesInput
-    adViews?: AdViewCreateNestedManyWithoutProfileInput
-    activities?: SharedProfileActivityCreateNestedManyWithoutProfileInput
-  }
-
-  export type SharedAccountUserUncheckedCreateWithoutUserInput = {
-    id?: string
-    sharedAccountId: string
-    profileName: string
-    iskidProfile?: boolean
-    avatarUrl?: string | null
-    pinCode?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    adViews?: AdViewUncheckedCreateNestedManyWithoutProfileInput
-    activities?: SharedProfileActivityUncheckedCreateNestedManyWithoutProfileInput
-  }
-
-  export type SharedAccountUserCreateOrConnectWithoutUserInput = {
-    where: SharedAccountUserWhereUniqueInput
-    create: XOR<SharedAccountUserCreateWithoutUserInput, SharedAccountUserUncheckedCreateWithoutUserInput>
-  }
-
-  export type SharedAccountUserCreateManyUserInputEnvelope = {
-    data: SharedAccountUserCreateManyUserInput | SharedAccountUserCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -49393,40 +48957,6 @@ export namespace Prisma {
 
   export type CommentCreateManyUserInputEnvelope = {
     data: CommentCreateManyUserInput | CommentCreateManyUserInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type SharedAccountCreateWithoutSharedUserInput = {
-    id?: string
-    sharedOn?: Date | string
-    status?: $Enums.SharedAccountStatus
-    isActive?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    owner: UserCreateNestedOneWithoutOwnedSharedAccountsInput
-    subscription: SubscriptionCreateNestedOneWithoutSharedAccountsInput
-    profiles?: SharedAccountUserCreateNestedManyWithoutSharedAccountInput
-  }
-
-  export type SharedAccountUncheckedCreateWithoutSharedUserInput = {
-    id?: string
-    ownerUserId: string
-    subscriptionId: string
-    sharedOn?: Date | string
-    status?: $Enums.SharedAccountStatus
-    isActive?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    profiles?: SharedAccountUserUncheckedCreateNestedManyWithoutSharedAccountInput
-  }
-
-  export type SharedAccountCreateOrConnectWithoutSharedUserInput = {
-    where: SharedAccountWhereUniqueInput
-    create: XOR<SharedAccountCreateWithoutSharedUserInput, SharedAccountUncheckedCreateWithoutSharedUserInput>
-  }
-
-  export type SharedAccountCreateManySharedUserInputEnvelope = {
-    data: SharedAccountCreateManySharedUserInput | SharedAccountCreateManySharedUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -49637,44 +49167,10 @@ export namespace Prisma {
     NOT?: SharedAccountScalarWhereInput | SharedAccountScalarWhereInput[]
     id?: StringFilter<"SharedAccount"> | string
     ownerUserId?: StringFilter<"SharedAccount"> | string
-    sharedUserId?: StringNullableFilter<"SharedAccount"> | string | null
     subscriptionId?: StringFilter<"SharedAccount"> | string
-    sharedOn?: DateTimeFilter<"SharedAccount"> | Date | string
     status?: EnumSharedAccountStatusFilter<"SharedAccount"> | $Enums.SharedAccountStatus
-    isActive?: BoolFilter<"SharedAccount"> | boolean
     createdAt?: DateTimeFilter<"SharedAccount"> | Date | string
     updatedAt?: DateTimeFilter<"SharedAccount"> | Date | string
-  }
-
-  export type SharedAccountUserUpsertWithWhereUniqueWithoutUserInput = {
-    where: SharedAccountUserWhereUniqueInput
-    update: XOR<SharedAccountUserUpdateWithoutUserInput, SharedAccountUserUncheckedUpdateWithoutUserInput>
-    create: XOR<SharedAccountUserCreateWithoutUserInput, SharedAccountUserUncheckedCreateWithoutUserInput>
-  }
-
-  export type SharedAccountUserUpdateWithWhereUniqueWithoutUserInput = {
-    where: SharedAccountUserWhereUniqueInput
-    data: XOR<SharedAccountUserUpdateWithoutUserInput, SharedAccountUserUncheckedUpdateWithoutUserInput>
-  }
-
-  export type SharedAccountUserUpdateManyWithWhereWithoutUserInput = {
-    where: SharedAccountUserScalarWhereInput
-    data: XOR<SharedAccountUserUpdateManyMutationInput, SharedAccountUserUncheckedUpdateManyWithoutUserInput>
-  }
-
-  export type SharedAccountUserScalarWhereInput = {
-    AND?: SharedAccountUserScalarWhereInput | SharedAccountUserScalarWhereInput[]
-    OR?: SharedAccountUserScalarWhereInput[]
-    NOT?: SharedAccountUserScalarWhereInput | SharedAccountUserScalarWhereInput[]
-    id?: StringFilter<"SharedAccountUser"> | string
-    sharedAccountId?: StringFilter<"SharedAccountUser"> | string
-    userId?: StringFilter<"SharedAccountUser"> | string
-    profileName?: StringFilter<"SharedAccountUser"> | string
-    iskidProfile?: BoolFilter<"SharedAccountUser"> | boolean
-    avatarUrl?: StringNullableFilter<"SharedAccountUser"> | string | null
-    pinCode?: StringNullableFilter<"SharedAccountUser"> | string | null
-    createdAt?: DateTimeFilter<"SharedAccountUser"> | Date | string
-    updatedAt?: DateTimeFilter<"SharedAccountUser"> | Date | string
   }
 
   export type PurchaseUpsertWithWhereUniqueWithoutUserInput = {
@@ -49731,22 +49227,6 @@ export namespace Prisma {
     text?: StringFilter<"Comment"> | string
     createdAt?: DateTimeFilter<"Comment"> | Date | string
     parentCommentId?: StringNullableFilter<"Comment"> | string | null
-  }
-
-  export type SharedAccountUpsertWithWhereUniqueWithoutSharedUserInput = {
-    where: SharedAccountWhereUniqueInput
-    update: XOR<SharedAccountUpdateWithoutSharedUserInput, SharedAccountUncheckedUpdateWithoutSharedUserInput>
-    create: XOR<SharedAccountCreateWithoutSharedUserInput, SharedAccountUncheckedCreateWithoutSharedUserInput>
-  }
-
-  export type SharedAccountUpdateWithWhereUniqueWithoutSharedUserInput = {
-    where: SharedAccountWhereUniqueInput
-    data: XOR<SharedAccountUpdateWithoutSharedUserInput, SharedAccountUncheckedUpdateWithoutSharedUserInput>
-  }
-
-  export type SharedAccountUpdateManyWithWhereWithoutSharedUserInput = {
-    where: SharedAccountScalarWhereInput
-    data: XOR<SharedAccountUpdateManyMutationInput, SharedAccountUncheckedUpdateManyWithoutSharedUserInput>
   }
 
   export type AdViewUpsertWithWhereUniqueWithoutUserInput = {
@@ -49880,16 +49360,13 @@ export namespace Prisma {
     lastLoginAt?: Date | string | null
     isVerified?: boolean
     isMainAccount?: boolean
-    role?: $Enums.UserRole
     createdAt?: Date | string
     updatedAt?: Date | string
     sessions?: SessionCreateNestedManyWithoutUserInput
     subscriptions?: SubscriptionCreateNestedManyWithoutUserInput
     ownedSharedAccounts?: SharedAccountCreateNestedManyWithoutOwnerInput
-    sharedProfiles?: SharedAccountUserCreateNestedManyWithoutUserInput
     purchases?: PurchaseCreateNestedManyWithoutUserInput
     comments?: CommentCreateNestedManyWithoutUserInput
-    SharedAccount?: SharedAccountCreateNestedManyWithoutSharedUserInput
     adViews?: AdViewCreateNestedManyWithoutUserInput
     userVideoView?: UserVideoViewCreateNestedManyWithoutUserInput
     SeasonView?: SeasonViewCreateNestedManyWithoutUserInput
@@ -49904,16 +49381,13 @@ export namespace Prisma {
     lastLoginAt?: Date | string | null
     isVerified?: boolean
     isMainAccount?: boolean
-    role?: $Enums.UserRole
     createdAt?: Date | string
     updatedAt?: Date | string
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     subscriptions?: SubscriptionUncheckedCreateNestedManyWithoutUserInput
     ownedSharedAccounts?: SharedAccountUncheckedCreateNestedManyWithoutOwnerInput
-    sharedProfiles?: SharedAccountUserUncheckedCreateNestedManyWithoutUserInput
     purchases?: PurchaseUncheckedCreateNestedManyWithoutUserInput
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
-    SharedAccount?: SharedAccountUncheckedCreateNestedManyWithoutSharedUserInput
     adViews?: AdViewUncheckedCreateNestedManyWithoutUserInput
     userVideoView?: UserVideoViewUncheckedCreateNestedManyWithoutUserInput
     SeasonView?: SeasonViewUncheckedCreateNestedManyWithoutUserInput
@@ -49944,16 +49418,13 @@ export namespace Prisma {
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isMainAccount?: BoolFieldUpdateOperationsInput | boolean
-    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUpdateManyWithoutUserNestedInput
     subscriptions?: SubscriptionUpdateManyWithoutUserNestedInput
     ownedSharedAccounts?: SharedAccountUpdateManyWithoutOwnerNestedInput
-    sharedProfiles?: SharedAccountUserUpdateManyWithoutUserNestedInput
     purchases?: PurchaseUpdateManyWithoutUserNestedInput
     comments?: CommentUpdateManyWithoutUserNestedInput
-    SharedAccount?: SharedAccountUpdateManyWithoutSharedUserNestedInput
     adViews?: AdViewUpdateManyWithoutUserNestedInput
     userVideoView?: UserVideoViewUpdateManyWithoutUserNestedInput
     SeasonView?: SeasonViewUpdateManyWithoutUserNestedInput
@@ -49968,16 +49439,13 @@ export namespace Prisma {
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isMainAccount?: BoolFieldUpdateOperationsInput | boolean
-    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     subscriptions?: SubscriptionUncheckedUpdateManyWithoutUserNestedInput
     ownedSharedAccounts?: SharedAccountUncheckedUpdateManyWithoutOwnerNestedInput
-    sharedProfiles?: SharedAccountUserUncheckedUpdateManyWithoutUserNestedInput
     purchases?: PurchaseUncheckedUpdateManyWithoutUserNestedInput
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
-    SharedAccount?: SharedAccountUncheckedUpdateManyWithoutSharedUserNestedInput
     adViews?: AdViewUncheckedUpdateManyWithoutUserNestedInput
     userVideoView?: UserVideoViewUncheckedUpdateManyWithoutUserNestedInput
     SeasonView?: SeasonViewUncheckedUpdateManyWithoutUserNestedInput
@@ -49992,15 +49460,12 @@ export namespace Prisma {
     lastLoginAt?: Date | string | null
     isVerified?: boolean
     isMainAccount?: boolean
-    role?: $Enums.UserRole
     createdAt?: Date | string
     updatedAt?: Date | string
     subscriptions?: SubscriptionCreateNestedManyWithoutUserInput
     ownedSharedAccounts?: SharedAccountCreateNestedManyWithoutOwnerInput
-    sharedProfiles?: SharedAccountUserCreateNestedManyWithoutUserInput
     purchases?: PurchaseCreateNestedManyWithoutUserInput
     comments?: CommentCreateNestedManyWithoutUserInput
-    SharedAccount?: SharedAccountCreateNestedManyWithoutSharedUserInput
     adViews?: AdViewCreateNestedManyWithoutUserInput
     userVideoView?: UserVideoViewCreateNestedManyWithoutUserInput
     SeasonView?: SeasonViewCreateNestedManyWithoutUserInput
@@ -50016,15 +49481,12 @@ export namespace Prisma {
     lastLoginAt?: Date | string | null
     isVerified?: boolean
     isMainAccount?: boolean
-    role?: $Enums.UserRole
     createdAt?: Date | string
     updatedAt?: Date | string
     subscriptions?: SubscriptionUncheckedCreateNestedManyWithoutUserInput
     ownedSharedAccounts?: SharedAccountUncheckedCreateNestedManyWithoutOwnerInput
-    sharedProfiles?: SharedAccountUserUncheckedCreateNestedManyWithoutUserInput
     purchases?: PurchaseUncheckedCreateNestedManyWithoutUserInput
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
-    SharedAccount?: SharedAccountUncheckedCreateNestedManyWithoutSharedUserInput
     adViews?: AdViewUncheckedCreateNestedManyWithoutUserInput
     userVideoView?: UserVideoViewUncheckedCreateNestedManyWithoutUserInput
     SeasonView?: SeasonViewUncheckedCreateNestedManyWithoutUserInput
@@ -50056,15 +49518,12 @@ export namespace Prisma {
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isMainAccount?: BoolFieldUpdateOperationsInput | boolean
-    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     subscriptions?: SubscriptionUpdateManyWithoutUserNestedInput
     ownedSharedAccounts?: SharedAccountUpdateManyWithoutOwnerNestedInput
-    sharedProfiles?: SharedAccountUserUpdateManyWithoutUserNestedInput
     purchases?: PurchaseUpdateManyWithoutUserNestedInput
     comments?: CommentUpdateManyWithoutUserNestedInput
-    SharedAccount?: SharedAccountUpdateManyWithoutSharedUserNestedInput
     adViews?: AdViewUpdateManyWithoutUserNestedInput
     userVideoView?: UserVideoViewUpdateManyWithoutUserNestedInput
     SeasonView?: SeasonViewUpdateManyWithoutUserNestedInput
@@ -50080,15 +49539,12 @@ export namespace Prisma {
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isMainAccount?: BoolFieldUpdateOperationsInput | boolean
-    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     subscriptions?: SubscriptionUncheckedUpdateManyWithoutUserNestedInput
     ownedSharedAccounts?: SharedAccountUncheckedUpdateManyWithoutOwnerNestedInput
-    sharedProfiles?: SharedAccountUserUncheckedUpdateManyWithoutUserNestedInput
     purchases?: PurchaseUncheckedUpdateManyWithoutUserNestedInput
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
-    SharedAccount?: SharedAccountUncheckedUpdateManyWithoutSharedUserNestedInput
     adViews?: AdViewUncheckedUpdateManyWithoutUserNestedInput
     userVideoView?: UserVideoViewUncheckedUpdateManyWithoutUserNestedInput
     SeasonView?: SeasonViewUncheckedUpdateManyWithoutUserNestedInput
@@ -50154,15 +49610,12 @@ export namespace Prisma {
     lastLoginAt?: Date | string | null
     isVerified?: boolean
     isMainAccount?: boolean
-    role?: $Enums.UserRole
     createdAt?: Date | string
     updatedAt?: Date | string
     sessions?: SessionCreateNestedManyWithoutUserInput
     ownedSharedAccounts?: SharedAccountCreateNestedManyWithoutOwnerInput
-    sharedProfiles?: SharedAccountUserCreateNestedManyWithoutUserInput
     purchases?: PurchaseCreateNestedManyWithoutUserInput
     comments?: CommentCreateNestedManyWithoutUserInput
-    SharedAccount?: SharedAccountCreateNestedManyWithoutSharedUserInput
     adViews?: AdViewCreateNestedManyWithoutUserInput
     userVideoView?: UserVideoViewCreateNestedManyWithoutUserInput
     SeasonView?: SeasonViewCreateNestedManyWithoutUserInput
@@ -50178,15 +49631,12 @@ export namespace Prisma {
     lastLoginAt?: Date | string | null
     isVerified?: boolean
     isMainAccount?: boolean
-    role?: $Enums.UserRole
     createdAt?: Date | string
     updatedAt?: Date | string
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     ownedSharedAccounts?: SharedAccountUncheckedCreateNestedManyWithoutOwnerInput
-    sharedProfiles?: SharedAccountUserUncheckedCreateNestedManyWithoutUserInput
     purchases?: PurchaseUncheckedCreateNestedManyWithoutUserInput
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
-    SharedAccount?: SharedAccountUncheckedCreateNestedManyWithoutSharedUserInput
     adViews?: AdViewUncheckedCreateNestedManyWithoutUserInput
     userVideoView?: UserVideoViewUncheckedCreateNestedManyWithoutUserInput
     SeasonView?: SeasonViewUncheckedCreateNestedManyWithoutUserInput
@@ -50225,23 +49675,17 @@ export namespace Prisma {
 
   export type SharedAccountCreateWithoutSubscriptionInput = {
     id?: string
-    sharedOn?: Date | string
     status?: $Enums.SharedAccountStatus
-    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     owner: UserCreateNestedOneWithoutOwnedSharedAccountsInput
-    sharedUser?: UserCreateNestedOneWithoutSharedAccountInput
     profiles?: SharedAccountUserCreateNestedManyWithoutSharedAccountInput
   }
 
   export type SharedAccountUncheckedCreateWithoutSubscriptionInput = {
     id?: string
     ownerUserId: string
-    sharedUserId?: string | null
-    sharedOn?: Date | string
     status?: $Enums.SharedAccountStatus
-    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     profiles?: SharedAccountUserUncheckedCreateNestedManyWithoutSharedAccountInput
@@ -50277,15 +49721,12 @@ export namespace Prisma {
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isMainAccount?: BoolFieldUpdateOperationsInput | boolean
-    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUpdateManyWithoutUserNestedInput
     ownedSharedAccounts?: SharedAccountUpdateManyWithoutOwnerNestedInput
-    sharedProfiles?: SharedAccountUserUpdateManyWithoutUserNestedInput
     purchases?: PurchaseUpdateManyWithoutUserNestedInput
     comments?: CommentUpdateManyWithoutUserNestedInput
-    SharedAccount?: SharedAccountUpdateManyWithoutSharedUserNestedInput
     adViews?: AdViewUpdateManyWithoutUserNestedInput
     userVideoView?: UserVideoViewUpdateManyWithoutUserNestedInput
     SeasonView?: SeasonViewUpdateManyWithoutUserNestedInput
@@ -50301,15 +49742,12 @@ export namespace Prisma {
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isMainAccount?: BoolFieldUpdateOperationsInput | boolean
-    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     ownedSharedAccounts?: SharedAccountUncheckedUpdateManyWithoutOwnerNestedInput
-    sharedProfiles?: SharedAccountUserUncheckedUpdateManyWithoutUserNestedInput
     purchases?: PurchaseUncheckedUpdateManyWithoutUserNestedInput
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
-    SharedAccount?: SharedAccountUncheckedUpdateManyWithoutSharedUserNestedInput
     adViews?: AdViewUncheckedUpdateManyWithoutUserNestedInput
     userVideoView?: UserVideoViewUncheckedUpdateManyWithoutUserNestedInput
     SeasonView?: SeasonViewUncheckedUpdateManyWithoutUserNestedInput
@@ -50372,15 +49810,12 @@ export namespace Prisma {
     lastLoginAt?: Date | string | null
     isVerified?: boolean
     isMainAccount?: boolean
-    role?: $Enums.UserRole
     createdAt?: Date | string
     updatedAt?: Date | string
     sessions?: SessionCreateNestedManyWithoutUserInput
     subscriptions?: SubscriptionCreateNestedManyWithoutUserInput
-    sharedProfiles?: SharedAccountUserCreateNestedManyWithoutUserInput
     purchases?: PurchaseCreateNestedManyWithoutUserInput
     comments?: CommentCreateNestedManyWithoutUserInput
-    SharedAccount?: SharedAccountCreateNestedManyWithoutSharedUserInput
     adViews?: AdViewCreateNestedManyWithoutUserInput
     userVideoView?: UserVideoViewCreateNestedManyWithoutUserInput
     SeasonView?: SeasonViewCreateNestedManyWithoutUserInput
@@ -50396,15 +49831,12 @@ export namespace Prisma {
     lastLoginAt?: Date | string | null
     isVerified?: boolean
     isMainAccount?: boolean
-    role?: $Enums.UserRole
     createdAt?: Date | string
     updatedAt?: Date | string
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     subscriptions?: SubscriptionUncheckedCreateNestedManyWithoutUserInput
-    sharedProfiles?: SharedAccountUserUncheckedCreateNestedManyWithoutUserInput
     purchases?: PurchaseUncheckedCreateNestedManyWithoutUserInput
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
-    SharedAccount?: SharedAccountUncheckedCreateNestedManyWithoutSharedUserInput
     adViews?: AdViewUncheckedCreateNestedManyWithoutUserInput
     userVideoView?: UserVideoViewUncheckedCreateNestedManyWithoutUserInput
     SeasonView?: SeasonViewUncheckedCreateNestedManyWithoutUserInput
@@ -50414,59 +49846,6 @@ export namespace Prisma {
   export type UserCreateOrConnectWithoutOwnedSharedAccountsInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutOwnedSharedAccountsInput, UserUncheckedCreateWithoutOwnedSharedAccountsInput>
-  }
-
-  export type UserCreateWithoutSharedAccountInput = {
-    id?: string
-    email: string
-    password_hash: string
-    name?: string | null
-    avatarUrl?: string | null
-    lastLoginAt?: Date | string | null
-    isVerified?: boolean
-    isMainAccount?: boolean
-    role?: $Enums.UserRole
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    sessions?: SessionCreateNestedManyWithoutUserInput
-    subscriptions?: SubscriptionCreateNestedManyWithoutUserInput
-    ownedSharedAccounts?: SharedAccountCreateNestedManyWithoutOwnerInput
-    sharedProfiles?: SharedAccountUserCreateNestedManyWithoutUserInput
-    purchases?: PurchaseCreateNestedManyWithoutUserInput
-    comments?: CommentCreateNestedManyWithoutUserInput
-    adViews?: AdViewCreateNestedManyWithoutUserInput
-    userVideoView?: UserVideoViewCreateNestedManyWithoutUserInput
-    SeasonView?: SeasonViewCreateNestedManyWithoutUserInput
-    EmailValidation?: EmailValidationCreateNestedManyWithoutUserInput
-  }
-
-  export type UserUncheckedCreateWithoutSharedAccountInput = {
-    id?: string
-    email: string
-    password_hash: string
-    name?: string | null
-    avatarUrl?: string | null
-    lastLoginAt?: Date | string | null
-    isVerified?: boolean
-    isMainAccount?: boolean
-    role?: $Enums.UserRole
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
-    subscriptions?: SubscriptionUncheckedCreateNestedManyWithoutUserInput
-    ownedSharedAccounts?: SharedAccountUncheckedCreateNestedManyWithoutOwnerInput
-    sharedProfiles?: SharedAccountUserUncheckedCreateNestedManyWithoutUserInput
-    purchases?: PurchaseUncheckedCreateNestedManyWithoutUserInput
-    comments?: CommentUncheckedCreateNestedManyWithoutUserInput
-    adViews?: AdViewUncheckedCreateNestedManyWithoutUserInput
-    userVideoView?: UserVideoViewUncheckedCreateNestedManyWithoutUserInput
-    SeasonView?: SeasonViewUncheckedCreateNestedManyWithoutUserInput
-    EmailValidation?: EmailValidationUncheckedCreateNestedManyWithoutUserInput
-  }
-
-  export type UserCreateOrConnectWithoutSharedAccountInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutSharedAccountInput, UserUncheckedCreateWithoutSharedAccountInput>
   }
 
   export type SubscriptionCreateWithoutSharedAccountsInput = {
@@ -50503,21 +49882,19 @@ export namespace Prisma {
     profileName: string
     iskidProfile?: boolean
     avatarUrl?: string | null
-    pinCode?: string | null
+    pinCode: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutSharedProfilesInput
     adViews?: AdViewCreateNestedManyWithoutProfileInput
     activities?: SharedProfileActivityCreateNestedManyWithoutProfileInput
   }
 
   export type SharedAccountUserUncheckedCreateWithoutSharedAccountInput = {
     id?: string
-    userId: string
     profileName: string
     iskidProfile?: boolean
     avatarUrl?: string | null
-    pinCode?: string | null
+    pinCode: number
     createdAt?: Date | string
     updatedAt?: Date | string
     adViews?: AdViewUncheckedCreateNestedManyWithoutProfileInput
@@ -50554,15 +49931,12 @@ export namespace Prisma {
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isMainAccount?: BoolFieldUpdateOperationsInput | boolean
-    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUpdateManyWithoutUserNestedInput
     subscriptions?: SubscriptionUpdateManyWithoutUserNestedInput
-    sharedProfiles?: SharedAccountUserUpdateManyWithoutUserNestedInput
     purchases?: PurchaseUpdateManyWithoutUserNestedInput
     comments?: CommentUpdateManyWithoutUserNestedInput
-    SharedAccount?: SharedAccountUpdateManyWithoutSharedUserNestedInput
     adViews?: AdViewUpdateManyWithoutUserNestedInput
     userVideoView?: UserVideoViewUpdateManyWithoutUserNestedInput
     SeasonView?: SeasonViewUpdateManyWithoutUserNestedInput
@@ -50578,72 +49952,10 @@ export namespace Prisma {
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isMainAccount?: BoolFieldUpdateOperationsInput | boolean
-    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     subscriptions?: SubscriptionUncheckedUpdateManyWithoutUserNestedInput
-    sharedProfiles?: SharedAccountUserUncheckedUpdateManyWithoutUserNestedInput
-    purchases?: PurchaseUncheckedUpdateManyWithoutUserNestedInput
-    comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
-    SharedAccount?: SharedAccountUncheckedUpdateManyWithoutSharedUserNestedInput
-    adViews?: AdViewUncheckedUpdateManyWithoutUserNestedInput
-    userVideoView?: UserVideoViewUncheckedUpdateManyWithoutUserNestedInput
-    SeasonView?: SeasonViewUncheckedUpdateManyWithoutUserNestedInput
-    EmailValidation?: EmailValidationUncheckedUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUpsertWithoutSharedAccountInput = {
-    update: XOR<UserUpdateWithoutSharedAccountInput, UserUncheckedUpdateWithoutSharedAccountInput>
-    create: XOR<UserCreateWithoutSharedAccountInput, UserUncheckedCreateWithoutSharedAccountInput>
-    where?: UserWhereInput
-  }
-
-  export type UserUpdateToOneWithWhereWithoutSharedAccountInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutSharedAccountInput, UserUncheckedUpdateWithoutSharedAccountInput>
-  }
-
-  export type UserUpdateWithoutSharedAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    isMainAccount?: BoolFieldUpdateOperationsInput | boolean
-    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    sessions?: SessionUpdateManyWithoutUserNestedInput
-    subscriptions?: SubscriptionUpdateManyWithoutUserNestedInput
-    ownedSharedAccounts?: SharedAccountUpdateManyWithoutOwnerNestedInput
-    sharedProfiles?: SharedAccountUserUpdateManyWithoutUserNestedInput
-    purchases?: PurchaseUpdateManyWithoutUserNestedInput
-    comments?: CommentUpdateManyWithoutUserNestedInput
-    adViews?: AdViewUpdateManyWithoutUserNestedInput
-    userVideoView?: UserVideoViewUpdateManyWithoutUserNestedInput
-    SeasonView?: SeasonViewUpdateManyWithoutUserNestedInput
-    EmailValidation?: EmailValidationUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutSharedAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    isMainAccount?: BoolFieldUpdateOperationsInput | boolean
-    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
-    subscriptions?: SubscriptionUncheckedUpdateManyWithoutUserNestedInput
-    ownedSharedAccounts?: SharedAccountUncheckedUpdateManyWithoutOwnerNestedInput
-    sharedProfiles?: SharedAccountUserUncheckedUpdateManyWithoutUserNestedInput
     purchases?: PurchaseUncheckedUpdateManyWithoutUserNestedInput
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
     adViews?: AdViewUncheckedUpdateManyWithoutUserNestedInput
@@ -50703,26 +50015,34 @@ export namespace Prisma {
     data: XOR<SharedAccountUserUpdateManyMutationInput, SharedAccountUserUncheckedUpdateManyWithoutSharedAccountInput>
   }
 
+  export type SharedAccountUserScalarWhereInput = {
+    AND?: SharedAccountUserScalarWhereInput | SharedAccountUserScalarWhereInput[]
+    OR?: SharedAccountUserScalarWhereInput[]
+    NOT?: SharedAccountUserScalarWhereInput | SharedAccountUserScalarWhereInput[]
+    id?: StringFilter<"SharedAccountUser"> | string
+    sharedAccountId?: StringFilter<"SharedAccountUser"> | string
+    profileName?: StringFilter<"SharedAccountUser"> | string
+    iskidProfile?: BoolFilter<"SharedAccountUser"> | boolean
+    avatarUrl?: StringNullableFilter<"SharedAccountUser"> | string | null
+    pinCode?: IntFilter<"SharedAccountUser"> | number
+    createdAt?: DateTimeFilter<"SharedAccountUser"> | Date | string
+    updatedAt?: DateTimeFilter<"SharedAccountUser"> | Date | string
+  }
+
   export type SharedAccountCreateWithoutProfilesInput = {
     id?: string
-    sharedOn?: Date | string
     status?: $Enums.SharedAccountStatus
-    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     owner: UserCreateNestedOneWithoutOwnedSharedAccountsInput
-    sharedUser?: UserCreateNestedOneWithoutSharedAccountInput
     subscription: SubscriptionCreateNestedOneWithoutSharedAccountsInput
   }
 
   export type SharedAccountUncheckedCreateWithoutProfilesInput = {
     id?: string
     ownerUserId: string
-    sharedUserId?: string | null
     subscriptionId: string
-    sharedOn?: Date | string
     status?: $Enums.SharedAccountStatus
-    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -50730,59 +50050,6 @@ export namespace Prisma {
   export type SharedAccountCreateOrConnectWithoutProfilesInput = {
     where: SharedAccountWhereUniqueInput
     create: XOR<SharedAccountCreateWithoutProfilesInput, SharedAccountUncheckedCreateWithoutProfilesInput>
-  }
-
-  export type UserCreateWithoutSharedProfilesInput = {
-    id?: string
-    email: string
-    password_hash: string
-    name?: string | null
-    avatarUrl?: string | null
-    lastLoginAt?: Date | string | null
-    isVerified?: boolean
-    isMainAccount?: boolean
-    role?: $Enums.UserRole
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    sessions?: SessionCreateNestedManyWithoutUserInput
-    subscriptions?: SubscriptionCreateNestedManyWithoutUserInput
-    ownedSharedAccounts?: SharedAccountCreateNestedManyWithoutOwnerInput
-    purchases?: PurchaseCreateNestedManyWithoutUserInput
-    comments?: CommentCreateNestedManyWithoutUserInput
-    SharedAccount?: SharedAccountCreateNestedManyWithoutSharedUserInput
-    adViews?: AdViewCreateNestedManyWithoutUserInput
-    userVideoView?: UserVideoViewCreateNestedManyWithoutUserInput
-    SeasonView?: SeasonViewCreateNestedManyWithoutUserInput
-    EmailValidation?: EmailValidationCreateNestedManyWithoutUserInput
-  }
-
-  export type UserUncheckedCreateWithoutSharedProfilesInput = {
-    id?: string
-    email: string
-    password_hash: string
-    name?: string | null
-    avatarUrl?: string | null
-    lastLoginAt?: Date | string | null
-    isVerified?: boolean
-    isMainAccount?: boolean
-    role?: $Enums.UserRole
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
-    subscriptions?: SubscriptionUncheckedCreateNestedManyWithoutUserInput
-    ownedSharedAccounts?: SharedAccountUncheckedCreateNestedManyWithoutOwnerInput
-    purchases?: PurchaseUncheckedCreateNestedManyWithoutUserInput
-    comments?: CommentUncheckedCreateNestedManyWithoutUserInput
-    SharedAccount?: SharedAccountUncheckedCreateNestedManyWithoutSharedUserInput
-    adViews?: AdViewUncheckedCreateNestedManyWithoutUserInput
-    userVideoView?: UserVideoViewUncheckedCreateNestedManyWithoutUserInput
-    SeasonView?: SeasonViewUncheckedCreateNestedManyWithoutUserInput
-    EmailValidation?: EmailValidationUncheckedCreateNestedManyWithoutUserInput
-  }
-
-  export type UserCreateOrConnectWithoutSharedProfilesInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutSharedProfilesInput, UserUncheckedCreateWithoutSharedProfilesInput>
   }
 
   export type AdViewCreateWithoutProfileInput = {
@@ -50846,85 +50113,20 @@ export namespace Prisma {
 
   export type SharedAccountUpdateWithoutProfilesInput = {
     id?: StringFieldUpdateOperationsInput | string
-    sharedOn?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumSharedAccountStatusFieldUpdateOperationsInput | $Enums.SharedAccountStatus
-    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: UserUpdateOneRequiredWithoutOwnedSharedAccountsNestedInput
-    sharedUser?: UserUpdateOneWithoutSharedAccountNestedInput
     subscription?: SubscriptionUpdateOneRequiredWithoutSharedAccountsNestedInput
   }
 
   export type SharedAccountUncheckedUpdateWithoutProfilesInput = {
     id?: StringFieldUpdateOperationsInput | string
     ownerUserId?: StringFieldUpdateOperationsInput | string
-    sharedUserId?: NullableStringFieldUpdateOperationsInput | string | null
     subscriptionId?: StringFieldUpdateOperationsInput | string
-    sharedOn?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumSharedAccountStatusFieldUpdateOperationsInput | $Enums.SharedAccountStatus
-    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type UserUpsertWithoutSharedProfilesInput = {
-    update: XOR<UserUpdateWithoutSharedProfilesInput, UserUncheckedUpdateWithoutSharedProfilesInput>
-    create: XOR<UserCreateWithoutSharedProfilesInput, UserUncheckedCreateWithoutSharedProfilesInput>
-    where?: UserWhereInput
-  }
-
-  export type UserUpdateToOneWithWhereWithoutSharedProfilesInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutSharedProfilesInput, UserUncheckedUpdateWithoutSharedProfilesInput>
-  }
-
-  export type UserUpdateWithoutSharedProfilesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    isMainAccount?: BoolFieldUpdateOperationsInput | boolean
-    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    sessions?: SessionUpdateManyWithoutUserNestedInput
-    subscriptions?: SubscriptionUpdateManyWithoutUserNestedInput
-    ownedSharedAccounts?: SharedAccountUpdateManyWithoutOwnerNestedInput
-    purchases?: PurchaseUpdateManyWithoutUserNestedInput
-    comments?: CommentUpdateManyWithoutUserNestedInput
-    SharedAccount?: SharedAccountUpdateManyWithoutSharedUserNestedInput
-    adViews?: AdViewUpdateManyWithoutUserNestedInput
-    userVideoView?: UserVideoViewUpdateManyWithoutUserNestedInput
-    SeasonView?: SeasonViewUpdateManyWithoutUserNestedInput
-    EmailValidation?: EmailValidationUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutSharedProfilesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    isMainAccount?: BoolFieldUpdateOperationsInput | boolean
-    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
-    subscriptions?: SubscriptionUncheckedUpdateManyWithoutUserNestedInput
-    ownedSharedAccounts?: SharedAccountUncheckedUpdateManyWithoutOwnerNestedInput
-    purchases?: PurchaseUncheckedUpdateManyWithoutUserNestedInput
-    comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
-    SharedAccount?: SharedAccountUncheckedUpdateManyWithoutSharedUserNestedInput
-    adViews?: AdViewUncheckedUpdateManyWithoutUserNestedInput
-    userVideoView?: UserVideoViewUncheckedUpdateManyWithoutUserNestedInput
-    SeasonView?: SeasonViewUncheckedUpdateManyWithoutUserNestedInput
-    EmailValidation?: EmailValidationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type AdViewUpsertWithWhereUniqueWithoutProfileInput = {
@@ -53201,16 +52403,13 @@ export namespace Prisma {
     lastLoginAt?: Date | string | null
     isVerified?: boolean
     isMainAccount?: boolean
-    role?: $Enums.UserRole
     createdAt?: Date | string
     updatedAt?: Date | string
     sessions?: SessionCreateNestedManyWithoutUserInput
     subscriptions?: SubscriptionCreateNestedManyWithoutUserInput
     ownedSharedAccounts?: SharedAccountCreateNestedManyWithoutOwnerInput
-    sharedProfiles?: SharedAccountUserCreateNestedManyWithoutUserInput
     purchases?: PurchaseCreateNestedManyWithoutUserInput
     comments?: CommentCreateNestedManyWithoutUserInput
-    SharedAccount?: SharedAccountCreateNestedManyWithoutSharedUserInput
     adViews?: AdViewCreateNestedManyWithoutUserInput
     SeasonView?: SeasonViewCreateNestedManyWithoutUserInput
     EmailValidation?: EmailValidationCreateNestedManyWithoutUserInput
@@ -53225,16 +52424,13 @@ export namespace Prisma {
     lastLoginAt?: Date | string | null
     isVerified?: boolean
     isMainAccount?: boolean
-    role?: $Enums.UserRole
     createdAt?: Date | string
     updatedAt?: Date | string
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     subscriptions?: SubscriptionUncheckedCreateNestedManyWithoutUserInput
     ownedSharedAccounts?: SharedAccountUncheckedCreateNestedManyWithoutOwnerInput
-    sharedProfiles?: SharedAccountUserUncheckedCreateNestedManyWithoutUserInput
     purchases?: PurchaseUncheckedCreateNestedManyWithoutUserInput
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
-    SharedAccount?: SharedAccountUncheckedCreateNestedManyWithoutSharedUserInput
     adViews?: AdViewUncheckedCreateNestedManyWithoutUserInput
     SeasonView?: SeasonViewUncheckedCreateNestedManyWithoutUserInput
     EmailValidation?: EmailValidationUncheckedCreateNestedManyWithoutUserInput
@@ -53302,16 +52498,13 @@ export namespace Prisma {
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isMainAccount?: BoolFieldUpdateOperationsInput | boolean
-    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUpdateManyWithoutUserNestedInput
     subscriptions?: SubscriptionUpdateManyWithoutUserNestedInput
     ownedSharedAccounts?: SharedAccountUpdateManyWithoutOwnerNestedInput
-    sharedProfiles?: SharedAccountUserUpdateManyWithoutUserNestedInput
     purchases?: PurchaseUpdateManyWithoutUserNestedInput
     comments?: CommentUpdateManyWithoutUserNestedInput
-    SharedAccount?: SharedAccountUpdateManyWithoutSharedUserNestedInput
     adViews?: AdViewUpdateManyWithoutUserNestedInput
     SeasonView?: SeasonViewUpdateManyWithoutUserNestedInput
     EmailValidation?: EmailValidationUpdateManyWithoutUserNestedInput
@@ -53326,16 +52519,13 @@ export namespace Prisma {
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isMainAccount?: BoolFieldUpdateOperationsInput | boolean
-    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     subscriptions?: SubscriptionUncheckedUpdateManyWithoutUserNestedInput
     ownedSharedAccounts?: SharedAccountUncheckedUpdateManyWithoutOwnerNestedInput
-    sharedProfiles?: SharedAccountUserUncheckedUpdateManyWithoutUserNestedInput
     purchases?: PurchaseUncheckedUpdateManyWithoutUserNestedInput
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
-    SharedAccount?: SharedAccountUncheckedUpdateManyWithoutSharedUserNestedInput
     adViews?: AdViewUncheckedUpdateManyWithoutUserNestedInput
     SeasonView?: SeasonViewUncheckedUpdateManyWithoutUserNestedInput
     EmailValidation?: EmailValidationUncheckedUpdateManyWithoutUserNestedInput
@@ -53416,16 +52606,13 @@ export namespace Prisma {
     lastLoginAt?: Date | string | null
     isVerified?: boolean
     isMainAccount?: boolean
-    role?: $Enums.UserRole
     createdAt?: Date | string
     updatedAt?: Date | string
     sessions?: SessionCreateNestedManyWithoutUserInput
     subscriptions?: SubscriptionCreateNestedManyWithoutUserInput
     ownedSharedAccounts?: SharedAccountCreateNestedManyWithoutOwnerInput
-    sharedProfiles?: SharedAccountUserCreateNestedManyWithoutUserInput
     purchases?: PurchaseCreateNestedManyWithoutUserInput
     comments?: CommentCreateNestedManyWithoutUserInput
-    SharedAccount?: SharedAccountCreateNestedManyWithoutSharedUserInput
     adViews?: AdViewCreateNestedManyWithoutUserInput
     userVideoView?: UserVideoViewCreateNestedManyWithoutUserInput
     EmailValidation?: EmailValidationCreateNestedManyWithoutUserInput
@@ -53440,16 +52627,13 @@ export namespace Prisma {
     lastLoginAt?: Date | string | null
     isVerified?: boolean
     isMainAccount?: boolean
-    role?: $Enums.UserRole
     createdAt?: Date | string
     updatedAt?: Date | string
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     subscriptions?: SubscriptionUncheckedCreateNestedManyWithoutUserInput
     ownedSharedAccounts?: SharedAccountUncheckedCreateNestedManyWithoutOwnerInput
-    sharedProfiles?: SharedAccountUserUncheckedCreateNestedManyWithoutUserInput
     purchases?: PurchaseUncheckedCreateNestedManyWithoutUserInput
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
-    SharedAccount?: SharedAccountUncheckedCreateNestedManyWithoutSharedUserInput
     adViews?: AdViewUncheckedCreateNestedManyWithoutUserInput
     userVideoView?: UserVideoViewUncheckedCreateNestedManyWithoutUserInput
     EmailValidation?: EmailValidationUncheckedCreateNestedManyWithoutUserInput
@@ -53509,16 +52693,13 @@ export namespace Prisma {
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isMainAccount?: BoolFieldUpdateOperationsInput | boolean
-    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUpdateManyWithoutUserNestedInput
     subscriptions?: SubscriptionUpdateManyWithoutUserNestedInput
     ownedSharedAccounts?: SharedAccountUpdateManyWithoutOwnerNestedInput
-    sharedProfiles?: SharedAccountUserUpdateManyWithoutUserNestedInput
     purchases?: PurchaseUpdateManyWithoutUserNestedInput
     comments?: CommentUpdateManyWithoutUserNestedInput
-    SharedAccount?: SharedAccountUpdateManyWithoutSharedUserNestedInput
     adViews?: AdViewUpdateManyWithoutUserNestedInput
     userVideoView?: UserVideoViewUpdateManyWithoutUserNestedInput
     EmailValidation?: EmailValidationUpdateManyWithoutUserNestedInput
@@ -53533,16 +52714,13 @@ export namespace Prisma {
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isMainAccount?: BoolFieldUpdateOperationsInput | boolean
-    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     subscriptions?: SubscriptionUncheckedUpdateManyWithoutUserNestedInput
     ownedSharedAccounts?: SharedAccountUncheckedUpdateManyWithoutOwnerNestedInput
-    sharedProfiles?: SharedAccountUserUncheckedUpdateManyWithoutUserNestedInput
     purchases?: PurchaseUncheckedUpdateManyWithoutUserNestedInput
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
-    SharedAccount?: SharedAccountUncheckedUpdateManyWithoutSharedUserNestedInput
     adViews?: AdViewUncheckedUpdateManyWithoutUserNestedInput
     userVideoView?: UserVideoViewUncheckedUpdateManyWithoutUserNestedInput
     EmailValidation?: EmailValidationUncheckedUpdateManyWithoutUserNestedInput
@@ -54101,15 +53279,12 @@ export namespace Prisma {
     lastLoginAt?: Date | string | null
     isVerified?: boolean
     isMainAccount?: boolean
-    role?: $Enums.UserRole
     createdAt?: Date | string
     updatedAt?: Date | string
     sessions?: SessionCreateNestedManyWithoutUserInput
     subscriptions?: SubscriptionCreateNestedManyWithoutUserInput
     ownedSharedAccounts?: SharedAccountCreateNestedManyWithoutOwnerInput
-    sharedProfiles?: SharedAccountUserCreateNestedManyWithoutUserInput
     comments?: CommentCreateNestedManyWithoutUserInput
-    SharedAccount?: SharedAccountCreateNestedManyWithoutSharedUserInput
     adViews?: AdViewCreateNestedManyWithoutUserInput
     userVideoView?: UserVideoViewCreateNestedManyWithoutUserInput
     SeasonView?: SeasonViewCreateNestedManyWithoutUserInput
@@ -54125,15 +53300,12 @@ export namespace Prisma {
     lastLoginAt?: Date | string | null
     isVerified?: boolean
     isMainAccount?: boolean
-    role?: $Enums.UserRole
     createdAt?: Date | string
     updatedAt?: Date | string
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     subscriptions?: SubscriptionUncheckedCreateNestedManyWithoutUserInput
     ownedSharedAccounts?: SharedAccountUncheckedCreateNestedManyWithoutOwnerInput
-    sharedProfiles?: SharedAccountUserUncheckedCreateNestedManyWithoutUserInput
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
-    SharedAccount?: SharedAccountUncheckedCreateNestedManyWithoutSharedUserInput
     adViews?: AdViewUncheckedCreateNestedManyWithoutUserInput
     userVideoView?: UserVideoViewUncheckedCreateNestedManyWithoutUserInput
     SeasonView?: SeasonViewUncheckedCreateNestedManyWithoutUserInput
@@ -54202,15 +53374,12 @@ export namespace Prisma {
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isMainAccount?: BoolFieldUpdateOperationsInput | boolean
-    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUpdateManyWithoutUserNestedInput
     subscriptions?: SubscriptionUpdateManyWithoutUserNestedInput
     ownedSharedAccounts?: SharedAccountUpdateManyWithoutOwnerNestedInput
-    sharedProfiles?: SharedAccountUserUpdateManyWithoutUserNestedInput
     comments?: CommentUpdateManyWithoutUserNestedInput
-    SharedAccount?: SharedAccountUpdateManyWithoutSharedUserNestedInput
     adViews?: AdViewUpdateManyWithoutUserNestedInput
     userVideoView?: UserVideoViewUpdateManyWithoutUserNestedInput
     SeasonView?: SeasonViewUpdateManyWithoutUserNestedInput
@@ -54226,15 +53395,12 @@ export namespace Prisma {
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isMainAccount?: BoolFieldUpdateOperationsInput | boolean
-    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     subscriptions?: SubscriptionUncheckedUpdateManyWithoutUserNestedInput
     ownedSharedAccounts?: SharedAccountUncheckedUpdateManyWithoutOwnerNestedInput
-    sharedProfiles?: SharedAccountUserUncheckedUpdateManyWithoutUserNestedInput
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
-    SharedAccount?: SharedAccountUncheckedUpdateManyWithoutSharedUserNestedInput
     adViews?: AdViewUncheckedUpdateManyWithoutUserNestedInput
     userVideoView?: UserVideoViewUncheckedUpdateManyWithoutUserNestedInput
     SeasonView?: SeasonViewUncheckedUpdateManyWithoutUserNestedInput
@@ -54293,15 +53459,12 @@ export namespace Prisma {
     lastLoginAt?: Date | string | null
     isVerified?: boolean
     isMainAccount?: boolean
-    role?: $Enums.UserRole
     createdAt?: Date | string
     updatedAt?: Date | string
     sessions?: SessionCreateNestedManyWithoutUserInput
     subscriptions?: SubscriptionCreateNestedManyWithoutUserInput
     ownedSharedAccounts?: SharedAccountCreateNestedManyWithoutOwnerInput
-    sharedProfiles?: SharedAccountUserCreateNestedManyWithoutUserInput
     purchases?: PurchaseCreateNestedManyWithoutUserInput
-    SharedAccount?: SharedAccountCreateNestedManyWithoutSharedUserInput
     adViews?: AdViewCreateNestedManyWithoutUserInput
     userVideoView?: UserVideoViewCreateNestedManyWithoutUserInput
     SeasonView?: SeasonViewCreateNestedManyWithoutUserInput
@@ -54317,15 +53480,12 @@ export namespace Prisma {
     lastLoginAt?: Date | string | null
     isVerified?: boolean
     isMainAccount?: boolean
-    role?: $Enums.UserRole
     createdAt?: Date | string
     updatedAt?: Date | string
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     subscriptions?: SubscriptionUncheckedCreateNestedManyWithoutUserInput
     ownedSharedAccounts?: SharedAccountUncheckedCreateNestedManyWithoutOwnerInput
-    sharedProfiles?: SharedAccountUserUncheckedCreateNestedManyWithoutUserInput
     purchases?: PurchaseUncheckedCreateNestedManyWithoutUserInput
-    SharedAccount?: SharedAccountUncheckedCreateNestedManyWithoutSharedUserInput
     adViews?: AdViewUncheckedCreateNestedManyWithoutUserInput
     userVideoView?: UserVideoViewUncheckedCreateNestedManyWithoutUserInput
     SeasonView?: SeasonViewUncheckedCreateNestedManyWithoutUserInput
@@ -54445,15 +53605,12 @@ export namespace Prisma {
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isMainAccount?: BoolFieldUpdateOperationsInput | boolean
-    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUpdateManyWithoutUserNestedInput
     subscriptions?: SubscriptionUpdateManyWithoutUserNestedInput
     ownedSharedAccounts?: SharedAccountUpdateManyWithoutOwnerNestedInput
-    sharedProfiles?: SharedAccountUserUpdateManyWithoutUserNestedInput
     purchases?: PurchaseUpdateManyWithoutUserNestedInput
-    SharedAccount?: SharedAccountUpdateManyWithoutSharedUserNestedInput
     adViews?: AdViewUpdateManyWithoutUserNestedInput
     userVideoView?: UserVideoViewUpdateManyWithoutUserNestedInput
     SeasonView?: SeasonViewUpdateManyWithoutUserNestedInput
@@ -54469,15 +53626,12 @@ export namespace Prisma {
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isMainAccount?: BoolFieldUpdateOperationsInput | boolean
-    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     subscriptions?: SubscriptionUncheckedUpdateManyWithoutUserNestedInput
     ownedSharedAccounts?: SharedAccountUncheckedUpdateManyWithoutOwnerNestedInput
-    sharedProfiles?: SharedAccountUserUncheckedUpdateManyWithoutUserNestedInput
     purchases?: PurchaseUncheckedUpdateManyWithoutUserNestedInput
-    SharedAccount?: SharedAccountUncheckedUpdateManyWithoutSharedUserNestedInput
     adViews?: AdViewUncheckedUpdateManyWithoutUserNestedInput
     userVideoView?: UserVideoViewUncheckedUpdateManyWithoutUserNestedInput
     SeasonView?: SeasonViewUncheckedUpdateManyWithoutUserNestedInput
@@ -54646,16 +53800,13 @@ export namespace Prisma {
     lastLoginAt?: Date | string | null
     isVerified?: boolean
     isMainAccount?: boolean
-    role?: $Enums.UserRole
     createdAt?: Date | string
     updatedAt?: Date | string
     sessions?: SessionCreateNestedManyWithoutUserInput
     subscriptions?: SubscriptionCreateNestedManyWithoutUserInput
     ownedSharedAccounts?: SharedAccountCreateNestedManyWithoutOwnerInput
-    sharedProfiles?: SharedAccountUserCreateNestedManyWithoutUserInput
     purchases?: PurchaseCreateNestedManyWithoutUserInput
     comments?: CommentCreateNestedManyWithoutUserInput
-    SharedAccount?: SharedAccountCreateNestedManyWithoutSharedUserInput
     userVideoView?: UserVideoViewCreateNestedManyWithoutUserInput
     SeasonView?: SeasonViewCreateNestedManyWithoutUserInput
     EmailValidation?: EmailValidationCreateNestedManyWithoutUserInput
@@ -54670,16 +53821,13 @@ export namespace Prisma {
     lastLoginAt?: Date | string | null
     isVerified?: boolean
     isMainAccount?: boolean
-    role?: $Enums.UserRole
     createdAt?: Date | string
     updatedAt?: Date | string
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     subscriptions?: SubscriptionUncheckedCreateNestedManyWithoutUserInput
     ownedSharedAccounts?: SharedAccountUncheckedCreateNestedManyWithoutOwnerInput
-    sharedProfiles?: SharedAccountUserUncheckedCreateNestedManyWithoutUserInput
     purchases?: PurchaseUncheckedCreateNestedManyWithoutUserInput
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
-    SharedAccount?: SharedAccountUncheckedCreateNestedManyWithoutSharedUserInput
     userVideoView?: UserVideoViewUncheckedCreateNestedManyWithoutUserInput
     SeasonView?: SeasonViewUncheckedCreateNestedManyWithoutUserInput
     EmailValidation?: EmailValidationUncheckedCreateNestedManyWithoutUserInput
@@ -54695,22 +53843,20 @@ export namespace Prisma {
     profileName: string
     iskidProfile?: boolean
     avatarUrl?: string | null
-    pinCode?: string | null
+    pinCode: number
     createdAt?: Date | string
     updatedAt?: Date | string
     sharedAccount: SharedAccountCreateNestedOneWithoutProfilesInput
-    user: UserCreateNestedOneWithoutSharedProfilesInput
     activities?: SharedProfileActivityCreateNestedManyWithoutProfileInput
   }
 
   export type SharedAccountUserUncheckedCreateWithoutAdViewsInput = {
     id?: string
     sharedAccountId: string
-    userId: string
     profileName: string
     iskidProfile?: boolean
     avatarUrl?: string | null
-    pinCode?: string | null
+    pinCode: number
     createdAt?: Date | string
     updatedAt?: Date | string
     activities?: SharedProfileActivityUncheckedCreateNestedManyWithoutProfileInput
@@ -54772,16 +53918,13 @@ export namespace Prisma {
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isMainAccount?: BoolFieldUpdateOperationsInput | boolean
-    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUpdateManyWithoutUserNestedInput
     subscriptions?: SubscriptionUpdateManyWithoutUserNestedInput
     ownedSharedAccounts?: SharedAccountUpdateManyWithoutOwnerNestedInput
-    sharedProfiles?: SharedAccountUserUpdateManyWithoutUserNestedInput
     purchases?: PurchaseUpdateManyWithoutUserNestedInput
     comments?: CommentUpdateManyWithoutUserNestedInput
-    SharedAccount?: SharedAccountUpdateManyWithoutSharedUserNestedInput
     userVideoView?: UserVideoViewUpdateManyWithoutUserNestedInput
     SeasonView?: SeasonViewUpdateManyWithoutUserNestedInput
     EmailValidation?: EmailValidationUpdateManyWithoutUserNestedInput
@@ -54796,16 +53939,13 @@ export namespace Prisma {
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isMainAccount?: BoolFieldUpdateOperationsInput | boolean
-    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     subscriptions?: SubscriptionUncheckedUpdateManyWithoutUserNestedInput
     ownedSharedAccounts?: SharedAccountUncheckedUpdateManyWithoutOwnerNestedInput
-    sharedProfiles?: SharedAccountUserUncheckedUpdateManyWithoutUserNestedInput
     purchases?: PurchaseUncheckedUpdateManyWithoutUserNestedInput
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
-    SharedAccount?: SharedAccountUncheckedUpdateManyWithoutSharedUserNestedInput
     userVideoView?: UserVideoViewUncheckedUpdateManyWithoutUserNestedInput
     SeasonView?: SeasonViewUncheckedUpdateManyWithoutUserNestedInput
     EmailValidation?: EmailValidationUncheckedUpdateManyWithoutUserNestedInput
@@ -54827,22 +53967,20 @@ export namespace Prisma {
     profileName?: StringFieldUpdateOperationsInput | string
     iskidProfile?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    pinCode?: NullableStringFieldUpdateOperationsInput | string | null
+    pinCode?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sharedAccount?: SharedAccountUpdateOneRequiredWithoutProfilesNestedInput
-    user?: UserUpdateOneRequiredWithoutSharedProfilesNestedInput
     activities?: SharedProfileActivityUpdateManyWithoutProfileNestedInput
   }
 
   export type SharedAccountUserUncheckedUpdateWithoutAdViewsInput = {
     id?: StringFieldUpdateOperationsInput | string
     sharedAccountId?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
     profileName?: StringFieldUpdateOperationsInput | string
     iskidProfile?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    pinCode?: NullableStringFieldUpdateOperationsInput | string | null
+    pinCode?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     activities?: SharedProfileActivityUncheckedUpdateManyWithoutProfileNestedInput
@@ -54853,22 +53991,20 @@ export namespace Prisma {
     profileName: string
     iskidProfile?: boolean
     avatarUrl?: string | null
-    pinCode?: string | null
+    pinCode: number
     createdAt?: Date | string
     updatedAt?: Date | string
     sharedAccount: SharedAccountCreateNestedOneWithoutProfilesInput
-    user: UserCreateNestedOneWithoutSharedProfilesInput
     adViews?: AdViewCreateNestedManyWithoutProfileInput
   }
 
   export type SharedAccountUserUncheckedCreateWithoutActivitiesInput = {
     id?: string
     sharedAccountId: string
-    userId: string
     profileName: string
     iskidProfile?: boolean
     avatarUrl?: string | null
-    pinCode?: string | null
+    pinCode: number
     createdAt?: Date | string
     updatedAt?: Date | string
     adViews?: AdViewUncheckedCreateNestedManyWithoutProfileInput
@@ -54895,22 +54031,20 @@ export namespace Prisma {
     profileName?: StringFieldUpdateOperationsInput | string
     iskidProfile?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    pinCode?: NullableStringFieldUpdateOperationsInput | string | null
+    pinCode?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sharedAccount?: SharedAccountUpdateOneRequiredWithoutProfilesNestedInput
-    user?: UserUpdateOneRequiredWithoutSharedProfilesNestedInput
     adViews?: AdViewUpdateManyWithoutProfileNestedInput
   }
 
   export type SharedAccountUserUncheckedUpdateWithoutActivitiesInput = {
     id?: StringFieldUpdateOperationsInput | string
     sharedAccountId?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
     profileName?: StringFieldUpdateOperationsInput | string
     iskidProfile?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    pinCode?: NullableStringFieldUpdateOperationsInput | string | null
+    pinCode?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     adViews?: AdViewUncheckedUpdateManyWithoutProfileNestedInput
@@ -54939,22 +54073,8 @@ export namespace Prisma {
 
   export type SharedAccountCreateManyOwnerInput = {
     id?: string
-    sharedUserId?: string | null
     subscriptionId: string
-    sharedOn?: Date | string
     status?: $Enums.SharedAccountStatus
-    isActive?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type SharedAccountUserCreateManyUserInput = {
-    id?: string
-    sharedAccountId: string
-    profileName: string
-    iskidProfile?: boolean
-    avatarUrl?: string | null
-    pinCode?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -54973,17 +54093,6 @@ export namespace Prisma {
     text: string
     createdAt?: Date | string
     parentCommentId?: string | null
-  }
-
-  export type SharedAccountCreateManySharedUserInput = {
-    id?: string
-    ownerUserId: string
-    subscriptionId: string
-    sharedOn?: Date | string
-    status?: $Enums.SharedAccountStatus
-    isActive?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
   }
 
   export type AdViewCreateManyUserInput = {
@@ -55095,23 +54204,17 @@ export namespace Prisma {
 
   export type SharedAccountUpdateWithoutOwnerInput = {
     id?: StringFieldUpdateOperationsInput | string
-    sharedOn?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumSharedAccountStatusFieldUpdateOperationsInput | $Enums.SharedAccountStatus
-    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    sharedUser?: UserUpdateOneWithoutSharedAccountNestedInput
     subscription?: SubscriptionUpdateOneRequiredWithoutSharedAccountsNestedInput
     profiles?: SharedAccountUserUpdateManyWithoutSharedAccountNestedInput
   }
 
   export type SharedAccountUncheckedUpdateWithoutOwnerInput = {
     id?: StringFieldUpdateOperationsInput | string
-    sharedUserId?: NullableStringFieldUpdateOperationsInput | string | null
     subscriptionId?: StringFieldUpdateOperationsInput | string
-    sharedOn?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumSharedAccountStatusFieldUpdateOperationsInput | $Enums.SharedAccountStatus
-    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     profiles?: SharedAccountUserUncheckedUpdateManyWithoutSharedAccountNestedInput
@@ -55119,48 +54222,8 @@ export namespace Prisma {
 
   export type SharedAccountUncheckedUpdateManyWithoutOwnerInput = {
     id?: StringFieldUpdateOperationsInput | string
-    sharedUserId?: NullableStringFieldUpdateOperationsInput | string | null
     subscriptionId?: StringFieldUpdateOperationsInput | string
-    sharedOn?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumSharedAccountStatusFieldUpdateOperationsInput | $Enums.SharedAccountStatus
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type SharedAccountUserUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    profileName?: StringFieldUpdateOperationsInput | string
-    iskidProfile?: BoolFieldUpdateOperationsInput | boolean
-    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    pinCode?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    sharedAccount?: SharedAccountUpdateOneRequiredWithoutProfilesNestedInput
-    adViews?: AdViewUpdateManyWithoutProfileNestedInput
-    activities?: SharedProfileActivityUpdateManyWithoutProfileNestedInput
-  }
-
-  export type SharedAccountUserUncheckedUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    sharedAccountId?: StringFieldUpdateOperationsInput | string
-    profileName?: StringFieldUpdateOperationsInput | string
-    iskidProfile?: BoolFieldUpdateOperationsInput | boolean
-    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    pinCode?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    adViews?: AdViewUncheckedUpdateManyWithoutProfileNestedInput
-    activities?: SharedProfileActivityUncheckedUpdateManyWithoutProfileNestedInput
-  }
-
-  export type SharedAccountUserUncheckedUpdateManyWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    sharedAccountId?: StringFieldUpdateOperationsInput | string
-    profileName?: StringFieldUpdateOperationsInput | string
-    iskidProfile?: BoolFieldUpdateOperationsInput | boolean
-    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    pinCode?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -55213,41 +54276,6 @@ export namespace Prisma {
     text?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     parentCommentId?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type SharedAccountUpdateWithoutSharedUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    sharedOn?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: EnumSharedAccountStatusFieldUpdateOperationsInput | $Enums.SharedAccountStatus
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    owner?: UserUpdateOneRequiredWithoutOwnedSharedAccountsNestedInput
-    subscription?: SubscriptionUpdateOneRequiredWithoutSharedAccountsNestedInput
-    profiles?: SharedAccountUserUpdateManyWithoutSharedAccountNestedInput
-  }
-
-  export type SharedAccountUncheckedUpdateWithoutSharedUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    ownerUserId?: StringFieldUpdateOperationsInput | string
-    subscriptionId?: StringFieldUpdateOperationsInput | string
-    sharedOn?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: EnumSharedAccountStatusFieldUpdateOperationsInput | $Enums.SharedAccountStatus
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    profiles?: SharedAccountUserUncheckedUpdateManyWithoutSharedAccountNestedInput
-  }
-
-  export type SharedAccountUncheckedUpdateManyWithoutSharedUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    ownerUserId?: StringFieldUpdateOperationsInput | string
-    subscriptionId?: StringFieldUpdateOperationsInput | string
-    sharedOn?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: EnumSharedAccountStatusFieldUpdateOperationsInput | $Enums.SharedAccountStatus
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AdViewUpdateWithoutUserInput = {
@@ -55425,33 +54453,24 @@ export namespace Prisma {
   export type SharedAccountCreateManySubscriptionInput = {
     id?: string
     ownerUserId: string
-    sharedUserId?: string | null
-    sharedOn?: Date | string
     status?: $Enums.SharedAccountStatus
-    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type SharedAccountUpdateWithoutSubscriptionInput = {
     id?: StringFieldUpdateOperationsInput | string
-    sharedOn?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumSharedAccountStatusFieldUpdateOperationsInput | $Enums.SharedAccountStatus
-    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: UserUpdateOneRequiredWithoutOwnedSharedAccountsNestedInput
-    sharedUser?: UserUpdateOneWithoutSharedAccountNestedInput
     profiles?: SharedAccountUserUpdateManyWithoutSharedAccountNestedInput
   }
 
   export type SharedAccountUncheckedUpdateWithoutSubscriptionInput = {
     id?: StringFieldUpdateOperationsInput | string
     ownerUserId?: StringFieldUpdateOperationsInput | string
-    sharedUserId?: NullableStringFieldUpdateOperationsInput | string | null
-    sharedOn?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumSharedAccountStatusFieldUpdateOperationsInput | $Enums.SharedAccountStatus
-    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     profiles?: SharedAccountUserUncheckedUpdateManyWithoutSharedAccountNestedInput
@@ -55460,21 +54479,17 @@ export namespace Prisma {
   export type SharedAccountUncheckedUpdateManyWithoutSubscriptionInput = {
     id?: StringFieldUpdateOperationsInput | string
     ownerUserId?: StringFieldUpdateOperationsInput | string
-    sharedUserId?: NullableStringFieldUpdateOperationsInput | string | null
-    sharedOn?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumSharedAccountStatusFieldUpdateOperationsInput | $Enums.SharedAccountStatus
-    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type SharedAccountUserCreateManySharedAccountInput = {
     id?: string
-    userId: string
     profileName: string
     iskidProfile?: boolean
     avatarUrl?: string | null
-    pinCode?: string | null
+    pinCode: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -55484,21 +54499,19 @@ export namespace Prisma {
     profileName?: StringFieldUpdateOperationsInput | string
     iskidProfile?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    pinCode?: NullableStringFieldUpdateOperationsInput | string | null
+    pinCode?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutSharedProfilesNestedInput
     adViews?: AdViewUpdateManyWithoutProfileNestedInput
     activities?: SharedProfileActivityUpdateManyWithoutProfileNestedInput
   }
 
   export type SharedAccountUserUncheckedUpdateWithoutSharedAccountInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
     profileName?: StringFieldUpdateOperationsInput | string
     iskidProfile?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    pinCode?: NullableStringFieldUpdateOperationsInput | string | null
+    pinCode?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     adViews?: AdViewUncheckedUpdateManyWithoutProfileNestedInput
@@ -55507,11 +54520,10 @@ export namespace Prisma {
 
   export type SharedAccountUserUncheckedUpdateManyWithoutSharedAccountInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
     profileName?: StringFieldUpdateOperationsInput | string
     iskidProfile?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    pinCode?: NullableStringFieldUpdateOperationsInput | string | null
+    pinCode?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

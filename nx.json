@@ -40,7 +40,9 @@
         "libs/shared/cqrs/*",
         "libs/shared/api/*",
         "libs/domains/errors/*",
-        "libs/shared/metric/*"
+        "libs/shared/metric/*",
+        "libs/domains/common/*",
+        "libs/domains/access/*"
       ]
     },
     {
@@ -80,7 +82,9 @@
         "libs/shared/cqrs/*",
         "libs/shared/api/*",
         "libs/domains/errors/*",
-        "libs/shared/metric/*"
+        "libs/shared/metric/*",
+        "libs/domains/common/*",
+        "libs/domains/access/*"
       ],
       "options": {
         "typecheck": {

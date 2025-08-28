@@ -50,6 +50,12 @@
     },
     {
       "path": "./libs/domains/users"
+    },
+    {
+      "path": "./libs/domains/common"
+    },
+    {
+      "path": "./libs/domains/access"
     }
   ]
 }

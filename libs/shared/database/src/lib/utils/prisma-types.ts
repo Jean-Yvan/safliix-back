@@ -7,7 +7,11 @@ import {
   serieInclude,
   serieWithMetadataAndSeasonCountInclude,
   movieInclude,
-  sessionInclude
+  sessionInclude,
+  userWithRelationsInclude,
+  userWithoutRelationsSelect,
+  sharedAccountUserInclude,
+  sharedAccountInclude
 } from "./prisma-includes";
 
 export type MetadataWithRelations = Prisma.VideoMetadataGetPayload<{
@@ -34,9 +38,25 @@ export type SerieWithMetadataAndSeasonCount = Prisma.SeriesGetPayload<{
   include: typeof serieWithMetadataAndSeasonCountInclude;
 }>;
 
-/* export type SessionWithUser = Prisma.SessionGetPayload<{
+export type SessionWithUser = Prisma.SessionGetPayload<{
   include: typeof sessionInclude; 
-}>; */
+}>;
+
+export type UserWithoutRelation = Prisma.UserGetPayload<{
+  select : typeof userWithoutRelationsSelect;
+}>;
+
+export type UserWithRelation = Prisma.UserGetPayload<{
+  include: typeof userWithRelationsInclude;
+}>;
+
+export type SharedAccountUserWithRelation = Prisma.SharedAccountUserGetPayload<{
+  include : typeof sharedAccountUserInclude;
+}>;
+
+export type SharedAccountWithRelation = Prisma.SharedAccountGetPayload<{
+  include: typeof sharedAccountInclude;
+}>
 
 export type SerieToPrisma = {
   id: string | undefined;
@@ -217,13 +237,15 @@ export type SeasonViewToPrisma = {
   updatedAt?: Date;
 };
 
+
+
 export type UserToPrisma = {
   id: string | undefined;
   email: string;
   password_hash: string;
-  name?: string;
-  avatarUrl?: string;
-  lastLoginAt?: Date | null;
+  name: string | null;
+  avatarUrl: string | null;
+  lastLoginAt: Date | null;
   isVerified: boolean;
   isMainAccount: boolean;
   role: string; // UserRole
@@ -242,8 +264,8 @@ export type SessionToPrisma = {
   ipAddress?: string | null;
   userAgent?: string | null;
   expiresAt: Date;
-  createdAt?: Date;
-  updatedAt?: Date;
+  createdAt: Date | null;
+  updatedAt: Date | null;
 };
 
 export type EmailValidationToPrisma = {
@@ -258,13 +280,36 @@ export type EmailValidationToPrisma = {
 
 export type SharedAccountToPrisma = {
   id: string | undefined;
-  ownerUserId: string;
-  sharedUserId?: string | null;
-  subscriptionId: string;
-  sharedOn: Date;
+  owner:{
+    connect:{
+      id:string;
+    }
+  };
+  subscription:{
+    connect:{
+      id:string;
+    }
+  };
   status: string; // SharedAccountStatus
-  isActive: boolean;
   createdAt?: Date;
   updatedAt?: Date;
 };
+
+export type SharedAccountUserToPrisma = {
+  id: string | undefined;
+  sharedAccount: {
+    connect:{
+      id:string;
+    }
+  };
+  profileName: string;
+  isKidProfile:boolean;
+  avatarUrl: string | null;
+  pinCode:number;
+  createdAt?: Date;
+  updatedAt?:Date 
+
+}
+
+
 

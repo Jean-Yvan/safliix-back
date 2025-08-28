@@ -1,8 +1,10 @@
 import { User } from "../entities/user.entity";
+import { Result } from "oxide.ts";
 
 export interface IUserRepository {
-  findById(id: string): Promise<User | null>;
-  findByEmail(email: string): Promise<User | null>;
-  save(user: User): Promise<User>;
-  delete(id: string): Promise<void>;
+  findById(id: string): Promise<Result<User,Error>>;
+  findByEmail(email: string): Promise<Result<User,Error>>;
+  findAll(filters?:string[]): Promise<Result<User[],Error>>;
+  save(user: User): Promise<Result<User,Error>>;
+  delete(id: string): Promise<Result<void,Error>>;
 }
