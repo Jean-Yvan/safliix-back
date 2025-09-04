@@ -1,5 +1,5 @@
 // libs/database/src/lib/prisma-types.ts
-import { Prisma } from "../generated/client";
+import { Prisma,SubscriptionPlan } from "../generated/client";
 import {
   metadataInclude,
   episodeInclude,
@@ -57,6 +57,25 @@ export type SharedAccountUserWithRelation = Prisma.SharedAccountUserGetPayload<{
 export type SharedAccountWithRelation = Prisma.SharedAccountGetPayload<{
   include: typeof sharedAccountInclude;
 }>
+
+export type SubscriptionPlanWithRelation = Prisma.SubscriptionPlanGetPayload<{
+  include: {
+    subscriptions:true
+  }
+}>
+
+export type SubscriptionWithRelation = Prisma.SubscriptionGetPayload<{
+  include: {
+    user: true,
+    plan: true
+  }
+}>
+
+/* export type SubscriptionPlan = Prisma.SubscriptionPlanGetPayload<{
+  include:{
+    subscriptions:false
+  }
+}> */
 
 export type SerieToPrisma = {
   id: string | undefined;
@@ -311,5 +330,16 @@ export type SharedAccountUserToPrisma = {
 
 }
 
+export type CreateSubscriptionPlanInput = Omit<SubscriptionPlan, "id">;
+
+// 👇 utilitaire générique pour les "create"
+export type CreateToPrisma<TModelName extends keyof Prisma.TypeMap["model"]> =
+  Prisma.TypeMap["model"][TModelName]["operations"]["create"]["args"]["data"];
+
+// 👇 utilitaire générique pour les "update"
+export type UpdateToPrisma<TModelName extends keyof Prisma.TypeMap["model"]> = {
+  where: { id: string };
+  data: Prisma.TypeMap["model"][TModelName]["operations"]["update"]["args"]["data"];
+};
 
 

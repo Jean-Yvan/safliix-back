@@ -1,14 +1,14 @@
+import { mapField } from "@safliix-back/common";
 import { User } from "../entities/user.entity";
-import { UserToPrisma, UserWithoutRelation, UserWithRelation } from "@safliix-back/database";
+import { CreateToPrisma, UpdateToPrisma, UserWithoutRelation, UserWithRelation } from "@safliix-back/database";
 
 export class UserMapper {
   static toDomain(data: UserWithRelation | UserWithoutRelation): User {
     return User.restore(data);
   }
 
-  static toPrisma(user: User): UserToPrisma {
+  static toPrismaCreate(user: User): CreateToPrisma<"User"> {
     return {
-      id: user.id,
       email: user.email,
       password_hash: user.passwordHash,
       name: user.name,
@@ -16,9 +16,21 @@ export class UserMapper {
       lastLoginAt: user.lastLoginAt,
       isVerified: user.isVerified,
       isMainAccount: user.isMainAccount,
-      role: '',
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
     };
+  }
+
+  static toPrismaUpdate(id:string,user: User): UpdateToPrisma<"User"> {
+    return {
+      where:{
+        id: id
+      },
+      data:{
+        name: mapField(user.name),
+        email: mapField(user.email),
+        avatarUrl:mapField(user.avatarUrl),
+      }
+    }
   }
 }

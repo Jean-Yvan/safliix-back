@@ -13,7 +13,7 @@ import {
 } from '../../errors/movie.errors'; 
 
 @Injectable()
-//@CommandHandler(CreateMovieCommand)
+@CommandHandler(CreateMovieCommand)
 export class CreateMovieHandler extends BaseHandler<CreateMovieCommand, Result<MovieAggregate, MovieCreationError>> {
   //protected logger: Logger;
 

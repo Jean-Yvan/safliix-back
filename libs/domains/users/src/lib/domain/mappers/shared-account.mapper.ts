@@ -1,35 +1,33 @@
 // domain/mappers/shared-account.mapper.ts
+import { CreateToPrisma, SharedAccountWithRelation, UpdateToPrisma } from "@safliix-back/database";
 import { SharedAccount } from "../entities/shared-account.entity";
+import { mapConnect, mapField } from "@safliix-back/common";
 
 
 export class SharedAccountMapper {
   // Mapper Prisma → Entité Domain
-  static toDomain(prisma: any): SharedAccount {
-    return SharedAccount.restore({
-      id: prisma.id,
-      ownerUserId: prisma.ownerUserId,
-      subscriptionId: prisma.subscriptionId,
-      status: prisma.status, // ou SharedAccountStatus[prisma.status] si enum
-      sharedUserId: prisma.sharedUserId ?? undefined,
-      sharedOn: prisma.sharedOn,
-      isActive: prisma.isActive,
-      createdAt: prisma.createdAt,
-      updatedAt: prisma.updatedAt,
-    });
+  static toDomain(data: SharedAccountWithRelation): SharedAccount {
+    return SharedAccount.restore(data);
   }
 
   // Mapper Entité Domain → Prisma
-  static toPrisma(entity: SharedAccount): any {
+  static toPrismaCreate(entity: SharedAccount): CreateToPrisma<"SharedAccount"> {
     return {
       id: entity.id,
-      ownerUserId: entity.ownerUserId,
-      subscriptionId: entity.subscriptionId,
-      status: entity.status, // ou entity.status.value si enum
-      sharedUserId: entity.sharedUserId ?? null,
-      sharedOn: entity.sharedOn,
-      isActive: entity.isActive,
-      createdAt: entity.createdAt,
-      updatedAt: entity.updatedAt,
+      owner:mapConnect(entity.ownerUserId),
+      subscription:mapConnect(entity.subscriptionId),
+      status: "ACCEPTED",
     };
+  }
+
+  static toPrismaUpdate(id:string,entity:Partial<SharedAccount>): UpdateToPrisma<"SharedAccount">{
+    return {
+      where : {
+        id
+      },
+      data: {
+        status:mapField(entity.status)
+      }
+    }
   }
 }

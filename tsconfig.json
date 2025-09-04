@@ -36,9 +36,7 @@
     {
       "path": "./libs/shared/cqrs"
     },
-    {
-      "path": "./libs/shared/api"
-    },
+    
     {
       "path": "./libs/domains/errors"
     },
@@ -56,6 +54,10 @@
     },
     {
       "path": "./libs/domains/access"
+    },
+  
+    {
+      "path": "./libs/shared/database/mappers"
     }
   ]
 }

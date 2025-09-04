@@ -1,23 +1,30 @@
-import { SharedAccountUserToPrisma, SharedAccountUserWithRelation } from "@safliix-back/database";
+import { CreateToPrisma, SharedAccountUserWithRelation, UpdateToPrisma } from "@safliix-back/database";
 import { SharedAccountUser } from "../entities/shared-account-user.entity";
+import { mapConnect, mapField } from "@safliix-back/common";
 
 export class SharedAccountUserMapper{
   static toDomain(data: SharedAccountUserWithRelation):SharedAccountUser{
     return SharedAccountUser.restore(data);
   }
 
-  static toPrisma(data:SharedAccountUser):SharedAccountUserToPrisma{
+  static toPrismaCreate(data:SharedAccountUser):CreateToPrisma<"SharedAccountUser">{
     return {
-      id: data.id,
-      sharedAccount:{
-        connect:{
-          id:data.sharedAccountId
-        }
-      },
+      sharedAccount:mapConnect(data.sharedAccountId),
       profileName: data.profileName,
-      isKidProfile: data.isKidProfile,
       avatarUrl:data.avatarUrl,
       pinCode:data.pinCode,
+    }
+  }
+
+  static toPrismaUpdate(id:string,data:Partial<SharedAccountUser>):UpdateToPrisma<"SharedAccountUser">{
+    return {
+      where:{ id },
+      data:{
+        profileName: mapField(data.profileName),
+        iskidProfile: mapField(data.isKidProfile),
+        pinCode: mapField(data.pinCode),
+        avatarUrl: mapField(data.avatarUrl)
+      }
     }
   }
 }

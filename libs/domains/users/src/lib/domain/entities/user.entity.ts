@@ -2,17 +2,18 @@ import { CreateUserDto } from "../../interfaces/dto/create-user.dto";
 import { Password } from '@safliix-back/common';
 import { UserWithoutRelation, UserWithRelation } from "@safliix-back/database";
 import { Result, Ok,Err } from 'oxide.ts';
+import { UpdateUserDto } from "../../interfaces/dto/update-user.dto";
 
 export class User {
   private constructor(
     public readonly id: string | undefined,
-    public readonly email: string,
-    public readonly passwordHash: string,
-    public readonly name: string | null,
-    public readonly avatarUrl: string | null,
-    public readonly lastLoginAt: Date | null,
-    public readonly isVerified = false,
-    public readonly isMainAccount = true,
+    public email: string,
+    public  passwordHash: string,
+    public  name: string | null,
+    public  avatarUrl: string | null,
+    public  lastLoginAt: Date | null,
+    public  isVerified = false,
+    public  isMainAccount = true,
     public readonly createdAt?: Date,
     public readonly updatedAt?: Date,
     // Relations optionnelles, pour DDD elles restent immuables depuis la DB
@@ -67,4 +68,25 @@ export class User {
       "EmailValidation" in props ? props.EmailValidation : undefined
     );
   }
+
+  async updateWith(dto:UpdateUserDto){
+    if(dto.email != undefined){
+      this.email = dto.email;
+    }
+
+    if(dto.name != undefined){
+      this.name = dto.name;
+    }
+
+    if(dto.password != undefined){
+      const passwordR = await Password.create(dto.password);
+      this.passwordHash = passwordR.unwrap().value;
+    }
+
+    if(dto.isVerified != undefined){
+      this.isVerified = dto.isVerified;
+    }
+  }
+
+  
 }

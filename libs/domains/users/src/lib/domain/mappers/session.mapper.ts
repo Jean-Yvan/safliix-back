@@ -1,25 +1,29 @@
+import { mapConnect } from "@safliix-back/common";
 import { Session } from "../entities/session.entity";
-import { SessionToPrisma, SessionWithUser } from "@safliix-back/database";
+import { CreateToPrisma, SessionWithUser, UpdateToPrisma } from "@safliix-back/database";
 
 export class SessionMapper {
   static toDomain(prisma: SessionWithUser): Session {
     return Session.restore(prisma);
   }
 
-  static toPrisma(session: Session): SessionToPrisma {
+  static toPrismaCreate(session: Session): CreateToPrisma<"Session"> {
     return {
-      id: session.id,
-      user:{
-        connect:{
-          id: session.userId
-        }
-      },
+      user:mapConnect(session.userId),
       refreshToken: session.refreshToken,
       ipAddress: session.ipAddress,
       userAgent: session.userAgent,
-      expiresAt: session.expiresAt!,
-      createdAt: session.createdAt,
-      updatedAt: session.updatedAt,
+      expiresAt: session.expiresAt,
+      
     };
+  }
+
+  static toPrismaUpdate(id:string, data:Partial<Session>) : UpdateToPrisma<"Session">{
+    return {
+      where : {id},
+      data: {
+
+      }
+    }
   }
 }
