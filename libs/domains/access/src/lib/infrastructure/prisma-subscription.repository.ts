@@ -31,7 +31,7 @@ export class PrismaSubscriptionRepository implements ISubscriptionRepository {
     }
   }
 
-  async update(id: string, subscription: Partial<Subscription>): Promise<Subscription> {
+  async update(id: string, subscription: Subscription): Promise<Subscription> {
     try {
       const data = {
         ...subscription,
@@ -41,8 +41,15 @@ export class PrismaSubscriptionRepository implements ISubscriptionRepository {
       if(prismaSub.isErr()){
         throw(prismaSub.unwrapErr());
       }
-      const updated = await this.prisma.subscription.update(prismaSub.unwrap());
-      return updated;
+      const updated = await this.prisma.subscription.update({
+        ...prismaSub.unwrap(),
+        include:{
+          user:true,
+          plan:true,
+        }
+      });
+      
+      return SubscriptionMapper.toDomain(updated);
     } catch (error) {
       throw (error as Error);
     }

@@ -1,5 +1,4 @@
   import { SubscriptionPlan } from "../entities/subscription-plan.entity";
-  import { Result } from "oxide.ts";
   import { SubscriptionPlanWithRelation } from "@safliix-back/database";
 
   export interface ISubscriptionPlanRepository {

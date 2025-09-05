@@ -93,3 +93,8 @@ export const sharedAccountInclude = {
   subscription:true,
   profiles:true
 } as const;
+
+export const purchaseInclude = {
+  user:true,
+  video:true
+} as const;

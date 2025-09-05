@@ -71,6 +71,13 @@ export type SubscriptionWithRelation = Prisma.SubscriptionGetPayload<{
   }
 }>
 
+export type PurchaseWithRelation = Prisma.PurchaseGetPayload<{
+  include: {
+    user:true,
+    video:true
+  }
+}>;
+
 /* export type SubscriptionPlan = Prisma.SubscriptionPlanGetPayload<{
   include:{
     subscriptions:false
