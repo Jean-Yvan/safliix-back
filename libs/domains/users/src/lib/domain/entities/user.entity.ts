@@ -42,7 +42,7 @@ export class User {
       props.avatarUrl ?? null,
       null,
       false,
-      props.isMainAccount ?? true,
+      true,
     ));
   }
 
@@ -64,8 +64,8 @@ export class User {
       "ownedSharedAccounts" in props ? props.ownedSharedAccounts : undefined,
       "adViews" in props ? props.adViews : undefined,
       "userVideoView" in props ? props.userVideoView : undefined,
-      "SeasonView" in props ? props.SeasonView : undefined,
-      "EmailValidation" in props ? props.EmailValidation : undefined
+      "seasonView" in props ? props.seasonView : undefined,
+      "emailValidation" in props ? props.emailValidation : undefined
     );
   }
 
@@ -83,9 +83,7 @@ export class User {
       this.passwordHash = passwordR.unwrap().value;
     }
 
-    if(dto.isVerified != undefined){
-      this.isVerified = dto.isVerified;
-    }
+    
   }
 
   

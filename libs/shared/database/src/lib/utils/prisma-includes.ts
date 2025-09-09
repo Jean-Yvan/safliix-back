@@ -77,11 +77,11 @@ export const userWithRelationsInclude = {
   sharedProfiles: true,
   purchases: true,
   comments: true,
-  SharedAccount: true,
+  sharedAccount: true,
   adViews: true,
   userVideoView: true,
-  SeasonView: true,
-  EmailValidation: true
+  seasonView: true,
+  emailValidation: true
 } as const;
 
 export const sharedAccountUserInclude = {
@@ -97,4 +97,9 @@ export const sharedAccountInclude = {
 export const purchaseInclude = {
   user:true,
   video:true
+} as const;
+
+export const adminInclude = {
+  sessions: true,
+  emailValidation: true
 } as const;

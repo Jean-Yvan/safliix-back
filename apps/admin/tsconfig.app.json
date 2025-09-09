@@ -22,10 +22,19 @@
   ],
   "references": [
     {
+      "path": "../../libs/domains/users/tsconfig.lib.json"
+    },
+    {
+      "path": "../../libs/domains/access/tsconfig.lib.json"
+    },
+    {
       "path": "../../libs/domains/movies/tsconfig.lib.json"
     },
     {
       "path": "../../libs/shared/api/tsconfig.lib.json"
+    },
+    {
+      "path": "../../libs/domains/adminEntity/tsconfig.lib.json"
     }
   ]
 }

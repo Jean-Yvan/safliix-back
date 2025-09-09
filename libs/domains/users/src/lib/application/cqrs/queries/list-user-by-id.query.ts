@@ -1,3 +1,3 @@
-export class ListUserIdQuery {
+export class ListUserByIdQuery {
   constructor(public readonly userId: string) {}
 }

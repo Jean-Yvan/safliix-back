@@ -133,9 +133,29 @@ exports.Prisma.UserScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.AdminScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  password_hash: 'password_hash',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  country: 'country',
+  city: 'city',
+  state: 'state',
+  phoneNumber: 'phoneNumber',
+  address: 'address',
+  avatarUrl: 'avatarUrl',
+  lastLoginAt: 'lastLoginAt',
+  isVerified: 'isVerified',
+  role: 'role',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.EmailValidationScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
+  adminId: 'adminId',
   token: 'token',
   expiresAt: 'expiresAt',
   used: 'used',
@@ -146,6 +166,7 @@ exports.Prisma.EmailValidationScalarFieldEnum = {
 exports.Prisma.SessionScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
+  adminId: 'adminId',
   refreshToken: 'refreshToken',
   ipAddress: 'ipAddress',
   userAgent: 'userAgent',
@@ -445,6 +466,11 @@ exports.Prisma.JsonNullValueFilter = {
   JsonNull: Prisma.JsonNull,
   AnyNull: Prisma.AnyNull
 };
+exports.AdminRole = exports.$Enums.AdminRole = {
+  ADMIN: 'ADMIN',
+  SUPER_ADMIN: 'SUPER_ADMIN'
+};
+
 exports.VideoQuality = exports.$Enums.VideoQuality = {
   SD: 'SD',
   HD: 'HD',
@@ -471,6 +497,7 @@ exports.ProfileActivityAction = exports.$Enums.ProfileActivityAction = {
 
 exports.Prisma.ModelName = {
   User: 'User',
+  Admin: 'Admin',
   EmailValidation: 'EmailValidation',
   Session: 'Session',
   SubscriptionPlan: 'SubscriptionPlan',

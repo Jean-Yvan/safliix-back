@@ -9,7 +9,7 @@ import { QueryHandler } from "@nestjs/cqrs";
 
 @Injectable()
 @QueryHandler(ListSubscriptionPlanQuery)
-export class GetAllSubscriptionPlansHandler extends BaseHandler<
+export class ListSubscriptionPlansHandler extends BaseHandler<
   ListSubscriptionPlanQuery,
   Result<SubscriptionPlan[], Error>
 > {

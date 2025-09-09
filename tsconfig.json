@@ -36,7 +36,6 @@
     {
       "path": "./libs/shared/cqrs"
     },
-    
     {
       "path": "./libs/domains/errors"
     },
@@ -47,17 +46,19 @@
       "path": "./libs/shared/metric"
     },
     {
-      "path": "./libs/domains/users"
-    },
-    {
       "path": "./libs/domains/common"
     },
     {
       "path": "./libs/domains/access"
     },
-  
     {
       "path": "./libs/shared/database/mappers"
+    },
+    {
+      "path": "./libs/shared/api"
+    },
+    {
+      "path": "./libs/domains/adminEntity"
     }
   ]
 }

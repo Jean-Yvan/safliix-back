@@ -42,7 +42,8 @@
         "libs/domains/errors/*",
         "libs/shared/metric/*",
         "libs/domains/common/*",
-        "libs/domains/access/*"
+        "libs/domains/access/*",
+        "libs/domains/adminEntity/*"
       ]
     },
     {
@@ -84,7 +85,8 @@
         "libs/domains/errors/*",
         "libs/shared/metric/*",
         "libs/domains/common/*",
-        "libs/domains/access/*"
+        "libs/domains/access/*",
+        "libs/domains/adminEntity/*"
       ],
       "options": {
         "typecheck": {

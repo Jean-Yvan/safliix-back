@@ -13,7 +13,7 @@ export class PurchaseMapper{
       user: mapConnect(data.userId),
       video:mapConnect(data.videoId),
       purchaseDate:data.purchaseDate,
-      country:data.country,
+      country:data.country ?? '',
       expirationDate:data.expirationDate
     }
   }

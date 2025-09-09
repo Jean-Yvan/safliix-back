@@ -5,7 +5,7 @@ import { User } from '../domain/entities/user.entity';
 import { UserMapper } from '../domain/mappers/user.mapper';
 
 @Injectable()
-export class UserRepositoryImpl implements IUserRepository {
+export class PrismaUserRepository implements IUserRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async findById(id: string): Promise<User> {
@@ -21,6 +21,7 @@ export class UserRepositoryImpl implements IUserRepository {
   async findByEmail(email: string): Promise<User> {
     try {
       const user = await this.prisma.user.findUnique({ where: { email } });
+      
       if (!user) throw(new Error('User not found'));
       return UserMapper.toDomain(user);
     } catch (e) {
@@ -42,19 +43,29 @@ export class UserRepositoryImpl implements IUserRepository {
   }
 
   async save(user: User): Promise<User> {
-    try {
-      const data = UserMapper.toPrismaCreate(user);
-      const saved = await this.prisma.user.upsert({
-        where: { id: user.id },
-        update: data,
-        create: data,
-        include:userWithRelationsInclude
-      });
-      return (UserMapper.toDomain(saved));
-    } catch (e) {
-      throw(e as Error);
-    }
+  
+
+  if (!user.id) {
+    // Création
+    const data = UserMapper.toPrismaCreate(user);
+    console.dir(data, {depth:2});
+    const created = await this.prisma.user.create({
+      data,
+      include: userWithRelationsInclude
+    });
+    return UserMapper.toDomain(created);
+  } else {
+    // Mise à jour
+    const data = UserMapper.toPrismaUpdate(user.id,user);
+    const updated = await this.prisma.user.update({
+      ...data,
+      include:userWithRelationsInclude
+    });
+    return UserMapper.toDomain(updated);
   }
+}
+
+  
 
   async delete(id: string): Promise<void> {
     try {

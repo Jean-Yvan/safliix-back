@@ -19,6 +19,11 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  */
 export type User = $Result.DefaultSelection<Prisma.$UserPayload>
 /**
+ * Model Admin
+ * 
+ */
+export type Admin = $Result.DefaultSelection<Prisma.$AdminPayload>
+/**
  * Model EmailValidation
  * 
  */
@@ -173,13 +178,12 @@ export type SharedProfileActivity = $Result.DefaultSelection<Prisma.$SharedProfi
  * Enums
  */
 export namespace $Enums {
-  export const UserRole: {
-  USER: 'USER',
+  export const AdminRole: {
   ADMIN: 'ADMIN',
   SUPER_ADMIN: 'SUPER_ADMIN'
 };
 
-export type UserRole = (typeof UserRole)[keyof typeof UserRole]
+export type AdminRole = (typeof AdminRole)[keyof typeof AdminRole]
 
 
 export const VideoQuality: {
@@ -239,9 +243,9 @@ export type ProfileActivityAction = (typeof ProfileActivityAction)[keyof typeof 
 
 }
 
-export type UserRole = $Enums.UserRole
+export type AdminRole = $Enums.AdminRole
 
-export const UserRole: typeof $Enums.UserRole
+export const AdminRole: typeof $Enums.AdminRole
 
 export type VideoQuality = $Enums.VideoQuality
 
@@ -401,6 +405,16 @@ export class PrismaClient<
     * ```
     */
   get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.admin`: Exposes CRUD operations for the **Admin** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Admins
+    * const admins = await prisma.admin.findMany()
+    * ```
+    */
+  get admin(): Prisma.AdminDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.emailValidation`: Exposes CRUD operations for the **EmailValidation** model.
@@ -1142,6 +1156,7 @@ export namespace Prisma {
 
   export const ModelName: {
     User: 'User',
+    Admin: 'Admin',
     EmailValidation: 'EmailValidation',
     Session: 'Session',
     SubscriptionPlan: 'SubscriptionPlan',
@@ -1190,7 +1205,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "emailValidation" | "session" | "subscriptionPlan" | "subscription" | "sharedAccount" | "sharedAccountUser" | "videoMetadata" | "videoFile" | "videoGenre" | "actor" | "videoActor" | "videoLanguage" | "videoFormat" | "videoCategory" | "movie" | "series" | "season" | "episode" | "userVideoView" | "seasonView" | "seriesView" | "tag" | "movieTag" | "seriesTag" | "subtitle" | "purchase" | "comment" | "ad" | "adView" | "sharedProfileActivity"
+      modelProps: "user" | "admin" | "emailValidation" | "session" | "subscriptionPlan" | "subscription" | "sharedAccount" | "sharedAccountUser" | "videoMetadata" | "videoFile" | "videoGenre" | "actor" | "videoActor" | "videoLanguage" | "videoFormat" | "videoCategory" | "movie" | "series" | "season" | "episode" | "userVideoView" | "seasonView" | "seriesView" | "tag" | "movieTag" | "seriesTag" | "subtitle" | "purchase" | "comment" | "ad" | "adView" | "sharedProfileActivity"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1265,6 +1280,80 @@ export namespace Prisma {
           count: {
             args: Prisma.UserCountArgs<ExtArgs>
             result: $Utils.Optional<UserCountAggregateOutputType> | number
+          }
+        }
+      }
+      Admin: {
+        payload: Prisma.$AdminPayload<ExtArgs>
+        fields: Prisma.AdminFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AdminFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdminPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AdminFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdminPayload>
+          }
+          findFirst: {
+            args: Prisma.AdminFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdminPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AdminFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdminPayload>
+          }
+          findMany: {
+            args: Prisma.AdminFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdminPayload>[]
+          }
+          create: {
+            args: Prisma.AdminCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdminPayload>
+          }
+          createMany: {
+            args: Prisma.AdminCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AdminCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdminPayload>[]
+          }
+          delete: {
+            args: Prisma.AdminDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdminPayload>
+          }
+          update: {
+            args: Prisma.AdminUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdminPayload>
+          }
+          deleteMany: {
+            args: Prisma.AdminDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AdminUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AdminUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdminPayload>[]
+          }
+          upsert: {
+            args: Prisma.AdminUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdminPayload>
+          }
+          aggregate: {
+            args: Prisma.AdminAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAdmin>
+          }
+          groupBy: {
+            args: Prisma.AdminGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AdminGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AdminCountArgs<ExtArgs>
+            result: $Utils.Optional<AdminCountAggregateOutputType> | number
           }
         }
       }
@@ -3573,6 +3662,7 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     user?: UserOmit
+    admin?: AdminOmit
     emailValidation?: EmailValidationOmit
     session?: SessionOmit
     subscriptionPlan?: SubscriptionPlanOmit
@@ -3704,8 +3794,8 @@ export namespace Prisma {
     comments: number
     adViews: number
     userVideoView: number
-    SeasonView: number
-    EmailValidation: number
+    seasonView: number
+    emailValidation: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3716,8 +3806,8 @@ export namespace Prisma {
     comments?: boolean | UserCountOutputTypeCountCommentsArgs
     adViews?: boolean | UserCountOutputTypeCountAdViewsArgs
     userVideoView?: boolean | UserCountOutputTypeCountUserVideoViewArgs
-    SeasonView?: boolean | UserCountOutputTypeCountSeasonViewArgs
-    EmailValidation?: boolean | UserCountOutputTypeCountEmailValidationArgs
+    seasonView?: boolean | UserCountOutputTypeCountSeasonViewArgs
+    emailValidation?: boolean | UserCountOutputTypeCountEmailValidationArgs
   }
 
   // Custom InputTypes
@@ -3791,6 +3881,46 @@ export namespace Prisma {
    * UserCountOutputType without action
    */
   export type UserCountOutputTypeCountEmailValidationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: EmailValidationWhereInput
+  }
+
+
+  /**
+   * Count Type AdminCountOutputType
+   */
+
+  export type AdminCountOutputType = {
+    sessions: number
+    emailValidation: number
+  }
+
+  export type AdminCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sessions?: boolean | AdminCountOutputTypeCountSessionsArgs
+    emailValidation?: boolean | AdminCountOutputTypeCountEmailValidationArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * AdminCountOutputType without action
+   */
+  export type AdminCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdminCountOutputType
+     */
+    select?: AdminCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * AdminCountOutputType without action
+   */
+  export type AdminCountOutputTypeCountSessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SessionWhereInput
+  }
+
+  /**
+   * AdminCountOutputType without action
+   */
+  export type AdminCountOutputTypeCountEmailValidationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: EmailValidationWhereInput
   }
 
@@ -4636,8 +4766,8 @@ export namespace Prisma {
     comments?: boolean | User$commentsArgs<ExtArgs>
     adViews?: boolean | User$adViewsArgs<ExtArgs>
     userVideoView?: boolean | User$userVideoViewArgs<ExtArgs>
-    SeasonView?: boolean | User$SeasonViewArgs<ExtArgs>
-    EmailValidation?: boolean | User$EmailValidationArgs<ExtArgs>
+    seasonView?: boolean | User$seasonViewArgs<ExtArgs>
+    emailValidation?: boolean | User$emailValidationArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -4689,8 +4819,8 @@ export namespace Prisma {
     comments?: boolean | User$commentsArgs<ExtArgs>
     adViews?: boolean | User$adViewsArgs<ExtArgs>
     userVideoView?: boolean | User$userVideoViewArgs<ExtArgs>
-    SeasonView?: boolean | User$SeasonViewArgs<ExtArgs>
-    EmailValidation?: boolean | User$EmailValidationArgs<ExtArgs>
+    seasonView?: boolean | User$seasonViewArgs<ExtArgs>
+    emailValidation?: boolean | User$emailValidationArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -4706,8 +4836,8 @@ export namespace Prisma {
       comments: Prisma.$CommentPayload<ExtArgs>[]
       adViews: Prisma.$AdViewPayload<ExtArgs>[]
       userVideoView: Prisma.$UserVideoViewPayload<ExtArgs>[]
-      SeasonView: Prisma.$SeasonViewPayload<ExtArgs>[]
-      EmailValidation: Prisma.$EmailValidationPayload<ExtArgs>[]
+      seasonView: Prisma.$SeasonViewPayload<ExtArgs>[]
+      emailValidation: Prisma.$EmailValidationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -5121,8 +5251,8 @@ export namespace Prisma {
     comments<T extends User$commentsArgs<ExtArgs> = {}>(args?: Subset<T, User$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     adViews<T extends User$adViewsArgs<ExtArgs> = {}>(args?: Subset<T, User$adViewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdViewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     userVideoView<T extends User$userVideoViewArgs<ExtArgs> = {}>(args?: Subset<T, User$userVideoViewArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserVideoViewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    SeasonView<T extends User$SeasonViewArgs<ExtArgs> = {}>(args?: Subset<T, User$SeasonViewArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SeasonViewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    EmailValidation<T extends User$EmailValidationArgs<ExtArgs> = {}>(args?: Subset<T, User$EmailValidationArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EmailValidationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    seasonView<T extends User$seasonViewArgs<ExtArgs> = {}>(args?: Subset<T, User$seasonViewArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SeasonViewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    emailValidation<T extends User$emailValidationArgs<ExtArgs> = {}>(args?: Subset<T, User$emailValidationArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EmailValidationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5718,9 +5848,9 @@ export namespace Prisma {
   }
 
   /**
-   * User.SeasonView
+   * User.seasonView
    */
-  export type User$SeasonViewArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$seasonViewArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the SeasonView
      */
@@ -5742,9 +5872,9 @@ export namespace Prisma {
   }
 
   /**
-   * User.EmailValidation
+   * User.emailValidation
    */
-  export type User$EmailValidationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$emailValidationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the EmailValidation
      */
@@ -5785,6 +5915,1247 @@ export namespace Prisma {
 
 
   /**
+   * Model Admin
+   */
+
+  export type AggregateAdmin = {
+    _count: AdminCountAggregateOutputType | null
+    _min: AdminMinAggregateOutputType | null
+    _max: AdminMaxAggregateOutputType | null
+  }
+
+  export type AdminMinAggregateOutputType = {
+    id: string | null
+    email: string | null
+    password_hash: string | null
+    firstName: string | null
+    lastName: string | null
+    country: string | null
+    city: string | null
+    state: string | null
+    phoneNumber: string | null
+    address: string | null
+    avatarUrl: string | null
+    lastLoginAt: Date | null
+    isVerified: boolean | null
+    role: $Enums.AdminRole | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type AdminMaxAggregateOutputType = {
+    id: string | null
+    email: string | null
+    password_hash: string | null
+    firstName: string | null
+    lastName: string | null
+    country: string | null
+    city: string | null
+    state: string | null
+    phoneNumber: string | null
+    address: string | null
+    avatarUrl: string | null
+    lastLoginAt: Date | null
+    isVerified: boolean | null
+    role: $Enums.AdminRole | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type AdminCountAggregateOutputType = {
+    id: number
+    email: number
+    password_hash: number
+    firstName: number
+    lastName: number
+    country: number
+    city: number
+    state: number
+    phoneNumber: number
+    address: number
+    avatarUrl: number
+    lastLoginAt: number
+    isVerified: number
+    role: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type AdminMinAggregateInputType = {
+    id?: true
+    email?: true
+    password_hash?: true
+    firstName?: true
+    lastName?: true
+    country?: true
+    city?: true
+    state?: true
+    phoneNumber?: true
+    address?: true
+    avatarUrl?: true
+    lastLoginAt?: true
+    isVerified?: true
+    role?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type AdminMaxAggregateInputType = {
+    id?: true
+    email?: true
+    password_hash?: true
+    firstName?: true
+    lastName?: true
+    country?: true
+    city?: true
+    state?: true
+    phoneNumber?: true
+    address?: true
+    avatarUrl?: true
+    lastLoginAt?: true
+    isVerified?: true
+    role?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type AdminCountAggregateInputType = {
+    id?: true
+    email?: true
+    password_hash?: true
+    firstName?: true
+    lastName?: true
+    country?: true
+    city?: true
+    state?: true
+    phoneNumber?: true
+    address?: true
+    avatarUrl?: true
+    lastLoginAt?: true
+    isVerified?: true
+    role?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type AdminAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Admin to aggregate.
+     */
+    where?: AdminWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Admins to fetch.
+     */
+    orderBy?: AdminOrderByWithRelationInput | AdminOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AdminWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Admins from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Admins.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Admins
+    **/
+    _count?: true | AdminCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AdminMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AdminMaxAggregateInputType
+  }
+
+  export type GetAdminAggregateType<T extends AdminAggregateArgs> = {
+        [P in keyof T & keyof AggregateAdmin]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAdmin[P]>
+      : GetScalarType<T[P], AggregateAdmin[P]>
+  }
+
+
+
+
+  export type AdminGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AdminWhereInput
+    orderBy?: AdminOrderByWithAggregationInput | AdminOrderByWithAggregationInput[]
+    by: AdminScalarFieldEnum[] | AdminScalarFieldEnum
+    having?: AdminScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AdminCountAggregateInputType | true
+    _min?: AdminMinAggregateInputType
+    _max?: AdminMaxAggregateInputType
+  }
+
+  export type AdminGroupByOutputType = {
+    id: string
+    email: string
+    password_hash: string
+    firstName: string
+    lastName: string
+    country: string
+    city: string
+    state: string
+    phoneNumber: string
+    address: string
+    avatarUrl: string | null
+    lastLoginAt: Date | null
+    isVerified: boolean
+    role: $Enums.AdminRole
+    createdAt: Date
+    updatedAt: Date
+    _count: AdminCountAggregateOutputType | null
+    _min: AdminMinAggregateOutputType | null
+    _max: AdminMaxAggregateOutputType | null
+  }
+
+  type GetAdminGroupByPayload<T extends AdminGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AdminGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AdminGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AdminGroupByOutputType[P]>
+            : GetScalarType<T[P], AdminGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AdminSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    email?: boolean
+    password_hash?: boolean
+    firstName?: boolean
+    lastName?: boolean
+    country?: boolean
+    city?: boolean
+    state?: boolean
+    phoneNumber?: boolean
+    address?: boolean
+    avatarUrl?: boolean
+    lastLoginAt?: boolean
+    isVerified?: boolean
+    role?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    sessions?: boolean | Admin$sessionsArgs<ExtArgs>
+    emailValidation?: boolean | Admin$emailValidationArgs<ExtArgs>
+    _count?: boolean | AdminCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["admin"]>
+
+  export type AdminSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    email?: boolean
+    password_hash?: boolean
+    firstName?: boolean
+    lastName?: boolean
+    country?: boolean
+    city?: boolean
+    state?: boolean
+    phoneNumber?: boolean
+    address?: boolean
+    avatarUrl?: boolean
+    lastLoginAt?: boolean
+    isVerified?: boolean
+    role?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["admin"]>
+
+  export type AdminSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    email?: boolean
+    password_hash?: boolean
+    firstName?: boolean
+    lastName?: boolean
+    country?: boolean
+    city?: boolean
+    state?: boolean
+    phoneNumber?: boolean
+    address?: boolean
+    avatarUrl?: boolean
+    lastLoginAt?: boolean
+    isVerified?: boolean
+    role?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["admin"]>
+
+  export type AdminSelectScalar = {
+    id?: boolean
+    email?: boolean
+    password_hash?: boolean
+    firstName?: boolean
+    lastName?: boolean
+    country?: boolean
+    city?: boolean
+    state?: boolean
+    phoneNumber?: boolean
+    address?: boolean
+    avatarUrl?: boolean
+    lastLoginAt?: boolean
+    isVerified?: boolean
+    role?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type AdminOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "password_hash" | "firstName" | "lastName" | "country" | "city" | "state" | "phoneNumber" | "address" | "avatarUrl" | "lastLoginAt" | "isVerified" | "role" | "createdAt" | "updatedAt", ExtArgs["result"]["admin"]>
+  export type AdminInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sessions?: boolean | Admin$sessionsArgs<ExtArgs>
+    emailValidation?: boolean | Admin$emailValidationArgs<ExtArgs>
+    _count?: boolean | AdminCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type AdminIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type AdminIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $AdminPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Admin"
+    objects: {
+      sessions: Prisma.$SessionPayload<ExtArgs>[]
+      emailValidation: Prisma.$EmailValidationPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      email: string
+      password_hash: string
+      firstName: string
+      lastName: string
+      country: string
+      city: string
+      state: string
+      phoneNumber: string
+      address: string
+      avatarUrl: string | null
+      lastLoginAt: Date | null
+      isVerified: boolean
+      role: $Enums.AdminRole
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["admin"]>
+    composites: {}
+  }
+
+  type AdminGetPayload<S extends boolean | null | undefined | AdminDefaultArgs> = $Result.GetResult<Prisma.$AdminPayload, S>
+
+  type AdminCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AdminFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AdminCountAggregateInputType | true
+    }
+
+  export interface AdminDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Admin'], meta: { name: 'Admin' } }
+    /**
+     * Find zero or one Admin that matches the filter.
+     * @param {AdminFindUniqueArgs} args - Arguments to find a Admin
+     * @example
+     * // Get one Admin
+     * const admin = await prisma.admin.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AdminFindUniqueArgs>(args: SelectSubset<T, AdminFindUniqueArgs<ExtArgs>>): Prisma__AdminClient<$Result.GetResult<Prisma.$AdminPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Admin that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AdminFindUniqueOrThrowArgs} args - Arguments to find a Admin
+     * @example
+     * // Get one Admin
+     * const admin = await prisma.admin.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AdminFindUniqueOrThrowArgs>(args: SelectSubset<T, AdminFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AdminClient<$Result.GetResult<Prisma.$AdminPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Admin that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdminFindFirstArgs} args - Arguments to find a Admin
+     * @example
+     * // Get one Admin
+     * const admin = await prisma.admin.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AdminFindFirstArgs>(args?: SelectSubset<T, AdminFindFirstArgs<ExtArgs>>): Prisma__AdminClient<$Result.GetResult<Prisma.$AdminPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Admin that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdminFindFirstOrThrowArgs} args - Arguments to find a Admin
+     * @example
+     * // Get one Admin
+     * const admin = await prisma.admin.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AdminFindFirstOrThrowArgs>(args?: SelectSubset<T, AdminFindFirstOrThrowArgs<ExtArgs>>): Prisma__AdminClient<$Result.GetResult<Prisma.$AdminPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Admins that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdminFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Admins
+     * const admins = await prisma.admin.findMany()
+     * 
+     * // Get first 10 Admins
+     * const admins = await prisma.admin.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const adminWithIdOnly = await prisma.admin.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AdminFindManyArgs>(args?: SelectSubset<T, AdminFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdminPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Admin.
+     * @param {AdminCreateArgs} args - Arguments to create a Admin.
+     * @example
+     * // Create one Admin
+     * const Admin = await prisma.admin.create({
+     *   data: {
+     *     // ... data to create a Admin
+     *   }
+     * })
+     * 
+     */
+    create<T extends AdminCreateArgs>(args: SelectSubset<T, AdminCreateArgs<ExtArgs>>): Prisma__AdminClient<$Result.GetResult<Prisma.$AdminPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Admins.
+     * @param {AdminCreateManyArgs} args - Arguments to create many Admins.
+     * @example
+     * // Create many Admins
+     * const admin = await prisma.admin.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AdminCreateManyArgs>(args?: SelectSubset<T, AdminCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Admins and returns the data saved in the database.
+     * @param {AdminCreateManyAndReturnArgs} args - Arguments to create many Admins.
+     * @example
+     * // Create many Admins
+     * const admin = await prisma.admin.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Admins and only return the `id`
+     * const adminWithIdOnly = await prisma.admin.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AdminCreateManyAndReturnArgs>(args?: SelectSubset<T, AdminCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdminPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Admin.
+     * @param {AdminDeleteArgs} args - Arguments to delete one Admin.
+     * @example
+     * // Delete one Admin
+     * const Admin = await prisma.admin.delete({
+     *   where: {
+     *     // ... filter to delete one Admin
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AdminDeleteArgs>(args: SelectSubset<T, AdminDeleteArgs<ExtArgs>>): Prisma__AdminClient<$Result.GetResult<Prisma.$AdminPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Admin.
+     * @param {AdminUpdateArgs} args - Arguments to update one Admin.
+     * @example
+     * // Update one Admin
+     * const admin = await prisma.admin.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AdminUpdateArgs>(args: SelectSubset<T, AdminUpdateArgs<ExtArgs>>): Prisma__AdminClient<$Result.GetResult<Prisma.$AdminPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Admins.
+     * @param {AdminDeleteManyArgs} args - Arguments to filter Admins to delete.
+     * @example
+     * // Delete a few Admins
+     * const { count } = await prisma.admin.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AdminDeleteManyArgs>(args?: SelectSubset<T, AdminDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Admins.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdminUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Admins
+     * const admin = await prisma.admin.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AdminUpdateManyArgs>(args: SelectSubset<T, AdminUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Admins and returns the data updated in the database.
+     * @param {AdminUpdateManyAndReturnArgs} args - Arguments to update many Admins.
+     * @example
+     * // Update many Admins
+     * const admin = await prisma.admin.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Admins and only return the `id`
+     * const adminWithIdOnly = await prisma.admin.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AdminUpdateManyAndReturnArgs>(args: SelectSubset<T, AdminUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdminPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Admin.
+     * @param {AdminUpsertArgs} args - Arguments to update or create a Admin.
+     * @example
+     * // Update or create a Admin
+     * const admin = await prisma.admin.upsert({
+     *   create: {
+     *     // ... data to create a Admin
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Admin we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AdminUpsertArgs>(args: SelectSubset<T, AdminUpsertArgs<ExtArgs>>): Prisma__AdminClient<$Result.GetResult<Prisma.$AdminPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Admins.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdminCountArgs} args - Arguments to filter Admins to count.
+     * @example
+     * // Count the number of Admins
+     * const count = await prisma.admin.count({
+     *   where: {
+     *     // ... the filter for the Admins we want to count
+     *   }
+     * })
+    **/
+    count<T extends AdminCountArgs>(
+      args?: Subset<T, AdminCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AdminCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Admin.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdminAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AdminAggregateArgs>(args: Subset<T, AdminAggregateArgs>): Prisma.PrismaPromise<GetAdminAggregateType<T>>
+
+    /**
+     * Group by Admin.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdminGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AdminGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AdminGroupByArgs['orderBy'] }
+        : { orderBy?: AdminGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AdminGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAdminGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Admin model
+   */
+  readonly fields: AdminFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Admin.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AdminClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    sessions<T extends Admin$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, Admin$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    emailValidation<T extends Admin$emailValidationArgs<ExtArgs> = {}>(args?: Subset<T, Admin$emailValidationArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EmailValidationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Admin model
+   */
+  interface AdminFieldRefs {
+    readonly id: FieldRef<"Admin", 'String'>
+    readonly email: FieldRef<"Admin", 'String'>
+    readonly password_hash: FieldRef<"Admin", 'String'>
+    readonly firstName: FieldRef<"Admin", 'String'>
+    readonly lastName: FieldRef<"Admin", 'String'>
+    readonly country: FieldRef<"Admin", 'String'>
+    readonly city: FieldRef<"Admin", 'String'>
+    readonly state: FieldRef<"Admin", 'String'>
+    readonly phoneNumber: FieldRef<"Admin", 'String'>
+    readonly address: FieldRef<"Admin", 'String'>
+    readonly avatarUrl: FieldRef<"Admin", 'String'>
+    readonly lastLoginAt: FieldRef<"Admin", 'DateTime'>
+    readonly isVerified: FieldRef<"Admin", 'Boolean'>
+    readonly role: FieldRef<"Admin", 'AdminRole'>
+    readonly createdAt: FieldRef<"Admin", 'DateTime'>
+    readonly updatedAt: FieldRef<"Admin", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Admin findUnique
+   */
+  export type AdminFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Admin
+     */
+    select?: AdminSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Admin
+     */
+    omit?: AdminOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdminInclude<ExtArgs> | null
+    /**
+     * Filter, which Admin to fetch.
+     */
+    where: AdminWhereUniqueInput
+  }
+
+  /**
+   * Admin findUniqueOrThrow
+   */
+  export type AdminFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Admin
+     */
+    select?: AdminSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Admin
+     */
+    omit?: AdminOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdminInclude<ExtArgs> | null
+    /**
+     * Filter, which Admin to fetch.
+     */
+    where: AdminWhereUniqueInput
+  }
+
+  /**
+   * Admin findFirst
+   */
+  export type AdminFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Admin
+     */
+    select?: AdminSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Admin
+     */
+    omit?: AdminOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdminInclude<ExtArgs> | null
+    /**
+     * Filter, which Admin to fetch.
+     */
+    where?: AdminWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Admins to fetch.
+     */
+    orderBy?: AdminOrderByWithRelationInput | AdminOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Admins.
+     */
+    cursor?: AdminWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Admins from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Admins.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Admins.
+     */
+    distinct?: AdminScalarFieldEnum | AdminScalarFieldEnum[]
+  }
+
+  /**
+   * Admin findFirstOrThrow
+   */
+  export type AdminFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Admin
+     */
+    select?: AdminSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Admin
+     */
+    omit?: AdminOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdminInclude<ExtArgs> | null
+    /**
+     * Filter, which Admin to fetch.
+     */
+    where?: AdminWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Admins to fetch.
+     */
+    orderBy?: AdminOrderByWithRelationInput | AdminOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Admins.
+     */
+    cursor?: AdminWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Admins from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Admins.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Admins.
+     */
+    distinct?: AdminScalarFieldEnum | AdminScalarFieldEnum[]
+  }
+
+  /**
+   * Admin findMany
+   */
+  export type AdminFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Admin
+     */
+    select?: AdminSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Admin
+     */
+    omit?: AdminOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdminInclude<ExtArgs> | null
+    /**
+     * Filter, which Admins to fetch.
+     */
+    where?: AdminWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Admins to fetch.
+     */
+    orderBy?: AdminOrderByWithRelationInput | AdminOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Admins.
+     */
+    cursor?: AdminWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Admins from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Admins.
+     */
+    skip?: number
+    distinct?: AdminScalarFieldEnum | AdminScalarFieldEnum[]
+  }
+
+  /**
+   * Admin create
+   */
+  export type AdminCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Admin
+     */
+    select?: AdminSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Admin
+     */
+    omit?: AdminOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdminInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Admin.
+     */
+    data: XOR<AdminCreateInput, AdminUncheckedCreateInput>
+  }
+
+  /**
+   * Admin createMany
+   */
+  export type AdminCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Admins.
+     */
+    data: AdminCreateManyInput | AdminCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Admin createManyAndReturn
+   */
+  export type AdminCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Admin
+     */
+    select?: AdminSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Admin
+     */
+    omit?: AdminOmit<ExtArgs> | null
+    /**
+     * The data used to create many Admins.
+     */
+    data: AdminCreateManyInput | AdminCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Admin update
+   */
+  export type AdminUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Admin
+     */
+    select?: AdminSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Admin
+     */
+    omit?: AdminOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdminInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Admin.
+     */
+    data: XOR<AdminUpdateInput, AdminUncheckedUpdateInput>
+    /**
+     * Choose, which Admin to update.
+     */
+    where: AdminWhereUniqueInput
+  }
+
+  /**
+   * Admin updateMany
+   */
+  export type AdminUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Admins.
+     */
+    data: XOR<AdminUpdateManyMutationInput, AdminUncheckedUpdateManyInput>
+    /**
+     * Filter which Admins to update
+     */
+    where?: AdminWhereInput
+    /**
+     * Limit how many Admins to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Admin updateManyAndReturn
+   */
+  export type AdminUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Admin
+     */
+    select?: AdminSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Admin
+     */
+    omit?: AdminOmit<ExtArgs> | null
+    /**
+     * The data used to update Admins.
+     */
+    data: XOR<AdminUpdateManyMutationInput, AdminUncheckedUpdateManyInput>
+    /**
+     * Filter which Admins to update
+     */
+    where?: AdminWhereInput
+    /**
+     * Limit how many Admins to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Admin upsert
+   */
+  export type AdminUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Admin
+     */
+    select?: AdminSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Admin
+     */
+    omit?: AdminOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdminInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Admin to update in case it exists.
+     */
+    where: AdminWhereUniqueInput
+    /**
+     * In case the Admin found by the `where` argument doesn't exist, create a new Admin with this data.
+     */
+    create: XOR<AdminCreateInput, AdminUncheckedCreateInput>
+    /**
+     * In case the Admin was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AdminUpdateInput, AdminUncheckedUpdateInput>
+  }
+
+  /**
+   * Admin delete
+   */
+  export type AdminDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Admin
+     */
+    select?: AdminSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Admin
+     */
+    omit?: AdminOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdminInclude<ExtArgs> | null
+    /**
+     * Filter which Admin to delete.
+     */
+    where: AdminWhereUniqueInput
+  }
+
+  /**
+   * Admin deleteMany
+   */
+  export type AdminDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Admins to delete
+     */
+    where?: AdminWhereInput
+    /**
+     * Limit how many Admins to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Admin.sessions
+   */
+  export type Admin$sessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Session
+     */
+    select?: SessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Session
+     */
+    omit?: SessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SessionInclude<ExtArgs> | null
+    where?: SessionWhereInput
+    orderBy?: SessionOrderByWithRelationInput | SessionOrderByWithRelationInput[]
+    cursor?: SessionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SessionScalarFieldEnum | SessionScalarFieldEnum[]
+  }
+
+  /**
+   * Admin.emailValidation
+   */
+  export type Admin$emailValidationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmailValidation
+     */
+    select?: EmailValidationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EmailValidation
+     */
+    omit?: EmailValidationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EmailValidationInclude<ExtArgs> | null
+    where?: EmailValidationWhereInput
+    orderBy?: EmailValidationOrderByWithRelationInput | EmailValidationOrderByWithRelationInput[]
+    cursor?: EmailValidationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: EmailValidationScalarFieldEnum | EmailValidationScalarFieldEnum[]
+  }
+
+  /**
+   * Admin without action
+   */
+  export type AdminDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Admin
+     */
+    select?: AdminSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Admin
+     */
+    omit?: AdminOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdminInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model EmailValidation
    */
 
@@ -5797,6 +7168,7 @@ export namespace Prisma {
   export type EmailValidationMinAggregateOutputType = {
     id: string | null
     userId: string | null
+    adminId: string | null
     token: string | null
     expiresAt: Date | null
     used: boolean | null
@@ -5807,6 +7179,7 @@ export namespace Prisma {
   export type EmailValidationMaxAggregateOutputType = {
     id: string | null
     userId: string | null
+    adminId: string | null
     token: string | null
     expiresAt: Date | null
     used: boolean | null
@@ -5817,6 +7190,7 @@ export namespace Prisma {
   export type EmailValidationCountAggregateOutputType = {
     id: number
     userId: number
+    adminId: number
     token: number
     expiresAt: number
     used: number
@@ -5829,6 +7203,7 @@ export namespace Prisma {
   export type EmailValidationMinAggregateInputType = {
     id?: true
     userId?: true
+    adminId?: true
     token?: true
     expiresAt?: true
     used?: true
@@ -5839,6 +7214,7 @@ export namespace Prisma {
   export type EmailValidationMaxAggregateInputType = {
     id?: true
     userId?: true
+    adminId?: true
     token?: true
     expiresAt?: true
     used?: true
@@ -5849,6 +7225,7 @@ export namespace Prisma {
   export type EmailValidationCountAggregateInputType = {
     id?: true
     userId?: true
+    adminId?: true
     token?: true
     expiresAt?: true
     used?: true
@@ -5931,7 +7308,8 @@ export namespace Prisma {
 
   export type EmailValidationGroupByOutputType = {
     id: string
-    userId: string
+    userId: string | null
+    adminId: string | null
     token: string
     expiresAt: Date
     used: boolean
@@ -5959,39 +7337,46 @@ export namespace Prisma {
   export type EmailValidationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
+    adminId?: boolean
     token?: boolean
     expiresAt?: boolean
     used?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | EmailValidation$userArgs<ExtArgs>
+    admin?: boolean | EmailValidation$adminArgs<ExtArgs>
   }, ExtArgs["result"]["emailValidation"]>
 
   export type EmailValidationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
+    adminId?: boolean
     token?: boolean
     expiresAt?: boolean
     used?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | EmailValidation$userArgs<ExtArgs>
+    admin?: boolean | EmailValidation$adminArgs<ExtArgs>
   }, ExtArgs["result"]["emailValidation"]>
 
   export type EmailValidationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
+    adminId?: boolean
     token?: boolean
     expiresAt?: boolean
     used?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | EmailValidation$userArgs<ExtArgs>
+    admin?: boolean | EmailValidation$adminArgs<ExtArgs>
   }, ExtArgs["result"]["emailValidation"]>
 
   export type EmailValidationSelectScalar = {
     id?: boolean
     userId?: boolean
+    adminId?: boolean
     token?: boolean
     expiresAt?: boolean
     used?: boolean
@@ -5999,25 +7384,30 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type EmailValidationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "token" | "expiresAt" | "used" | "createdAt" | "updatedAt", ExtArgs["result"]["emailValidation"]>
+  export type EmailValidationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "adminId" | "token" | "expiresAt" | "used" | "createdAt" | "updatedAt", ExtArgs["result"]["emailValidation"]>
   export type EmailValidationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | EmailValidation$userArgs<ExtArgs>
+    admin?: boolean | EmailValidation$adminArgs<ExtArgs>
   }
   export type EmailValidationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | EmailValidation$userArgs<ExtArgs>
+    admin?: boolean | EmailValidation$adminArgs<ExtArgs>
   }
   export type EmailValidationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | EmailValidation$userArgs<ExtArgs>
+    admin?: boolean | EmailValidation$adminArgs<ExtArgs>
   }
 
   export type $EmailValidationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "EmailValidation"
     objects: {
-      user: Prisma.$UserPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs> | null
+      admin: Prisma.$AdminPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      userId: string
+      userId: string | null
+      adminId: string | null
       token: string
       expiresAt: Date
       used: boolean
@@ -6417,7 +7807,8 @@ export namespace Prisma {
    */
   export interface Prisma__EmailValidationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends EmailValidation$userArgs<ExtArgs> = {}>(args?: Subset<T, EmailValidation$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    admin<T extends EmailValidation$adminArgs<ExtArgs> = {}>(args?: Subset<T, EmailValidation$adminArgs<ExtArgs>>): Prisma__AdminClient<$Result.GetResult<Prisma.$AdminPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6449,6 +7840,7 @@ export namespace Prisma {
   interface EmailValidationFieldRefs {
     readonly id: FieldRef<"EmailValidation", 'String'>
     readonly userId: FieldRef<"EmailValidation", 'String'>
+    readonly adminId: FieldRef<"EmailValidation", 'String'>
     readonly token: FieldRef<"EmailValidation", 'String'>
     readonly expiresAt: FieldRef<"EmailValidation", 'DateTime'>
     readonly used: FieldRef<"EmailValidation", 'Boolean'>
@@ -6850,6 +8242,44 @@ export namespace Prisma {
   }
 
   /**
+   * EmailValidation.user
+   */
+  export type EmailValidation$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * EmailValidation.admin
+   */
+  export type EmailValidation$adminArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Admin
+     */
+    select?: AdminSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Admin
+     */
+    omit?: AdminOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdminInclude<ExtArgs> | null
+    where?: AdminWhereInput
+  }
+
+  /**
    * EmailValidation without action
    */
   export type EmailValidationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6881,6 +8311,7 @@ export namespace Prisma {
   export type SessionMinAggregateOutputType = {
     id: string | null
     userId: string | null
+    adminId: string | null
     refreshToken: string | null
     ipAddress: string | null
     userAgent: string | null
@@ -6892,6 +8323,7 @@ export namespace Prisma {
   export type SessionMaxAggregateOutputType = {
     id: string | null
     userId: string | null
+    adminId: string | null
     refreshToken: string | null
     ipAddress: string | null
     userAgent: string | null
@@ -6903,6 +8335,7 @@ export namespace Prisma {
   export type SessionCountAggregateOutputType = {
     id: number
     userId: number
+    adminId: number
     refreshToken: number
     ipAddress: number
     userAgent: number
@@ -6916,6 +8349,7 @@ export namespace Prisma {
   export type SessionMinAggregateInputType = {
     id?: true
     userId?: true
+    adminId?: true
     refreshToken?: true
     ipAddress?: true
     userAgent?: true
@@ -6927,6 +8361,7 @@ export namespace Prisma {
   export type SessionMaxAggregateInputType = {
     id?: true
     userId?: true
+    adminId?: true
     refreshToken?: true
     ipAddress?: true
     userAgent?: true
@@ -6938,6 +8373,7 @@ export namespace Prisma {
   export type SessionCountAggregateInputType = {
     id?: true
     userId?: true
+    adminId?: true
     refreshToken?: true
     ipAddress?: true
     userAgent?: true
@@ -7021,7 +8457,8 @@ export namespace Prisma {
 
   export type SessionGroupByOutputType = {
     id: string
-    userId: string
+    userId: string | null
+    adminId: string | null
     refreshToken: string
     ipAddress: string | null
     userAgent: string | null
@@ -7050,42 +8487,49 @@ export namespace Prisma {
   export type SessionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
+    adminId?: boolean
     refreshToken?: boolean
     ipAddress?: boolean
     userAgent?: boolean
     expiresAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | Session$userArgs<ExtArgs>
+    admin?: boolean | Session$adminArgs<ExtArgs>
   }, ExtArgs["result"]["session"]>
 
   export type SessionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
+    adminId?: boolean
     refreshToken?: boolean
     ipAddress?: boolean
     userAgent?: boolean
     expiresAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | Session$userArgs<ExtArgs>
+    admin?: boolean | Session$adminArgs<ExtArgs>
   }, ExtArgs["result"]["session"]>
 
   export type SessionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
+    adminId?: boolean
     refreshToken?: boolean
     ipAddress?: boolean
     userAgent?: boolean
     expiresAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | Session$userArgs<ExtArgs>
+    admin?: boolean | Session$adminArgs<ExtArgs>
   }, ExtArgs["result"]["session"]>
 
   export type SessionSelectScalar = {
     id?: boolean
     userId?: boolean
+    adminId?: boolean
     refreshToken?: boolean
     ipAddress?: boolean
     userAgent?: boolean
@@ -7094,25 +8538,30 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type SessionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "refreshToken" | "ipAddress" | "userAgent" | "expiresAt" | "createdAt" | "updatedAt", ExtArgs["result"]["session"]>
+  export type SessionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "adminId" | "refreshToken" | "ipAddress" | "userAgent" | "expiresAt" | "createdAt" | "updatedAt", ExtArgs["result"]["session"]>
   export type SessionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | Session$userArgs<ExtArgs>
+    admin?: boolean | Session$adminArgs<ExtArgs>
   }
   export type SessionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | Session$userArgs<ExtArgs>
+    admin?: boolean | Session$adminArgs<ExtArgs>
   }
   export type SessionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | Session$userArgs<ExtArgs>
+    admin?: boolean | Session$adminArgs<ExtArgs>
   }
 
   export type $SessionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Session"
     objects: {
-      user: Prisma.$UserPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs> | null
+      admin: Prisma.$AdminPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      userId: string
+      userId: string | null
+      adminId: string | null
       refreshToken: string
       ipAddress: string | null
       userAgent: string | null
@@ -7513,7 +8962,8 @@ export namespace Prisma {
    */
   export interface Prisma__SessionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends Session$userArgs<ExtArgs> = {}>(args?: Subset<T, Session$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    admin<T extends Session$adminArgs<ExtArgs> = {}>(args?: Subset<T, Session$adminArgs<ExtArgs>>): Prisma__AdminClient<$Result.GetResult<Prisma.$AdminPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7545,6 +8995,7 @@ export namespace Prisma {
   interface SessionFieldRefs {
     readonly id: FieldRef<"Session", 'String'>
     readonly userId: FieldRef<"Session", 'String'>
+    readonly adminId: FieldRef<"Session", 'String'>
     readonly refreshToken: FieldRef<"Session", 'String'>
     readonly ipAddress: FieldRef<"Session", 'String'>
     readonly userAgent: FieldRef<"Session", 'String'>
@@ -7944,6 +9395,44 @@ export namespace Prisma {
      * Limit how many Sessions to delete.
      */
     limit?: number
+  }
+
+  /**
+   * Session.user
+   */
+  export type Session$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * Session.admin
+   */
+  export type Session$adminArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Admin
+     */
+    select?: AdminSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Admin
+     */
+    omit?: AdminOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdminInclude<ExtArgs> | null
+    where?: AdminWhereInput
   }
 
   /**
@@ -39528,9 +41017,32 @@ export namespace Prisma {
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
+  export const AdminScalarFieldEnum: {
+    id: 'id',
+    email: 'email',
+    password_hash: 'password_hash',
+    firstName: 'firstName',
+    lastName: 'lastName',
+    country: 'country',
+    city: 'city',
+    state: 'state',
+    phoneNumber: 'phoneNumber',
+    address: 'address',
+    avatarUrl: 'avatarUrl',
+    lastLoginAt: 'lastLoginAt',
+    isVerified: 'isVerified',
+    role: 'role',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type AdminScalarFieldEnum = (typeof AdminScalarFieldEnum)[keyof typeof AdminScalarFieldEnum]
+
+
   export const EmailValidationScalarFieldEnum: {
     id: 'id',
     userId: 'userId',
+    adminId: 'adminId',
     token: 'token',
     expiresAt: 'expiresAt',
     used: 'used',
@@ -39544,6 +41056,7 @@ export namespace Prisma {
   export const SessionScalarFieldEnum: {
     id: 'id',
     userId: 'userId',
+    adminId: 'adminId',
     refreshToken: 'refreshToken',
     ipAddress: 'ipAddress',
     userAgent: 'userAgent',
@@ -39987,6 +41500,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'AdminRole'
+   */
+  export type EnumAdminRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AdminRole'>
+    
+
+
+  /**
+   * Reference to a field of type 'AdminRole[]'
+   */
+  export type ListEnumAdminRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AdminRole[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -40108,8 +41635,8 @@ export namespace Prisma {
     comments?: CommentListRelationFilter
     adViews?: AdViewListRelationFilter
     userVideoView?: UserVideoViewListRelationFilter
-    SeasonView?: SeasonViewListRelationFilter
-    EmailValidation?: EmailValidationListRelationFilter
+    seasonView?: SeasonViewListRelationFilter
+    emailValidation?: EmailValidationListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -40130,8 +41657,8 @@ export namespace Prisma {
     comments?: CommentOrderByRelationAggregateInput
     adViews?: AdViewOrderByRelationAggregateInput
     userVideoView?: UserVideoViewOrderByRelationAggregateInput
-    SeasonView?: SeasonViewOrderByRelationAggregateInput
-    EmailValidation?: EmailValidationOrderByRelationAggregateInput
+    seasonView?: SeasonViewOrderByRelationAggregateInput
+    emailValidation?: EmailValidationOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -40155,8 +41682,8 @@ export namespace Prisma {
     comments?: CommentListRelationFilter
     adViews?: AdViewListRelationFilter
     userVideoView?: UserVideoViewListRelationFilter
-    SeasonView?: SeasonViewListRelationFilter
-    EmailValidation?: EmailValidationListRelationFilter
+    seasonView?: SeasonViewListRelationFilter
+    emailValidation?: EmailValidationListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -40191,29 +41718,146 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
 
+  export type AdminWhereInput = {
+    AND?: AdminWhereInput | AdminWhereInput[]
+    OR?: AdminWhereInput[]
+    NOT?: AdminWhereInput | AdminWhereInput[]
+    id?: StringFilter<"Admin"> | string
+    email?: StringFilter<"Admin"> | string
+    password_hash?: StringFilter<"Admin"> | string
+    firstName?: StringFilter<"Admin"> | string
+    lastName?: StringFilter<"Admin"> | string
+    country?: StringFilter<"Admin"> | string
+    city?: StringFilter<"Admin"> | string
+    state?: StringFilter<"Admin"> | string
+    phoneNumber?: StringFilter<"Admin"> | string
+    address?: StringFilter<"Admin"> | string
+    avatarUrl?: StringNullableFilter<"Admin"> | string | null
+    lastLoginAt?: DateTimeNullableFilter<"Admin"> | Date | string | null
+    isVerified?: BoolFilter<"Admin"> | boolean
+    role?: EnumAdminRoleFilter<"Admin"> | $Enums.AdminRole
+    createdAt?: DateTimeFilter<"Admin"> | Date | string
+    updatedAt?: DateTimeFilter<"Admin"> | Date | string
+    sessions?: SessionListRelationFilter
+    emailValidation?: EmailValidationListRelationFilter
+  }
+
+  export type AdminOrderByWithRelationInput = {
+    id?: SortOrder
+    email?: SortOrder
+    password_hash?: SortOrder
+    firstName?: SortOrder
+    lastName?: SortOrder
+    country?: SortOrder
+    city?: SortOrder
+    state?: SortOrder
+    phoneNumber?: SortOrder
+    address?: SortOrder
+    avatarUrl?: SortOrderInput | SortOrder
+    lastLoginAt?: SortOrderInput | SortOrder
+    isVerified?: SortOrder
+    role?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    sessions?: SessionOrderByRelationAggregateInput
+    emailValidation?: EmailValidationOrderByRelationAggregateInput
+  }
+
+  export type AdminWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    email?: string
+    AND?: AdminWhereInput | AdminWhereInput[]
+    OR?: AdminWhereInput[]
+    NOT?: AdminWhereInput | AdminWhereInput[]
+    password_hash?: StringFilter<"Admin"> | string
+    firstName?: StringFilter<"Admin"> | string
+    lastName?: StringFilter<"Admin"> | string
+    country?: StringFilter<"Admin"> | string
+    city?: StringFilter<"Admin"> | string
+    state?: StringFilter<"Admin"> | string
+    phoneNumber?: StringFilter<"Admin"> | string
+    address?: StringFilter<"Admin"> | string
+    avatarUrl?: StringNullableFilter<"Admin"> | string | null
+    lastLoginAt?: DateTimeNullableFilter<"Admin"> | Date | string | null
+    isVerified?: BoolFilter<"Admin"> | boolean
+    role?: EnumAdminRoleFilter<"Admin"> | $Enums.AdminRole
+    createdAt?: DateTimeFilter<"Admin"> | Date | string
+    updatedAt?: DateTimeFilter<"Admin"> | Date | string
+    sessions?: SessionListRelationFilter
+    emailValidation?: EmailValidationListRelationFilter
+  }, "id" | "email">
+
+  export type AdminOrderByWithAggregationInput = {
+    id?: SortOrder
+    email?: SortOrder
+    password_hash?: SortOrder
+    firstName?: SortOrder
+    lastName?: SortOrder
+    country?: SortOrder
+    city?: SortOrder
+    state?: SortOrder
+    phoneNumber?: SortOrder
+    address?: SortOrder
+    avatarUrl?: SortOrderInput | SortOrder
+    lastLoginAt?: SortOrderInput | SortOrder
+    isVerified?: SortOrder
+    role?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: AdminCountOrderByAggregateInput
+    _max?: AdminMaxOrderByAggregateInput
+    _min?: AdminMinOrderByAggregateInput
+  }
+
+  export type AdminScalarWhereWithAggregatesInput = {
+    AND?: AdminScalarWhereWithAggregatesInput | AdminScalarWhereWithAggregatesInput[]
+    OR?: AdminScalarWhereWithAggregatesInput[]
+    NOT?: AdminScalarWhereWithAggregatesInput | AdminScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Admin"> | string
+    email?: StringWithAggregatesFilter<"Admin"> | string
+    password_hash?: StringWithAggregatesFilter<"Admin"> | string
+    firstName?: StringWithAggregatesFilter<"Admin"> | string
+    lastName?: StringWithAggregatesFilter<"Admin"> | string
+    country?: StringWithAggregatesFilter<"Admin"> | string
+    city?: StringWithAggregatesFilter<"Admin"> | string
+    state?: StringWithAggregatesFilter<"Admin"> | string
+    phoneNumber?: StringWithAggregatesFilter<"Admin"> | string
+    address?: StringWithAggregatesFilter<"Admin"> | string
+    avatarUrl?: StringNullableWithAggregatesFilter<"Admin"> | string | null
+    lastLoginAt?: DateTimeNullableWithAggregatesFilter<"Admin"> | Date | string | null
+    isVerified?: BoolWithAggregatesFilter<"Admin"> | boolean
+    role?: EnumAdminRoleWithAggregatesFilter<"Admin"> | $Enums.AdminRole
+    createdAt?: DateTimeWithAggregatesFilter<"Admin"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Admin"> | Date | string
+  }
+
   export type EmailValidationWhereInput = {
     AND?: EmailValidationWhereInput | EmailValidationWhereInput[]
     OR?: EmailValidationWhereInput[]
     NOT?: EmailValidationWhereInput | EmailValidationWhereInput[]
     id?: StringFilter<"EmailValidation"> | string
-    userId?: StringFilter<"EmailValidation"> | string
+    userId?: StringNullableFilter<"EmailValidation"> | string | null
+    adminId?: StringNullableFilter<"EmailValidation"> | string | null
     token?: StringFilter<"EmailValidation"> | string
     expiresAt?: DateTimeFilter<"EmailValidation"> | Date | string
     used?: BoolFilter<"EmailValidation"> | boolean
     createdAt?: DateTimeFilter<"EmailValidation"> | Date | string
     updatedAt?: DateTimeFilter<"EmailValidation"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    admin?: XOR<AdminNullableScalarRelationFilter, AdminWhereInput> | null
   }
 
   export type EmailValidationOrderByWithRelationInput = {
     id?: SortOrder
-    userId?: SortOrder
+    userId?: SortOrderInput | SortOrder
+    adminId?: SortOrderInput | SortOrder
     token?: SortOrder
     expiresAt?: SortOrder
     used?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     user?: UserOrderByWithRelationInput
+    admin?: AdminOrderByWithRelationInput
   }
 
   export type EmailValidationWhereUniqueInput = Prisma.AtLeast<{
@@ -40222,17 +41866,20 @@ export namespace Prisma {
     AND?: EmailValidationWhereInput | EmailValidationWhereInput[]
     OR?: EmailValidationWhereInput[]
     NOT?: EmailValidationWhereInput | EmailValidationWhereInput[]
-    userId?: StringFilter<"EmailValidation"> | string
+    userId?: StringNullableFilter<"EmailValidation"> | string | null
+    adminId?: StringNullableFilter<"EmailValidation"> | string | null
     expiresAt?: DateTimeFilter<"EmailValidation"> | Date | string
     used?: BoolFilter<"EmailValidation"> | boolean
     createdAt?: DateTimeFilter<"EmailValidation"> | Date | string
     updatedAt?: DateTimeFilter<"EmailValidation"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    admin?: XOR<AdminNullableScalarRelationFilter, AdminWhereInput> | null
   }, "id" | "token">
 
   export type EmailValidationOrderByWithAggregationInput = {
     id?: SortOrder
-    userId?: SortOrder
+    userId?: SortOrderInput | SortOrder
+    adminId?: SortOrderInput | SortOrder
     token?: SortOrder
     expiresAt?: SortOrder
     used?: SortOrder
@@ -40248,7 +41895,8 @@ export namespace Prisma {
     OR?: EmailValidationScalarWhereWithAggregatesInput[]
     NOT?: EmailValidationScalarWhereWithAggregatesInput | EmailValidationScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"EmailValidation"> | string
-    userId?: StringWithAggregatesFilter<"EmailValidation"> | string
+    userId?: StringNullableWithAggregatesFilter<"EmailValidation"> | string | null
+    adminId?: StringNullableWithAggregatesFilter<"EmailValidation"> | string | null
     token?: StringWithAggregatesFilter<"EmailValidation"> | string
     expiresAt?: DateTimeWithAggregatesFilter<"EmailValidation"> | Date | string
     used?: BoolWithAggregatesFilter<"EmailValidation"> | boolean
@@ -40261,19 +41909,22 @@ export namespace Prisma {
     OR?: SessionWhereInput[]
     NOT?: SessionWhereInput | SessionWhereInput[]
     id?: StringFilter<"Session"> | string
-    userId?: StringFilter<"Session"> | string
+    userId?: StringNullableFilter<"Session"> | string | null
+    adminId?: StringNullableFilter<"Session"> | string | null
     refreshToken?: StringFilter<"Session"> | string
     ipAddress?: StringNullableFilter<"Session"> | string | null
     userAgent?: StringNullableFilter<"Session"> | string | null
     expiresAt?: DateTimeFilter<"Session"> | Date | string
     createdAt?: DateTimeFilter<"Session"> | Date | string
     updatedAt?: DateTimeFilter<"Session"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    admin?: XOR<AdminNullableScalarRelationFilter, AdminWhereInput> | null
   }
 
   export type SessionOrderByWithRelationInput = {
     id?: SortOrder
-    userId?: SortOrder
+    userId?: SortOrderInput | SortOrder
+    adminId?: SortOrderInput | SortOrder
     refreshToken?: SortOrder
     ipAddress?: SortOrderInput | SortOrder
     userAgent?: SortOrderInput | SortOrder
@@ -40281,6 +41932,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     user?: UserOrderByWithRelationInput
+    admin?: AdminOrderByWithRelationInput
   }
 
   export type SessionWhereUniqueInput = Prisma.AtLeast<{
@@ -40289,18 +41941,21 @@ export namespace Prisma {
     AND?: SessionWhereInput | SessionWhereInput[]
     OR?: SessionWhereInput[]
     NOT?: SessionWhereInput | SessionWhereInput[]
-    userId?: StringFilter<"Session"> | string
+    userId?: StringNullableFilter<"Session"> | string | null
+    adminId?: StringNullableFilter<"Session"> | string | null
     ipAddress?: StringNullableFilter<"Session"> | string | null
     userAgent?: StringNullableFilter<"Session"> | string | null
     expiresAt?: DateTimeFilter<"Session"> | Date | string
     createdAt?: DateTimeFilter<"Session"> | Date | string
     updatedAt?: DateTimeFilter<"Session"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    admin?: XOR<AdminNullableScalarRelationFilter, AdminWhereInput> | null
   }, "id" | "refreshToken">
 
   export type SessionOrderByWithAggregationInput = {
     id?: SortOrder
-    userId?: SortOrder
+    userId?: SortOrderInput | SortOrder
+    adminId?: SortOrderInput | SortOrder
     refreshToken?: SortOrder
     ipAddress?: SortOrderInput | SortOrder
     userAgent?: SortOrderInput | SortOrder
@@ -40317,7 +41972,8 @@ export namespace Prisma {
     OR?: SessionScalarWhereWithAggregatesInput[]
     NOT?: SessionScalarWhereWithAggregatesInput | SessionScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Session"> | string
-    userId?: StringWithAggregatesFilter<"Session"> | string
+    userId?: StringNullableWithAggregatesFilter<"Session"> | string | null
+    adminId?: StringNullableWithAggregatesFilter<"Session"> | string | null
     refreshToken?: StringWithAggregatesFilter<"Session"> | string
     ipAddress?: StringNullableWithAggregatesFilter<"Session"> | string | null
     userAgent?: StringNullableWithAggregatesFilter<"Session"> | string | null
@@ -42246,8 +43902,8 @@ export namespace Prisma {
     comments?: CommentCreateNestedManyWithoutUserInput
     adViews?: AdViewCreateNestedManyWithoutUserInput
     userVideoView?: UserVideoViewCreateNestedManyWithoutUserInput
-    SeasonView?: SeasonViewCreateNestedManyWithoutUserInput
-    EmailValidation?: EmailValidationCreateNestedManyWithoutUserInput
+    seasonView?: SeasonViewCreateNestedManyWithoutUserInput
+    emailValidation?: EmailValidationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -42268,8 +43924,8 @@ export namespace Prisma {
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
     adViews?: AdViewUncheckedCreateNestedManyWithoutUserInput
     userVideoView?: UserVideoViewUncheckedCreateNestedManyWithoutUserInput
-    SeasonView?: SeasonViewUncheckedCreateNestedManyWithoutUserInput
-    EmailValidation?: EmailValidationUncheckedCreateNestedManyWithoutUserInput
+    seasonView?: SeasonViewUncheckedCreateNestedManyWithoutUserInput
+    emailValidation?: EmailValidationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -42290,8 +43946,8 @@ export namespace Prisma {
     comments?: CommentUpdateManyWithoutUserNestedInput
     adViews?: AdViewUpdateManyWithoutUserNestedInput
     userVideoView?: UserVideoViewUpdateManyWithoutUserNestedInput
-    SeasonView?: SeasonViewUpdateManyWithoutUserNestedInput
-    EmailValidation?: EmailValidationUpdateManyWithoutUserNestedInput
+    seasonView?: SeasonViewUpdateManyWithoutUserNestedInput
+    emailValidation?: EmailValidationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -42312,8 +43968,8 @@ export namespace Prisma {
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
     adViews?: AdViewUncheckedUpdateManyWithoutUserNestedInput
     userVideoView?: UserVideoViewUncheckedUpdateManyWithoutUserNestedInput
-    SeasonView?: SeasonViewUncheckedUpdateManyWithoutUserNestedInput
-    EmailValidation?: EmailValidationUncheckedUpdateManyWithoutUserNestedInput
+    seasonView?: SeasonViewUncheckedUpdateManyWithoutUserNestedInput
+    emailValidation?: EmailValidationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -42355,6 +44011,147 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type AdminCreateInput = {
+    id?: string
+    email: string
+    password_hash: string
+    firstName: string
+    lastName: string
+    country: string
+    city: string
+    state: string
+    phoneNumber: string
+    address: string
+    avatarUrl?: string | null
+    lastLoginAt?: Date | string | null
+    isVerified?: boolean
+    role?: $Enums.AdminRole
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sessions?: SessionCreateNestedManyWithoutAdminInput
+    emailValidation?: EmailValidationCreateNestedManyWithoutAdminInput
+  }
+
+  export type AdminUncheckedCreateInput = {
+    id?: string
+    email: string
+    password_hash: string
+    firstName: string
+    lastName: string
+    country: string
+    city: string
+    state: string
+    phoneNumber: string
+    address: string
+    avatarUrl?: string | null
+    lastLoginAt?: Date | string | null
+    isVerified?: boolean
+    role?: $Enums.AdminRole
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sessions?: SessionUncheckedCreateNestedManyWithoutAdminInput
+    emailValidation?: EmailValidationUncheckedCreateNestedManyWithoutAdminInput
+  }
+
+  export type AdminUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password_hash?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    country?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    state?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+    address?: StringFieldUpdateOperationsInput | string
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessions?: SessionUpdateManyWithoutAdminNestedInput
+    emailValidation?: EmailValidationUpdateManyWithoutAdminNestedInput
+  }
+
+  export type AdminUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password_hash?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    country?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    state?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+    address?: StringFieldUpdateOperationsInput | string
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessions?: SessionUncheckedUpdateManyWithoutAdminNestedInput
+    emailValidation?: EmailValidationUncheckedUpdateManyWithoutAdminNestedInput
+  }
+
+  export type AdminCreateManyInput = {
+    id?: string
+    email: string
+    password_hash: string
+    firstName: string
+    lastName: string
+    country: string
+    city: string
+    state: string
+    phoneNumber: string
+    address: string
+    avatarUrl?: string | null
+    lastLoginAt?: Date | string | null
+    isVerified?: boolean
+    role?: $Enums.AdminRole
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AdminUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password_hash?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    country?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    state?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+    address?: StringFieldUpdateOperationsInput | string
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AdminUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password_hash?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    country?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    state?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+    address?: StringFieldUpdateOperationsInput | string
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type EmailValidationCreateInput = {
     id?: string
     token: string
@@ -42362,12 +44159,14 @@ export namespace Prisma {
     used?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutEmailValidationInput
+    user?: UserCreateNestedOneWithoutEmailValidationInput
+    admin?: AdminCreateNestedOneWithoutEmailValidationInput
   }
 
   export type EmailValidationUncheckedCreateInput = {
     id?: string
-    userId: string
+    userId?: string | null
+    adminId?: string | null
     token: string
     expiresAt: Date | string
     used?: boolean
@@ -42382,12 +44181,14 @@ export namespace Prisma {
     used?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutEmailValidationNestedInput
+    user?: UserUpdateOneWithoutEmailValidationNestedInput
+    admin?: AdminUpdateOneWithoutEmailValidationNestedInput
   }
 
   export type EmailValidationUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    adminId?: NullableStringFieldUpdateOperationsInput | string | null
     token?: StringFieldUpdateOperationsInput | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     used?: BoolFieldUpdateOperationsInput | boolean
@@ -42397,7 +44198,8 @@ export namespace Prisma {
 
   export type EmailValidationCreateManyInput = {
     id?: string
-    userId: string
+    userId?: string | null
+    adminId?: string | null
     token: string
     expiresAt: Date | string
     used?: boolean
@@ -42416,7 +44218,8 @@ export namespace Prisma {
 
   export type EmailValidationUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    adminId?: NullableStringFieldUpdateOperationsInput | string | null
     token?: StringFieldUpdateOperationsInput | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     used?: BoolFieldUpdateOperationsInput | boolean
@@ -42432,12 +44235,14 @@ export namespace Prisma {
     expiresAt: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutSessionsInput
+    user?: UserCreateNestedOneWithoutSessionsInput
+    admin?: AdminCreateNestedOneWithoutSessionsInput
   }
 
   export type SessionUncheckedCreateInput = {
     id?: string
-    userId: string
+    userId?: string | null
+    adminId?: string | null
     refreshToken: string
     ipAddress?: string | null
     userAgent?: string | null
@@ -42454,12 +44259,14 @@ export namespace Prisma {
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutSessionsNestedInput
+    user?: UserUpdateOneWithoutSessionsNestedInput
+    admin?: AdminUpdateOneWithoutSessionsNestedInput
   }
 
   export type SessionUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    adminId?: NullableStringFieldUpdateOperationsInput | string | null
     refreshToken?: StringFieldUpdateOperationsInput | string
     ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
     userAgent?: NullableStringFieldUpdateOperationsInput | string | null
@@ -42470,7 +44277,8 @@ export namespace Prisma {
 
   export type SessionCreateManyInput = {
     id?: string
-    userId: string
+    userId?: string | null
+    adminId?: string | null
     refreshToken: string
     ipAddress?: string | null
     userAgent?: string | null
@@ -42491,7 +44299,8 @@ export namespace Prisma {
 
   export type SessionUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    adminId?: NullableStringFieldUpdateOperationsInput | string | null
     refreshToken?: StringFieldUpdateOperationsInput | string
     ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
     userAgent?: NullableStringFieldUpdateOperationsInput | string | null
@@ -44723,14 +46532,94 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type UserScalarRelationFilter = {
-    is?: UserWhereInput
-    isNot?: UserWhereInput
+  export type EnumAdminRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.AdminRole | EnumAdminRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.AdminRole[] | ListEnumAdminRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.AdminRole[] | ListEnumAdminRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumAdminRoleFilter<$PrismaModel> | $Enums.AdminRole
+  }
+
+  export type AdminCountOrderByAggregateInput = {
+    id?: SortOrder
+    email?: SortOrder
+    password_hash?: SortOrder
+    firstName?: SortOrder
+    lastName?: SortOrder
+    country?: SortOrder
+    city?: SortOrder
+    state?: SortOrder
+    phoneNumber?: SortOrder
+    address?: SortOrder
+    avatarUrl?: SortOrder
+    lastLoginAt?: SortOrder
+    isVerified?: SortOrder
+    role?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AdminMaxOrderByAggregateInput = {
+    id?: SortOrder
+    email?: SortOrder
+    password_hash?: SortOrder
+    firstName?: SortOrder
+    lastName?: SortOrder
+    country?: SortOrder
+    city?: SortOrder
+    state?: SortOrder
+    phoneNumber?: SortOrder
+    address?: SortOrder
+    avatarUrl?: SortOrder
+    lastLoginAt?: SortOrder
+    isVerified?: SortOrder
+    role?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AdminMinOrderByAggregateInput = {
+    id?: SortOrder
+    email?: SortOrder
+    password_hash?: SortOrder
+    firstName?: SortOrder
+    lastName?: SortOrder
+    country?: SortOrder
+    city?: SortOrder
+    state?: SortOrder
+    phoneNumber?: SortOrder
+    address?: SortOrder
+    avatarUrl?: SortOrder
+    lastLoginAt?: SortOrder
+    isVerified?: SortOrder
+    role?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EnumAdminRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.AdminRole | EnumAdminRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.AdminRole[] | ListEnumAdminRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.AdminRole[] | ListEnumAdminRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumAdminRoleWithAggregatesFilter<$PrismaModel> | $Enums.AdminRole
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumAdminRoleFilter<$PrismaModel>
+    _max?: NestedEnumAdminRoleFilter<$PrismaModel>
+  }
+
+  export type UserNullableScalarRelationFilter = {
+    is?: UserWhereInput | null
+    isNot?: UserWhereInput | null
+  }
+
+  export type AdminNullableScalarRelationFilter = {
+    is?: AdminWhereInput | null
+    isNot?: AdminWhereInput | null
   }
 
   export type EmailValidationCountOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
+    adminId?: SortOrder
     token?: SortOrder
     expiresAt?: SortOrder
     used?: SortOrder
@@ -44741,6 +46630,7 @@ export namespace Prisma {
   export type EmailValidationMaxOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
+    adminId?: SortOrder
     token?: SortOrder
     expiresAt?: SortOrder
     used?: SortOrder
@@ -44751,6 +46641,7 @@ export namespace Prisma {
   export type EmailValidationMinOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
+    adminId?: SortOrder
     token?: SortOrder
     expiresAt?: SortOrder
     used?: SortOrder
@@ -44761,6 +46652,7 @@ export namespace Prisma {
   export type SessionCountOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
+    adminId?: SortOrder
     refreshToken?: SortOrder
     ipAddress?: SortOrder
     userAgent?: SortOrder
@@ -44772,6 +46664,7 @@ export namespace Prisma {
   export type SessionMaxOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
+    adminId?: SortOrder
     refreshToken?: SortOrder
     ipAddress?: SortOrder
     userAgent?: SortOrder
@@ -44783,6 +46676,7 @@ export namespace Prisma {
   export type SessionMinOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
+    adminId?: SortOrder
     refreshToken?: SortOrder
     ipAddress?: SortOrder
     userAgent?: SortOrder
@@ -44907,6 +46801,11 @@ export namespace Prisma {
     in?: $Enums.RenewalStatus[] | ListEnumRenewalStatusFieldRefInput<$PrismaModel>
     notIn?: $Enums.RenewalStatus[] | ListEnumRenewalStatusFieldRefInput<$PrismaModel>
     not?: NestedEnumRenewalStatusFilter<$PrismaModel> | $Enums.RenewalStatus
+  }
+
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
   }
 
   export type SubscriptionPlanScalarRelationFilter = {
@@ -46057,11 +47956,6 @@ export namespace Prisma {
     isNot?: AdWhereInput
   }
 
-  export type UserNullableScalarRelationFilter = {
-    is?: UserWhereInput | null
-    isNot?: UserWhereInput | null
-  }
-
   export type SharedAccountUserNullableScalarRelationFilter = {
     is?: SharedAccountUserWhereInput | null
     isNot?: SharedAccountUserWhereInput | null
@@ -46582,18 +48476,124 @@ export namespace Prisma {
     deleteMany?: EmailValidationScalarWhereInput | EmailValidationScalarWhereInput[]
   }
 
+  export type SessionCreateNestedManyWithoutAdminInput = {
+    create?: XOR<SessionCreateWithoutAdminInput, SessionUncheckedCreateWithoutAdminInput> | SessionCreateWithoutAdminInput[] | SessionUncheckedCreateWithoutAdminInput[]
+    connectOrCreate?: SessionCreateOrConnectWithoutAdminInput | SessionCreateOrConnectWithoutAdminInput[]
+    createMany?: SessionCreateManyAdminInputEnvelope
+    connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+  }
+
+  export type EmailValidationCreateNestedManyWithoutAdminInput = {
+    create?: XOR<EmailValidationCreateWithoutAdminInput, EmailValidationUncheckedCreateWithoutAdminInput> | EmailValidationCreateWithoutAdminInput[] | EmailValidationUncheckedCreateWithoutAdminInput[]
+    connectOrCreate?: EmailValidationCreateOrConnectWithoutAdminInput | EmailValidationCreateOrConnectWithoutAdminInput[]
+    createMany?: EmailValidationCreateManyAdminInputEnvelope
+    connect?: EmailValidationWhereUniqueInput | EmailValidationWhereUniqueInput[]
+  }
+
+  export type SessionUncheckedCreateNestedManyWithoutAdminInput = {
+    create?: XOR<SessionCreateWithoutAdminInput, SessionUncheckedCreateWithoutAdminInput> | SessionCreateWithoutAdminInput[] | SessionUncheckedCreateWithoutAdminInput[]
+    connectOrCreate?: SessionCreateOrConnectWithoutAdminInput | SessionCreateOrConnectWithoutAdminInput[]
+    createMany?: SessionCreateManyAdminInputEnvelope
+    connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+  }
+
+  export type EmailValidationUncheckedCreateNestedManyWithoutAdminInput = {
+    create?: XOR<EmailValidationCreateWithoutAdminInput, EmailValidationUncheckedCreateWithoutAdminInput> | EmailValidationCreateWithoutAdminInput[] | EmailValidationUncheckedCreateWithoutAdminInput[]
+    connectOrCreate?: EmailValidationCreateOrConnectWithoutAdminInput | EmailValidationCreateOrConnectWithoutAdminInput[]
+    createMany?: EmailValidationCreateManyAdminInputEnvelope
+    connect?: EmailValidationWhereUniqueInput | EmailValidationWhereUniqueInput[]
+  }
+
+  export type EnumAdminRoleFieldUpdateOperationsInput = {
+    set?: $Enums.AdminRole
+  }
+
+  export type SessionUpdateManyWithoutAdminNestedInput = {
+    create?: XOR<SessionCreateWithoutAdminInput, SessionUncheckedCreateWithoutAdminInput> | SessionCreateWithoutAdminInput[] | SessionUncheckedCreateWithoutAdminInput[]
+    connectOrCreate?: SessionCreateOrConnectWithoutAdminInput | SessionCreateOrConnectWithoutAdminInput[]
+    upsert?: SessionUpsertWithWhereUniqueWithoutAdminInput | SessionUpsertWithWhereUniqueWithoutAdminInput[]
+    createMany?: SessionCreateManyAdminInputEnvelope
+    set?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    disconnect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    delete?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    update?: SessionUpdateWithWhereUniqueWithoutAdminInput | SessionUpdateWithWhereUniqueWithoutAdminInput[]
+    updateMany?: SessionUpdateManyWithWhereWithoutAdminInput | SessionUpdateManyWithWhereWithoutAdminInput[]
+    deleteMany?: SessionScalarWhereInput | SessionScalarWhereInput[]
+  }
+
+  export type EmailValidationUpdateManyWithoutAdminNestedInput = {
+    create?: XOR<EmailValidationCreateWithoutAdminInput, EmailValidationUncheckedCreateWithoutAdminInput> | EmailValidationCreateWithoutAdminInput[] | EmailValidationUncheckedCreateWithoutAdminInput[]
+    connectOrCreate?: EmailValidationCreateOrConnectWithoutAdminInput | EmailValidationCreateOrConnectWithoutAdminInput[]
+    upsert?: EmailValidationUpsertWithWhereUniqueWithoutAdminInput | EmailValidationUpsertWithWhereUniqueWithoutAdminInput[]
+    createMany?: EmailValidationCreateManyAdminInputEnvelope
+    set?: EmailValidationWhereUniqueInput | EmailValidationWhereUniqueInput[]
+    disconnect?: EmailValidationWhereUniqueInput | EmailValidationWhereUniqueInput[]
+    delete?: EmailValidationWhereUniqueInput | EmailValidationWhereUniqueInput[]
+    connect?: EmailValidationWhereUniqueInput | EmailValidationWhereUniqueInput[]
+    update?: EmailValidationUpdateWithWhereUniqueWithoutAdminInput | EmailValidationUpdateWithWhereUniqueWithoutAdminInput[]
+    updateMany?: EmailValidationUpdateManyWithWhereWithoutAdminInput | EmailValidationUpdateManyWithWhereWithoutAdminInput[]
+    deleteMany?: EmailValidationScalarWhereInput | EmailValidationScalarWhereInput[]
+  }
+
+  export type SessionUncheckedUpdateManyWithoutAdminNestedInput = {
+    create?: XOR<SessionCreateWithoutAdminInput, SessionUncheckedCreateWithoutAdminInput> | SessionCreateWithoutAdminInput[] | SessionUncheckedCreateWithoutAdminInput[]
+    connectOrCreate?: SessionCreateOrConnectWithoutAdminInput | SessionCreateOrConnectWithoutAdminInput[]
+    upsert?: SessionUpsertWithWhereUniqueWithoutAdminInput | SessionUpsertWithWhereUniqueWithoutAdminInput[]
+    createMany?: SessionCreateManyAdminInputEnvelope
+    set?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    disconnect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    delete?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    update?: SessionUpdateWithWhereUniqueWithoutAdminInput | SessionUpdateWithWhereUniqueWithoutAdminInput[]
+    updateMany?: SessionUpdateManyWithWhereWithoutAdminInput | SessionUpdateManyWithWhereWithoutAdminInput[]
+    deleteMany?: SessionScalarWhereInput | SessionScalarWhereInput[]
+  }
+
+  export type EmailValidationUncheckedUpdateManyWithoutAdminNestedInput = {
+    create?: XOR<EmailValidationCreateWithoutAdminInput, EmailValidationUncheckedCreateWithoutAdminInput> | EmailValidationCreateWithoutAdminInput[] | EmailValidationUncheckedCreateWithoutAdminInput[]
+    connectOrCreate?: EmailValidationCreateOrConnectWithoutAdminInput | EmailValidationCreateOrConnectWithoutAdminInput[]
+    upsert?: EmailValidationUpsertWithWhereUniqueWithoutAdminInput | EmailValidationUpsertWithWhereUniqueWithoutAdminInput[]
+    createMany?: EmailValidationCreateManyAdminInputEnvelope
+    set?: EmailValidationWhereUniqueInput | EmailValidationWhereUniqueInput[]
+    disconnect?: EmailValidationWhereUniqueInput | EmailValidationWhereUniqueInput[]
+    delete?: EmailValidationWhereUniqueInput | EmailValidationWhereUniqueInput[]
+    connect?: EmailValidationWhereUniqueInput | EmailValidationWhereUniqueInput[]
+    update?: EmailValidationUpdateWithWhereUniqueWithoutAdminInput | EmailValidationUpdateWithWhereUniqueWithoutAdminInput[]
+    updateMany?: EmailValidationUpdateManyWithWhereWithoutAdminInput | EmailValidationUpdateManyWithWhereWithoutAdminInput[]
+    deleteMany?: EmailValidationScalarWhereInput | EmailValidationScalarWhereInput[]
+  }
+
   export type UserCreateNestedOneWithoutEmailValidationInput = {
     create?: XOR<UserCreateWithoutEmailValidationInput, UserUncheckedCreateWithoutEmailValidationInput>
     connectOrCreate?: UserCreateOrConnectWithoutEmailValidationInput
     connect?: UserWhereUniqueInput
   }
 
-  export type UserUpdateOneRequiredWithoutEmailValidationNestedInput = {
+  export type AdminCreateNestedOneWithoutEmailValidationInput = {
+    create?: XOR<AdminCreateWithoutEmailValidationInput, AdminUncheckedCreateWithoutEmailValidationInput>
+    connectOrCreate?: AdminCreateOrConnectWithoutEmailValidationInput
+    connect?: AdminWhereUniqueInput
+  }
+
+  export type UserUpdateOneWithoutEmailValidationNestedInput = {
     create?: XOR<UserCreateWithoutEmailValidationInput, UserUncheckedCreateWithoutEmailValidationInput>
     connectOrCreate?: UserCreateOrConnectWithoutEmailValidationInput
     upsert?: UserUpsertWithoutEmailValidationInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutEmailValidationInput, UserUpdateWithoutEmailValidationInput>, UserUncheckedUpdateWithoutEmailValidationInput>
+  }
+
+  export type AdminUpdateOneWithoutEmailValidationNestedInput = {
+    create?: XOR<AdminCreateWithoutEmailValidationInput, AdminUncheckedCreateWithoutEmailValidationInput>
+    connectOrCreate?: AdminCreateOrConnectWithoutEmailValidationInput
+    upsert?: AdminUpsertWithoutEmailValidationInput
+    disconnect?: AdminWhereInput | boolean
+    delete?: AdminWhereInput | boolean
+    connect?: AdminWhereUniqueInput
+    update?: XOR<XOR<AdminUpdateToOneWithWhereWithoutEmailValidationInput, AdminUpdateWithoutEmailValidationInput>, AdminUncheckedUpdateWithoutEmailValidationInput>
   }
 
   export type UserCreateNestedOneWithoutSessionsInput = {
@@ -46602,12 +48602,30 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
-  export type UserUpdateOneRequiredWithoutSessionsNestedInput = {
+  export type AdminCreateNestedOneWithoutSessionsInput = {
+    create?: XOR<AdminCreateWithoutSessionsInput, AdminUncheckedCreateWithoutSessionsInput>
+    connectOrCreate?: AdminCreateOrConnectWithoutSessionsInput
+    connect?: AdminWhereUniqueInput
+  }
+
+  export type UserUpdateOneWithoutSessionsNestedInput = {
     create?: XOR<UserCreateWithoutSessionsInput, UserUncheckedCreateWithoutSessionsInput>
     connectOrCreate?: UserCreateOrConnectWithoutSessionsInput
     upsert?: UserUpsertWithoutSessionsInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSessionsInput, UserUpdateWithoutSessionsInput>, UserUncheckedUpdateWithoutSessionsInput>
+  }
+
+  export type AdminUpdateOneWithoutSessionsNestedInput = {
+    create?: XOR<AdminCreateWithoutSessionsInput, AdminUncheckedCreateWithoutSessionsInput>
+    connectOrCreate?: AdminCreateOrConnectWithoutSessionsInput
+    upsert?: AdminUpsertWithoutSessionsInput
+    disconnect?: AdminWhereInput | boolean
+    delete?: AdminWhereInput | boolean
+    connect?: AdminWhereUniqueInput
+    update?: XOR<XOR<AdminUpdateToOneWithWhereWithoutSessionsInput, AdminUpdateWithoutSessionsInput>, AdminUncheckedUpdateWithoutSessionsInput>
   }
 
   export type SubscriptionCreateNestedManyWithoutPlanInput = {
@@ -48637,6 +50655,23 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedEnumAdminRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.AdminRole | EnumAdminRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.AdminRole[] | ListEnumAdminRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.AdminRole[] | ListEnumAdminRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumAdminRoleFilter<$PrismaModel> | $Enums.AdminRole
+  }
+
+  export type NestedEnumAdminRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.AdminRole | EnumAdminRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.AdminRole[] | ListEnumAdminRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.AdminRole[] | ListEnumAdminRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumAdminRoleWithAggregatesFilter<$PrismaModel> | $Enums.AdminRole
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumAdminRoleFilter<$PrismaModel>
+    _max?: NestedEnumAdminRoleFilter<$PrismaModel>
+  }
+
   export type NestedFloatFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel>
     in?: number[] | ListFloatFieldRefInput<$PrismaModel>
@@ -48822,10 +50857,12 @@ export namespace Prisma {
     expiresAt: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
+    admin?: AdminCreateNestedOneWithoutSessionsInput
   }
 
   export type SessionUncheckedCreateWithoutUserInput = {
     id?: string
+    adminId?: string | null
     refreshToken: string
     ipAddress?: string | null
     userAgent?: string | null
@@ -49063,10 +51100,12 @@ export namespace Prisma {
     used?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    admin?: AdminCreateNestedOneWithoutEmailValidationInput
   }
 
   export type EmailValidationUncheckedCreateWithoutUserInput = {
     id?: string
+    adminId?: string | null
     token: string
     expiresAt: Date | string
     used?: boolean
@@ -49105,7 +51144,8 @@ export namespace Prisma {
     OR?: SessionScalarWhereInput[]
     NOT?: SessionScalarWhereInput | SessionScalarWhereInput[]
     id?: StringFilter<"Session"> | string
-    userId?: StringFilter<"Session"> | string
+    userId?: StringNullableFilter<"Session"> | string | null
+    adminId?: StringNullableFilter<"Session"> | string | null
     refreshToken?: StringFilter<"Session"> | string
     ipAddress?: StringNullableFilter<"Session"> | string | null
     userAgent?: StringNullableFilter<"Session"> | string | null
@@ -49343,12 +51383,107 @@ export namespace Prisma {
     OR?: EmailValidationScalarWhereInput[]
     NOT?: EmailValidationScalarWhereInput | EmailValidationScalarWhereInput[]
     id?: StringFilter<"EmailValidation"> | string
-    userId?: StringFilter<"EmailValidation"> | string
+    userId?: StringNullableFilter<"EmailValidation"> | string | null
+    adminId?: StringNullableFilter<"EmailValidation"> | string | null
     token?: StringFilter<"EmailValidation"> | string
     expiresAt?: DateTimeFilter<"EmailValidation"> | Date | string
     used?: BoolFilter<"EmailValidation"> | boolean
     createdAt?: DateTimeFilter<"EmailValidation"> | Date | string
     updatedAt?: DateTimeFilter<"EmailValidation"> | Date | string
+  }
+
+  export type SessionCreateWithoutAdminInput = {
+    id?: string
+    refreshToken: string
+    ipAddress?: string | null
+    userAgent?: string | null
+    expiresAt: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user?: UserCreateNestedOneWithoutSessionsInput
+  }
+
+  export type SessionUncheckedCreateWithoutAdminInput = {
+    id?: string
+    userId?: string | null
+    refreshToken: string
+    ipAddress?: string | null
+    userAgent?: string | null
+    expiresAt: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SessionCreateOrConnectWithoutAdminInput = {
+    where: SessionWhereUniqueInput
+    create: XOR<SessionCreateWithoutAdminInput, SessionUncheckedCreateWithoutAdminInput>
+  }
+
+  export type SessionCreateManyAdminInputEnvelope = {
+    data: SessionCreateManyAdminInput | SessionCreateManyAdminInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type EmailValidationCreateWithoutAdminInput = {
+    id?: string
+    token: string
+    expiresAt: Date | string
+    used?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user?: UserCreateNestedOneWithoutEmailValidationInput
+  }
+
+  export type EmailValidationUncheckedCreateWithoutAdminInput = {
+    id?: string
+    userId?: string | null
+    token: string
+    expiresAt: Date | string
+    used?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type EmailValidationCreateOrConnectWithoutAdminInput = {
+    where: EmailValidationWhereUniqueInput
+    create: XOR<EmailValidationCreateWithoutAdminInput, EmailValidationUncheckedCreateWithoutAdminInput>
+  }
+
+  export type EmailValidationCreateManyAdminInputEnvelope = {
+    data: EmailValidationCreateManyAdminInput | EmailValidationCreateManyAdminInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SessionUpsertWithWhereUniqueWithoutAdminInput = {
+    where: SessionWhereUniqueInput
+    update: XOR<SessionUpdateWithoutAdminInput, SessionUncheckedUpdateWithoutAdminInput>
+    create: XOR<SessionCreateWithoutAdminInput, SessionUncheckedCreateWithoutAdminInput>
+  }
+
+  export type SessionUpdateWithWhereUniqueWithoutAdminInput = {
+    where: SessionWhereUniqueInput
+    data: XOR<SessionUpdateWithoutAdminInput, SessionUncheckedUpdateWithoutAdminInput>
+  }
+
+  export type SessionUpdateManyWithWhereWithoutAdminInput = {
+    where: SessionScalarWhereInput
+    data: XOR<SessionUpdateManyMutationInput, SessionUncheckedUpdateManyWithoutAdminInput>
+  }
+
+  export type EmailValidationUpsertWithWhereUniqueWithoutAdminInput = {
+    where: EmailValidationWhereUniqueInput
+    update: XOR<EmailValidationUpdateWithoutAdminInput, EmailValidationUncheckedUpdateWithoutAdminInput>
+    create: XOR<EmailValidationCreateWithoutAdminInput, EmailValidationUncheckedCreateWithoutAdminInput>
+  }
+
+  export type EmailValidationUpdateWithWhereUniqueWithoutAdminInput = {
+    where: EmailValidationWhereUniqueInput
+    data: XOR<EmailValidationUpdateWithoutAdminInput, EmailValidationUncheckedUpdateWithoutAdminInput>
+  }
+
+  export type EmailValidationUpdateManyWithWhereWithoutAdminInput = {
+    where: EmailValidationScalarWhereInput
+    data: XOR<EmailValidationUpdateManyMutationInput, EmailValidationUncheckedUpdateManyWithoutAdminInput>
   }
 
   export type UserCreateWithoutEmailValidationInput = {
@@ -49369,7 +51504,7 @@ export namespace Prisma {
     comments?: CommentCreateNestedManyWithoutUserInput
     adViews?: AdViewCreateNestedManyWithoutUserInput
     userVideoView?: UserVideoViewCreateNestedManyWithoutUserInput
-    SeasonView?: SeasonViewCreateNestedManyWithoutUserInput
+    seasonView?: SeasonViewCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutEmailValidationInput = {
@@ -49390,12 +51525,57 @@ export namespace Prisma {
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
     adViews?: AdViewUncheckedCreateNestedManyWithoutUserInput
     userVideoView?: UserVideoViewUncheckedCreateNestedManyWithoutUserInput
-    SeasonView?: SeasonViewUncheckedCreateNestedManyWithoutUserInput
+    seasonView?: SeasonViewUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutEmailValidationInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutEmailValidationInput, UserUncheckedCreateWithoutEmailValidationInput>
+  }
+
+  export type AdminCreateWithoutEmailValidationInput = {
+    id?: string
+    email: string
+    password_hash: string
+    firstName: string
+    lastName: string
+    country: string
+    city: string
+    state: string
+    phoneNumber: string
+    address: string
+    avatarUrl?: string | null
+    lastLoginAt?: Date | string | null
+    isVerified?: boolean
+    role?: $Enums.AdminRole
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sessions?: SessionCreateNestedManyWithoutAdminInput
+  }
+
+  export type AdminUncheckedCreateWithoutEmailValidationInput = {
+    id?: string
+    email: string
+    password_hash: string
+    firstName: string
+    lastName: string
+    country: string
+    city: string
+    state: string
+    phoneNumber: string
+    address: string
+    avatarUrl?: string | null
+    lastLoginAt?: Date | string | null
+    isVerified?: boolean
+    role?: $Enums.AdminRole
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sessions?: SessionUncheckedCreateNestedManyWithoutAdminInput
+  }
+
+  export type AdminCreateOrConnectWithoutEmailValidationInput = {
+    where: AdminWhereUniqueInput
+    create: XOR<AdminCreateWithoutEmailValidationInput, AdminUncheckedCreateWithoutEmailValidationInput>
   }
 
   export type UserUpsertWithoutEmailValidationInput = {
@@ -49427,7 +51607,7 @@ export namespace Prisma {
     comments?: CommentUpdateManyWithoutUserNestedInput
     adViews?: AdViewUpdateManyWithoutUserNestedInput
     userVideoView?: UserVideoViewUpdateManyWithoutUserNestedInput
-    SeasonView?: SeasonViewUpdateManyWithoutUserNestedInput
+    seasonView?: SeasonViewUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutEmailValidationInput = {
@@ -49448,7 +51628,58 @@ export namespace Prisma {
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
     adViews?: AdViewUncheckedUpdateManyWithoutUserNestedInput
     userVideoView?: UserVideoViewUncheckedUpdateManyWithoutUserNestedInput
-    SeasonView?: SeasonViewUncheckedUpdateManyWithoutUserNestedInput
+    seasonView?: SeasonViewUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type AdminUpsertWithoutEmailValidationInput = {
+    update: XOR<AdminUpdateWithoutEmailValidationInput, AdminUncheckedUpdateWithoutEmailValidationInput>
+    create: XOR<AdminCreateWithoutEmailValidationInput, AdminUncheckedCreateWithoutEmailValidationInput>
+    where?: AdminWhereInput
+  }
+
+  export type AdminUpdateToOneWithWhereWithoutEmailValidationInput = {
+    where?: AdminWhereInput
+    data: XOR<AdminUpdateWithoutEmailValidationInput, AdminUncheckedUpdateWithoutEmailValidationInput>
+  }
+
+  export type AdminUpdateWithoutEmailValidationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password_hash?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    country?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    state?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+    address?: StringFieldUpdateOperationsInput | string
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessions?: SessionUpdateManyWithoutAdminNestedInput
+  }
+
+  export type AdminUncheckedUpdateWithoutEmailValidationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password_hash?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    country?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    state?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+    address?: StringFieldUpdateOperationsInput | string
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessions?: SessionUncheckedUpdateManyWithoutAdminNestedInput
   }
 
   export type UserCreateWithoutSessionsInput = {
@@ -49468,8 +51699,8 @@ export namespace Prisma {
     comments?: CommentCreateNestedManyWithoutUserInput
     adViews?: AdViewCreateNestedManyWithoutUserInput
     userVideoView?: UserVideoViewCreateNestedManyWithoutUserInput
-    SeasonView?: SeasonViewCreateNestedManyWithoutUserInput
-    EmailValidation?: EmailValidationCreateNestedManyWithoutUserInput
+    seasonView?: SeasonViewCreateNestedManyWithoutUserInput
+    emailValidation?: EmailValidationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -49489,13 +51720,58 @@ export namespace Prisma {
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
     adViews?: AdViewUncheckedCreateNestedManyWithoutUserInput
     userVideoView?: UserVideoViewUncheckedCreateNestedManyWithoutUserInput
-    SeasonView?: SeasonViewUncheckedCreateNestedManyWithoutUserInput
-    EmailValidation?: EmailValidationUncheckedCreateNestedManyWithoutUserInput
+    seasonView?: SeasonViewUncheckedCreateNestedManyWithoutUserInput
+    emailValidation?: EmailValidationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutSessionsInput, UserUncheckedCreateWithoutSessionsInput>
+  }
+
+  export type AdminCreateWithoutSessionsInput = {
+    id?: string
+    email: string
+    password_hash: string
+    firstName: string
+    lastName: string
+    country: string
+    city: string
+    state: string
+    phoneNumber: string
+    address: string
+    avatarUrl?: string | null
+    lastLoginAt?: Date | string | null
+    isVerified?: boolean
+    role?: $Enums.AdminRole
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    emailValidation?: EmailValidationCreateNestedManyWithoutAdminInput
+  }
+
+  export type AdminUncheckedCreateWithoutSessionsInput = {
+    id?: string
+    email: string
+    password_hash: string
+    firstName: string
+    lastName: string
+    country: string
+    city: string
+    state: string
+    phoneNumber: string
+    address: string
+    avatarUrl?: string | null
+    lastLoginAt?: Date | string | null
+    isVerified?: boolean
+    role?: $Enums.AdminRole
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    emailValidation?: EmailValidationUncheckedCreateNestedManyWithoutAdminInput
+  }
+
+  export type AdminCreateOrConnectWithoutSessionsInput = {
+    where: AdminWhereUniqueInput
+    create: XOR<AdminCreateWithoutSessionsInput, AdminUncheckedCreateWithoutSessionsInput>
   }
 
   export type UserUpsertWithoutSessionsInput = {
@@ -49526,8 +51802,8 @@ export namespace Prisma {
     comments?: CommentUpdateManyWithoutUserNestedInput
     adViews?: AdViewUpdateManyWithoutUserNestedInput
     userVideoView?: UserVideoViewUpdateManyWithoutUserNestedInput
-    SeasonView?: SeasonViewUpdateManyWithoutUserNestedInput
-    EmailValidation?: EmailValidationUpdateManyWithoutUserNestedInput
+    seasonView?: SeasonViewUpdateManyWithoutUserNestedInput
+    emailValidation?: EmailValidationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -49547,8 +51823,59 @@ export namespace Prisma {
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
     adViews?: AdViewUncheckedUpdateManyWithoutUserNestedInput
     userVideoView?: UserVideoViewUncheckedUpdateManyWithoutUserNestedInput
-    SeasonView?: SeasonViewUncheckedUpdateManyWithoutUserNestedInput
-    EmailValidation?: EmailValidationUncheckedUpdateManyWithoutUserNestedInput
+    seasonView?: SeasonViewUncheckedUpdateManyWithoutUserNestedInput
+    emailValidation?: EmailValidationUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type AdminUpsertWithoutSessionsInput = {
+    update: XOR<AdminUpdateWithoutSessionsInput, AdminUncheckedUpdateWithoutSessionsInput>
+    create: XOR<AdminCreateWithoutSessionsInput, AdminUncheckedCreateWithoutSessionsInput>
+    where?: AdminWhereInput
+  }
+
+  export type AdminUpdateToOneWithWhereWithoutSessionsInput = {
+    where?: AdminWhereInput
+    data: XOR<AdminUpdateWithoutSessionsInput, AdminUncheckedUpdateWithoutSessionsInput>
+  }
+
+  export type AdminUpdateWithoutSessionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password_hash?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    country?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    state?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+    address?: StringFieldUpdateOperationsInput | string
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    emailValidation?: EmailValidationUpdateManyWithoutAdminNestedInput
+  }
+
+  export type AdminUncheckedUpdateWithoutSessionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password_hash?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    country?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    state?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+    address?: StringFieldUpdateOperationsInput | string
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    emailValidation?: EmailValidationUncheckedUpdateManyWithoutAdminNestedInput
   }
 
   export type SubscriptionCreateWithoutPlanInput = {
@@ -49618,8 +51945,8 @@ export namespace Prisma {
     comments?: CommentCreateNestedManyWithoutUserInput
     adViews?: AdViewCreateNestedManyWithoutUserInput
     userVideoView?: UserVideoViewCreateNestedManyWithoutUserInput
-    SeasonView?: SeasonViewCreateNestedManyWithoutUserInput
-    EmailValidation?: EmailValidationCreateNestedManyWithoutUserInput
+    seasonView?: SeasonViewCreateNestedManyWithoutUserInput
+    emailValidation?: EmailValidationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSubscriptionsInput = {
@@ -49639,8 +51966,8 @@ export namespace Prisma {
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
     adViews?: AdViewUncheckedCreateNestedManyWithoutUserInput
     userVideoView?: UserVideoViewUncheckedCreateNestedManyWithoutUserInput
-    SeasonView?: SeasonViewUncheckedCreateNestedManyWithoutUserInput
-    EmailValidation?: EmailValidationUncheckedCreateNestedManyWithoutUserInput
+    seasonView?: SeasonViewUncheckedCreateNestedManyWithoutUserInput
+    emailValidation?: EmailValidationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSubscriptionsInput = {
@@ -49729,8 +52056,8 @@ export namespace Prisma {
     comments?: CommentUpdateManyWithoutUserNestedInput
     adViews?: AdViewUpdateManyWithoutUserNestedInput
     userVideoView?: UserVideoViewUpdateManyWithoutUserNestedInput
-    SeasonView?: SeasonViewUpdateManyWithoutUserNestedInput
-    EmailValidation?: EmailValidationUpdateManyWithoutUserNestedInput
+    seasonView?: SeasonViewUpdateManyWithoutUserNestedInput
+    emailValidation?: EmailValidationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSubscriptionsInput = {
@@ -49750,8 +52077,8 @@ export namespace Prisma {
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
     adViews?: AdViewUncheckedUpdateManyWithoutUserNestedInput
     userVideoView?: UserVideoViewUncheckedUpdateManyWithoutUserNestedInput
-    SeasonView?: SeasonViewUncheckedUpdateManyWithoutUserNestedInput
-    EmailValidation?: EmailValidationUncheckedUpdateManyWithoutUserNestedInput
+    seasonView?: SeasonViewUncheckedUpdateManyWithoutUserNestedInput
+    emailValidation?: EmailValidationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type SubscriptionPlanUpsertWithoutSubscriptionsInput = {
@@ -49818,8 +52145,8 @@ export namespace Prisma {
     comments?: CommentCreateNestedManyWithoutUserInput
     adViews?: AdViewCreateNestedManyWithoutUserInput
     userVideoView?: UserVideoViewCreateNestedManyWithoutUserInput
-    SeasonView?: SeasonViewCreateNestedManyWithoutUserInput
-    EmailValidation?: EmailValidationCreateNestedManyWithoutUserInput
+    seasonView?: SeasonViewCreateNestedManyWithoutUserInput
+    emailValidation?: EmailValidationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutOwnedSharedAccountsInput = {
@@ -49839,8 +52166,8 @@ export namespace Prisma {
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
     adViews?: AdViewUncheckedCreateNestedManyWithoutUserInput
     userVideoView?: UserVideoViewUncheckedCreateNestedManyWithoutUserInput
-    SeasonView?: SeasonViewUncheckedCreateNestedManyWithoutUserInput
-    EmailValidation?: EmailValidationUncheckedCreateNestedManyWithoutUserInput
+    seasonView?: SeasonViewUncheckedCreateNestedManyWithoutUserInput
+    emailValidation?: EmailValidationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutOwnedSharedAccountsInput = {
@@ -49939,8 +52266,8 @@ export namespace Prisma {
     comments?: CommentUpdateManyWithoutUserNestedInput
     adViews?: AdViewUpdateManyWithoutUserNestedInput
     userVideoView?: UserVideoViewUpdateManyWithoutUserNestedInput
-    SeasonView?: SeasonViewUpdateManyWithoutUserNestedInput
-    EmailValidation?: EmailValidationUpdateManyWithoutUserNestedInput
+    seasonView?: SeasonViewUpdateManyWithoutUserNestedInput
+    emailValidation?: EmailValidationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutOwnedSharedAccountsInput = {
@@ -49960,8 +52287,8 @@ export namespace Prisma {
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
     adViews?: AdViewUncheckedUpdateManyWithoutUserNestedInput
     userVideoView?: UserVideoViewUncheckedUpdateManyWithoutUserNestedInput
-    SeasonView?: SeasonViewUncheckedUpdateManyWithoutUserNestedInput
-    EmailValidation?: EmailValidationUncheckedUpdateManyWithoutUserNestedInput
+    seasonView?: SeasonViewUncheckedUpdateManyWithoutUserNestedInput
+    emailValidation?: EmailValidationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type SubscriptionUpsertWithoutSharedAccountsInput = {
@@ -52411,8 +54738,8 @@ export namespace Prisma {
     purchases?: PurchaseCreateNestedManyWithoutUserInput
     comments?: CommentCreateNestedManyWithoutUserInput
     adViews?: AdViewCreateNestedManyWithoutUserInput
-    SeasonView?: SeasonViewCreateNestedManyWithoutUserInput
-    EmailValidation?: EmailValidationCreateNestedManyWithoutUserInput
+    seasonView?: SeasonViewCreateNestedManyWithoutUserInput
+    emailValidation?: EmailValidationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUserVideoViewInput = {
@@ -52432,8 +54759,8 @@ export namespace Prisma {
     purchases?: PurchaseUncheckedCreateNestedManyWithoutUserInput
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
     adViews?: AdViewUncheckedCreateNestedManyWithoutUserInput
-    SeasonView?: SeasonViewUncheckedCreateNestedManyWithoutUserInput
-    EmailValidation?: EmailValidationUncheckedCreateNestedManyWithoutUserInput
+    seasonView?: SeasonViewUncheckedCreateNestedManyWithoutUserInput
+    emailValidation?: EmailValidationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUserVideoViewInput = {
@@ -52506,8 +54833,8 @@ export namespace Prisma {
     purchases?: PurchaseUpdateManyWithoutUserNestedInput
     comments?: CommentUpdateManyWithoutUserNestedInput
     adViews?: AdViewUpdateManyWithoutUserNestedInput
-    SeasonView?: SeasonViewUpdateManyWithoutUserNestedInput
-    EmailValidation?: EmailValidationUpdateManyWithoutUserNestedInput
+    seasonView?: SeasonViewUpdateManyWithoutUserNestedInput
+    emailValidation?: EmailValidationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUserVideoViewInput = {
@@ -52527,8 +54854,8 @@ export namespace Prisma {
     purchases?: PurchaseUncheckedUpdateManyWithoutUserNestedInput
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
     adViews?: AdViewUncheckedUpdateManyWithoutUserNestedInput
-    SeasonView?: SeasonViewUncheckedUpdateManyWithoutUserNestedInput
-    EmailValidation?: EmailValidationUncheckedUpdateManyWithoutUserNestedInput
+    seasonView?: SeasonViewUncheckedUpdateManyWithoutUserNestedInput
+    emailValidation?: EmailValidationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type VideoFileUpsertWithoutUserVideoProgressInput = {
@@ -52615,7 +54942,7 @@ export namespace Prisma {
     comments?: CommentCreateNestedManyWithoutUserInput
     adViews?: AdViewCreateNestedManyWithoutUserInput
     userVideoView?: UserVideoViewCreateNestedManyWithoutUserInput
-    EmailValidation?: EmailValidationCreateNestedManyWithoutUserInput
+    emailValidation?: EmailValidationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSeasonViewInput = {
@@ -52636,7 +54963,7 @@ export namespace Prisma {
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
     adViews?: AdViewUncheckedCreateNestedManyWithoutUserInput
     userVideoView?: UserVideoViewUncheckedCreateNestedManyWithoutUserInput
-    EmailValidation?: EmailValidationUncheckedCreateNestedManyWithoutUserInput
+    emailValidation?: EmailValidationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSeasonViewInput = {
@@ -52702,7 +55029,7 @@ export namespace Prisma {
     comments?: CommentUpdateManyWithoutUserNestedInput
     adViews?: AdViewUpdateManyWithoutUserNestedInput
     userVideoView?: UserVideoViewUpdateManyWithoutUserNestedInput
-    EmailValidation?: EmailValidationUpdateManyWithoutUserNestedInput
+    emailValidation?: EmailValidationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSeasonViewInput = {
@@ -52723,7 +55050,7 @@ export namespace Prisma {
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
     adViews?: AdViewUncheckedUpdateManyWithoutUserNestedInput
     userVideoView?: UserVideoViewUncheckedUpdateManyWithoutUserNestedInput
-    EmailValidation?: EmailValidationUncheckedUpdateManyWithoutUserNestedInput
+    emailValidation?: EmailValidationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type SeriesCreateWithoutSeriesViewInput = {
@@ -53287,8 +55614,8 @@ export namespace Prisma {
     comments?: CommentCreateNestedManyWithoutUserInput
     adViews?: AdViewCreateNestedManyWithoutUserInput
     userVideoView?: UserVideoViewCreateNestedManyWithoutUserInput
-    SeasonView?: SeasonViewCreateNestedManyWithoutUserInput
-    EmailValidation?: EmailValidationCreateNestedManyWithoutUserInput
+    seasonView?: SeasonViewCreateNestedManyWithoutUserInput
+    emailValidation?: EmailValidationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPurchasesInput = {
@@ -53308,8 +55635,8 @@ export namespace Prisma {
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
     adViews?: AdViewUncheckedCreateNestedManyWithoutUserInput
     userVideoView?: UserVideoViewUncheckedCreateNestedManyWithoutUserInput
-    SeasonView?: SeasonViewUncheckedCreateNestedManyWithoutUserInput
-    EmailValidation?: EmailValidationUncheckedCreateNestedManyWithoutUserInput
+    seasonView?: SeasonViewUncheckedCreateNestedManyWithoutUserInput
+    emailValidation?: EmailValidationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPurchasesInput = {
@@ -53382,8 +55709,8 @@ export namespace Prisma {
     comments?: CommentUpdateManyWithoutUserNestedInput
     adViews?: AdViewUpdateManyWithoutUserNestedInput
     userVideoView?: UserVideoViewUpdateManyWithoutUserNestedInput
-    SeasonView?: SeasonViewUpdateManyWithoutUserNestedInput
-    EmailValidation?: EmailValidationUpdateManyWithoutUserNestedInput
+    seasonView?: SeasonViewUpdateManyWithoutUserNestedInput
+    emailValidation?: EmailValidationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPurchasesInput = {
@@ -53403,8 +55730,8 @@ export namespace Prisma {
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
     adViews?: AdViewUncheckedUpdateManyWithoutUserNestedInput
     userVideoView?: UserVideoViewUncheckedUpdateManyWithoutUserNestedInput
-    SeasonView?: SeasonViewUncheckedUpdateManyWithoutUserNestedInput
-    EmailValidation?: EmailValidationUncheckedUpdateManyWithoutUserNestedInput
+    seasonView?: SeasonViewUncheckedUpdateManyWithoutUserNestedInput
+    emailValidation?: EmailValidationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type VideoFileUpsertWithoutPurchasesInput = {
@@ -53467,8 +55794,8 @@ export namespace Prisma {
     purchases?: PurchaseCreateNestedManyWithoutUserInput
     adViews?: AdViewCreateNestedManyWithoutUserInput
     userVideoView?: UserVideoViewCreateNestedManyWithoutUserInput
-    SeasonView?: SeasonViewCreateNestedManyWithoutUserInput
-    EmailValidation?: EmailValidationCreateNestedManyWithoutUserInput
+    seasonView?: SeasonViewCreateNestedManyWithoutUserInput
+    emailValidation?: EmailValidationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCommentsInput = {
@@ -53488,8 +55815,8 @@ export namespace Prisma {
     purchases?: PurchaseUncheckedCreateNestedManyWithoutUserInput
     adViews?: AdViewUncheckedCreateNestedManyWithoutUserInput
     userVideoView?: UserVideoViewUncheckedCreateNestedManyWithoutUserInput
-    SeasonView?: SeasonViewUncheckedCreateNestedManyWithoutUserInput
-    EmailValidation?: EmailValidationUncheckedCreateNestedManyWithoutUserInput
+    seasonView?: SeasonViewUncheckedCreateNestedManyWithoutUserInput
+    emailValidation?: EmailValidationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCommentsInput = {
@@ -53613,8 +55940,8 @@ export namespace Prisma {
     purchases?: PurchaseUpdateManyWithoutUserNestedInput
     adViews?: AdViewUpdateManyWithoutUserNestedInput
     userVideoView?: UserVideoViewUpdateManyWithoutUserNestedInput
-    SeasonView?: SeasonViewUpdateManyWithoutUserNestedInput
-    EmailValidation?: EmailValidationUpdateManyWithoutUserNestedInput
+    seasonView?: SeasonViewUpdateManyWithoutUserNestedInput
+    emailValidation?: EmailValidationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCommentsInput = {
@@ -53634,8 +55961,8 @@ export namespace Prisma {
     purchases?: PurchaseUncheckedUpdateManyWithoutUserNestedInput
     adViews?: AdViewUncheckedUpdateManyWithoutUserNestedInput
     userVideoView?: UserVideoViewUncheckedUpdateManyWithoutUserNestedInput
-    SeasonView?: SeasonViewUncheckedUpdateManyWithoutUserNestedInput
-    EmailValidation?: EmailValidationUncheckedUpdateManyWithoutUserNestedInput
+    seasonView?: SeasonViewUncheckedUpdateManyWithoutUserNestedInput
+    emailValidation?: EmailValidationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type VideoFileUpsertWithoutCommentsInput = {
@@ -53808,8 +56135,8 @@ export namespace Prisma {
     purchases?: PurchaseCreateNestedManyWithoutUserInput
     comments?: CommentCreateNestedManyWithoutUserInput
     userVideoView?: UserVideoViewCreateNestedManyWithoutUserInput
-    SeasonView?: SeasonViewCreateNestedManyWithoutUserInput
-    EmailValidation?: EmailValidationCreateNestedManyWithoutUserInput
+    seasonView?: SeasonViewCreateNestedManyWithoutUserInput
+    emailValidation?: EmailValidationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAdViewsInput = {
@@ -53829,8 +56156,8 @@ export namespace Prisma {
     purchases?: PurchaseUncheckedCreateNestedManyWithoutUserInput
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
     userVideoView?: UserVideoViewUncheckedCreateNestedManyWithoutUserInput
-    SeasonView?: SeasonViewUncheckedCreateNestedManyWithoutUserInput
-    EmailValidation?: EmailValidationUncheckedCreateNestedManyWithoutUserInput
+    seasonView?: SeasonViewUncheckedCreateNestedManyWithoutUserInput
+    emailValidation?: EmailValidationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAdViewsInput = {
@@ -53926,8 +56253,8 @@ export namespace Prisma {
     purchases?: PurchaseUpdateManyWithoutUserNestedInput
     comments?: CommentUpdateManyWithoutUserNestedInput
     userVideoView?: UserVideoViewUpdateManyWithoutUserNestedInput
-    SeasonView?: SeasonViewUpdateManyWithoutUserNestedInput
-    EmailValidation?: EmailValidationUpdateManyWithoutUserNestedInput
+    seasonView?: SeasonViewUpdateManyWithoutUserNestedInput
+    emailValidation?: EmailValidationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAdViewsInput = {
@@ -53947,8 +56274,8 @@ export namespace Prisma {
     purchases?: PurchaseUncheckedUpdateManyWithoutUserNestedInput
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
     userVideoView?: UserVideoViewUncheckedUpdateManyWithoutUserNestedInput
-    SeasonView?: SeasonViewUncheckedUpdateManyWithoutUserNestedInput
-    EmailValidation?: EmailValidationUncheckedUpdateManyWithoutUserNestedInput
+    seasonView?: SeasonViewUncheckedUpdateManyWithoutUserNestedInput
+    emailValidation?: EmailValidationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type SharedAccountUserUpsertWithoutAdViewsInput = {
@@ -54052,6 +56379,7 @@ export namespace Prisma {
 
   export type SessionCreateManyUserInput = {
     id?: string
+    adminId?: string | null
     refreshToken: string
     ipAddress?: string | null
     userAgent?: string | null
@@ -54130,6 +56458,7 @@ export namespace Prisma {
 
   export type EmailValidationCreateManyUserInput = {
     id?: string
+    adminId?: string | null
     token: string
     expiresAt: Date | string
     used?: boolean
@@ -54145,10 +56474,12 @@ export namespace Prisma {
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    admin?: AdminUpdateOneWithoutSessionsNestedInput
   }
 
   export type SessionUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
+    adminId?: NullableStringFieldUpdateOperationsInput | string | null
     refreshToken?: StringFieldUpdateOperationsInput | string
     ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
     userAgent?: NullableStringFieldUpdateOperationsInput | string | null
@@ -54159,6 +56490,7 @@ export namespace Prisma {
 
   export type SessionUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
+    adminId?: NullableStringFieldUpdateOperationsInput | string | null
     refreshToken?: StringFieldUpdateOperationsInput | string
     ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
     userAgent?: NullableStringFieldUpdateOperationsInput | string | null
@@ -54384,10 +56716,12 @@ export namespace Prisma {
     used?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    admin?: AdminUpdateOneWithoutEmailValidationNestedInput
   }
 
   export type EmailValidationUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
+    adminId?: NullableStringFieldUpdateOperationsInput | string | null
     token?: StringFieldUpdateOperationsInput | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     used?: BoolFieldUpdateOperationsInput | boolean
@@ -54397,6 +56731,91 @@ export namespace Prisma {
 
   export type EmailValidationUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
+    adminId?: NullableStringFieldUpdateOperationsInput | string | null
+    token?: StringFieldUpdateOperationsInput | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    used?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SessionCreateManyAdminInput = {
+    id?: string
+    userId?: string | null
+    refreshToken: string
+    ipAddress?: string | null
+    userAgent?: string | null
+    expiresAt: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type EmailValidationCreateManyAdminInput = {
+    id?: string
+    userId?: string | null
+    token: string
+    expiresAt: Date | string
+    used?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SessionUpdateWithoutAdminInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    refreshToken?: StringFieldUpdateOperationsInput | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneWithoutSessionsNestedInput
+  }
+
+  export type SessionUncheckedUpdateWithoutAdminInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshToken?: StringFieldUpdateOperationsInput | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SessionUncheckedUpdateManyWithoutAdminInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshToken?: StringFieldUpdateOperationsInput | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EmailValidationUpdateWithoutAdminInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    token?: StringFieldUpdateOperationsInput | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    used?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneWithoutEmailValidationNestedInput
+  }
+
+  export type EmailValidationUncheckedUpdateWithoutAdminInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    token?: StringFieldUpdateOperationsInput | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    used?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EmailValidationUncheckedUpdateManyWithoutAdminInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     token?: StringFieldUpdateOperationsInput | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     used?: BoolFieldUpdateOperationsInput | boolean

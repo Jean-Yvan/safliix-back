@@ -1,0 +1,19 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "files": [],
+  "include": [],
+  "references": [
+    {
+      "path": "../common"
+    },
+    {
+      "path": "../../shared/cqrs"
+    },
+    {
+      "path": "../../shared/database"
+    },
+    {
+      "path": "./tsconfig.lib.json"
+    }
+  ]
+}

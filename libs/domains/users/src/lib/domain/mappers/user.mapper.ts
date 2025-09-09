@@ -13,12 +13,10 @@ export class UserMapper {
       password_hash: user.passwordHash,
       name: user.name,
       avatarUrl: user.avatarUrl,
-      lastLoginAt: user.lastLoginAt,
+      //lastLoginAt: user.lastLoginAt ?? undefined,
       isVerified: user.isVerified,
       isMainAccount: user.isMainAccount,
-      createdAt: user.createdAt,
-      updatedAt: user.updatedAt,
-    };
+    } as const ;
   }
 
   static toPrismaUpdate(id:string,user: User): UpdateToPrisma<"User"> {

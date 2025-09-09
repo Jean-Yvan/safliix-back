@@ -4,10 +4,19 @@
   "include": [],
   "references": [
     {
+      "path": "../../libs/domains/users"
+    },
+    {
+      "path": "../../libs/domains/access"
+    },
+    {
       "path": "../../libs/domains/movies"
     },
     {
       "path": "../../libs/shared/api"
+    },
+    {
+      "path": "../../libs/domains/adminEntity"
     },
     {
       "path": "./tsconfig.app.json"

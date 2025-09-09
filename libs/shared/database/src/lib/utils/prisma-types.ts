@@ -11,7 +11,8 @@ import {
   userWithRelationsInclude,
   userWithoutRelationsSelect,
   sharedAccountUserInclude,
-  sharedAccountInclude
+  sharedAccountInclude,
+  adminInclude
 } from "./prisma-includes";
 
 export type MetadataWithRelations = Prisma.VideoMetadataGetPayload<{
@@ -77,6 +78,10 @@ export type PurchaseWithRelation = Prisma.PurchaseGetPayload<{
     video:true
   }
 }>;
+
+export type AdminWithRelation = Prisma.AdminGetPayload<{
+  include: typeof adminInclude;
+}>
 
 /* export type SubscriptionPlan = Prisma.SubscriptionPlanGetPayload<{
   include:{

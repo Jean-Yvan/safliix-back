@@ -1,5 +1,5 @@
 import { BaseHandler } from "@safliix-back/cqrs";
-import { UpdateuserCommand } from "../cqrs/commands/update-user.command";
+import { UpdateUserCommand } from "../cqrs/commands/update-user.command";
 import { Result, Err, Ok } from "oxide.ts";
 import { User } from "../../domain/entities/user.entity";
 import { Inject, Injectable } from "@nestjs/common";
@@ -8,8 +8,8 @@ import type { IUserRepository } from "../../domain/ports/user.repository";
 import { USER_REPOSITORY } from "../../utils/types";
 
 @Injectable()
-@CommandHandler(UpdateuserCommand)
-export class UpdateUserHandler extends BaseHandler<UpdateuserCommand,Result<User,Error>>{
+@CommandHandler(UpdateUserCommand)
+export class UpdateUserHandler extends BaseHandler<UpdateUserCommand,Result<User,Error>>{
 
   constructor(
     @Inject(USER_REPOSITORY)
@@ -18,7 +18,7 @@ export class UpdateUserHandler extends BaseHandler<UpdateuserCommand,Result<User
     super();
   }
 
-  protected override async handle(command: UpdateuserCommand): Promise<Result<User, Error>> {
+  protected override async handle(command: UpdateUserCommand): Promise<Result<User, Error>> {
     const existing = await this.repository.findById(command.payload.id);
     if(!existing){
       return Err(new Error("Utilisateur inexistant"));

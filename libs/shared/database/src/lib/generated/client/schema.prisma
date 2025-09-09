@@ -9,13 +9,6 @@ generator client {
   output   = "../src/lib/generated/client"
 }
 
-generator classes {
-  provider   = "prisma-class-generator"
-  output     = "../src/lib/generated/classes"
-  useSwagger = false
-  dryRun     = false
-}
-
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -46,18 +39,44 @@ model User {
 
   userVideoView UserVideoView[]
 
-  SeasonView SeasonView[]
+  seasonView SeasonView[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  EmailValidation EmailValidation[]
+  emailValidation EmailValidation[]
+}
+
+model Admin {
+  id            String    @id @default(uuid())
+  email         String    @unique
+  password_hash String
+  firstName     String
+  lastName      String
+  country       String
+  city          String
+  state         String
+  phoneNumber   String
+  address       String
+  avatarUrl     String?
+  lastLoginAt   DateTime?
+  isVerified    Boolean   @default(false)
+  role          AdminRole @default(ADMIN)
+  // Relations
+  sessions      Session[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  emailValidation EmailValidation[]
 }
 
 model EmailValidation {
   id        String   @id @default(uuid())
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    String?
+  adminId   String?
+  admin     Admin?   @relation(fields: [adminId], references: [id])
   token     String   @unique
   expiresAt DateTime
   used      Boolean  @default(false)
@@ -70,8 +89,10 @@ model EmailValidation {
 
 model Session {
   id           String   @id @default(uuid())
-  user         User     @relation(fields: [userId], references: [id])
-  userId       String
+  user         User?    @relation(fields: [userId], references: [id])
+  userId       String?
+  admin        Admin?   @relation(fields: [adminId], references: [id])
+  adminId      String?
   refreshToken String   @unique
   ipAddress    String?
   userAgent    String?
@@ -83,8 +104,7 @@ model Session {
   @@index([userId, refreshToken])
 }
 
-enum UserRole {
-  USER
+enum AdminRole {
   ADMIN
   SUPER_ADMIN
 }
