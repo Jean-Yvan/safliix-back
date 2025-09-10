@@ -1,3 +1,4 @@
+import { VideoFormatWithoutRelation } from '@safliix-back/database';
 import { Result,Ok,Err } from 'oxide.ts';
 
 
@@ -23,6 +24,8 @@ export class InvalidFormatError extends Error {
     this.name = 'InvalidFormatError';
   }
 }
+
+
 
 export class VideoFormat {
   private constructor(
@@ -52,16 +55,16 @@ export class VideoFormat {
       return Err(new InvalidFormatError('Format too long (max 20 chars)'));
     }
 
-    return Ok(
-      new VideoFormat(
-        id,
-        normalizedFormat,
-        description
-      )
-    );
+    return Ok(new VideoFormat(id, normalizedFormat, description));
   }
 
-  
+  static restore(data: VideoFormatWithoutRelation) : VideoFormat{
+    return new VideoFormat(
+      data.id,
+      data.format,
+      data.description
+    )
+  }
 
   // === Accessors ===
   get format(): string {
@@ -72,6 +75,30 @@ export class VideoFormat {
     return this._description;
   }
 
+  // === Update ===
+  updateWith(dto: { format?: string; description?: string | null; existingFormats?: string[] }): Result<VideoFormat, Error> {
+    const newFormat = dto.format ? dto.format.trim().toUpperCase() : this._format;
+    const newDescription = dto.description ?? this._description;
+
+    if (!newFormat) {
+      return Err(new EmptyFormatError());
+    }
+
+    if (dto.existingFormats && dto.existingFormats.includes(newFormat) && newFormat !== this._format) {
+      return Err(new DuplicateFormatError(newFormat));
+    }
+
+    if (newFormat.length > 20) {
+      return Err(new InvalidFormatError('Format too long (max 20 chars)'));
+    }
+
+    if (newDescription && newDescription.length > 500) {
+      return Err(new InvalidFormatError('Description too long (max 500 chars)'));
+    }
+
+    return Ok(new VideoFormat(this.id, newFormat, newDescription));
+  }
+
   setDescription(description: string): Result<void, InvalidFormatError> {
     if (description.length > 500) {
       return Err(new InvalidFormatError('Description too long (max 500 chars)'));
@@ -80,12 +107,7 @@ export class VideoFormat {
     return Ok(undefined);
   }
 
-  // === Persistence ===
-  
-
-  // === Business Logic ===
   matches(searchTerm: string): boolean {
-    return this._format.includes(searchTerm.toUpperCase()) || 
-          (this._description?.toLowerCase().includes(searchTerm.toLowerCase()) ?? false);
+    return this._format.includes(searchTerm.toUpperCase()) || (this._description?.toLowerCase().includes(searchTerm.toLowerCase()) ?? false);
   }
 }

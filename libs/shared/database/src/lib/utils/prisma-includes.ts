@@ -3,6 +3,7 @@
 export const metadataInclude = {
   format: true,
   category: true,
+  gender: true,
   actors: {
     include: {
       actor: true,

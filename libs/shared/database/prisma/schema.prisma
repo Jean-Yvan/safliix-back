@@ -212,13 +212,14 @@ model VideoMetadata {
   formatId          String
   category          VideoCategory @relation(fields: [categoryId], references: [id])
   categoryId        String
-  status            String        @default("DRAFT")
+  gender            VideoGenre    @relation(fields: [genderId], references: [id])
+  genderId          String
+  status            ContentStatus @default(DRAFT)
 
   // Relations
   movie     Movie?
   episode   Episode?
   series    Series?
-  genres    VideoGenre[]
   actors    VideoActor[]
   subtitles Subtitle[]      @relation("VideoMetadataToSubtitle")
   languages VideoLanguage[]

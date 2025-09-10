@@ -1,14 +1,18 @@
-import { Body, Controller, Post,Get,Query } from '@nestjs/common';
+import { Body, Controller, Post,Get,Query,Param,Delete } from '@nestjs/common';
 import { 
   CreateMovieHandler,
   CreateMovieDto,
   MovieFilterDto,  
   DeleteMovieHandler,
+  DeleteMovieCommand,
   GetMoviesHandler,
   CreateMovieCommand, 
-  GetMoviesQuery
+  GetMoviesQuery,
+  ListMovieByIdHandler,
+  ListMovieByIdQuery
    } from '@safliix-back/movies';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+
 
 @Controller('admin/movies')
 export class AdminMovieController {
@@ -16,7 +20,8 @@ export class AdminMovieController {
     private readonly createMovieHandler: CreateMovieHandler,
     private readonly deleteMovieHandler: DeleteMovieHandler,
     //private readonly updateMovieHandler: UpdateMovieHandler,
-    private readonly getMoviesHandler: GetMoviesHandler, 
+    private readonly getMoviesHandler: GetMoviesHandler,
+    private readonly listByIdHandler: ListMovieByIdHandler 
   ) {}
 
   @Post()
@@ -62,9 +67,34 @@ export class AdminMovieController {
     };
   }
 
-  /* @Get(':id')
-  async getById(@Param('id', ParseUUIDPipe) id: string) {
-    return this.queryBus.execute(new GetMovieQuery(id));
-  } */ 
+  @Get(':id')
+  @ApiOperation({summary: 'List movie based on id'})
+  async listById(@Param('id') id: string) {
+    const query = new ListMovieByIdQuery(id);
+    const result = await this.listByIdHandler.execute(query);
+    if(result.isErr()){
+      throw result.unwrapErr();
+    }
+
+    return {
+      success:true,
+      data:result.unwrap()
+    }
+  }
+  
+  @Delete(':id')
+  @ApiOperation({summary:"Delete movie based on id"})
+  async delete(@Param('id') id:string){
+    const command = new DeleteMovieCommand(id);
+    const result = await this.deleteMovieHandler.execute(command);
+    if(result.isErr()){
+      throw result.unwrapErr();
+    }
+
+    return {
+      success:true,
+      data:result.unwrap()
+    }   
+  }
 
 }

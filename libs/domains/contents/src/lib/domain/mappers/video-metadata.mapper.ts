@@ -1,86 +1,28 @@
 import { VideoMetadata } from "../entities/video-metadata.value-object";
-import { VideoCategoryMapper } from "./video-category.mapper";
-import { VideoFormatMapper } from "./video-format.mapper";
-import { Result, Ok, Err } from "oxide.ts";
+
 import {
-  MetadataToPrisma,
-  VideoFormatToPrisma,
-  VideoCategoryToPrisma,
-  VideoActorToPrisma,
-  MetadataWithRelations
+  MetadataWithRelations,
+  CreateToPrisma,
+  UpdateToPrisma
 } from "@safliix-back/database";
 
 export class VideoMetadataMapper {
 
-  static toDomain(prismaMetadata: MetadataWithRelations): Result<VideoMetadata, Error> {
-    
-    if (!prismaMetadata) {
-      return Err(new Error("Prisma metadata is required"));
-    }
-    if (!prismaMetadata.format || !prismaMetadata.category) {
-      return Err(new Error("Prisma metadata must include format and category"));
-    }
-    
-    const formatResult = VideoFormatMapper.toDomain(prismaMetadata.format);
-    if (formatResult.isErr()) {
-      return Err(new Error(`Failed to map VideoFormat: ${formatResult.unwrapErr().message}`));
-    }
-    const categoryResult = VideoCategoryMapper.toDomain(prismaMetadata.category);
-
-    if (categoryResult.isErr()) {
-      return Err(new Error(`Failed to map VideoCategory: ${categoryResult.unwrapErr().message}`));
-    }
-
-    /* const actors = prismaMetadata.actors.map(a => 
-      new VideoActor(
-        a.actor.id,
-        a.actor.name,
-        a.actor.bio,
-        a.actor.dateOfBirth
-      )
-    ); */
-
-    const metadataResult = VideoMetadata.create(
-      prismaMetadata.id,
-      prismaMetadata.title,
-      prismaMetadata.description,
-      prismaMetadata.thumbnailUrl,
-      prismaMetadata.productionHouse,
-      prismaMetadata.director,
-      prismaMetadata.secondaryImage,
-      prismaMetadata.releaseDate,
-      prismaMetadata.platformDate,
-      categoryResult.unwrap(),
-      formatResult.unwrap(),
-      prismaMetadata.actors.map(actor => ({
-        name: actor.actor.name,
-        role: actor.role ?? undefined,
-        actorId: actor.actor.id
-      }))
-      
-    );
-
-    if (metadataResult.isErr()) {
-      return Err(metadataResult.unwrapErr());
-    }
-
-    return Ok(metadataResult.unwrap());
-     
+  static toDomain(prismaMetadata: MetadataWithRelations): VideoMetadata {
+    return VideoMetadata.restore(prismaMetadata);
   }
 
-  static toPrisma(metadata: VideoMetadata): MetadataToPrisma {
+  static toPrismaCreate(metadata: VideoMetadata): CreateToPrisma<"VideoMetadata"> {
     return {
-      id: metadata.id ?? undefined,
       title: metadata.title,
       description: metadata.description,
-
       format: {
         connectOrCreate: {
           where: { format: metadata.format.format },
           create: {
             format: metadata.format.format,
             description: metadata.format.description,
-          } as VideoFormatToPrisma,
+          } 
         },
       },
 
@@ -90,34 +32,116 @@ export class VideoMetadataMapper {
           create: {
             category: metadata.category.category,
             description: metadata.category.description,
-          } as VideoCategoryToPrisma,
+          } 
         },
       },
 
-      actors: {
-        create: metadata.actors.map(actor => ({
-          actor: {
-            connectOrCreate: {
-              where: { id: actor.actorId as string },
-              create: {
-                name: actor.name,
-              } as VideoActorToPrisma,
-            },
-          },
-        })),
+      gender: {
+        connectOrCreate: {
+          where: { name: metadata.gender.name },
+          create: {
+            name: metadata.gender.name
+          }
+        }
       },
+
+      actors: {
+        create: metadata.actors.map(actor => {
+          if (actor.actorId) {
+            return {
+              actor: {
+                connect: { id: actor.actorId },
+              },
+            };
+          } else {
+            return {
+              actor: {
+                create: { name: actor.name },
+              },
+            };
+          }
+        }),
+      },
+
       
-      thumbnailUrl: metadata.thumbnail,
+      thumbnailUrl: metadata.thumbnailUrl,
       secondaryImage: metadata.secondaryImage == null ? '': metadata.secondaryImage,
       releaseDate: metadata.releaseDate,
       platformDate: metadata.platformDate,
       ageRating: '',
       productionHouse: metadata.productionHouse,
-      productionCountry:"",
+      productionCountry:metadata.productionCountry,
       director: metadata.director,
-      status: "",
+      status: metadata.status,
       
     };
+  }
+
+  static toPrismaUpdate(id:string,metadata:VideoMetadata): UpdateToPrisma<"VideoMetadata">{
+    return {
+      where: {id},
+      data: {
+        title: metadata.title,
+        description: metadata.description,
+        format: {
+          connectOrCreate: {
+            where: { format: metadata.format.format },
+            create: {
+              format: metadata.format.format,
+              description: metadata.format.description,
+            } 
+          },
+        },
+
+        category: {
+          connectOrCreate: {
+            where: { category: metadata.category.category },
+            create: {
+              category: metadata.category.category,
+              description: metadata.category.description,
+            } 
+          },
+        },
+
+        gender: {
+          connectOrCreate: {
+            where: { name: metadata.gender.name },
+            create: {
+              name: metadata.gender.name
+            }
+          }
+        },
+
+        actors: {
+        create: metadata.actors.map(actor => {
+          if (actor.actorId) {
+            return {
+              actor: {
+                connect: { id: actor.actorId },
+              },
+            };
+          } else {
+            return {
+              actor: {
+                create: { name: actor.name },
+              },
+            };
+          }
+        }),
+      },
+        
+        thumbnailUrl: metadata.thumbnailUrl,
+        secondaryImage: metadata.secondaryImage == null ? '': metadata.secondaryImage,
+        releaseDate: metadata.releaseDate,
+        platformDate: metadata.platformDate,
+        ageRating: '',
+        productionHouse: metadata.productionHouse,
+        productionCountry:metadata.productionCountry,
+        director: metadata.director,
+        status: metadata.status,
+          
+        }
+    }
   }
 }
     

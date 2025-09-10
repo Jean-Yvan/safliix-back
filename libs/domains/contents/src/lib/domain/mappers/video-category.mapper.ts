@@ -1,33 +1,28 @@
 import { VideoCategory } from "../entities/video-category.value-object";
-import { Result, Ok, Err } from "oxide.ts";
-import { VideoCategoryToPrisma } from "@safliix-back/database";
+import { CreateToPrisma, UpdateToPrisma, VideoCategoryWithoutRelation } from "@safliix-back/database";
 
 
 export class VideoCategoryMapper {
 
-  static toDomain(prismaCategory: VideoCategoryToPrisma): Result<VideoCategory, Error> {
-  
-    const id = prismaCategory.id ? prismaCategory.id : undefined; 
-    const category = VideoCategory.create(
-      id,
-      prismaCategory.category,
-      prismaCategory.description
-    );
-
-    if (category.isErr()) {
-      return Err(category.unwrapErr());
-    }
-    return Ok(category.unwrap());
-      
-     
+  static toDomain(prismaCategory: VideoCategoryWithoutRelation): VideoCategory {
+    return VideoCategory.restore(prismaCategory);
   }
 
-  static toPrisma(category: VideoCategory): VideoCategoryToPrisma {
+  static toPrismaCreate(category: VideoCategory): CreateToPrisma<"VideoCategory">{
     
-    return {
-      id: category.id, 
+    return { 
       category: category.category,
       description: category.description,
     };
+  }
+
+  static toPrismaUpdate(id:string,category: VideoCategory): UpdateToPrisma<"VideoCategory">{
+    return {
+      where : {id},
+      data:{
+        category: category.category,
+        description: category.description,
+      }
+    }
   }
 }

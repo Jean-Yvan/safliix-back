@@ -231,6 +231,7 @@ exports.Prisma.VideoMetadataScalarFieldEnum = {
   director: 'director',
   formatId: 'formatId',
   categoryId: 'categoryId',
+  genderId: 'genderId',
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -487,6 +488,12 @@ exports.SharedAccountStatus = exports.$Enums.SharedAccountStatus = {
   PENDING: 'PENDING',
   ACCEPTED: 'ACCEPTED',
   REVOKED: 'REVOKED'
+};
+
+exports.ContentStatus = exports.$Enums.ContentStatus = {
+  DRAFT: 'DRAFT',
+  PUBLISHED: 'PUBLISHED',
+  ARCHIVED: 'ARCHIVED'
 };
 
 exports.ProfileActivityAction = exports.$Enums.ProfileActivityAction = {

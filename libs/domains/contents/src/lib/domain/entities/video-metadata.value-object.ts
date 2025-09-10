@@ -1,6 +1,12 @@
 import { Result,Ok,Err } from 'oxide.ts';
 import { VideoCategory } from './video-category.value-object';
 import { VideoFormat } from './video-format.value-object';
+import { MetadataWithRelations } from '@safliix-back/database';
+import { VideoCategoryMapper } from '../mappers/video-category.mapper';
+import { VideoFormatMapper } from '../mappers/video-format.mapper';
+import { ContentStatus } from "@safliix-back/common";
+import { VideoGender } from './video-gender.value-object';
+import { VideoGenderMapper } from '../mappers/video-gender.mapper';
 // Définition des erreurs métier
 
 export class MissingRequiredFieldError extends Error {
@@ -10,42 +16,47 @@ export class MissingRequiredFieldError extends Error {
   }
 }
 
+
 export class VideoMetadata {
   private constructor(
     public readonly id: string | undefined,
-    private _title: string,
-    private _description: string,
-    private _thumbnailUrl: string,
-    private _secondaryImage: string | null,
-    private _releaseDate: Date,
-    private _platformDate: Date,
-    private _productionHouse: string,
-    private _director: string,
-    private _category: VideoCategory,
-    private _format: VideoFormat, 
-    private _actors: { name: string; role?: string; actorId?: string; id?:string }[] = []
+    public title: string,
+    public description: string,
+    public thumbnailUrl: string,
+    public secondaryImage: string | null,
+    public releaseDate: Date,
+    public platformDate: Date,
+    public productionHouse: string,
+    public productionCountry: string,
+    public status: ContentStatus,     
+    public director: string,
+    public category: VideoCategory,
+    public format: VideoFormat,
+    public gender: VideoGender,
+    public actors: { name: string; role?: string; actorId?: string; id?: string }[] = []
   ) {}
 
+  // === Factory ===
   static create(
     id: string | undefined,
     title: string,
     description: string,
     thumbnailUrl: string,
     productionHouse: string,
+    productionCountry: string,
+    status: ContentStatus,
     director: string,
     secondaryImage: string | null,
     releaseDate: Date,
     platformDate: Date,
     category: VideoCategory,
     format: VideoFormat,
-    actors?: { name: string; role?: string | undefined; actorId?: string }[],
+    gender: VideoGender,
+    actors?: { name: string; role?: string; actorId?: string }[],
   ): Result<VideoMetadata, MissingRequiredFieldError> {
-    // Validation des champs requis
     if (!title) {
-      return Err(new MissingRequiredFieldError('title'));
+      return Err(new MissingRequiredFieldError("title"));
     }
-
-    
 
     const instance = new VideoMetadata(
       id,
@@ -56,12 +67,14 @@ export class VideoMetadata {
       releaseDate,
       platformDate,
       productionHouse,
+      productionCountry,
+      status,
       director,
       category,
-      format
+      format,
+      gender
     );
 
-    // Ajout des acteurs si fournis
     if (actors) {
       for (const actor of actors) {
         const actorResult = instance.addActor(actor);
@@ -72,110 +85,124 @@ export class VideoMetadata {
     }
 
     return Ok(instance);
-    
   }
 
-  static restore(
-    id: string | undefined,
-    title: string,
-    description: string,
-    thumbnailUrl: string,
-    productionHouse: string,
-    director: string,
-    secondaryImage: string | null,
-    releaseDate: Date,
-    platformDate: Date,
-    category: VideoCategory,
-    format: VideoFormat,
-    actors?: {name: string; role: string | undefined; actorId: string }[],
-  ): VideoMetadata {
-    
+  static restore(data:MetadataWithRelations): VideoMetadata {
     const instance = new VideoMetadata(
-      id,
-      title,
-      description,
-      thumbnailUrl,
-      secondaryImage,
-      releaseDate,
-      platformDate,
-      productionHouse,
-      director,
-      category,
-      format
+      data.id,
+      data.title,
+      data.description,
+      data.thumbnailUrl,
+      data.secondaryImage,
+      data.releaseDate,
+      data.platformDate,
+      data.productionHouse,
+      data.productionCountry,
+      data.status as ContentStatus,
+      data.director,
+      VideoCategoryMapper.toDomain(data.category),
+      VideoFormatMapper.toDomain(data.format),
+      VideoGenderMapper.toDomain(data.gender)
     );
 
-    // Ajout des acteurs si fournis
-    if (actors) {
-      for (const actor of actors) {
-        instance.addActor(actor);
-        /* if (actorResult.isErr()) {
-          return Err(actorResult.unwrapErr());
-        } */
+    if (data.actors) {
+      for (const actor of data.actors) {
+        instance.addActor({name: actor.actor.name,actorId:actor.actor.name});
       }
     }
 
     return instance;
-    
   }
 
-  
+  // === Update Method ===
+  updateWith(data: {
+    title?: string;
+    description?: string;
+    thumbnailUrl?: string;
+    secondaryImage?: string | null;
+    releaseDate?: Date;
+    platformDate?: Date;
+    productionHouse?: string;
+    productionCountry?:string;
+    status?: ContentStatus;
+    director?: string;
+    category?: VideoCategory;
+    format?: VideoFormat;
+    gender?: VideoGender;
+    actors?: { name: string; role?: string; actorId?: string }[];
+  }): Result<void, MissingRequiredFieldError | Error> {
+    if (data.title !== undefined) {
+      if (!data.title) {
+        return Err(new MissingRequiredFieldError("title"));
+      }
+      this.title = data.title;
+    }
 
-  
+    if (data.description !== undefined) {
+      this.description = data.description;
+    }
 
+    if (data.thumbnailUrl !== undefined) {
+      this.thumbnailUrl = data.thumbnailUrl;
+    }
+
+    if (data.secondaryImage !== undefined) {
+      this.secondaryImage = data.secondaryImage;
+    }
+
+    if (data.releaseDate !== undefined) {
+      this.releaseDate = data.releaseDate;
+    }
+
+    if (data.platformDate !== undefined) {
+      this.platformDate = data.platformDate;
+    }
+
+    if (data.productionHouse !== undefined) {
+      this.productionHouse = data.productionHouse;
+    }
+
+    if(data.productionCountry){
+      this.productionCountry = data.productionCountry;
+    }
+
+    if(data.status){
+      this.status = data.status;
+    }
+
+    if (data.director !== undefined) {
+      this.director = data.director;
+    }
+
+    if (data.category !== undefined) {
+      this.category = data.category;
+    }
+
+    if (data.format !== undefined) {
+      this.format = data.format;
+    }
+
+    if (data.actors !== undefined) {
+      for (const actor of data.actors) {
+        if (!actor.name) {
+          return Err(new Error("Actor name is required"));
+        }
+      }
+      this.actors = [...data.actors];
+    }
+
+    return Ok(undefined);
+  }
+
+  // === Business ===
   addActor(actor: { name: string; role?: string; actorId?: string }): Result<void, Error> {
     if (!actor.name) {
-      return Err(new Error('Actor name is required'));
-    } 
+      return Err(new Error("Actor name is required"));
+    }
 
-    this._actors.push(actor);
+    this.actors.push(actor);
     return Ok(undefined);
   }
 
   
-  // Getters...
-  get title(): string {
-    return this._title;
-  }
-
-  get description(): string {
-    return this._description;
-  }
-
-  get thumbnail(): string {
-    return this._thumbnailUrl;
-  }
-
-  // Optionnel: Getter pour les actors en lecture seule
-  get actors(): ReadonlyArray<{ name: string; role?: string; actorId?: string }> {
-    return [...this._actors];
-  }
-
-  
-
-  get category(): VideoCategory  {
-    return this._category;
-  }
-
-  get format(): VideoFormat  {
-    return this._format;
-  }
-
-  get secondaryImage(): string | null {
-    return this._secondaryImage;
-  }
-  get releaseDate(): Date {
-    return this._releaseDate;
-  }
-  get platformDate(): Date {
-    return this._platformDate;
-  }
-  
-  get productionHouse(): string {
-    return this._productionHouse;
-  }
-  get director(): string {
-    return this._director;
-  }
-
-
 }

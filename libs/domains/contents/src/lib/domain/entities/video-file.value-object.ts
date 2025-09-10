@@ -1,3 +1,4 @@
+import { VideoFileWithoutRelation } from '@safliix-back/database';
 import { Result, Ok, Err } from 'oxide.ts';
 
 
@@ -15,6 +16,7 @@ export class InvalidDurationError extends Error {
     this.name = 'InvalidDurationError';
   }
 }
+
 
 export class VideoFile {
   private constructor(
@@ -35,10 +37,6 @@ export class VideoFile {
     width: number | null,
     height: number | null,
   ): Result<VideoFile, InvalidFileFormatError | InvalidDurationError> {
-    /* if (!params.filePath.endsWith('.mp4')) {
-      return Err(new InvalidFileFormatError());
-    } */
-
     if (duration <= 0) {
       return Err(new InvalidDurationError());
     }
@@ -55,7 +53,53 @@ export class VideoFile {
     );
   }
 
-  
+  static restore(data: VideoFileWithoutRelation) : VideoFile {
+    return new VideoFile(
+      data.id,
+      data.filePath,
+      data.duration,
+      data.trailerPath,
+      data.width,
+      data.height 
+    );
+  }
+
+  // === Update Method ===
+  updateWith(data: {
+    filePath?: string;
+    duration?: number;
+    trailerPath?: string | null;
+    width?: number | null;
+    height?: number | null;
+  }): Result<void, InvalidFileFormatError | InvalidDurationError> {
+    if (data.filePath !== undefined) {
+      if (!data.filePath.endsWith(".mp4")) {
+        return Err(new InvalidFileFormatError());
+      }
+      this._filePath = data.filePath;
+    }
+
+    if (data.duration !== undefined) {
+      if (data.duration <= 0) {
+        return Err(new InvalidDurationError());
+      }
+      this._duration = data.duration;
+    }
+
+    if (data.trailerPath !== undefined) {
+      this._trailerPath = data.trailerPath;
+    }
+
+    if (data.width !== undefined) {
+      this._width = data.width;
+    }
+
+    if (data.height !== undefined) {
+      this._height = data.height;
+    }
+
+    return Ok(undefined);
+  }
 
   // === Méthodes d'accès ===
   get filePath(): string {
@@ -91,7 +135,4 @@ export class VideoFile {
   get height(): number | null {
     return this._height;
   }
-
-  // === Persistence ===
-  
 }

@@ -6,8 +6,10 @@ export * from  './lib/interface/rest/dto/create-movie.dto';
 export * from './lib/application/handlers/create-movie.handler';
 export * from './lib/application/handlers/delete-movie.handler';
 export * from './lib/application/handlers/update-movie.handler';
+export * from './lib/application/handlers/list-movie-by-id.handler';
 export * from './lib/application/handlers/get-movies.handler';
 export * from './lib/interface/rest/dto/movie-filter.dto';
 export * from './lib/mappers/movie.mapper';
 export * from './lib/application/queries/get-movies.query';
-
+export * from './lib/application/queries/list-movie-by-Id.query';
+export * from './lib/application/commands/delete-movie.command';

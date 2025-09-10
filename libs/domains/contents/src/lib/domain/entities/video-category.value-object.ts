@@ -1,3 +1,4 @@
+import { VideoCategoryWithoutRelation } from '@safliix-back/database';
 import { Result,Ok,Err } from 'oxide.ts';
 
 
@@ -23,6 +24,8 @@ export class InvalidCategoryError extends Error {
   }
 }
 
+
+
 export class VideoCategory {
   private constructor(
     public readonly id: string | undefined,
@@ -35,17 +38,12 @@ export class VideoCategory {
     id: string | undefined,
     category: string,
     description: string | null
-    
-    
   ): Result<VideoCategory, EmptyCategoryError | DuplicateCategoryError | InvalidCategoryError> {
     const normalizedCategory = category.trim();
 
-    // Validation des règles métier
     if (!normalizedCategory) {
       return Err(new EmptyCategoryError());
     }
-
-    
 
     if (normalizedCategory.length > 50) {
       return Err(new InvalidCategoryError('Category too long (max 50 chars)'));
@@ -55,16 +53,16 @@ export class VideoCategory {
       return Err(new InvalidCategoryError('Description too long (max 500 chars)'));
     }
 
-    return Ok(
-      new VideoCategory(
-        id,
-        normalizedCategory,
-        description
-      )
-    );
+    return Ok(new VideoCategory(id, normalizedCategory, description));
   }
 
-  
+  static restore(data:VideoCategoryWithoutRelation) : VideoCategory {
+    return new VideoCategory(
+      data.id,
+      data.category,
+      data.description
+    )
+  }
 
   // === Accessors ===
   get category(): string {
@@ -75,6 +73,26 @@ export class VideoCategory {
     return this._description;
   }
 
+  // === Update ===
+  updateWith(dto: {category?: string; description?: string | null }): Result<VideoCategory, Error> {
+    const newCategory = dto.category?.trim() ?? this._category;
+    const newDescription = dto.description ?? this._description;
+
+    if (!newCategory) {
+      return Err(new EmptyCategoryError());
+    }
+
+    if (newCategory.length > 50) {
+      return Err(new InvalidCategoryError('Category too long (max 50 chars)'));
+    }
+
+    if (newDescription && newDescription.length > 500) {
+      return Err(new InvalidCategoryError('Description too long (max 500 chars)'));
+    }
+
+    return Ok(new VideoCategory(this.id, newCategory, newDescription));
+  }
+
   updateDescription(description: string): Result<void, InvalidCategoryError> {
     if (description.length > 500) {
       return Err(new InvalidCategoryError('Description too long (max 500 chars)'));
@@ -83,10 +101,8 @@ export class VideoCategory {
     return Ok(undefined);
   }
 
-
   matches(searchTerm: string): boolean {
     const term = searchTerm.toLowerCase();
-    return this._category.toLowerCase().includes(term) || 
-          (this._description?.toLowerCase().includes(term) ?? false);
+    return this._category.toLowerCase().includes(term) || (this._description?.toLowerCase().includes(term) ?? false);
   }
 }

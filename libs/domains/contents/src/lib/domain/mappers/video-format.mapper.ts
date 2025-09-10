@@ -1,28 +1,27 @@
-import { VideoFormatToPrisma } from "@safliix-back/database";
+import { CreateToPrisma, UpdateToPrisma, VideoFormatToPrisma, VideoFormatWithoutRelation } from "@safliix-back/database";
 import { VideoFormat } from "../entities/video-format.value-object";
-import { Result, Ok, Err } from "oxide.ts";
+
 
 export class VideoFormatMapper {
 
-  static toDomain(prismaFormat: VideoFormatToPrisma): Result<VideoFormat, Error> {
-    const result = VideoFormat.create(
-      prismaFormat.id ?? undefined,
-      prismaFormat.format,
-      prismaFormat.description,
-    );
-    if (result.isOk()) {
-      return Ok(result.unwrap());
-    } else {
-      const err = result.unwrapErr();
-      return Err(err instanceof Error ? err : new Error(String(err)));
-    }
+  static toDomain(prismaFormat: VideoFormatWithoutRelation): VideoFormat {
+    return VideoFormat.restore(prismaFormat);
   }
 
-  static toPrisma(format: VideoFormat): VideoFormatToPrisma {
+  static toPrismaCreate(format: VideoFormat): CreateToPrisma<"VideoFormat"> {
     return {
-      id: format.id,
       format: format.format,
       description: format.description,
     };
+  }
+
+  static toPrismaUpdate(id:string,format: VideoFormat): UpdateToPrisma<"VideoFormat">{
+    return {
+      where: {id},
+      data: {
+        format: format.format,
+        description: format.description,
+      }
+    }
   }
 }

@@ -1,27 +1,13 @@
 import { VideoFile } from "../entities/video-file.value-object";
-import { VideoFileToPrisma } from "@safliix-back/database";
-import { Result, Ok, Err } from "oxide.ts";
+import { CreateToPrisma, UpdateToPrisma, VideoFileWithoutRelation } from "@safliix-back/database";
 
 export class VideoFileMapper {
 
-  static toDomain(prismaVideoFile: VideoFileToPrisma): Result<VideoFile, Error> {
-    const videoFile = VideoFile.create(
-      prismaVideoFile.id,
-      prismaVideoFile.filePath,
-      prismaVideoFile.duration,
-      prismaVideoFile.trailerPath,
-      prismaVideoFile.width,
-      prismaVideoFile.height
-    );
-
-    if (videoFile.isErr()) {
-      return Err(videoFile.unwrapErr());
-    }else{
-      return Ok(videoFile.unwrap());
-    }
+  static toDomain(prismaVideoFile: VideoFileWithoutRelation): VideoFile {
+    return VideoFile.restore(prismaVideoFile);
   }
 
-  static toPrisma(videoFile: VideoFile): VideoFileToPrisma {
+  static toPrismaCreate(videoFile: VideoFile): CreateToPrisma<"VideoFile"> {
     return {
       id: videoFile.id,
       filePath: videoFile.filePath,
@@ -30,5 +16,18 @@ export class VideoFileMapper {
       height: videoFile.height,
       duration: videoFile.duration
     };
+  }
+
+  static toPrismaUpdate(id:string,videoFile: VideoFile): UpdateToPrisma<"VideoFile"> {
+    return {
+      where : {id},
+      data:{
+        filePath: videoFile.filePath,
+        trailerPath: videoFile.trailerPath,
+        width: videoFile.width,
+        height: videoFile.height,
+        duration: videoFile.duration
+      }
+    }
   }
 }

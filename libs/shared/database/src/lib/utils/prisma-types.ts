@@ -19,6 +19,11 @@ export type MetadataWithRelations = Prisma.VideoMetadataGetPayload<{
   include: typeof metadataInclude;
 }>;
 
+export type VideoFormatWithoutRelation = Prisma.VideoFormatGetPayload<object>
+export type VideoCategoryWithoutRelation = Prisma.VideoCategoryGetPayload<object>;
+export type VideoFileWithoutRelation = Prisma.VideoFileGetPayload<object>;
+export type VideoGenderWithoutRelation = Prisma.VideoGenreGetPayload<object>;
+
 export type MovieWithRelations = Prisma.MovieGetPayload<{
   include: typeof movieInclude}>;
 
@@ -63,7 +68,9 @@ export type SubscriptionPlanWithRelation = Prisma.SubscriptionPlanGetPayload<{
   include: {
     subscriptions:true
   }
-}>
+}>;
+
+
 
 export type SubscriptionWithRelation = Prisma.SubscriptionGetPayload<{
   include: {
@@ -81,7 +88,11 @@ export type PurchaseWithRelation = Prisma.PurchaseGetPayload<{
 
 export type AdminWithRelation = Prisma.AdminGetPayload<{
   include: typeof adminInclude;
-}>
+}>;
+
+
+
+
 
 /* export type SubscriptionPlan = Prisma.SubscriptionPlanGetPayload<{
   include:{

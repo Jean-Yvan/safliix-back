@@ -13,22 +13,19 @@ export class MovieRepository implements IMovieRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(movie: MovieAggregate): Promise<void> {
-    const prismaMovie = MovieMapper.toPrisma(movie);
+    const prismaMovie = MovieMapper.toPrismaCreate(movie);
     this.logger.debug(`Creating movie with data: ${JSON.stringify(prismaMovie)}`);
     
-    await this.prisma.client.movie.create({
+    await this.prisma.movie.create({
       data: prismaMovie,
     });
   }
 
-  async update(movie: MovieAggregate): Promise<void> {
-    const prismaMovie = MovieMapper.toPrisma(movie);
+  async update(id:string,movie: MovieAggregate): Promise<void> {
+    const prismaMovie = MovieMapper.toPrismaUpdate(id,movie);
     
 
-    await this.prisma.client.movie.update({
-      where: { id: movie.id },
-      data: prismaMovie,
-    });
+    await this.prisma.movie.update(prismaMovie);
   }
 
   async save(movie: MovieAggregate): Promise<void> {
@@ -36,7 +33,7 @@ export class MovieRepository implements IMovieRepository {
   }
 
   async publish(id: string, publicationDate?: Date): Promise<MovieAggregate> {
-    const updated = await this.prisma.client.movie.update({
+    const updated = await this.prisma.movie.update({
       where: { id },
       data: {
         status: 'PUBLISHED',
@@ -48,17 +45,17 @@ export class MovieRepository implements IMovieRepository {
     });
 
     const restored = MovieMapper.toDomain(updated);
-    if (restored.isErr()) throw restored.unwrapErr();
-    return restored.unwrap();
+    //if (restored.isErr()) throw restored.unwrapErr();
+    return restored;
   }
 
   async delete(id: string): Promise<boolean> {
-    await this.prisma.client.movie.delete({ where: { id } });
+    await this.prisma.movie.delete({ where: { id } });
     return true;
   }
 
   async findById(id: string): Promise<MovieAggregate | null> {
-    const movie = await this.prisma.client.movie.findUnique({
+    const movie = await this.prisma.movie.findUnique({
       where: { id },
       include: movieInclude
     });
@@ -66,12 +63,8 @@ export class MovieRepository implements IMovieRepository {
     if (!movie) return null;
 
     const restored = MovieMapper.toDomain(movie);
-    if (restored.isErr()) {
-      this.logger.error(`Error restoring movie ${id}: ${restored.unwrapErr().message}`);
-      return null;
-    }
-
-    return restored.unwrap();
+    
+    return restored;
   }
 
   async findAll(filters?: MovieFilter): Promise<MovieAggregate[]> {
@@ -100,7 +93,7 @@ export class MovieRepository implements IMovieRepository {
       }
     }
 
-    const movies = await this.prisma.client.movie.findMany({
+    const movies = await this.prisma.movie.findMany({
       where,
       skip: filters?.page && filters?.limit ? filters.page * filters.limit : undefined,
       take: filters?.limit,
@@ -109,8 +102,8 @@ export class MovieRepository implements IMovieRepository {
 
     return movies
       .map((m) => MovieMapper.toDomain(m))
-      .filter((r) => r.isOk())
-      .map((r) => r.unwrap());
+      .filter((r) => r)
+      .map((r) => r);
     }
 
 }
