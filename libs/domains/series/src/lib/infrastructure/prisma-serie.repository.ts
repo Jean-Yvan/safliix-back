@@ -8,10 +8,13 @@ import {
   SerieWithRelations,
   serieInclude,
   serieWithMetadataAndSeasonCountInclude,
-  SerieWithMetadataAndSeasonCount, 
-  SerieToPrisma
+  SerieWithMetadataAndSeasonCount,
+  seasonInclude,
+  episodeInclude, 
 } from "@safliix-back/database";
 import { SerieMapper } from "../mappers/serie.mapper";
+import { SeasonMapper } from "../mappers/season.mapper";
+import { EpisodeMapper } from "../mappers/episode.mapper";
 
 @Injectable()
 export class PrismaSerieRepository implements ISerieRepository{
@@ -20,85 +23,158 @@ export class PrismaSerieRepository implements ISerieRepository{
     private readonly prisma: PrismaService  
   ){}
 
+  async save(serie: Serie): Promise<void> {
+    const created = SerieMapper.toPrismaCreate(serie);
+    console.dir(created,{depth:2});
+    await this.prisma.series.create({
+      data: created,
+    });
+  }
+
+  async update(serie: Serie): Promise<Serie> {
+
+    const update = SerieMapper.toPrismaUpdate(serie.id!,serie);
+    const result = await this.prisma.series.update({
+      ...update,
+      include:serieInclude
+    });
+    return SerieMapper.toDomain(result);
+  }
+
   async findById(id: string): Promise<Serie | null> {
-    const serie: SerieWithRelations | null = await this.prisma.client.series.findUnique({
+    const serie: SerieWithRelations | null = await this.prisma.series.findUnique({
       where: { id },
       include: serieInclude,
     });
-
     if (!serie) return null;
-
-    const result = SerieMapper.toDomain(serie);
-
-    if (result.isErr()) {
-      
-      throw result.unwrapErr();
-    }
-
-    return result.unwrap();
+    return SerieMapper.toDomain(serie);
+    
   }
 
-  async findAll(): Promise<Serie[] | null> {
-    const series : SerieWithMetadataAndSeasonCount[] = await this.prisma.client.series.findMany({
+  async findAll(): Promise<Serie[]> {
+    const series : SerieWithMetadataAndSeasonCount[] = await this.prisma.series.findMany({
       include: serieWithMetadataAndSeasonCountInclude,
     });
+    
+    return series.map(serie => SerieMapper.toDomain(serie));
+  }
 
-    if(!series) return null;
-
-    return series.map(serie => {
-      const result = SerieMapper.toDomain(serie);
-      if (result.isErr()) {
-        throw result.unwrapErr();
-      }
-      return result.unwrap();
+  
+  async deleteById(id: string): Promise<void> {
+    this.prisma.series.delete({
+      where: {id}
     });
   }
 
-  async save(serie: Serie): Promise<Serie> {
-    const data: SerieToPrisma = SerieMapper.toPrisma(serie); // typé grâce à nos types
-
-    const id = data.id == null ? undefined : data.id;
-    const serieResult = await this.prisma.client.series.upsert({
-      where: { id },
-      create: data,
-      update: data,
-      include: serieInclude // Use the correct include object compatible with SeriesInclude<DefaultArgs>
+  async findSeasonsBySerieId(serieId: string): Promise<Season[]> {
+    const seasons = await this.prisma.season.findMany({
+      where: { seriesId : serieId },
+      include: seasonInclude,
     });
 
-    const s = SerieMapper.toDomain(serieResult);
-    if(s.isErr()){
-      throw s.unwrapErr()
-    }
+    return seasons.map(SeasonMapper.toDomain);
+  }
 
-    return s.unwrap();
+  async findEpisodesBySeasonId(seasonId: string): Promise<Episode[]> {
+    const episodes = await this.prisma.episode.findMany({
+      where: { seasonId },
+      include: episodeInclude
+    });
+
+    return episodes.map(EpisodeMapper.toDomain);
   }
-  deleteById(id: string): Promise<void> {
-    throw new Error("Method not implemented.");
+
+  async countSeasons(serieId: string): Promise<number> {
+    return this.prisma.season.count({
+      where: { seriesId:serieId },
+    });
   }
-  update(serie: Serie): Promise<void> {
-    throw new Error("Method not implemented.");
+
+  async countEpisodes(serieId: string): Promise<number> {
+    return this.prisma.episode.count({
+      where: { season: {seriesId: serieId } },
+    });
   }
-  addEpisodeToSerie(serieId: string, episodeId: string): Promise<void> {
-    throw new Error("Method not implemented.");
+
+  async createSeason(season: Season): Promise<Season> {
+    const toCreate = SeasonMapper.toPrismaCreate(season);
+    const created = await this.prisma.season.create({
+      data: toCreate,
+      include: seasonInclude,
+    });
+
+    return SeasonMapper.toDomain(created);
   }
-  removeEpisodeFromSerie(serieId: string, episodeId: string): Promise<void> {
-    throw new Error("Method not implemented.");
+
+  async updateSeason(season: Season): Promise<Season> {
+    if (!season.id) throw new Error("season.id required for update");
+
+    const toUpdate = SeasonMapper.toPrismaUpdate(season.id,season);
+    const updated = await this.prisma.season.update({
+      ...toUpdate,
+      include: seasonInclude,
+    });
+
+    return SeasonMapper.toDomain(updated);
   }
-  findEpisodesBySerieId(serieId: string): Promise<Episode[]> {
-    throw new Error("Method not implemented.");
+
+  async deleteSeason(seasonId: string): Promise<void> {
+    await this.prisma.season.delete({ where: { id: seasonId } });
   }
-  findEpisodeBySeasonId(seasonId: string): Promise<Episode[] | null> {
-    throw new Error("Method not implemented.");
+
+  async findSeasonById(seasonId: string): Promise<Season | null> {
+    const result = await this.prisma.season.findUnique({
+      where:{id:seasonId},
+      include:seasonInclude
+    });
+    if(!result) return null;
+    return SeasonMapper.toDomain(result);
   }
-  findSeasonsBySerieId(serieId: string): Promise<Season[]> {
-    throw new Error("Method not implemented.");
+
+  async createEpisode(episode: Episode): Promise<Episode> {
+  const toCreate = EpisodeMapper.toPrismaCreate(episode);
+    const created = await this.prisma.episode.create({
+      data: toCreate,
+      include:episodeInclude
+    });
+
+    return EpisodeMapper.toDomain(created)
   }
-  addSeasonToSerie(serieId: string, seasonId: string): Promise<void> {
-    throw new Error("Method not implemented.");
+
+  async updateEpisode(episode: Episode): Promise<Episode> {
+    if (!episode.id) throw new Error("episode.id required for update");
+    const toUpdate = EpisodeMapper.toPrismaUpdate(episode.id,episode);
+    const updated = await this.prisma.episode.update({
+      ...toUpdate,
+      include:episodeInclude  
+    });
+
+    return EpisodeMapper.toDomain(updated)
+;  }
+
+  async deleteEpisode(episodeId: string): Promise<void> {
+    await this.prisma.episode.delete({ where: { id: episodeId } });
   }
-  removeSeasonFromSerie(serieId: string, seasonId: string): Promise<void> {
-    throw new Error("Method not implemented.");
+
+  async findEpisodeById(episodeId: string): Promise<Episode | null> {
+    const result = await this.prisma.episode.findUnique({
+      where:{id:episodeId},
+      include:episodeInclude
+    });
+    if(result) return EpisodeMapper.toDomain(result);
+    return null;
   }
+
+  async moveEpisode(episodeId: string, toSeasonId: string): Promise<void> {
+    await this.prisma.episode.update({
+      where: { id: episodeId },
+      data: {
+        season: { connect: { id: toSeasonId } },
+      },
+    });
+  }
+
+
   
   
 }

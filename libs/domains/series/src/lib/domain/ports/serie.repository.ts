@@ -3,17 +3,30 @@ import { Episode } from '../entities/episode.entity';
 import { Season } from '../entities/season.entity';
 
 export interface ISerieRepository {
+  // CRUD Series
   findById(id: string): Promise<Serie | null>;
-  findAll(): Promise<Serie[] | null>;
-  save(serie: Serie): Promise<Serie>;
+  findAll(): Promise<Serie[]>;
+  save(serie: Serie): Promise<void>;
+  update(serie: Serie): Promise<Serie>;
   deleteById(id: string): Promise<void>;
-  update(serie: Serie): Promise<void>;
-  addEpisodeToSerie(serieId: string, episodeId: string): Promise<void>;
-  removeEpisodeFromSerie(serieId: string, episodeId: string): Promise<void>;
-  findEpisodesBySerieId(serieId: string): Promise<Episode[]>;
-  findEpisodeBySeasonId(seasonId: string): Promise<Episode[] | null>;
+
+  // Relations
   findSeasonsBySerieId(serieId: string): Promise<Season[]>;
-  addSeasonToSerie(serieId: string, seasonId: string): Promise<void>;
-  removeSeasonFromSerie(serieId: string, seasonId: string): Promise<void>;
-  
-} 
+  findEpisodesBySeasonId(seasonId: string): Promise<Episode[]>;
+  findEpisodeById(episodeId:string):Promise<Episode | null>;
+  findSeasonById(seasonId:string):Promise<Season | null>;
+  // Helpers
+  countSeasons(serieId: string): Promise<number>;
+  countEpisodes(serieId: string): Promise<number>;
+
+  // Nouveaux : gestion des saisons & épisodes
+  createSeason(season: Season): Promise<Season>;
+  updateSeason(season: Season): Promise<Season>;
+  deleteSeason(seasonId: string): Promise<void>;
+
+  createEpisode(episode: Episode): Promise<Episode>;
+  updateEpisode(episode: Episode): Promise<Episode>;
+  deleteEpisode(episodeId: string): Promise<void>;
+
+  moveEpisode(episodeId: string, toSeasonId: string): Promise<void>;
+}

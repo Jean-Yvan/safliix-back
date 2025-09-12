@@ -244,6 +244,7 @@ exports.Prisma.VideoFileScalarFieldEnum = {
   duration: 'duration',
   width: 'width',
   height: 'height',
+  status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -330,7 +331,12 @@ exports.Prisma.EpisodeScalarFieldEnum = {
   seasonId: 'seasonId',
   number: 'number',
   videoFileId: 'videoFileId',
-  metadataId: 'metadataId',
+  title: 'title',
+  releaseDate: 'releaseDate',
+  plateformeDAte: 'plateformeDAte',
+  director: 'director',
+  description: 'description',
+  isSaFliixProd: 'isSaFliixProd',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -494,6 +500,16 @@ exports.ContentStatus = exports.$Enums.ContentStatus = {
   DRAFT: 'DRAFT',
   PUBLISHED: 'PUBLISHED',
   ARCHIVED: 'ARCHIVED'
+};
+
+exports.VideoFileStatus = exports.$Enums.VideoFileStatus = {
+  PENDING: 'PENDING',
+  UPLOADED: 'UPLOADED',
+  PROCESSING: 'PROCESSING',
+  PROCESSED: 'PROCESSED',
+  FAILED: 'FAILED',
+  CANCELLED: 'CANCELLED',
+  QUEUED: 'QUEUED'
 };
 
 exports.ProfileActivityAction = exports.$Enums.ProfileActivityAction = {

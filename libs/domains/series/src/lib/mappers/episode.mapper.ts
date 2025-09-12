@@ -1,58 +1,48 @@
 import { Episode } from "../domain/entities/episode.entity";
-import { EpisodeWithRelations, EpisodeToPrisma } from "@safliix-back/database";
-import { Err, Ok, Result } from "oxide.ts";
-import { VideoMetadataMapper,VideoFileMapper } from "@safliix-back/contents"
+import { EpisodeWithRelations, CreateToPrisma, UpdateToPrisma } from "@safliix-back/database";
+import { VideoFileMapper } from "@safliix-back/contents"
+import { mapConnect } from "@safliix-back/common";
 
 export class EpisodeMapper {
   static toDomain(
     prismaEpisode: EpisodeWithRelations
-  ): Result<Episode, Error> {
-    try {
-      const metadataResult = prismaEpisode.metadata 
-        ? VideoMetadataMapper.toDomain(prismaEpisode.metadata)
-        : undefined;
-
-      if (metadataResult?.isErr()) {
-        return Err(metadataResult.unwrapErr());
-      }
-
-      const videoFile = VideoFileMapper.toDomain(prismaEpisode.videoFile);
-      if (videoFile.isErr()) {
-        return Err(videoFile.unwrapErr());
-      }
-
-      return Ok(new Episode(
-        prismaEpisode.id,
-        prismaEpisode.metadata.title,
-        prismaEpisode.seasonId,
-        prismaEpisode.number,
-        videoFile.unwrap(),
-        metadataResult?.unwrap()
-      ));
-    } catch (error) {
-      return Err(error instanceof Error ? error : new Error('Episode mapping failed'));
-    }
+  ): Episode {
+   return Episode.restore(prismaEpisode);
   }
 
-  static toPrisma(episode: Episode): EpisodeToPrisma {
-    const prismaEpisode: EpisodeToPrisma = {
+  static toPrismaCreate(episode: Episode): CreateToPrisma<"Episode"> {
+    return {
       number: episode.number,
-      season: { connect: { id: episode.seasonId } },
+      season: mapConnect(episode.seasonId),
       videoFile: {
-        create: VideoFileMapper.toPrisma(episode.videoFile),
+        create: VideoFileMapper.toPrismaCreate(episode.videoFile),
         
       },
-      title: episode.title,
-      metadata: undefined as any, // placeholder, will be set below
+      title: episode.title ?? null,
+      isSaFliixProd: episode.isSaFliixProd,
+      plateformeDAte: episode.plateformDate,
+      releaseDate: episode.releaseDate,
+      director: episode.director,
+      description: episode.description
+      
     };
+  }
 
-    if (episode.metadata) {
-      prismaEpisode.metadata = {
-        create: VideoMetadataMapper.toPrisma(episode.metadata),
-      };
-    } 
-
-    return prismaEpisode;
+  static toPrismaUpdate(id:string,episode: Episode) : UpdateToPrisma<"Episode"> {
+    return {
+      where: {id},
+      data: {
+        number: episode.number,
+        season: mapConnect(episode.seasonId),
+        //videoFile: mapConnect(episode.videoFile.id!),
+        title: episode.title ?? null,
+        isSaFliixProd: episode.isSaFliixProd,
+        plateformeDAte: episode.plateformDate,
+        releaseDate: episode.releaseDate,
+        director: episode.director,
+        description: episode.description
+      }
+    }
   }
 }
 

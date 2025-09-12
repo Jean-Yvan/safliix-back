@@ -1,16 +1,19 @@
-import { Body, Controller, Post,Get,Query,Param,Delete } from '@nestjs/common';
+import { Body, Controller, Post,Get,Put,Query,Param,Delete } from '@nestjs/common';
 import { 
   CreateMovieHandler,
   CreateMovieDto,
+  UpdateMovieHandler,
+  UpdateMovieDto,
   MovieFilterDto,  
   DeleteMovieHandler,
   DeleteMovieCommand,
   GetMoviesHandler,
+  UpdateMovieCommand,
   CreateMovieCommand, 
   GetMoviesQuery,
   ListMovieByIdHandler,
   ListMovieByIdQuery
-   } from '@safliix-back/movies';
+} from '@safliix-back/movies';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 
 
@@ -19,7 +22,7 @@ export class AdminMovieController {
   constructor(
     private readonly createMovieHandler: CreateMovieHandler,
     private readonly deleteMovieHandler: DeleteMovieHandler,
-    //private readonly updateMovieHandler: UpdateMovieHandler,
+    private readonly updateMovieHandler: UpdateMovieHandler,
     private readonly getMoviesHandler: GetMoviesHandler,
     private readonly listByIdHandler: ListMovieByIdHandler 
   ) {}
@@ -48,7 +51,7 @@ export class AdminMovieController {
         }
       }
     
-    }
+  }
     
 
   @Get()
@@ -95,6 +98,21 @@ export class AdminMovieController {
       success:true,
       data:result.unwrap()
     }   
+  }
+
+  @Put(':id')
+  @ApiOperation({summary:"Update movie based on id"})
+  async update(@Body() dto: UpdateMovieDto){
+    const command = new UpdateMovieCommand(dto);
+    const result = await this.updateMovieHandler.execute(command);
+    if(result.isErr()){
+      throw result.unwrapErr();
+    }
+
+    return {
+      success:true,
+      data:result.unwrap()
+    }
   }
 
 }

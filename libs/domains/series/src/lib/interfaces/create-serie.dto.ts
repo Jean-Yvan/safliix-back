@@ -6,12 +6,19 @@ import {
   IsArray,
   IsBoolean,
   IsIn,
+  IsEnum,
   IsNotEmpty,
   ArrayNotEmpty,
+  ValidateNested,
   IsDateString,
 } from 'class-validator';
 
+import { Type } from "class-transformer";
+
+import { ActorDto } from '@safliix-back/contents';
+
 import { ApiProperty } from '@nestjs/swagger';
+import { ContentStatus } from '@safliix-back/common';
 
 
 export class CreateSerieDto {
@@ -83,11 +90,14 @@ export class CreateSerieDto {
   @IsUrl({}, { message: 'L’URL de la bande annonce est invalide.' })
   thrailerPath?: string;
 
-  @ApiProperty({required:false})
-  @IsArray({ message: 'Les noms des acteurs doivent être un tableau.' })
-  @IsString({ each: true, message: 'Chaque nom d’acteur doit être une chaîne.' })
-  @ArrayNotEmpty({ message: 'La liste des acteurs ne peut pas être vide.' })
-  actorNames!: string[];
+  @ApiProperty({
+    type: [ActorDto],
+    description: "Liste des acteurs. Peut contenir soit un id + name (acteur existant), soit uniquement un name (nouvel acteur)",
+  })
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => ActorDto)
+  actors?: ActorDto[];
 
   @ApiProperty({required:false})
   @IsString()
@@ -115,10 +125,10 @@ export class CreateSerieDto {
   @IsOptional()
   mainLanguage?: string;
 
-  @ApiProperty({example:"actif",required:true})
-  @IsString({ message: 'Le statut doit être une chaîne.' })
+  @ApiProperty({example:"DRAFT",required:false})
+  @IsEnum(["DRAFT","PUBLISHED"],{message:"status must be DRAFT or PUBLISHED"})
   @IsOptional()
-  status!: string;
+  status?: ContentStatus;
   
 
   @ApiProperty({example:"R",required:false})

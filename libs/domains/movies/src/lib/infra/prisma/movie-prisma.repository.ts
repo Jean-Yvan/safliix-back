@@ -12,20 +12,25 @@ export class MovieRepository implements IMovieRepository {
 
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(movie: MovieAggregate): Promise<void> {
+  async create(movie: MovieAggregate): Promise<MovieAggregate> {
     const prismaMovie = MovieMapper.toPrismaCreate(movie);
     this.logger.debug(`Creating movie with data: ${JSON.stringify(prismaMovie)}`);
     
-    await this.prisma.movie.create({
+    const result =await this.prisma.movie.create({
       data: prismaMovie,
+      include:movieInclude
     });
+
+    return MovieMapper.toDomain(result);
   }
 
-  async update(id:string,movie: MovieAggregate): Promise<void> {
+  async update(id:string,movie: MovieAggregate): Promise<MovieAggregate> {
     const prismaMovie = MovieMapper.toPrismaUpdate(id,movie);
-    
-
-    await this.prisma.movie.update(prismaMovie);
+    const updated = await this.prisma.movie.update({
+      ...prismaMovie,
+      include:movieInclude
+    });
+    return MovieMapper.toDomain(updated)
   }
 
   async save(movie: MovieAggregate): Promise<void> {

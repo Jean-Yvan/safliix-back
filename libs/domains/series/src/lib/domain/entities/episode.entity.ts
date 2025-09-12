@@ -1,15 +1,22 @@
-import { VideoFile, VideoMetadata } from "@safliix-back/contents";
+import { VideoFile, VideoFileMapper } from "@safliix-back/contents";
 import { Err,Ok, Result } from "oxide.ts";
 import { AddEpisodeDto } from "../../interfaces/add-episode.dto";
+import { EpisodeWithRelations } from "@safliix-back/database";
+import { UpdateEpisodeDto } from "src/lib/interfaces/update-episode.dto";
 
 export class Episode{
 	constructor(
-    public readonly id: string,
-    public readonly title: string,
-    public readonly seasonId: string,
-    public readonly number: number,
+    public id: string | undefined,
+    public title: string | null,
+    public releaseDate: Date,
+    public plateformDate: Date,
+    public director: string,
+    public description:string | null,
+    public isSaFliixProd: boolean,
+    public seasonId: string,
+    public number: number,
     public readonly videoFile: VideoFile,
-    public readonly metadata?: VideoMetadata,
+    
     
   ) {}
 
@@ -20,48 +27,64 @@ export class Episode{
     return true;
   }
 
-  static create(data : AddEpisodeDto,episodeNumber: number): Result<Episode, Error> {
-    try {
-      const videoFile = VideoFile.create({
-        duration : data.duration,
-        filePath: data.videoFileUrl
-      });
-      if (videoFile.isErr()) {
-        return Err(videoFile.unwrapErr());
-      }
-
-      const metadata = VideoMetadata.create({
-        title: data.title,
-        description: data.description ? data.description : '',
-        releaseDate: new Date(data.realeaseDate),
-        platformDate: new Date(data.plateformDate),
-        director: data.director,
-        thumbnailUrl: "",
-        duration: 0,
-        productionHouse: "",
-        secondaryImage: null,
-        format: undefined,
-        category: undefined
-      });
-
-      if (metadata.isErr()) {
-        return Err(metadata.unwrapErr());
-      }
-
-      const episode = new Episode(
-        '',
-        data.title,
-        data.seasonId,
-        episodeNumber,
-        videoFile.unwrap(),
-        metadata.unwrap()
-      );
-
-      episode.validate();
-      return Ok(episode);
-    } catch (error) {
-      return Err(error instanceof Error ? error : new Error('Episode creation failed'));
+  static create(data : AddEpisodeDto): Result<Episode, Error> {
+    
+    const videoFile = VideoFile.create(
+      undefined,
+      data.videoFileUrl,
+      data.duration,
+      data.thrailerPath,
+      0,
+      0
+    );
+    if (videoFile.isErr()) {
+      return Err(videoFile.unwrapErr());
     }
+
+    const episode = new Episode(
+      undefined,  
+      data.title,
+      new Date(data.releaseDate),
+      new Date(data.plateformDate),
+      data.director,
+      data.description ?? null,
+      data.isCustomProduction,
+      data.seasonId,
+      data.episodeNumber,
+      videoFile.unwrap(),
+      
+    );
+
+    episode.validate();
+    return Ok(episode);
+    
+  }
+
+  static restore(data: EpisodeWithRelations): Episode {
+    return new Episode(
+      data.id,
+      data.title,
+      data.releaseDate,
+      data.plateformeDAte,
+      data.director,
+      data.description,
+      data.isSaFliixProd,
+      data.seasonId,
+      data.number,
+      VideoFileMapper.toDomain( data.videoFile)
+    )
+  }
+
+  updateWith(data:UpdateEpisodeDto){
+    this.id = data.id;
+    this.title = data.title ? data.title : this.title;
+    this.description = data.description ? data.description : this.description;
+    this.director = data.director ? data.director : this.director;
+    this.number = data.episodeNumber ? data.episodeNumber : this.number;
+    this.seasonId = data.seasonId ? data.seasonId : this.seasonId;
+    this.releaseDate = data.releaseDate ? new Date(data.releaseDate) : this.releaseDate;
+    this.plateformDate = data.plateformDate ? new Date(data.plateformDate) : this.plateformDate;
+
   }
 
   

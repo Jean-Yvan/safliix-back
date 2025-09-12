@@ -28,6 +28,9 @@
       "path": "../../libs/domains/access/tsconfig.lib.json"
     },
     {
+      "path": "../../libs/domains/series/tsconfig.lib.json"
+    },
+    {
       "path": "../../libs/domains/movies/tsconfig.lib.json"
     },
     {

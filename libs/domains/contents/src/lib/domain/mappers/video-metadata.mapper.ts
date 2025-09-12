@@ -16,15 +16,17 @@ export class VideoMetadataMapper {
     return {
       title: metadata.title,
       description: metadata.description,
-      format: {
-        connectOrCreate: {
-          where: { format: metadata.format.format },
-          create: {
-            format: metadata.format.format,
-            description: metadata.format.description,
-          } 
-        },
-      },
+      ...(metadata.format && {
+          format: {
+            connectOrCreate: {
+              where: { format: metadata.format.format },
+              create: {
+                format: metadata.format.format,
+                description: metadata.format.description,
+              },
+            },
+          },
+      }),
 
       category: {
         connectOrCreate: {
@@ -83,15 +85,17 @@ export class VideoMetadataMapper {
       data: {
         title: metadata.title,
         description: metadata.description,
-        format: {
-          connectOrCreate: {
-            where: { format: metadata.format.format },
-            create: {
-              format: metadata.format.format,
-              description: metadata.format.description,
-            } 
+        ...(metadata.format && {
+          format: {
+            connectOrCreate: {
+              where: { format: metadata.format.format },
+              create: {
+                format: metadata.format.format,
+                description: metadata.format.description,
+              },
+            },
           },
-        },
+        }),
 
         category: {
           connectOrCreate: {

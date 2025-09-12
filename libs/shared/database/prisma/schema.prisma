@@ -208,8 +208,8 @@ model VideoMetadata {
   productionHouse   String
   productionCountry String
   director          String
-  format            VideoFormat   @relation(fields: [formatId], references: [id])
-  formatId          String
+  format            VideoFormat?  @relation(fields: [formatId], references: [id])
+  formatId          String?
   category          VideoCategory @relation(fields: [categoryId], references: [id])
   categoryId        String
   gender            VideoGenre    @relation(fields: [genderId], references: [id])
@@ -217,8 +217,8 @@ model VideoMetadata {
   status            ContentStatus @default(DRAFT)
 
   // Relations
-  movie     Movie?
-  episode   Episode?
+  movie Movie?
+
   series    Series?
   actors    VideoActor[]
   subtitles Subtitle[]      @relation("VideoMetadataToSubtitle")
@@ -231,13 +231,13 @@ model VideoMetadata {
 }
 
 model VideoFile {
-  id          String  @id @default(uuid())
-  filePath    String
-  trailerPath String?
-  duration    Int     @map("duration_seconds")
-  width       Int?
-  height      Int?
-
+  id                String          @id @default(uuid())
+  filePath          String
+  trailerPath       String?
+  duration          Int             @map("duration_seconds")
+  width             Int?
+  height            Int?
+  status            VideoFileStatus @default(PENDING)
   // Relations
   movie             Movie?
   episode           Episode?
@@ -334,6 +334,16 @@ enum ContentStatus {
   ARCHIVED
 }
 
+enum VideoFileStatus {
+  PENDING // En attente de traitement
+  UPLOADED // Uploadé mais pas encore traité
+  PROCESSING // En cours de traitement
+  PROCESSED // Traitement terminé avec succès
+  FAILED // Échec du traitement
+  CANCELLED // Traitement annulé
+  QUEUED
+}
+
 // ===== AGGREGATE ROOT 1 =====
 model Movie {
   id          String        @id @default(uuid())
@@ -388,14 +398,18 @@ model Season {
 }
 
 model Episode {
-  id          String        @id @default(uuid())
-  season      Season        @relation(fields: [seasonId], references: [id])
-  seasonId    String
-  number      Int
-  videoFile   VideoFile     @relation(fields: [videoFileId], references: [id])
-  videoFileId String        @unique
-  metadata    VideoMetadata @relation(fields: [metadataId], references: [id])
-  metadataId  String        @unique
+  id             String    @id @default(uuid())
+  season         Season    @relation(fields: [seasonId], references: [id])
+  seasonId       String
+  number         Int
+  videoFile      VideoFile @relation(fields: [videoFileId], references: [id])
+  videoFileId    String    @unique
+  title          String?
+  releaseDate    DateTime
+  plateformeDAte DateTime
+  director       String
+  description    String?
+  isSaFliixProd  Boolean
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

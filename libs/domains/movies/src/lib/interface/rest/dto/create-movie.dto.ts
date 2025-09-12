@@ -118,7 +118,7 @@ export class CreateMovieDto {
   @IsOptional()
   mainLanguage?: string;
 
-  @ApiProperty({example:"actif",required:true})
+  @ApiProperty({example:"DRAFT",required:true})
   @IsEnum(["DRAFT","PUBLISHED"],{message:"status must be DRAFT or PUBLISHED"})
   @IsOptional()
   status!: ContentStatus;

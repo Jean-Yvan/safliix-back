@@ -10,6 +10,9 @@
       "path": "../../libs/domains/access"
     },
     {
+      "path": "../../libs/domains/series"
+    },
+    {
       "path": "../../libs/domains/movies"
     },
     {

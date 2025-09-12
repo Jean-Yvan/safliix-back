@@ -9,7 +9,6 @@ export class VideoFileMapper {
 
   static toPrismaCreate(videoFile: VideoFile): CreateToPrisma<"VideoFile"> {
     return {
-      id: videoFile.id,
       filePath: videoFile.filePath,
       trailerPath: videoFile.trailerPath,
       width: videoFile.width,

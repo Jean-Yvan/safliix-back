@@ -1,5 +1,8 @@
-import { IsInt, Min, IsString,IsDateString,IsOptional,IsNotEmpty, IsUrl, IsBoolean } from 'class-validator';
+import { IsInt, Min,IsEnum, IsString,IsDateString,IsOptional,IsNotEmpty, IsUrl, IsBoolean } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+
+import { ContentStatus } from '@safliix-back/common';
+
 export class AddEpisodeDto {
 
   @ApiProperty({ example: 'Le dernier de la fratrie', required: true })
@@ -16,15 +19,19 @@ export class AddEpisodeDto {
   @IsUrl({}, { message: 'L\'URL de la miniature doit être une URL valide.' })
   thumbnailUrl!: string;
 
+  @ApiProperty({ example: 'https://wwww.s3.com', required: false })
+  @IsUrl({}, { message: "L'URL de la bande d'annonce doit être une URL valide." })
+  @IsOptional()
+  thrailerPath!: string;
+
   @ApiProperty({ example: true, required: true })
   @IsBoolean({ message: 'Le statut de la série doit être un booléen.' })
   isCustomProduction!: boolean;
 
-  @ApiProperty({ example: true, required: false })
+  @ApiProperty({example:"DRAFT",required:false})
+  @IsEnum(["DRAFT","PUBLISHED"],{message:"status must be DRAFT or PUBLISHED"})
   @IsOptional()
-  @IsBoolean({ message: 'Le statut de la série doit être un booléen.' })
-  isSous!: boolean;
-
+  status?: ContentStatus;
 
   @ApiProperty({required: true })
   @IsString({ message: 'L\'ID de la season doit être une chaîne.' })
@@ -38,7 +45,7 @@ export class AddEpisodeDto {
 
   @ApiProperty({ example: "2024-02-25", required: true })
   @IsDateString()
-  realeaseDate!: string;
+  releaseDate!: string;
 
   @ApiProperty({ example: "2024-02-25", required: true })
   @IsDateString()
@@ -52,5 +59,9 @@ export class AddEpisodeDto {
   @IsUrl({},{ message: 'Le lien du fichier vidéo doit être une URL valide.' })
   videoFileUrl!: string;
 
+  @ApiProperty({example:2,required:true})
+  @IsInt({message:"Le numéro de l'épisode doit être un entier"})
+  @Min(1,{message:"Le numéro de l'épisode doit être supérieur ou égal à 1"})
+  episodeNumber!:number;
   
 }

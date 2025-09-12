@@ -40,9 +40,6 @@
       "path": "./libs/domains/errors"
     },
     {
-      "path": "./libs/domains/video"
-    },
-    {
       "path": "./libs/shared/metric"
     },
     {
@@ -59,6 +56,21 @@
     },
     {
       "path": "./libs/domains/adminEntity"
+    },
+    {
+      "path": "./apps/video-processor-e2e"
+    },
+    {
+      "path": "./apps/video-processor"
+    },
+    {
+      "path": "./libs/shared/bullmq"
+    },
+    {
+      "path": "./libs/shared/video-file"
+    },
+    {
+      "path": "./libs/shared/s3"
     }
   ]
 }

@@ -164,9 +164,9 @@ export class MovieAggregate extends AggregateRoot {
     return movie;
   }
 
-  updateWith(payload: UpdateMovieDto): Result<void, Error> {
+  updateWith(payload: UpdateMovieDto): Result<MovieAggregate, Error> {
   // Mise à jour metadata
-  const formatResult = payload.format ? this.metadata.format.updateWith({format:payload.format}) : null;
+  const formatResult = payload.format ? this.metadata.format?.updateWith({format:payload.format}) : null;
   
   if(formatResult && formatResult.isErr()){
     return Err(formatResult.unwrapErr());
@@ -193,7 +193,7 @@ export class MovieAggregate extends AggregateRoot {
     productionHouse: payload.productionHouse ?? this.metadata.productionHouse,
     director: payload.director ?? this.metadata.director,
     category: category,
-    format: format,
+    format: format ?? undefined ,
     gender,
     actors: payload.actors,
   });
@@ -241,7 +241,7 @@ export class MovieAggregate extends AggregateRoot {
     this.type = payload.type;
   }
 
-  return Ok(undefined);
+  return Ok(this);
 }
 
 }

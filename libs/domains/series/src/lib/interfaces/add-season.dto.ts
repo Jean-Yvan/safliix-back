@@ -7,6 +7,11 @@ export class AddSeasonDto {
   @IsOptional()
   title?: string;
 
+  @ApiProperty({example:2,required:true})
+  @IsInt({message:"Le numéro de la saison doit être un entier"})
+  @Min(1,{message:"Le numéro de la saison doit être supérieur ou égal à 1"})
+  numero!:number;
+
   @ApiProperty({ example: 'Description de la saison 1', required: false })
   @IsString()
   @IsOptional()

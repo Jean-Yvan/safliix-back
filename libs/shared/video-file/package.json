@@ -1,5 +1,5 @@
 {
-  "name": "@safliix-back/video",
+  "name": "@safliix-back/video-file",
   "version": "0.0.1",
   "private": true,
   "main": "./src/index.ts",

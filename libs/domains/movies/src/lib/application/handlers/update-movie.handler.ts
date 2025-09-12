@@ -1,45 +1,48 @@
-/* import { ICommandHandler, CommandHandler } from '@nestjs/cqrs';
-import { Inject } from '@nestjs/common';
+import { CommandHandler } from '@nestjs/cqrs';
+import { Inject, Injectable } from '@nestjs/common';
+import { Result, Ok, Err } from "oxide.ts";
 import type { IMovieRepository } from '../../domain/ports/movie.repository';
 import { UpdateMovieCommand } from '../commands/update-movie.command';
 import { MOVIE_REPOSITORY } from '../..//utils/types';
 import { MovieNotFoundError } from '../../errors/movie.errors';
-import { MovieMapper } from 'src/lib/mappers/movie.mapper';
 import { MovieAggregate } from 'src/lib/domain/entities/movie.aggregate';
+import { BaseHandler } from '@safliix-back/cqrs';
 
+@Injectable()
 @CommandHandler(UpdateMovieCommand)
-export class UpdateMovieHandler implements ICommandHandler<UpdateMovieCommand> {
+export class UpdateMovieHandler extends BaseHandler<UpdateMovieCommand,Result<MovieAggregate,Error>> {
   constructor(
     @Inject(MOVIE_REPOSITORY)
     private readonly repository: IMovieRepository
-  ) {}
+  ) {super()}
 
-  async execute(command: UpdateMovieCommand) {
-    const movie = await this.repository.findById(command.payload.id);
-    if (!movie) {
-      throw new MovieNotFoundError(command.payload.id);
+  protected override async handle(command: UpdateMovieCommand): Promise<Result<MovieAggregate, Error>> {
+    const movieResult = await Result.safe(this.repository.findById(command.payload.id));
+    if(movieResult.isErr()){
+      return Err(movieResult.unwrapErr());
     }
 
-  //const updated = movie.update(command.payload);
-  const merged = {
-    ...movie,
-    ...command.payload,
-    title: command.payload.title ?? movie.metadata.title,
-    productionHouse: command.payload.productionHouse ?? movie.metadata.productionHouse,
-    productionCountry: command.payload.productionCountry ?? '',
-    releaseDate: command.payload.releaseDate ?? movie.metadata.releaseDate.toDateString(),
-    plateformDate: command.payload.plateformDate ?? movie.metadata.platformDate.toDateString(),
-    // Add other required fields here as needed, following the same pattern
-  };
+    const movie = movieResult.unwrap();
+    if (!movie) {
+      return Err(new MovieNotFoundError(command.payload.id));
+    }
 
-  const result = MovieAggregate.create(merged);
+  
 
-  if (result.isErr()) {
-    throw result.unwrapErr();
+    const merged = movie.updateWith(command.payload);
+
+    if (merged.isErr()) {
+      return Err(merged.unwrapErr());
+    }
+
+    const result = await Result.safe(this.repository.update(command.payload.id,merged.unwrap()));
+    if(result.isErr()){
+      return Err(result.unwrapErr());
+    }else{
+      return Ok(result.unwrap());
+    }
+    
   }
 
-  await this.repository.update(command.payload);
-
-  return result.unwrap();
-  }
-} */
+  
+} 

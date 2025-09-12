@@ -43,7 +43,11 @@
         "libs/shared/metric/*",
         "libs/domains/common/*",
         "libs/domains/access/*",
-        "libs/domains/adminEntity/*"
+        "libs/domains/adminEntity/*",
+        "shared/bullmq/*",
+        "libs/shared/bullmq/*",
+        "libs/shared/video-file/*",
+        "libs/shared/s3/*"
       ]
     },
     {
@@ -67,7 +71,12 @@
       "options": {
         "targetName": "test"
       },
-      "exclude": ["admin-e2e/**/*", "admin-e2e/**/*"]
+      "exclude": [
+        "admin-e2e/**/*",
+        "admin-e2e/**/*",
+        "video-processor-e2e/**/*",
+        "apps/video-processor-e2e/**/*"
+      ]
     },
     {
       "plugin": "@nx/js/typescript",
@@ -86,7 +95,11 @@
         "libs/shared/metric/*",
         "libs/domains/common/*",
         "libs/domains/access/*",
-        "libs/domains/adminEntity/*"
+        "libs/domains/adminEntity/*",
+        "shared/bullmq/*",
+        "libs/shared/bullmq/*",
+        "libs/shared/video-file/*",
+        "libs/shared/s3/*"
       ],
       "options": {
         "typecheck": {

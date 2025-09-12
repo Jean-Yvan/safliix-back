@@ -13,3 +13,5 @@ export * from './lib/mappers/movie.mapper';
 export * from './lib/application/queries/get-movies.query';
 export * from './lib/application/queries/list-movie-by-Id.query';
 export * from './lib/application/commands/delete-movie.command';
+export * from './lib/interface/rest/dto/update-movie.dto';
+export * from './lib/application/commands/update-movie.command';

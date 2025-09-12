@@ -6,10 +6,11 @@ import { Result, Ok, Err } from 'oxide.ts';
 import { SERIE_REPOSITORY } from '../../utils/types';
 import type { ISerieRepository } from '../../domain/ports/serie.repository';
 import { Serie } from '../../domain/entities/serie.entity';
+
 @Injectable()
 @CommandHandler(CreateSerieCommand)
-export class CreateSerieHandler extends BaseHandler<CreateSerieCommand, Result<Serie, Error>> {
-  protected override logger = new Logger(CreateSerieHandler.name);
+export class CreateSerieHandler extends BaseHandler<CreateSerieCommand, Result<void, Error>> {
+  //protected override logger = new Logger(CreateSerieHandler.name);
 
   constructor(
     @Inject(SERIE_REPOSITORY)
@@ -19,22 +20,23 @@ export class CreateSerieHandler extends BaseHandler<CreateSerieCommand, Result<S
     super(eventBus);
   }
 
-  protected override async handle(command: CreateSerieCommand): Promise<Result<Serie,Error>> {
+  protected override async handle(command: CreateSerieCommand): Promise<Result<void,Error>> {
     const serieResult = Serie.create(command.payload);
     if(serieResult.isErr()){
-      this.logger.error(`Validation failed for serie: ${command.payload.title} ${serieResult.unwrapErr().message}`);
-      return Err(new Error(serieResult.unwrapErr().message));
+      //this.logger.error(`Validation failed for serie: ${command.payload.title} ${serieResult.unwrapErr().message}`);
+      console.log("error:une erreur s'est déclenchée");
+      return Err(serieResult.unwrapErr());
     }
 
     const serie = serieResult.unwrap();
 
     const saveResult = await Result.safe(this.repository.save(serie));
     if (saveResult.isErr()) {
-      this.logger.error(`Failed to save serie ${command.payload.title}: ${saveResult.unwrapErr().message}`);
-      return Err(new Error(saveResult.unwrapErr().message));
+      //this.logger.error(`Failed to save serie ${command.payload.title}: ${saveResult.unwrapErr().message}`);
+      return Err(saveResult.unwrapErr());
     }
 
-    return Ok(saveResult.unwrap())
+    return Ok(undefined)
 
   }
 }

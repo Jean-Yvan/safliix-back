@@ -31,7 +31,7 @@ export class VideoMetadata {
     public status: ContentStatus,     
     public director: string,
     public category: VideoCategory,
-    public format: VideoFormat,
+    public format: VideoFormat | null,
     public gender: VideoGender,
     public actors: { name: string; role?: string; actorId?: string; id?: string }[] = []
   ) {}
@@ -44,13 +44,13 @@ export class VideoMetadata {
     thumbnailUrl: string,
     productionHouse: string,
     productionCountry: string,
-    status: ContentStatus,
+    status = ContentStatus.DRAFT,
     director: string,
     secondaryImage: string | null,
     releaseDate: Date,
     platformDate: Date,
     category: VideoCategory,
-    format: VideoFormat,
+    format: VideoFormat | null,
     gender: VideoGender,
     actors?: { name: string; role?: string; actorId?: string }[],
   ): Result<VideoMetadata, MissingRequiredFieldError> {
@@ -101,7 +101,7 @@ export class VideoMetadata {
       data.status as ContentStatus,
       data.director,
       VideoCategoryMapper.toDomain(data.category),
-      VideoFormatMapper.toDomain(data.format),
+      data.format ? VideoFormatMapper.toDomain(data.format) : null,
       VideoGenderMapper.toDomain(data.gender)
     );
 
@@ -130,7 +130,7 @@ export class VideoMetadata {
     format?: VideoFormat;
     gender?: VideoGender;
     actors?: { name: string; role?: string; actorId?: string }[];
-  }): Result<void, MissingRequiredFieldError | Error> {
+  }): Result<VideoMetadata, MissingRequiredFieldError | Error> {
     if (data.title !== undefined) {
       if (!data.title) {
         return Err(new MissingRequiredFieldError("title"));
@@ -191,7 +191,7 @@ export class VideoMetadata {
       this.actors = [...data.actors];
     }
 
-    return Ok(undefined);
+    return Ok(this);
   }
 
   // === Business ===
