@@ -221,8 +221,6 @@ exports.Prisma.VideoMetadataScalarFieldEnum = {
   id: 'id',
   title: 'title',
   description: 'description',
-  thumbnailUrl: 'thumbnailUrl',
-  secondaryImage: 'secondaryImage',
   releaseDate: 'releaseDate',
   platformDate: 'platformDate',
   ageRating: 'ageRating',
@@ -237,16 +235,25 @@ exports.Prisma.VideoMetadataScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.VideoFileScalarFieldEnum = {
+exports.Prisma.MediaFileScalarFieldEnum = {
   id: 'id',
-  filePath: 'filePath',
-  trailerPath: 'trailerPath',
+  s3Key: 's3Key',
   duration: 'duration',
   width: 'width',
   height: 'height',
   status: 'status',
+  mediaType: 'mediaType',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.MediaAttachmentScalarFieldEnum = {
+  id: 'id',
+  mediaFileId: 'mediaFileId',
+  movieId: 'movieId',
+  episodeId: 'episodeId',
+  adId: 'adId',
+  type: 'type'
 };
 
 exports.Prisma.VideoGenreScalarFieldEnum = {
@@ -298,7 +305,6 @@ exports.Prisma.VideoCategoryScalarFieldEnum = {
 exports.Prisma.MovieScalarFieldEnum = {
   id: 'id',
   metadataId: 'metadataId',
-  videoFileId: 'videoFileId',
   status: 'status',
   type: 'type',
   seasonCount: 'seasonCount',
@@ -307,7 +313,7 @@ exports.Prisma.MovieScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.SeriesScalarFieldEnum = {
+exports.Prisma.SerieScalarFieldEnum = {
   id: 'id',
   metadataId: 'metadataId',
   status: 'status',
@@ -320,7 +326,7 @@ exports.Prisma.SeriesScalarFieldEnum = {
 
 exports.Prisma.SeasonScalarFieldEnum = {
   id: 'id',
-  seriesId: 'seriesId',
+  serieId: 'serieId',
   number: 'number',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -330,7 +336,6 @@ exports.Prisma.EpisodeScalarFieldEnum = {
   id: 'id',
   seasonId: 'seasonId',
   number: 'number',
-  videoFileId: 'videoFileId',
   title: 'title',
   releaseDate: 'releaseDate',
   plateformeDAte: 'plateformeDAte',
@@ -369,7 +374,7 @@ exports.Prisma.SeasonViewScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.SeriesViewScalarFieldEnum = {
+exports.Prisma.SerieViewScalarFieldEnum = {
   id: 'id',
   seriesId: 'seriesId',
   userId: 'userId',
@@ -407,7 +412,8 @@ exports.Prisma.SubtitleScalarFieldEnum = {
 exports.Prisma.PurchaseScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  videoId: 'videoId',
+  movieId: 'movieId',
+  serieId: 'serieId',
   purchaseDate: 'purchaseDate',
   expirationDate: 'expirationDate',
   country: 'country'
@@ -416,7 +422,8 @@ exports.Prisma.PurchaseScalarFieldEnum = {
 exports.Prisma.CommentScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  videoId: 'videoId',
+  movieId: 'movieId',
+  epiisodeId: 'epiisodeId',
   text: 'text',
   createdAt: 'createdAt',
   parentCommentId: 'parentCommentId'
@@ -425,11 +432,10 @@ exports.Prisma.CommentScalarFieldEnum = {
 exports.Prisma.AdScalarFieldEnum = {
   id: 'id',
   title: 'title',
-  image_url: 'image_url',
-  video_url: 'video_url',
-  start_date: 'start_date',
-  end_date: 'end_date',
-  is_active: 'is_active'
+  imageUrl: 'imageUrl',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  isActive: 'isActive'
 };
 
 exports.Prisma.AdViewScalarFieldEnum = {
@@ -502,14 +508,30 @@ exports.ContentStatus = exports.$Enums.ContentStatus = {
   ARCHIVED: 'ARCHIVED'
 };
 
-exports.VideoFileStatus = exports.$Enums.VideoFileStatus = {
+exports.MediaFileStatus = exports.$Enums.MediaFileStatus = {
   PENDING: 'PENDING',
   UPLOADED: 'UPLOADED',
   PROCESSING: 'PROCESSING',
-  PROCESSED: 'PROCESSED',
-  FAILED: 'FAILED',
-  CANCELLED: 'CANCELLED',
-  QUEUED: 'QUEUED'
+  READY: 'READY',
+  FAILED: 'FAILED'
+};
+
+exports.MediaType = exports.$Enums.MediaType = {
+  VIDEO: 'VIDEO',
+  IMAGE: 'IMAGE'
+};
+
+exports.MediaAttachmentType = exports.$Enums.MediaAttachmentType = {
+  MAIN: 'MAIN',
+  TRAILER: 'TRAILER',
+  BONUS: 'BONUS',
+  MAKING_OF: 'MAKING_OF',
+  CLIP: 'CLIP',
+  PREVIEW: 'PREVIEW',
+  ADVERTISEMENT: 'ADVERTISEMENT',
+  THUMBNAIL: 'THUMBNAIL',
+  POSTER: 'POSTER',
+  BANNER: 'BANNER'
 };
 
 exports.ProfileActivityAction = exports.$Enums.ProfileActivityAction = {
@@ -528,7 +550,8 @@ exports.Prisma.ModelName = {
   SharedAccount: 'SharedAccount',
   SharedAccountUser: 'SharedAccountUser',
   VideoMetadata: 'VideoMetadata',
-  VideoFile: 'VideoFile',
+  MediaFile: 'MediaFile',
+  MediaAttachment: 'MediaAttachment',
   VideoGenre: 'VideoGenre',
   Actor: 'Actor',
   VideoActor: 'VideoActor',
@@ -536,12 +559,12 @@ exports.Prisma.ModelName = {
   VideoFormat: 'VideoFormat',
   VideoCategory: 'VideoCategory',
   Movie: 'Movie',
-  Series: 'Series',
+  Serie: 'Serie',
   Season: 'Season',
   Episode: 'Episode',
   UserVideoView: 'UserVideoView',
   SeasonView: 'SeasonView',
-  SeriesView: 'SeriesView',
+  SerieView: 'SerieView',
   Tag: 'Tag',
   MovieTag: 'MovieTag',
   SeriesTag: 'SeriesTag',

@@ -59,10 +59,15 @@ export type SharedAccountUser = $Result.DefaultSelection<Prisma.$SharedAccountUs
  */
 export type VideoMetadata = $Result.DefaultSelection<Prisma.$VideoMetadataPayload>
 /**
- * Model VideoFile
+ * Model MediaFile
  * 
  */
-export type VideoFile = $Result.DefaultSelection<Prisma.$VideoFilePayload>
+export type MediaFile = $Result.DefaultSelection<Prisma.$MediaFilePayload>
+/**
+ * Model MediaAttachment
+ * 
+ */
+export type MediaAttachment = $Result.DefaultSelection<Prisma.$MediaAttachmentPayload>
 /**
  * Model VideoGenre
  * 
@@ -99,10 +104,10 @@ export type VideoCategory = $Result.DefaultSelection<Prisma.$VideoCategoryPayloa
  */
 export type Movie = $Result.DefaultSelection<Prisma.$MoviePayload>
 /**
- * Model Series
+ * Model Serie
  * 
  */
-export type Series = $Result.DefaultSelection<Prisma.$SeriesPayload>
+export type Serie = $Result.DefaultSelection<Prisma.$SeriePayload>
 /**
  * Model Season
  * 
@@ -124,10 +129,10 @@ export type UserVideoView = $Result.DefaultSelection<Prisma.$UserVideoViewPayloa
  */
 export type SeasonView = $Result.DefaultSelection<Prisma.$SeasonViewPayload>
 /**
- * Model SeriesView
+ * Model SerieView
  * 
  */
-export type SeriesView = $Result.DefaultSelection<Prisma.$SeriesViewPayload>
+export type SerieView = $Result.DefaultSelection<Prisma.$SerieViewPayload>
 /**
  * Model Tag
  * 
@@ -213,6 +218,41 @@ export const SharedAccountStatus: {
 export type SharedAccountStatus = (typeof SharedAccountStatus)[keyof typeof SharedAccountStatus]
 
 
+export const MediaType: {
+  VIDEO: 'VIDEO',
+  IMAGE: 'IMAGE'
+};
+
+export type MediaType = (typeof MediaType)[keyof typeof MediaType]
+
+
+export const MediaFileStatus: {
+  PENDING: 'PENDING',
+  UPLOADED: 'UPLOADED',
+  PROCESSING: 'PROCESSING',
+  READY: 'READY',
+  FAILED: 'FAILED'
+};
+
+export type MediaFileStatus = (typeof MediaFileStatus)[keyof typeof MediaFileStatus]
+
+
+export const MediaAttachmentType: {
+  MAIN: 'MAIN',
+  TRAILER: 'TRAILER',
+  BONUS: 'BONUS',
+  MAKING_OF: 'MAKING_OF',
+  CLIP: 'CLIP',
+  PREVIEW: 'PREVIEW',
+  ADVERTISEMENT: 'ADVERTISEMENT',
+  THUMBNAIL: 'THUMBNAIL',
+  POSTER: 'POSTER',
+  BANNER: 'BANNER'
+};
+
+export type MediaAttachmentType = (typeof MediaAttachmentType)[keyof typeof MediaAttachmentType]
+
+
 export const AgeRating: {
   G: 'G',
   PG: 'PG',
@@ -271,6 +311,18 @@ export const RenewalStatus: typeof $Enums.RenewalStatus
 export type SharedAccountStatus = $Enums.SharedAccountStatus
 
 export const SharedAccountStatus: typeof $Enums.SharedAccountStatus
+
+export type MediaType = $Enums.MediaType
+
+export const MediaType: typeof $Enums.MediaType
+
+export type MediaFileStatus = $Enums.MediaFileStatus
+
+export const MediaFileStatus: typeof $Enums.MediaFileStatus
+
+export type MediaAttachmentType = $Enums.MediaAttachmentType
+
+export const MediaAttachmentType: typeof $Enums.MediaAttachmentType
 
 export type AgeRating = $Enums.AgeRating
 
@@ -504,14 +556,24 @@ export class PrismaClient<
   get videoMetadata(): Prisma.VideoMetadataDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.videoFile`: Exposes CRUD operations for the **VideoFile** model.
+   * `prisma.mediaFile`: Exposes CRUD operations for the **MediaFile** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more VideoFiles
-    * const videoFiles = await prisma.videoFile.findMany()
+    * // Fetch zero or more MediaFiles
+    * const mediaFiles = await prisma.mediaFile.findMany()
     * ```
     */
-  get videoFile(): Prisma.VideoFileDelegate<ExtArgs, ClientOptions>;
+  get mediaFile(): Prisma.MediaFileDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.mediaAttachment`: Exposes CRUD operations for the **MediaAttachment** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more MediaAttachments
+    * const mediaAttachments = await prisma.mediaAttachment.findMany()
+    * ```
+    */
+  get mediaAttachment(): Prisma.MediaAttachmentDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.videoGenre`: Exposes CRUD operations for the **VideoGenre** model.
@@ -584,14 +646,14 @@ export class PrismaClient<
   get movie(): Prisma.MovieDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.series`: Exposes CRUD operations for the **Series** model.
+   * `prisma.serie`: Exposes CRUD operations for the **Serie** model.
     * Example usage:
     * ```ts
     * // Fetch zero or more Series
-    * const series = await prisma.series.findMany()
+    * const series = await prisma.serie.findMany()
     * ```
     */
-  get series(): Prisma.SeriesDelegate<ExtArgs, ClientOptions>;
+  get serie(): Prisma.SerieDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.season`: Exposes CRUD operations for the **Season** model.
@@ -634,14 +696,14 @@ export class PrismaClient<
   get seasonView(): Prisma.SeasonViewDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.seriesView`: Exposes CRUD operations for the **SeriesView** model.
+   * `prisma.serieView`: Exposes CRUD operations for the **SerieView** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more SeriesViews
-    * const seriesViews = await prisma.seriesView.findMany()
+    * // Fetch zero or more SerieViews
+    * const serieViews = await prisma.serieView.findMany()
     * ```
     */
-  get seriesView(): Prisma.SeriesViewDelegate<ExtArgs, ClientOptions>;
+  get serieView(): Prisma.SerieViewDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.tag`: Exposes CRUD operations for the **Tag** model.
@@ -1181,7 +1243,8 @@ export namespace Prisma {
     SharedAccount: 'SharedAccount',
     SharedAccountUser: 'SharedAccountUser',
     VideoMetadata: 'VideoMetadata',
-    VideoFile: 'VideoFile',
+    MediaFile: 'MediaFile',
+    MediaAttachment: 'MediaAttachment',
     VideoGenre: 'VideoGenre',
     Actor: 'Actor',
     VideoActor: 'VideoActor',
@@ -1189,12 +1252,12 @@ export namespace Prisma {
     VideoFormat: 'VideoFormat',
     VideoCategory: 'VideoCategory',
     Movie: 'Movie',
-    Series: 'Series',
+    Serie: 'Serie',
     Season: 'Season',
     Episode: 'Episode',
     UserVideoView: 'UserVideoView',
     SeasonView: 'SeasonView',
-    SeriesView: 'SeriesView',
+    SerieView: 'SerieView',
     Tag: 'Tag',
     MovieTag: 'MovieTag',
     SeriesTag: 'SeriesTag',
@@ -1222,7 +1285,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "admin" | "emailValidation" | "session" | "subscriptionPlan" | "subscription" | "sharedAccount" | "sharedAccountUser" | "videoMetadata" | "videoFile" | "videoGenre" | "actor" | "videoActor" | "videoLanguage" | "videoFormat" | "videoCategory" | "movie" | "series" | "season" | "episode" | "userVideoView" | "seasonView" | "seriesView" | "tag" | "movieTag" | "seriesTag" | "subtitle" | "purchase" | "comment" | "ad" | "adView" | "sharedProfileActivity"
+      modelProps: "user" | "admin" | "emailValidation" | "session" | "subscriptionPlan" | "subscription" | "sharedAccount" | "sharedAccountUser" | "videoMetadata" | "mediaFile" | "mediaAttachment" | "videoGenre" | "actor" | "videoActor" | "videoLanguage" | "videoFormat" | "videoCategory" | "movie" | "serie" | "season" | "episode" | "userVideoView" | "seasonView" | "serieView" | "tag" | "movieTag" | "seriesTag" | "subtitle" | "purchase" | "comment" | "ad" | "adView" | "sharedProfileActivity"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1892,77 +1955,151 @@ export namespace Prisma {
           }
         }
       }
-      VideoFile: {
-        payload: Prisma.$VideoFilePayload<ExtArgs>
-        fields: Prisma.VideoFileFieldRefs
+      MediaFile: {
+        payload: Prisma.$MediaFilePayload<ExtArgs>
+        fields: Prisma.MediaFileFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.VideoFileFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$VideoFilePayload> | null
+            args: Prisma.MediaFileFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaFilePayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.VideoFileFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$VideoFilePayload>
+            args: Prisma.MediaFileFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaFilePayload>
           }
           findFirst: {
-            args: Prisma.VideoFileFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$VideoFilePayload> | null
+            args: Prisma.MediaFileFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaFilePayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.VideoFileFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$VideoFilePayload>
+            args: Prisma.MediaFileFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaFilePayload>
           }
           findMany: {
-            args: Prisma.VideoFileFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$VideoFilePayload>[]
+            args: Prisma.MediaFileFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaFilePayload>[]
           }
           create: {
-            args: Prisma.VideoFileCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$VideoFilePayload>
+            args: Prisma.MediaFileCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaFilePayload>
           }
           createMany: {
-            args: Prisma.VideoFileCreateManyArgs<ExtArgs>
+            args: Prisma.MediaFileCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.VideoFileCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$VideoFilePayload>[]
+            args: Prisma.MediaFileCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaFilePayload>[]
           }
           delete: {
-            args: Prisma.VideoFileDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$VideoFilePayload>
+            args: Prisma.MediaFileDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaFilePayload>
           }
           update: {
-            args: Prisma.VideoFileUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$VideoFilePayload>
+            args: Prisma.MediaFileUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaFilePayload>
           }
           deleteMany: {
-            args: Prisma.VideoFileDeleteManyArgs<ExtArgs>
+            args: Prisma.MediaFileDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.VideoFileUpdateManyArgs<ExtArgs>
+            args: Prisma.MediaFileUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.VideoFileUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$VideoFilePayload>[]
+            args: Prisma.MediaFileUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaFilePayload>[]
           }
           upsert: {
-            args: Prisma.VideoFileUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$VideoFilePayload>
+            args: Prisma.MediaFileUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaFilePayload>
           }
           aggregate: {
-            args: Prisma.VideoFileAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateVideoFile>
+            args: Prisma.MediaFileAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMediaFile>
           }
           groupBy: {
-            args: Prisma.VideoFileGroupByArgs<ExtArgs>
-            result: $Utils.Optional<VideoFileGroupByOutputType>[]
+            args: Prisma.MediaFileGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MediaFileGroupByOutputType>[]
           }
           count: {
-            args: Prisma.VideoFileCountArgs<ExtArgs>
-            result: $Utils.Optional<VideoFileCountAggregateOutputType> | number
+            args: Prisma.MediaFileCountArgs<ExtArgs>
+            result: $Utils.Optional<MediaFileCountAggregateOutputType> | number
+          }
+        }
+      }
+      MediaAttachment: {
+        payload: Prisma.$MediaAttachmentPayload<ExtArgs>
+        fields: Prisma.MediaAttachmentFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.MediaAttachmentFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaAttachmentPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.MediaAttachmentFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaAttachmentPayload>
+          }
+          findFirst: {
+            args: Prisma.MediaAttachmentFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaAttachmentPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.MediaAttachmentFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaAttachmentPayload>
+          }
+          findMany: {
+            args: Prisma.MediaAttachmentFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaAttachmentPayload>[]
+          }
+          create: {
+            args: Prisma.MediaAttachmentCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaAttachmentPayload>
+          }
+          createMany: {
+            args: Prisma.MediaAttachmentCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.MediaAttachmentCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaAttachmentPayload>[]
+          }
+          delete: {
+            args: Prisma.MediaAttachmentDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaAttachmentPayload>
+          }
+          update: {
+            args: Prisma.MediaAttachmentUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaAttachmentPayload>
+          }
+          deleteMany: {
+            args: Prisma.MediaAttachmentDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.MediaAttachmentUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.MediaAttachmentUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaAttachmentPayload>[]
+          }
+          upsert: {
+            args: Prisma.MediaAttachmentUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaAttachmentPayload>
+          }
+          aggregate: {
+            args: Prisma.MediaAttachmentAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMediaAttachment>
+          }
+          groupBy: {
+            args: Prisma.MediaAttachmentGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MediaAttachmentGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.MediaAttachmentCountArgs<ExtArgs>
+            result: $Utils.Optional<MediaAttachmentCountAggregateOutputType> | number
           }
         }
       }
@@ -2484,77 +2621,77 @@ export namespace Prisma {
           }
         }
       }
-      Series: {
-        payload: Prisma.$SeriesPayload<ExtArgs>
-        fields: Prisma.SeriesFieldRefs
+      Serie: {
+        payload: Prisma.$SeriePayload<ExtArgs>
+        fields: Prisma.SerieFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.SeriesFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SeriesPayload> | null
+            args: Prisma.SerieFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SeriePayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.SeriesFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SeriesPayload>
+            args: Prisma.SerieFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SeriePayload>
           }
           findFirst: {
-            args: Prisma.SeriesFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SeriesPayload> | null
+            args: Prisma.SerieFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SeriePayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.SeriesFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SeriesPayload>
+            args: Prisma.SerieFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SeriePayload>
           }
           findMany: {
-            args: Prisma.SeriesFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SeriesPayload>[]
+            args: Prisma.SerieFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SeriePayload>[]
           }
           create: {
-            args: Prisma.SeriesCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SeriesPayload>
+            args: Prisma.SerieCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SeriePayload>
           }
           createMany: {
-            args: Prisma.SeriesCreateManyArgs<ExtArgs>
+            args: Prisma.SerieCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.SeriesCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SeriesPayload>[]
+            args: Prisma.SerieCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SeriePayload>[]
           }
           delete: {
-            args: Prisma.SeriesDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SeriesPayload>
+            args: Prisma.SerieDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SeriePayload>
           }
           update: {
-            args: Prisma.SeriesUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SeriesPayload>
+            args: Prisma.SerieUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SeriePayload>
           }
           deleteMany: {
-            args: Prisma.SeriesDeleteManyArgs<ExtArgs>
+            args: Prisma.SerieDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.SeriesUpdateManyArgs<ExtArgs>
+            args: Prisma.SerieUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.SeriesUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SeriesPayload>[]
+            args: Prisma.SerieUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SeriePayload>[]
           }
           upsert: {
-            args: Prisma.SeriesUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SeriesPayload>
+            args: Prisma.SerieUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SeriePayload>
           }
           aggregate: {
-            args: Prisma.SeriesAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateSeries>
+            args: Prisma.SerieAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSerie>
           }
           groupBy: {
-            args: Prisma.SeriesGroupByArgs<ExtArgs>
-            result: $Utils.Optional<SeriesGroupByOutputType>[]
+            args: Prisma.SerieGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SerieGroupByOutputType>[]
           }
           count: {
-            args: Prisma.SeriesCountArgs<ExtArgs>
-            result: $Utils.Optional<SeriesCountAggregateOutputType> | number
+            args: Prisma.SerieCountArgs<ExtArgs>
+            result: $Utils.Optional<SerieCountAggregateOutputType> | number
           }
         }
       }
@@ -2854,77 +2991,77 @@ export namespace Prisma {
           }
         }
       }
-      SeriesView: {
-        payload: Prisma.$SeriesViewPayload<ExtArgs>
-        fields: Prisma.SeriesViewFieldRefs
+      SerieView: {
+        payload: Prisma.$SerieViewPayload<ExtArgs>
+        fields: Prisma.SerieViewFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.SeriesViewFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SeriesViewPayload> | null
+            args: Prisma.SerieViewFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SerieViewPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.SeriesViewFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SeriesViewPayload>
+            args: Prisma.SerieViewFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SerieViewPayload>
           }
           findFirst: {
-            args: Prisma.SeriesViewFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SeriesViewPayload> | null
+            args: Prisma.SerieViewFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SerieViewPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.SeriesViewFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SeriesViewPayload>
+            args: Prisma.SerieViewFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SerieViewPayload>
           }
           findMany: {
-            args: Prisma.SeriesViewFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SeriesViewPayload>[]
+            args: Prisma.SerieViewFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SerieViewPayload>[]
           }
           create: {
-            args: Prisma.SeriesViewCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SeriesViewPayload>
+            args: Prisma.SerieViewCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SerieViewPayload>
           }
           createMany: {
-            args: Prisma.SeriesViewCreateManyArgs<ExtArgs>
+            args: Prisma.SerieViewCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.SeriesViewCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SeriesViewPayload>[]
+            args: Prisma.SerieViewCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SerieViewPayload>[]
           }
           delete: {
-            args: Prisma.SeriesViewDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SeriesViewPayload>
+            args: Prisma.SerieViewDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SerieViewPayload>
           }
           update: {
-            args: Prisma.SeriesViewUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SeriesViewPayload>
+            args: Prisma.SerieViewUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SerieViewPayload>
           }
           deleteMany: {
-            args: Prisma.SeriesViewDeleteManyArgs<ExtArgs>
+            args: Prisma.SerieViewDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.SeriesViewUpdateManyArgs<ExtArgs>
+            args: Prisma.SerieViewUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.SeriesViewUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SeriesViewPayload>[]
+            args: Prisma.SerieViewUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SerieViewPayload>[]
           }
           upsert: {
-            args: Prisma.SeriesViewUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SeriesViewPayload>
+            args: Prisma.SerieViewUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SerieViewPayload>
           }
           aggregate: {
-            args: Prisma.SeriesViewAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateSeriesView>
+            args: Prisma.SerieViewAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSerieView>
           }
           groupBy: {
-            args: Prisma.SeriesViewGroupByArgs<ExtArgs>
-            result: $Utils.Optional<SeriesViewGroupByOutputType>[]
+            args: Prisma.SerieViewGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SerieViewGroupByOutputType>[]
           }
           count: {
-            args: Prisma.SeriesViewCountArgs<ExtArgs>
-            result: $Utils.Optional<SeriesViewCountAggregateOutputType> | number
+            args: Prisma.SerieViewCountArgs<ExtArgs>
+            result: $Utils.Optional<SerieViewCountAggregateOutputType> | number
           }
         }
       }
@@ -3687,7 +3824,8 @@ export namespace Prisma {
     sharedAccount?: SharedAccountOmit
     sharedAccountUser?: SharedAccountUserOmit
     videoMetadata?: VideoMetadataOmit
-    videoFile?: VideoFileOmit
+    mediaFile?: MediaFileOmit
+    mediaAttachment?: MediaAttachmentOmit
     videoGenre?: VideoGenreOmit
     actor?: ActorOmit
     videoActor?: VideoActorOmit
@@ -3695,12 +3833,12 @@ export namespace Prisma {
     videoFormat?: VideoFormatOmit
     videoCategory?: VideoCategoryOmit
     movie?: MovieOmit
-    series?: SeriesOmit
+    serie?: SerieOmit
     season?: SeasonOmit
     episode?: EpisodeOmit
     userVideoView?: UserVideoViewOmit
     seasonView?: SeasonViewOmit
-    seriesView?: SeriesViewOmit
+    serieView?: SerieViewOmit
     tag?: TagOmit
     movieTag?: MovieTagOmit
     seriesTag?: SeriesTagOmit
@@ -4125,60 +4263,42 @@ export namespace Prisma {
 
 
   /**
-   * Count Type VideoFileCountOutputType
+   * Count Type MediaFileCountOutputType
    */
 
-  export type VideoFileCountOutputType = {
-    subtitles: number
-    purchases: number
-    comments: number
-    UserVideoProgress: number
+  export type MediaFileCountOutputType = {
+    attachments: number
+    Subtitle: number
   }
 
-  export type VideoFileCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    subtitles?: boolean | VideoFileCountOutputTypeCountSubtitlesArgs
-    purchases?: boolean | VideoFileCountOutputTypeCountPurchasesArgs
-    comments?: boolean | VideoFileCountOutputTypeCountCommentsArgs
-    UserVideoProgress?: boolean | VideoFileCountOutputTypeCountUserVideoProgressArgs
+  export type MediaFileCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    attachments?: boolean | MediaFileCountOutputTypeCountAttachmentsArgs
+    Subtitle?: boolean | MediaFileCountOutputTypeCountSubtitleArgs
   }
 
   // Custom InputTypes
   /**
-   * VideoFileCountOutputType without action
+   * MediaFileCountOutputType without action
    */
-  export type VideoFileCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type MediaFileCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the VideoFileCountOutputType
+     * Select specific fields to fetch from the MediaFileCountOutputType
      */
-    select?: VideoFileCountOutputTypeSelect<ExtArgs> | null
+    select?: MediaFileCountOutputTypeSelect<ExtArgs> | null
   }
 
   /**
-   * VideoFileCountOutputType without action
+   * MediaFileCountOutputType without action
    */
-  export type VideoFileCountOutputTypeCountSubtitlesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type MediaFileCountOutputTypeCountAttachmentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MediaAttachmentWhereInput
+  }
+
+  /**
+   * MediaFileCountOutputType without action
+   */
+  export type MediaFileCountOutputTypeCountSubtitleArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: SubtitleWhereInput
-  }
-
-  /**
-   * VideoFileCountOutputType without action
-   */
-  export type VideoFileCountOutputTypeCountPurchasesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: PurchaseWhereInput
-  }
-
-  /**
-   * VideoFileCountOutputType without action
-   */
-  export type VideoFileCountOutputTypeCountCommentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: CommentWhereInput
-  }
-
-  /**
-   * VideoFileCountOutputType without action
-   */
-  export type VideoFileCountOutputTypeCountUserVideoProgressArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: UserVideoViewWhereInput
   }
 
 
@@ -4343,10 +4463,16 @@ export namespace Prisma {
 
   export type MovieCountOutputType = {
     tags: number
+    attachment: number
+    Comment: number
+    Purchase: number
   }
 
   export type MovieCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     tags?: boolean | MovieCountOutputTypeCountTagsArgs
+    attachment?: boolean | MovieCountOutputTypeCountAttachmentArgs
+    Comment?: boolean | MovieCountOutputTypeCountCommentArgs
+    Purchase?: boolean | MovieCountOutputTypeCountPurchaseArgs
   }
 
   // Custom InputTypes
@@ -4367,53 +4493,83 @@ export namespace Prisma {
     where?: MovieTagWhereInput
   }
 
-
   /**
-   * Count Type SeriesCountOutputType
+   * MovieCountOutputType without action
    */
-
-  export type SeriesCountOutputType = {
-    seasons: number
-    tags: number
-    SeriesView: number
+  export type MovieCountOutputTypeCountAttachmentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MediaAttachmentWhereInput
   }
 
-  export type SeriesCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    seasons?: boolean | SeriesCountOutputTypeCountSeasonsArgs
-    tags?: boolean | SeriesCountOutputTypeCountTagsArgs
-    SeriesView?: boolean | SeriesCountOutputTypeCountSeriesViewArgs
+  /**
+   * MovieCountOutputType without action
+   */
+  export type MovieCountOutputTypeCountCommentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CommentWhereInput
+  }
+
+  /**
+   * MovieCountOutputType without action
+   */
+  export type MovieCountOutputTypeCountPurchaseArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PurchaseWhereInput
+  }
+
+
+  /**
+   * Count Type SerieCountOutputType
+   */
+
+  export type SerieCountOutputType = {
+    seasons: number
+    tags: number
+    SerieView: number
+    Purchase: number
+  }
+
+  export type SerieCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    seasons?: boolean | SerieCountOutputTypeCountSeasonsArgs
+    tags?: boolean | SerieCountOutputTypeCountTagsArgs
+    SerieView?: boolean | SerieCountOutputTypeCountSerieViewArgs
+    Purchase?: boolean | SerieCountOutputTypeCountPurchaseArgs
   }
 
   // Custom InputTypes
   /**
-   * SeriesCountOutputType without action
+   * SerieCountOutputType without action
    */
-  export type SeriesCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SerieCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the SeriesCountOutputType
+     * Select specific fields to fetch from the SerieCountOutputType
      */
-    select?: SeriesCountOutputTypeSelect<ExtArgs> | null
+    select?: SerieCountOutputTypeSelect<ExtArgs> | null
   }
 
   /**
-   * SeriesCountOutputType without action
+   * SerieCountOutputType without action
    */
-  export type SeriesCountOutputTypeCountSeasonsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SerieCountOutputTypeCountSeasonsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: SeasonWhereInput
   }
 
   /**
-   * SeriesCountOutputType without action
+   * SerieCountOutputType without action
    */
-  export type SeriesCountOutputTypeCountTagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SerieCountOutputTypeCountTagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: SeriesTagWhereInput
   }
 
   /**
-   * SeriesCountOutputType without action
+   * SerieCountOutputType without action
    */
-  export type SeriesCountOutputTypeCountSeriesViewArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: SeriesViewWhereInput
+  export type SerieCountOutputTypeCountSerieViewArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SerieViewWhereInput
+  }
+
+  /**
+   * SerieCountOutputType without action
+   */
+  export type SerieCountOutputTypeCountPurchaseArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PurchaseWhereInput
   }
 
 
@@ -4454,6 +4610,46 @@ export namespace Prisma {
    */
   export type SeasonCountOutputTypeCountSeasonViewArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: SeasonViewWhereInput
+  }
+
+
+  /**
+   * Count Type EpisodeCountOutputType
+   */
+
+  export type EpisodeCountOutputType = {
+    videoAttachment: number
+    Comment: number
+  }
+
+  export type EpisodeCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    videoAttachment?: boolean | EpisodeCountOutputTypeCountVideoAttachmentArgs
+    Comment?: boolean | EpisodeCountOutputTypeCountCommentArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * EpisodeCountOutputType without action
+   */
+  export type EpisodeCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EpisodeCountOutputType
+     */
+    select?: EpisodeCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * EpisodeCountOutputType without action
+   */
+  export type EpisodeCountOutputTypeCountVideoAttachmentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MediaAttachmentWhereInput
+  }
+
+  /**
+   * EpisodeCountOutputType without action
+   */
+  export type EpisodeCountOutputTypeCountCommentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CommentWhereInput
   }
 
 
@@ -4533,10 +4729,12 @@ export namespace Prisma {
    */
 
   export type AdCountOutputType = {
+    videoAttachment: number
     views: number
   }
 
   export type AdCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    videoAttachment?: boolean | AdCountOutputTypeCountVideoAttachmentArgs
     views?: boolean | AdCountOutputTypeCountViewsArgs
   }
 
@@ -4549,6 +4747,13 @@ export namespace Prisma {
      * Select specific fields to fetch from the AdCountOutputType
      */
     select?: AdCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * AdCountOutputType without action
+   */
+  export type AdCountOutputTypeCountVideoAttachmentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MediaAttachmentWhereInput
   }
 
   /**
@@ -14056,8 +14261,6 @@ export namespace Prisma {
     id: string | null
     title: string | null
     description: string | null
-    thumbnailUrl: string | null
-    secondaryImage: string | null
     releaseDate: Date | null
     platformDate: Date | null
     ageRating: string | null
@@ -14076,8 +14279,6 @@ export namespace Prisma {
     id: string | null
     title: string | null
     description: string | null
-    thumbnailUrl: string | null
-    secondaryImage: string | null
     releaseDate: Date | null
     platformDate: Date | null
     ageRating: string | null
@@ -14096,8 +14297,6 @@ export namespace Prisma {
     id: number
     title: number
     description: number
-    thumbnailUrl: number
-    secondaryImage: number
     releaseDate: number
     platformDate: number
     ageRating: number
@@ -14118,8 +14317,6 @@ export namespace Prisma {
     id?: true
     title?: true
     description?: true
-    thumbnailUrl?: true
-    secondaryImage?: true
     releaseDate?: true
     platformDate?: true
     ageRating?: true
@@ -14138,8 +14335,6 @@ export namespace Prisma {
     id?: true
     title?: true
     description?: true
-    thumbnailUrl?: true
-    secondaryImage?: true
     releaseDate?: true
     platformDate?: true
     ageRating?: true
@@ -14158,8 +14353,6 @@ export namespace Prisma {
     id?: true
     title?: true
     description?: true
-    thumbnailUrl?: true
-    secondaryImage?: true
     releaseDate?: true
     platformDate?: true
     ageRating?: true
@@ -14251,8 +14444,6 @@ export namespace Prisma {
     id: string
     title: string
     description: string
-    thumbnailUrl: string
-    secondaryImage: string | null
     releaseDate: Date
     platformDate: Date
     ageRating: string
@@ -14288,8 +14479,6 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     description?: boolean
-    thumbnailUrl?: boolean
-    secondaryImage?: boolean
     releaseDate?: boolean
     platformDate?: boolean
     ageRating?: boolean
@@ -14317,8 +14506,6 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     description?: boolean
-    thumbnailUrl?: boolean
-    secondaryImage?: boolean
     releaseDate?: boolean
     platformDate?: boolean
     ageRating?: boolean
@@ -14340,8 +14527,6 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     description?: boolean
-    thumbnailUrl?: boolean
-    secondaryImage?: boolean
     releaseDate?: boolean
     platformDate?: boolean
     ageRating?: boolean
@@ -14363,8 +14548,6 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     description?: boolean
-    thumbnailUrl?: boolean
-    secondaryImage?: boolean
     releaseDate?: boolean
     platformDate?: boolean
     ageRating?: boolean
@@ -14379,7 +14562,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type VideoMetadataOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "thumbnailUrl" | "secondaryImage" | "releaseDate" | "platformDate" | "ageRating" | "productionHouse" | "productionCountry" | "director" | "formatId" | "categoryId" | "genderId" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["videoMetadata"]>
+  export type VideoMetadataOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "releaseDate" | "platformDate" | "ageRating" | "productionHouse" | "productionCountry" | "director" | "formatId" | "categoryId" | "genderId" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["videoMetadata"]>
   export type VideoMetadataInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     format?: boolean | VideoMetadata$formatArgs<ExtArgs>
     category?: boolean | VideoCategoryDefaultArgs<ExtArgs>
@@ -14409,7 +14592,7 @@ export namespace Prisma {
       category: Prisma.$VideoCategoryPayload<ExtArgs>
       gender: Prisma.$VideoGenrePayload<ExtArgs>
       movie: Prisma.$MoviePayload<ExtArgs> | null
-      series: Prisma.$SeriesPayload<ExtArgs> | null
+      series: Prisma.$SeriePayload<ExtArgs> | null
       actors: Prisma.$VideoActorPayload<ExtArgs>[]
       subtitles: Prisma.$SubtitlePayload<ExtArgs>[]
       languages: Prisma.$VideoLanguagePayload<ExtArgs>[]
@@ -14418,8 +14601,6 @@ export namespace Prisma {
       id: string
       title: string
       description: string
-      thumbnailUrl: string
-      secondaryImage: string | null
       releaseDate: Date
       platformDate: Date
       ageRating: string
@@ -14830,7 +15011,7 @@ export namespace Prisma {
     category<T extends VideoCategoryDefaultArgs<ExtArgs> = {}>(args?: Subset<T, VideoCategoryDefaultArgs<ExtArgs>>): Prisma__VideoCategoryClient<$Result.GetResult<Prisma.$VideoCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     gender<T extends VideoGenreDefaultArgs<ExtArgs> = {}>(args?: Subset<T, VideoGenreDefaultArgs<ExtArgs>>): Prisma__VideoGenreClient<$Result.GetResult<Prisma.$VideoGenrePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     movie<T extends VideoMetadata$movieArgs<ExtArgs> = {}>(args?: Subset<T, VideoMetadata$movieArgs<ExtArgs>>): Prisma__MovieClient<$Result.GetResult<Prisma.$MoviePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    series<T extends VideoMetadata$seriesArgs<ExtArgs> = {}>(args?: Subset<T, VideoMetadata$seriesArgs<ExtArgs>>): Prisma__SeriesClient<$Result.GetResult<Prisma.$SeriesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    series<T extends VideoMetadata$seriesArgs<ExtArgs> = {}>(args?: Subset<T, VideoMetadata$seriesArgs<ExtArgs>>): Prisma__SerieClient<$Result.GetResult<Prisma.$SeriePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     actors<T extends VideoMetadata$actorsArgs<ExtArgs> = {}>(args?: Subset<T, VideoMetadata$actorsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VideoActorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     subtitles<T extends VideoMetadata$subtitlesArgs<ExtArgs> = {}>(args?: Subset<T, VideoMetadata$subtitlesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubtitlePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     languages<T extends VideoMetadata$languagesArgs<ExtArgs> = {}>(args?: Subset<T, VideoMetadata$languagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VideoLanguagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -14866,8 +15047,6 @@ export namespace Prisma {
     readonly id: FieldRef<"VideoMetadata", 'String'>
     readonly title: FieldRef<"VideoMetadata", 'String'>
     readonly description: FieldRef<"VideoMetadata", 'String'>
-    readonly thumbnailUrl: FieldRef<"VideoMetadata", 'String'>
-    readonly secondaryImage: FieldRef<"VideoMetadata", 'String'>
     readonly releaseDate: FieldRef<"VideoMetadata", 'DateTime'>
     readonly platformDate: FieldRef<"VideoMetadata", 'DateTime'>
     readonly ageRating: FieldRef<"VideoMetadata", 'String'>
@@ -15318,18 +15497,18 @@ export namespace Prisma {
    */
   export type VideoMetadata$seriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Series
+     * Select specific fields to fetch from the Serie
      */
-    select?: SeriesSelect<ExtArgs> | null
+    select?: SerieSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Series
+     * Omit specific fields from the Serie
      */
-    omit?: SeriesOmit<ExtArgs> | null
+    omit?: SerieOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SeriesInclude<ExtArgs> | null
-    where?: SeriesWhereInput
+    include?: SerieInclude<ExtArgs> | null
+    where?: SerieWhereInput
   }
 
   /**
@@ -15424,451 +15603,439 @@ export namespace Prisma {
 
 
   /**
-   * Model VideoFile
+   * Model MediaFile
    */
 
-  export type AggregateVideoFile = {
-    _count: VideoFileCountAggregateOutputType | null
-    _avg: VideoFileAvgAggregateOutputType | null
-    _sum: VideoFileSumAggregateOutputType | null
-    _min: VideoFileMinAggregateOutputType | null
-    _max: VideoFileMaxAggregateOutputType | null
+  export type AggregateMediaFile = {
+    _count: MediaFileCountAggregateOutputType | null
+    _avg: MediaFileAvgAggregateOutputType | null
+    _sum: MediaFileSumAggregateOutputType | null
+    _min: MediaFileMinAggregateOutputType | null
+    _max: MediaFileMaxAggregateOutputType | null
   }
 
-  export type VideoFileAvgAggregateOutputType = {
+  export type MediaFileAvgAggregateOutputType = {
     duration: number | null
     width: number | null
     height: number | null
   }
 
-  export type VideoFileSumAggregateOutputType = {
+  export type MediaFileSumAggregateOutputType = {
     duration: number | null
     width: number | null
     height: number | null
   }
 
-  export type VideoFileMinAggregateOutputType = {
+  export type MediaFileMinAggregateOutputType = {
     id: string | null
-    filePath: string | null
-    trailerPath: string | null
+    s3Key: string | null
     duration: number | null
     width: number | null
     height: number | null
-    status: $Enums.VideoFileStatus | null
+    status: $Enums.MediaFileStatus | null
+    mediaType: $Enums.MediaType | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
-  export type VideoFileMaxAggregateOutputType = {
+  export type MediaFileMaxAggregateOutputType = {
     id: string | null
-    filePath: string | null
-    trailerPath: string | null
+    s3Key: string | null
     duration: number | null
     width: number | null
     height: number | null
-    status: $Enums.VideoFileStatus | null
+    status: $Enums.MediaFileStatus | null
+    mediaType: $Enums.MediaType | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
-  export type VideoFileCountAggregateOutputType = {
+  export type MediaFileCountAggregateOutputType = {
     id: number
-    filePath: number
-    trailerPath: number
+    s3Key: number
     duration: number
     width: number
     height: number
     status: number
+    mediaType: number
     createdAt: number
     updatedAt: number
     _all: number
   }
 
 
-  export type VideoFileAvgAggregateInputType = {
+  export type MediaFileAvgAggregateInputType = {
     duration?: true
     width?: true
     height?: true
   }
 
-  export type VideoFileSumAggregateInputType = {
+  export type MediaFileSumAggregateInputType = {
     duration?: true
     width?: true
     height?: true
   }
 
-  export type VideoFileMinAggregateInputType = {
+  export type MediaFileMinAggregateInputType = {
     id?: true
-    filePath?: true
-    trailerPath?: true
+    s3Key?: true
     duration?: true
     width?: true
     height?: true
     status?: true
+    mediaType?: true
     createdAt?: true
     updatedAt?: true
   }
 
-  export type VideoFileMaxAggregateInputType = {
+  export type MediaFileMaxAggregateInputType = {
     id?: true
-    filePath?: true
-    trailerPath?: true
+    s3Key?: true
     duration?: true
     width?: true
     height?: true
     status?: true
+    mediaType?: true
     createdAt?: true
     updatedAt?: true
   }
 
-  export type VideoFileCountAggregateInputType = {
+  export type MediaFileCountAggregateInputType = {
     id?: true
-    filePath?: true
-    trailerPath?: true
+    s3Key?: true
     duration?: true
     width?: true
     height?: true
     status?: true
+    mediaType?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
   }
 
-  export type VideoFileAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type MediaFileAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which VideoFile to aggregate.
+     * Filter which MediaFile to aggregate.
      */
-    where?: VideoFileWhereInput
+    where?: MediaFileWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of VideoFiles to fetch.
+     * Determine the order of MediaFiles to fetch.
      */
-    orderBy?: VideoFileOrderByWithRelationInput | VideoFileOrderByWithRelationInput[]
+    orderBy?: MediaFileOrderByWithRelationInput | MediaFileOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: VideoFileWhereUniqueInput
+    cursor?: MediaFileWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` VideoFiles from the position of the cursor.
+     * Take `±n` MediaFiles from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` VideoFiles.
+     * Skip the first `n` MediaFiles.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned VideoFiles
+     * Count returned MediaFiles
     **/
-    _count?: true | VideoFileCountAggregateInputType
+    _count?: true | MediaFileCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: VideoFileAvgAggregateInputType
+    _avg?: MediaFileAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: VideoFileSumAggregateInputType
+    _sum?: MediaFileSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: VideoFileMinAggregateInputType
+    _min?: MediaFileMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: VideoFileMaxAggregateInputType
+    _max?: MediaFileMaxAggregateInputType
   }
 
-  export type GetVideoFileAggregateType<T extends VideoFileAggregateArgs> = {
-        [P in keyof T & keyof AggregateVideoFile]: P extends '_count' | 'count'
+  export type GetMediaFileAggregateType<T extends MediaFileAggregateArgs> = {
+        [P in keyof T & keyof AggregateMediaFile]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateVideoFile[P]>
-      : GetScalarType<T[P], AggregateVideoFile[P]>
+        : GetScalarType<T[P], AggregateMediaFile[P]>
+      : GetScalarType<T[P], AggregateMediaFile[P]>
   }
 
 
 
 
-  export type VideoFileGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: VideoFileWhereInput
-    orderBy?: VideoFileOrderByWithAggregationInput | VideoFileOrderByWithAggregationInput[]
-    by: VideoFileScalarFieldEnum[] | VideoFileScalarFieldEnum
-    having?: VideoFileScalarWhereWithAggregatesInput
+  export type MediaFileGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MediaFileWhereInput
+    orderBy?: MediaFileOrderByWithAggregationInput | MediaFileOrderByWithAggregationInput[]
+    by: MediaFileScalarFieldEnum[] | MediaFileScalarFieldEnum
+    having?: MediaFileScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: VideoFileCountAggregateInputType | true
-    _avg?: VideoFileAvgAggregateInputType
-    _sum?: VideoFileSumAggregateInputType
-    _min?: VideoFileMinAggregateInputType
-    _max?: VideoFileMaxAggregateInputType
+    _count?: MediaFileCountAggregateInputType | true
+    _avg?: MediaFileAvgAggregateInputType
+    _sum?: MediaFileSumAggregateInputType
+    _min?: MediaFileMinAggregateInputType
+    _max?: MediaFileMaxAggregateInputType
   }
 
-  export type VideoFileGroupByOutputType = {
+  export type MediaFileGroupByOutputType = {
     id: string
-    filePath: string
-    trailerPath: string | null
-    duration: number
+    s3Key: string
+    duration: number | null
     width: number | null
     height: number | null
-    status: $Enums.VideoFileStatus
+    status: $Enums.MediaFileStatus
+    mediaType: $Enums.MediaType
     createdAt: Date
     updatedAt: Date
-    _count: VideoFileCountAggregateOutputType | null
-    _avg: VideoFileAvgAggregateOutputType | null
-    _sum: VideoFileSumAggregateOutputType | null
-    _min: VideoFileMinAggregateOutputType | null
-    _max: VideoFileMaxAggregateOutputType | null
+    _count: MediaFileCountAggregateOutputType | null
+    _avg: MediaFileAvgAggregateOutputType | null
+    _sum: MediaFileSumAggregateOutputType | null
+    _min: MediaFileMinAggregateOutputType | null
+    _max: MediaFileMaxAggregateOutputType | null
   }
 
-  type GetVideoFileGroupByPayload<T extends VideoFileGroupByArgs> = Prisma.PrismaPromise<
+  type GetMediaFileGroupByPayload<T extends MediaFileGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<VideoFileGroupByOutputType, T['by']> &
+      PickEnumerable<MediaFileGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof VideoFileGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof MediaFileGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], VideoFileGroupByOutputType[P]>
-            : GetScalarType<T[P], VideoFileGroupByOutputType[P]>
+              : GetScalarType<T[P], MediaFileGroupByOutputType[P]>
+            : GetScalarType<T[P], MediaFileGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type VideoFileSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type MediaFileSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    filePath?: boolean
-    trailerPath?: boolean
+    s3Key?: boolean
     duration?: boolean
     width?: boolean
     height?: boolean
     status?: boolean
+    mediaType?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    movie?: boolean | VideoFile$movieArgs<ExtArgs>
-    episode?: boolean | VideoFile$episodeArgs<ExtArgs>
-    subtitles?: boolean | VideoFile$subtitlesArgs<ExtArgs>
-    purchases?: boolean | VideoFile$purchasesArgs<ExtArgs>
-    comments?: boolean | VideoFile$commentsArgs<ExtArgs>
-    UserVideoProgress?: boolean | VideoFile$UserVideoProgressArgs<ExtArgs>
-    _count?: boolean | VideoFileCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["videoFile"]>
+    attachments?: boolean | MediaFile$attachmentsArgs<ExtArgs>
+    Subtitle?: boolean | MediaFile$SubtitleArgs<ExtArgs>
+    _count?: boolean | MediaFileCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["mediaFile"]>
 
-  export type VideoFileSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type MediaFileSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    filePath?: boolean
-    trailerPath?: boolean
+    s3Key?: boolean
     duration?: boolean
     width?: boolean
     height?: boolean
     status?: boolean
+    mediaType?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-  }, ExtArgs["result"]["videoFile"]>
+  }, ExtArgs["result"]["mediaFile"]>
 
-  export type VideoFileSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type MediaFileSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    filePath?: boolean
-    trailerPath?: boolean
+    s3Key?: boolean
     duration?: boolean
     width?: boolean
     height?: boolean
     status?: boolean
+    mediaType?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-  }, ExtArgs["result"]["videoFile"]>
+  }, ExtArgs["result"]["mediaFile"]>
 
-  export type VideoFileSelectScalar = {
+  export type MediaFileSelectScalar = {
     id?: boolean
-    filePath?: boolean
-    trailerPath?: boolean
+    s3Key?: boolean
     duration?: boolean
     width?: boolean
     height?: boolean
     status?: boolean
+    mediaType?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type VideoFileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "filePath" | "trailerPath" | "duration" | "width" | "height" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["videoFile"]>
-  export type VideoFileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    movie?: boolean | VideoFile$movieArgs<ExtArgs>
-    episode?: boolean | VideoFile$episodeArgs<ExtArgs>
-    subtitles?: boolean | VideoFile$subtitlesArgs<ExtArgs>
-    purchases?: boolean | VideoFile$purchasesArgs<ExtArgs>
-    comments?: boolean | VideoFile$commentsArgs<ExtArgs>
-    UserVideoProgress?: boolean | VideoFile$UserVideoProgressArgs<ExtArgs>
-    _count?: boolean | VideoFileCountOutputTypeDefaultArgs<ExtArgs>
+  export type MediaFileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "s3Key" | "duration" | "width" | "height" | "status" | "mediaType" | "createdAt" | "updatedAt", ExtArgs["result"]["mediaFile"]>
+  export type MediaFileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    attachments?: boolean | MediaFile$attachmentsArgs<ExtArgs>
+    Subtitle?: boolean | MediaFile$SubtitleArgs<ExtArgs>
+    _count?: boolean | MediaFileCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type VideoFileIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type VideoFileIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type MediaFileIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type MediaFileIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
-  export type $VideoFilePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "VideoFile"
+  export type $MediaFilePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "MediaFile"
     objects: {
-      movie: Prisma.$MoviePayload<ExtArgs> | null
-      episode: Prisma.$EpisodePayload<ExtArgs> | null
-      subtitles: Prisma.$SubtitlePayload<ExtArgs>[]
-      purchases: Prisma.$PurchasePayload<ExtArgs>[]
-      comments: Prisma.$CommentPayload<ExtArgs>[]
-      UserVideoProgress: Prisma.$UserVideoViewPayload<ExtArgs>[]
+      attachments: Prisma.$MediaAttachmentPayload<ExtArgs>[]
+      Subtitle: Prisma.$SubtitlePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      filePath: string
-      trailerPath: string | null
-      duration: number
+      s3Key: string
+      duration: number | null
       width: number | null
       height: number | null
-      status: $Enums.VideoFileStatus
+      status: $Enums.MediaFileStatus
+      mediaType: $Enums.MediaType
       createdAt: Date
       updatedAt: Date
-    }, ExtArgs["result"]["videoFile"]>
+    }, ExtArgs["result"]["mediaFile"]>
     composites: {}
   }
 
-  type VideoFileGetPayload<S extends boolean | null | undefined | VideoFileDefaultArgs> = $Result.GetResult<Prisma.$VideoFilePayload, S>
+  type MediaFileGetPayload<S extends boolean | null | undefined | MediaFileDefaultArgs> = $Result.GetResult<Prisma.$MediaFilePayload, S>
 
-  type VideoFileCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<VideoFileFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: VideoFileCountAggregateInputType | true
+  type MediaFileCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<MediaFileFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: MediaFileCountAggregateInputType | true
     }
 
-  export interface VideoFileDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['VideoFile'], meta: { name: 'VideoFile' } }
+  export interface MediaFileDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['MediaFile'], meta: { name: 'MediaFile' } }
     /**
-     * Find zero or one VideoFile that matches the filter.
-     * @param {VideoFileFindUniqueArgs} args - Arguments to find a VideoFile
+     * Find zero or one MediaFile that matches the filter.
+     * @param {MediaFileFindUniqueArgs} args - Arguments to find a MediaFile
      * @example
-     * // Get one VideoFile
-     * const videoFile = await prisma.videoFile.findUnique({
+     * // Get one MediaFile
+     * const mediaFile = await prisma.mediaFile.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends VideoFileFindUniqueArgs>(args: SelectSubset<T, VideoFileFindUniqueArgs<ExtArgs>>): Prisma__VideoFileClient<$Result.GetResult<Prisma.$VideoFilePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends MediaFileFindUniqueArgs>(args: SelectSubset<T, MediaFileFindUniqueArgs<ExtArgs>>): Prisma__MediaFileClient<$Result.GetResult<Prisma.$MediaFilePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one VideoFile that matches the filter or throw an error with `error.code='P2025'`
+     * Find one MediaFile that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {VideoFileFindUniqueOrThrowArgs} args - Arguments to find a VideoFile
+     * @param {MediaFileFindUniqueOrThrowArgs} args - Arguments to find a MediaFile
      * @example
-     * // Get one VideoFile
-     * const videoFile = await prisma.videoFile.findUniqueOrThrow({
+     * // Get one MediaFile
+     * const mediaFile = await prisma.mediaFile.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends VideoFileFindUniqueOrThrowArgs>(args: SelectSubset<T, VideoFileFindUniqueOrThrowArgs<ExtArgs>>): Prisma__VideoFileClient<$Result.GetResult<Prisma.$VideoFilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends MediaFileFindUniqueOrThrowArgs>(args: SelectSubset<T, MediaFileFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MediaFileClient<$Result.GetResult<Prisma.$MediaFilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first VideoFile that matches the filter.
+     * Find the first MediaFile that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {VideoFileFindFirstArgs} args - Arguments to find a VideoFile
+     * @param {MediaFileFindFirstArgs} args - Arguments to find a MediaFile
      * @example
-     * // Get one VideoFile
-     * const videoFile = await prisma.videoFile.findFirst({
+     * // Get one MediaFile
+     * const mediaFile = await prisma.mediaFile.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends VideoFileFindFirstArgs>(args?: SelectSubset<T, VideoFileFindFirstArgs<ExtArgs>>): Prisma__VideoFileClient<$Result.GetResult<Prisma.$VideoFilePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends MediaFileFindFirstArgs>(args?: SelectSubset<T, MediaFileFindFirstArgs<ExtArgs>>): Prisma__MediaFileClient<$Result.GetResult<Prisma.$MediaFilePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first VideoFile that matches the filter or
+     * Find the first MediaFile that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {VideoFileFindFirstOrThrowArgs} args - Arguments to find a VideoFile
+     * @param {MediaFileFindFirstOrThrowArgs} args - Arguments to find a MediaFile
      * @example
-     * // Get one VideoFile
-     * const videoFile = await prisma.videoFile.findFirstOrThrow({
+     * // Get one MediaFile
+     * const mediaFile = await prisma.mediaFile.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends VideoFileFindFirstOrThrowArgs>(args?: SelectSubset<T, VideoFileFindFirstOrThrowArgs<ExtArgs>>): Prisma__VideoFileClient<$Result.GetResult<Prisma.$VideoFilePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends MediaFileFindFirstOrThrowArgs>(args?: SelectSubset<T, MediaFileFindFirstOrThrowArgs<ExtArgs>>): Prisma__MediaFileClient<$Result.GetResult<Prisma.$MediaFilePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more VideoFiles that matches the filter.
+     * Find zero or more MediaFiles that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {VideoFileFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {MediaFileFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all VideoFiles
-     * const videoFiles = await prisma.videoFile.findMany()
+     * // Get all MediaFiles
+     * const mediaFiles = await prisma.mediaFile.findMany()
      * 
-     * // Get first 10 VideoFiles
-     * const videoFiles = await prisma.videoFile.findMany({ take: 10 })
+     * // Get first 10 MediaFiles
+     * const mediaFiles = await prisma.mediaFile.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const videoFileWithIdOnly = await prisma.videoFile.findMany({ select: { id: true } })
+     * const mediaFileWithIdOnly = await prisma.mediaFile.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends VideoFileFindManyArgs>(args?: SelectSubset<T, VideoFileFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VideoFilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends MediaFileFindManyArgs>(args?: SelectSubset<T, MediaFileFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaFilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a VideoFile.
-     * @param {VideoFileCreateArgs} args - Arguments to create a VideoFile.
+     * Create a MediaFile.
+     * @param {MediaFileCreateArgs} args - Arguments to create a MediaFile.
      * @example
-     * // Create one VideoFile
-     * const VideoFile = await prisma.videoFile.create({
+     * // Create one MediaFile
+     * const MediaFile = await prisma.mediaFile.create({
      *   data: {
-     *     // ... data to create a VideoFile
+     *     // ... data to create a MediaFile
      *   }
      * })
      * 
      */
-    create<T extends VideoFileCreateArgs>(args: SelectSubset<T, VideoFileCreateArgs<ExtArgs>>): Prisma__VideoFileClient<$Result.GetResult<Prisma.$VideoFilePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends MediaFileCreateArgs>(args: SelectSubset<T, MediaFileCreateArgs<ExtArgs>>): Prisma__MediaFileClient<$Result.GetResult<Prisma.$MediaFilePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many VideoFiles.
-     * @param {VideoFileCreateManyArgs} args - Arguments to create many VideoFiles.
+     * Create many MediaFiles.
+     * @param {MediaFileCreateManyArgs} args - Arguments to create many MediaFiles.
      * @example
-     * // Create many VideoFiles
-     * const videoFile = await prisma.videoFile.createMany({
+     * // Create many MediaFiles
+     * const mediaFile = await prisma.mediaFile.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends VideoFileCreateManyArgs>(args?: SelectSubset<T, VideoFileCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends MediaFileCreateManyArgs>(args?: SelectSubset<T, MediaFileCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many VideoFiles and returns the data saved in the database.
-     * @param {VideoFileCreateManyAndReturnArgs} args - Arguments to create many VideoFiles.
+     * Create many MediaFiles and returns the data saved in the database.
+     * @param {MediaFileCreateManyAndReturnArgs} args - Arguments to create many MediaFiles.
      * @example
-     * // Create many VideoFiles
-     * const videoFile = await prisma.videoFile.createManyAndReturn({
+     * // Create many MediaFiles
+     * const mediaFile = await prisma.mediaFile.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many VideoFiles and only return the `id`
-     * const videoFileWithIdOnly = await prisma.videoFile.createManyAndReturn({
+     * // Create many MediaFiles and only return the `id`
+     * const mediaFileWithIdOnly = await prisma.mediaFile.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -15878,28 +16045,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends VideoFileCreateManyAndReturnArgs>(args?: SelectSubset<T, VideoFileCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VideoFilePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends MediaFileCreateManyAndReturnArgs>(args?: SelectSubset<T, MediaFileCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaFilePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a VideoFile.
-     * @param {VideoFileDeleteArgs} args - Arguments to delete one VideoFile.
+     * Delete a MediaFile.
+     * @param {MediaFileDeleteArgs} args - Arguments to delete one MediaFile.
      * @example
-     * // Delete one VideoFile
-     * const VideoFile = await prisma.videoFile.delete({
+     * // Delete one MediaFile
+     * const MediaFile = await prisma.mediaFile.delete({
      *   where: {
-     *     // ... filter to delete one VideoFile
+     *     // ... filter to delete one MediaFile
      *   }
      * })
      * 
      */
-    delete<T extends VideoFileDeleteArgs>(args: SelectSubset<T, VideoFileDeleteArgs<ExtArgs>>): Prisma__VideoFileClient<$Result.GetResult<Prisma.$VideoFilePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends MediaFileDeleteArgs>(args: SelectSubset<T, MediaFileDeleteArgs<ExtArgs>>): Prisma__MediaFileClient<$Result.GetResult<Prisma.$MediaFilePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one VideoFile.
-     * @param {VideoFileUpdateArgs} args - Arguments to update one VideoFile.
+     * Update one MediaFile.
+     * @param {MediaFileUpdateArgs} args - Arguments to update one MediaFile.
      * @example
-     * // Update one VideoFile
-     * const videoFile = await prisma.videoFile.update({
+     * // Update one MediaFile
+     * const mediaFile = await prisma.mediaFile.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -15909,30 +16076,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends VideoFileUpdateArgs>(args: SelectSubset<T, VideoFileUpdateArgs<ExtArgs>>): Prisma__VideoFileClient<$Result.GetResult<Prisma.$VideoFilePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends MediaFileUpdateArgs>(args: SelectSubset<T, MediaFileUpdateArgs<ExtArgs>>): Prisma__MediaFileClient<$Result.GetResult<Prisma.$MediaFilePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more VideoFiles.
-     * @param {VideoFileDeleteManyArgs} args - Arguments to filter VideoFiles to delete.
+     * Delete zero or more MediaFiles.
+     * @param {MediaFileDeleteManyArgs} args - Arguments to filter MediaFiles to delete.
      * @example
-     * // Delete a few VideoFiles
-     * const { count } = await prisma.videoFile.deleteMany({
+     * // Delete a few MediaFiles
+     * const { count } = await prisma.mediaFile.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends VideoFileDeleteManyArgs>(args?: SelectSubset<T, VideoFileDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends MediaFileDeleteManyArgs>(args?: SelectSubset<T, MediaFileDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more VideoFiles.
+     * Update zero or more MediaFiles.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {VideoFileUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {MediaFileUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many VideoFiles
-     * const videoFile = await prisma.videoFile.updateMany({
+     * // Update many MediaFiles
+     * const mediaFile = await prisma.mediaFile.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -15942,14 +16109,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends VideoFileUpdateManyArgs>(args: SelectSubset<T, VideoFileUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends MediaFileUpdateManyArgs>(args: SelectSubset<T, MediaFileUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more VideoFiles and returns the data updated in the database.
-     * @param {VideoFileUpdateManyAndReturnArgs} args - Arguments to update many VideoFiles.
+     * Update zero or more MediaFiles and returns the data updated in the database.
+     * @param {MediaFileUpdateManyAndReturnArgs} args - Arguments to update many MediaFiles.
      * @example
-     * // Update many VideoFiles
-     * const videoFile = await prisma.videoFile.updateManyAndReturn({
+     * // Update many MediaFiles
+     * const mediaFile = await prisma.mediaFile.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -15958,8 +16125,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more VideoFiles and only return the `id`
-     * const videoFileWithIdOnly = await prisma.videoFile.updateManyAndReturn({
+     * // Update zero or more MediaFiles and only return the `id`
+     * const mediaFileWithIdOnly = await prisma.mediaFile.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -15972,56 +16139,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends VideoFileUpdateManyAndReturnArgs>(args: SelectSubset<T, VideoFileUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VideoFilePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends MediaFileUpdateManyAndReturnArgs>(args: SelectSubset<T, MediaFileUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaFilePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one VideoFile.
-     * @param {VideoFileUpsertArgs} args - Arguments to update or create a VideoFile.
+     * Create or update one MediaFile.
+     * @param {MediaFileUpsertArgs} args - Arguments to update or create a MediaFile.
      * @example
-     * // Update or create a VideoFile
-     * const videoFile = await prisma.videoFile.upsert({
+     * // Update or create a MediaFile
+     * const mediaFile = await prisma.mediaFile.upsert({
      *   create: {
-     *     // ... data to create a VideoFile
+     *     // ... data to create a MediaFile
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the VideoFile we want to update
+     *     // ... the filter for the MediaFile we want to update
      *   }
      * })
      */
-    upsert<T extends VideoFileUpsertArgs>(args: SelectSubset<T, VideoFileUpsertArgs<ExtArgs>>): Prisma__VideoFileClient<$Result.GetResult<Prisma.$VideoFilePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends MediaFileUpsertArgs>(args: SelectSubset<T, MediaFileUpsertArgs<ExtArgs>>): Prisma__MediaFileClient<$Result.GetResult<Prisma.$MediaFilePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of VideoFiles.
+     * Count the number of MediaFiles.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {VideoFileCountArgs} args - Arguments to filter VideoFiles to count.
+     * @param {MediaFileCountArgs} args - Arguments to filter MediaFiles to count.
      * @example
-     * // Count the number of VideoFiles
-     * const count = await prisma.videoFile.count({
+     * // Count the number of MediaFiles
+     * const count = await prisma.mediaFile.count({
      *   where: {
-     *     // ... the filter for the VideoFiles we want to count
+     *     // ... the filter for the MediaFiles we want to count
      *   }
      * })
     **/
-    count<T extends VideoFileCountArgs>(
-      args?: Subset<T, VideoFileCountArgs>,
+    count<T extends MediaFileCountArgs>(
+      args?: Subset<T, MediaFileCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], VideoFileCountAggregateOutputType>
+          : GetScalarType<T['select'], MediaFileCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a VideoFile.
+     * Allows you to perform aggregations operations on a MediaFile.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {VideoFileAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {MediaFileAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -16041,13 +16208,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends VideoFileAggregateArgs>(args: Subset<T, VideoFileAggregateArgs>): Prisma.PrismaPromise<GetVideoFileAggregateType<T>>
+    aggregate<T extends MediaFileAggregateArgs>(args: Subset<T, MediaFileAggregateArgs>): Prisma.PrismaPromise<GetMediaFileAggregateType<T>>
 
     /**
-     * Group by VideoFile.
+     * Group by MediaFile.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {VideoFileGroupByArgs} args - Group by arguments.
+     * @param {MediaFileGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -16062,14 +16229,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends VideoFileGroupByArgs,
+      T extends MediaFileGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: VideoFileGroupByArgs['orderBy'] }
-        : { orderBy?: VideoFileGroupByArgs['orderBy'] },
+        ? { orderBy: MediaFileGroupByArgs['orderBy'] }
+        : { orderBy?: MediaFileGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -16118,27 +16285,23 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, VideoFileGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetVideoFileGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, MediaFileGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMediaFileGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the VideoFile model
+   * Fields of the MediaFile model
    */
-  readonly fields: VideoFileFieldRefs;
+  readonly fields: MediaFileFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for VideoFile.
+   * The delegate class that acts as a "Promise-like" for MediaFile.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__VideoFileClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__MediaFileClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    movie<T extends VideoFile$movieArgs<ExtArgs> = {}>(args?: Subset<T, VideoFile$movieArgs<ExtArgs>>): Prisma__MovieClient<$Result.GetResult<Prisma.$MoviePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    episode<T extends VideoFile$episodeArgs<ExtArgs> = {}>(args?: Subset<T, VideoFile$episodeArgs<ExtArgs>>): Prisma__EpisodeClient<$Result.GetResult<Prisma.$EpisodePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    subtitles<T extends VideoFile$subtitlesArgs<ExtArgs> = {}>(args?: Subset<T, VideoFile$subtitlesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubtitlePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    purchases<T extends VideoFile$purchasesArgs<ExtArgs> = {}>(args?: Subset<T, VideoFile$purchasesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PurchasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    comments<T extends VideoFile$commentsArgs<ExtArgs> = {}>(args?: Subset<T, VideoFile$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    UserVideoProgress<T extends VideoFile$UserVideoProgressArgs<ExtArgs> = {}>(args?: Subset<T, VideoFile$UserVideoProgressArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserVideoViewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    attachments<T extends MediaFile$attachmentsArgs<ExtArgs> = {}>(args?: Subset<T, MediaFile$attachmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaAttachmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    Subtitle<T extends MediaFile$SubtitleArgs<ExtArgs> = {}>(args?: Subset<T, MediaFile$SubtitleArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubtitlePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -16165,447 +16328,433 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the VideoFile model
+   * Fields of the MediaFile model
    */
-  interface VideoFileFieldRefs {
-    readonly id: FieldRef<"VideoFile", 'String'>
-    readonly filePath: FieldRef<"VideoFile", 'String'>
-    readonly trailerPath: FieldRef<"VideoFile", 'String'>
-    readonly duration: FieldRef<"VideoFile", 'Int'>
-    readonly width: FieldRef<"VideoFile", 'Int'>
-    readonly height: FieldRef<"VideoFile", 'Int'>
-    readonly status: FieldRef<"VideoFile", 'VideoFileStatus'>
-    readonly createdAt: FieldRef<"VideoFile", 'DateTime'>
-    readonly updatedAt: FieldRef<"VideoFile", 'DateTime'>
+  interface MediaFileFieldRefs {
+    readonly id: FieldRef<"MediaFile", 'String'>
+    readonly s3Key: FieldRef<"MediaFile", 'String'>
+    readonly duration: FieldRef<"MediaFile", 'Int'>
+    readonly width: FieldRef<"MediaFile", 'Int'>
+    readonly height: FieldRef<"MediaFile", 'Int'>
+    readonly status: FieldRef<"MediaFile", 'MediaFileStatus'>
+    readonly mediaType: FieldRef<"MediaFile", 'MediaType'>
+    readonly createdAt: FieldRef<"MediaFile", 'DateTime'>
+    readonly updatedAt: FieldRef<"MediaFile", 'DateTime'>
   }
     
 
   // Custom InputTypes
   /**
-   * VideoFile findUnique
+   * MediaFile findUnique
    */
-  export type VideoFileFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type MediaFileFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the VideoFile
+     * Select specific fields to fetch from the MediaFile
      */
-    select?: VideoFileSelect<ExtArgs> | null
+    select?: MediaFileSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the VideoFile
+     * Omit specific fields from the MediaFile
      */
-    omit?: VideoFileOmit<ExtArgs> | null
+    omit?: MediaFileOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: VideoFileInclude<ExtArgs> | null
+    include?: MediaFileInclude<ExtArgs> | null
     /**
-     * Filter, which VideoFile to fetch.
+     * Filter, which MediaFile to fetch.
      */
-    where: VideoFileWhereUniqueInput
+    where: MediaFileWhereUniqueInput
   }
 
   /**
-   * VideoFile findUniqueOrThrow
+   * MediaFile findUniqueOrThrow
    */
-  export type VideoFileFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type MediaFileFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the VideoFile
+     * Select specific fields to fetch from the MediaFile
      */
-    select?: VideoFileSelect<ExtArgs> | null
+    select?: MediaFileSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the VideoFile
+     * Omit specific fields from the MediaFile
      */
-    omit?: VideoFileOmit<ExtArgs> | null
+    omit?: MediaFileOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: VideoFileInclude<ExtArgs> | null
+    include?: MediaFileInclude<ExtArgs> | null
     /**
-     * Filter, which VideoFile to fetch.
+     * Filter, which MediaFile to fetch.
      */
-    where: VideoFileWhereUniqueInput
+    where: MediaFileWhereUniqueInput
   }
 
   /**
-   * VideoFile findFirst
+   * MediaFile findFirst
    */
-  export type VideoFileFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type MediaFileFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the VideoFile
+     * Select specific fields to fetch from the MediaFile
      */
-    select?: VideoFileSelect<ExtArgs> | null
+    select?: MediaFileSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the VideoFile
+     * Omit specific fields from the MediaFile
      */
-    omit?: VideoFileOmit<ExtArgs> | null
+    omit?: MediaFileOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: VideoFileInclude<ExtArgs> | null
+    include?: MediaFileInclude<ExtArgs> | null
     /**
-     * Filter, which VideoFile to fetch.
+     * Filter, which MediaFile to fetch.
      */
-    where?: VideoFileWhereInput
+    where?: MediaFileWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of VideoFiles to fetch.
+     * Determine the order of MediaFiles to fetch.
      */
-    orderBy?: VideoFileOrderByWithRelationInput | VideoFileOrderByWithRelationInput[]
+    orderBy?: MediaFileOrderByWithRelationInput | MediaFileOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for VideoFiles.
+     * Sets the position for searching for MediaFiles.
      */
-    cursor?: VideoFileWhereUniqueInput
+    cursor?: MediaFileWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` VideoFiles from the position of the cursor.
+     * Take `±n` MediaFiles from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` VideoFiles.
+     * Skip the first `n` MediaFiles.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of VideoFiles.
+     * Filter by unique combinations of MediaFiles.
      */
-    distinct?: VideoFileScalarFieldEnum | VideoFileScalarFieldEnum[]
+    distinct?: MediaFileScalarFieldEnum | MediaFileScalarFieldEnum[]
   }
 
   /**
-   * VideoFile findFirstOrThrow
+   * MediaFile findFirstOrThrow
    */
-  export type VideoFileFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type MediaFileFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the VideoFile
+     * Select specific fields to fetch from the MediaFile
      */
-    select?: VideoFileSelect<ExtArgs> | null
+    select?: MediaFileSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the VideoFile
+     * Omit specific fields from the MediaFile
      */
-    omit?: VideoFileOmit<ExtArgs> | null
+    omit?: MediaFileOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: VideoFileInclude<ExtArgs> | null
+    include?: MediaFileInclude<ExtArgs> | null
     /**
-     * Filter, which VideoFile to fetch.
+     * Filter, which MediaFile to fetch.
      */
-    where?: VideoFileWhereInput
+    where?: MediaFileWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of VideoFiles to fetch.
+     * Determine the order of MediaFiles to fetch.
      */
-    orderBy?: VideoFileOrderByWithRelationInput | VideoFileOrderByWithRelationInput[]
+    orderBy?: MediaFileOrderByWithRelationInput | MediaFileOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for VideoFiles.
+     * Sets the position for searching for MediaFiles.
      */
-    cursor?: VideoFileWhereUniqueInput
+    cursor?: MediaFileWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` VideoFiles from the position of the cursor.
+     * Take `±n` MediaFiles from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` VideoFiles.
+     * Skip the first `n` MediaFiles.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of VideoFiles.
+     * Filter by unique combinations of MediaFiles.
      */
-    distinct?: VideoFileScalarFieldEnum | VideoFileScalarFieldEnum[]
+    distinct?: MediaFileScalarFieldEnum | MediaFileScalarFieldEnum[]
   }
 
   /**
-   * VideoFile findMany
+   * MediaFile findMany
    */
-  export type VideoFileFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type MediaFileFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the VideoFile
+     * Select specific fields to fetch from the MediaFile
      */
-    select?: VideoFileSelect<ExtArgs> | null
+    select?: MediaFileSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the VideoFile
+     * Omit specific fields from the MediaFile
      */
-    omit?: VideoFileOmit<ExtArgs> | null
+    omit?: MediaFileOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: VideoFileInclude<ExtArgs> | null
+    include?: MediaFileInclude<ExtArgs> | null
     /**
-     * Filter, which VideoFiles to fetch.
+     * Filter, which MediaFiles to fetch.
      */
-    where?: VideoFileWhereInput
+    where?: MediaFileWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of VideoFiles to fetch.
+     * Determine the order of MediaFiles to fetch.
      */
-    orderBy?: VideoFileOrderByWithRelationInput | VideoFileOrderByWithRelationInput[]
+    orderBy?: MediaFileOrderByWithRelationInput | MediaFileOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing VideoFiles.
+     * Sets the position for listing MediaFiles.
      */
-    cursor?: VideoFileWhereUniqueInput
+    cursor?: MediaFileWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` VideoFiles from the position of the cursor.
+     * Take `±n` MediaFiles from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` VideoFiles.
+     * Skip the first `n` MediaFiles.
      */
     skip?: number
-    distinct?: VideoFileScalarFieldEnum | VideoFileScalarFieldEnum[]
+    distinct?: MediaFileScalarFieldEnum | MediaFileScalarFieldEnum[]
   }
 
   /**
-   * VideoFile create
+   * MediaFile create
    */
-  export type VideoFileCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type MediaFileCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the VideoFile
+     * Select specific fields to fetch from the MediaFile
      */
-    select?: VideoFileSelect<ExtArgs> | null
+    select?: MediaFileSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the VideoFile
+     * Omit specific fields from the MediaFile
      */
-    omit?: VideoFileOmit<ExtArgs> | null
+    omit?: MediaFileOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: VideoFileInclude<ExtArgs> | null
+    include?: MediaFileInclude<ExtArgs> | null
     /**
-     * The data needed to create a VideoFile.
+     * The data needed to create a MediaFile.
      */
-    data: XOR<VideoFileCreateInput, VideoFileUncheckedCreateInput>
+    data: XOR<MediaFileCreateInput, MediaFileUncheckedCreateInput>
   }
 
   /**
-   * VideoFile createMany
+   * MediaFile createMany
    */
-  export type VideoFileCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type MediaFileCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many VideoFiles.
+     * The data used to create many MediaFiles.
      */
-    data: VideoFileCreateManyInput | VideoFileCreateManyInput[]
+    data: MediaFileCreateManyInput | MediaFileCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * VideoFile createManyAndReturn
+   * MediaFile createManyAndReturn
    */
-  export type VideoFileCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type MediaFileCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the VideoFile
+     * Select specific fields to fetch from the MediaFile
      */
-    select?: VideoFileSelectCreateManyAndReturn<ExtArgs> | null
+    select?: MediaFileSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the VideoFile
+     * Omit specific fields from the MediaFile
      */
-    omit?: VideoFileOmit<ExtArgs> | null
+    omit?: MediaFileOmit<ExtArgs> | null
     /**
-     * The data used to create many VideoFiles.
+     * The data used to create many MediaFiles.
      */
-    data: VideoFileCreateManyInput | VideoFileCreateManyInput[]
+    data: MediaFileCreateManyInput | MediaFileCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * VideoFile update
+   * MediaFile update
    */
-  export type VideoFileUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type MediaFileUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the VideoFile
+     * Select specific fields to fetch from the MediaFile
      */
-    select?: VideoFileSelect<ExtArgs> | null
+    select?: MediaFileSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the VideoFile
+     * Omit specific fields from the MediaFile
      */
-    omit?: VideoFileOmit<ExtArgs> | null
+    omit?: MediaFileOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: VideoFileInclude<ExtArgs> | null
+    include?: MediaFileInclude<ExtArgs> | null
     /**
-     * The data needed to update a VideoFile.
+     * The data needed to update a MediaFile.
      */
-    data: XOR<VideoFileUpdateInput, VideoFileUncheckedUpdateInput>
+    data: XOR<MediaFileUpdateInput, MediaFileUncheckedUpdateInput>
     /**
-     * Choose, which VideoFile to update.
+     * Choose, which MediaFile to update.
      */
-    where: VideoFileWhereUniqueInput
+    where: MediaFileWhereUniqueInput
   }
 
   /**
-   * VideoFile updateMany
+   * MediaFile updateMany
    */
-  export type VideoFileUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type MediaFileUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update VideoFiles.
+     * The data used to update MediaFiles.
      */
-    data: XOR<VideoFileUpdateManyMutationInput, VideoFileUncheckedUpdateManyInput>
+    data: XOR<MediaFileUpdateManyMutationInput, MediaFileUncheckedUpdateManyInput>
     /**
-     * Filter which VideoFiles to update
+     * Filter which MediaFiles to update
      */
-    where?: VideoFileWhereInput
+    where?: MediaFileWhereInput
     /**
-     * Limit how many VideoFiles to update.
+     * Limit how many MediaFiles to update.
      */
     limit?: number
   }
 
   /**
-   * VideoFile updateManyAndReturn
+   * MediaFile updateManyAndReturn
    */
-  export type VideoFileUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type MediaFileUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the VideoFile
+     * Select specific fields to fetch from the MediaFile
      */
-    select?: VideoFileSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: MediaFileSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the VideoFile
+     * Omit specific fields from the MediaFile
      */
-    omit?: VideoFileOmit<ExtArgs> | null
+    omit?: MediaFileOmit<ExtArgs> | null
     /**
-     * The data used to update VideoFiles.
+     * The data used to update MediaFiles.
      */
-    data: XOR<VideoFileUpdateManyMutationInput, VideoFileUncheckedUpdateManyInput>
+    data: XOR<MediaFileUpdateManyMutationInput, MediaFileUncheckedUpdateManyInput>
     /**
-     * Filter which VideoFiles to update
+     * Filter which MediaFiles to update
      */
-    where?: VideoFileWhereInput
+    where?: MediaFileWhereInput
     /**
-     * Limit how many VideoFiles to update.
+     * Limit how many MediaFiles to update.
      */
     limit?: number
   }
 
   /**
-   * VideoFile upsert
+   * MediaFile upsert
    */
-  export type VideoFileUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type MediaFileUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the VideoFile
+     * Select specific fields to fetch from the MediaFile
      */
-    select?: VideoFileSelect<ExtArgs> | null
+    select?: MediaFileSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the VideoFile
+     * Omit specific fields from the MediaFile
      */
-    omit?: VideoFileOmit<ExtArgs> | null
+    omit?: MediaFileOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: VideoFileInclude<ExtArgs> | null
+    include?: MediaFileInclude<ExtArgs> | null
     /**
-     * The filter to search for the VideoFile to update in case it exists.
+     * The filter to search for the MediaFile to update in case it exists.
      */
-    where: VideoFileWhereUniqueInput
+    where: MediaFileWhereUniqueInput
     /**
-     * In case the VideoFile found by the `where` argument doesn't exist, create a new VideoFile with this data.
+     * In case the MediaFile found by the `where` argument doesn't exist, create a new MediaFile with this data.
      */
-    create: XOR<VideoFileCreateInput, VideoFileUncheckedCreateInput>
+    create: XOR<MediaFileCreateInput, MediaFileUncheckedCreateInput>
     /**
-     * In case the VideoFile was found with the provided `where` argument, update it with this data.
+     * In case the MediaFile was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<VideoFileUpdateInput, VideoFileUncheckedUpdateInput>
+    update: XOR<MediaFileUpdateInput, MediaFileUncheckedUpdateInput>
   }
 
   /**
-   * VideoFile delete
+   * MediaFile delete
    */
-  export type VideoFileDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type MediaFileDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the VideoFile
+     * Select specific fields to fetch from the MediaFile
      */
-    select?: VideoFileSelect<ExtArgs> | null
+    select?: MediaFileSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the VideoFile
+     * Omit specific fields from the MediaFile
      */
-    omit?: VideoFileOmit<ExtArgs> | null
+    omit?: MediaFileOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: VideoFileInclude<ExtArgs> | null
+    include?: MediaFileInclude<ExtArgs> | null
     /**
-     * Filter which VideoFile to delete.
+     * Filter which MediaFile to delete.
      */
-    where: VideoFileWhereUniqueInput
+    where: MediaFileWhereUniqueInput
   }
 
   /**
-   * VideoFile deleteMany
+   * MediaFile deleteMany
    */
-  export type VideoFileDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type MediaFileDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which VideoFiles to delete
+     * Filter which MediaFiles to delete
      */
-    where?: VideoFileWhereInput
+    where?: MediaFileWhereInput
     /**
-     * Limit how many VideoFiles to delete.
+     * Limit how many MediaFiles to delete.
      */
     limit?: number
   }
 
   /**
-   * VideoFile.movie
+   * MediaFile.attachments
    */
-  export type VideoFile$movieArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type MediaFile$attachmentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Movie
+     * Select specific fields to fetch from the MediaAttachment
      */
-    select?: MovieSelect<ExtArgs> | null
+    select?: MediaAttachmentSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Movie
+     * Omit specific fields from the MediaAttachment
      */
-    omit?: MovieOmit<ExtArgs> | null
+    omit?: MediaAttachmentOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: MovieInclude<ExtArgs> | null
-    where?: MovieWhereInput
+    include?: MediaAttachmentInclude<ExtArgs> | null
+    where?: MediaAttachmentWhereInput
+    orderBy?: MediaAttachmentOrderByWithRelationInput | MediaAttachmentOrderByWithRelationInput[]
+    cursor?: MediaAttachmentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MediaAttachmentScalarFieldEnum | MediaAttachmentScalarFieldEnum[]
   }
 
   /**
-   * VideoFile.episode
+   * MediaFile.Subtitle
    */
-  export type VideoFile$episodeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Episode
-     */
-    select?: EpisodeSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Episode
-     */
-    omit?: EpisodeOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: EpisodeInclude<ExtArgs> | null
-    where?: EpisodeWhereInput
-  }
-
-  /**
-   * VideoFile.subtitles
-   */
-  export type VideoFile$subtitlesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type MediaFile$SubtitleArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Subtitle
      */
@@ -16627,93 +16776,1173 @@ export namespace Prisma {
   }
 
   /**
-   * VideoFile.purchases
+   * MediaFile without action
    */
-  export type VideoFile$purchasesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type MediaFileDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Purchase
+     * Select specific fields to fetch from the MediaFile
      */
-    select?: PurchaseSelect<ExtArgs> | null
+    select?: MediaFileSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Purchase
+     * Omit specific fields from the MediaFile
      */
-    omit?: PurchaseOmit<ExtArgs> | null
+    omit?: MediaFileOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: PurchaseInclude<ExtArgs> | null
-    where?: PurchaseWhereInput
-    orderBy?: PurchaseOrderByWithRelationInput | PurchaseOrderByWithRelationInput[]
-    cursor?: PurchaseWhereUniqueInput
+    include?: MediaFileInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model MediaAttachment
+   */
+
+  export type AggregateMediaAttachment = {
+    _count: MediaAttachmentCountAggregateOutputType | null
+    _min: MediaAttachmentMinAggregateOutputType | null
+    _max: MediaAttachmentMaxAggregateOutputType | null
+  }
+
+  export type MediaAttachmentMinAggregateOutputType = {
+    id: string | null
+    mediaFileId: string | null
+    movieId: string | null
+    episodeId: string | null
+    adId: string | null
+    type: $Enums.MediaAttachmentType | null
+  }
+
+  export type MediaAttachmentMaxAggregateOutputType = {
+    id: string | null
+    mediaFileId: string | null
+    movieId: string | null
+    episodeId: string | null
+    adId: string | null
+    type: $Enums.MediaAttachmentType | null
+  }
+
+  export type MediaAttachmentCountAggregateOutputType = {
+    id: number
+    mediaFileId: number
+    movieId: number
+    episodeId: number
+    adId: number
+    type: number
+    _all: number
+  }
+
+
+  export type MediaAttachmentMinAggregateInputType = {
+    id?: true
+    mediaFileId?: true
+    movieId?: true
+    episodeId?: true
+    adId?: true
+    type?: true
+  }
+
+  export type MediaAttachmentMaxAggregateInputType = {
+    id?: true
+    mediaFileId?: true
+    movieId?: true
+    episodeId?: true
+    adId?: true
+    type?: true
+  }
+
+  export type MediaAttachmentCountAggregateInputType = {
+    id?: true
+    mediaFileId?: true
+    movieId?: true
+    episodeId?: true
+    adId?: true
+    type?: true
+    _all?: true
+  }
+
+  export type MediaAttachmentAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MediaAttachment to aggregate.
+     */
+    where?: MediaAttachmentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MediaAttachments to fetch.
+     */
+    orderBy?: MediaAttachmentOrderByWithRelationInput | MediaAttachmentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MediaAttachmentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MediaAttachments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MediaAttachments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned MediaAttachments
+    **/
+    _count?: true | MediaAttachmentCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MediaAttachmentMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MediaAttachmentMaxAggregateInputType
+  }
+
+  export type GetMediaAttachmentAggregateType<T extends MediaAttachmentAggregateArgs> = {
+        [P in keyof T & keyof AggregateMediaAttachment]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMediaAttachment[P]>
+      : GetScalarType<T[P], AggregateMediaAttachment[P]>
+  }
+
+
+
+
+  export type MediaAttachmentGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MediaAttachmentWhereInput
+    orderBy?: MediaAttachmentOrderByWithAggregationInput | MediaAttachmentOrderByWithAggregationInput[]
+    by: MediaAttachmentScalarFieldEnum[] | MediaAttachmentScalarFieldEnum
+    having?: MediaAttachmentScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    distinct?: PurchaseScalarFieldEnum | PurchaseScalarFieldEnum[]
+    _count?: MediaAttachmentCountAggregateInputType | true
+    _min?: MediaAttachmentMinAggregateInputType
+    _max?: MediaAttachmentMaxAggregateInputType
+  }
+
+  export type MediaAttachmentGroupByOutputType = {
+    id: string
+    mediaFileId: string
+    movieId: string | null
+    episodeId: string | null
+    adId: string | null
+    type: $Enums.MediaAttachmentType
+    _count: MediaAttachmentCountAggregateOutputType | null
+    _min: MediaAttachmentMinAggregateOutputType | null
+    _max: MediaAttachmentMaxAggregateOutputType | null
+  }
+
+  type GetMediaAttachmentGroupByPayload<T extends MediaAttachmentGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<MediaAttachmentGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MediaAttachmentGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MediaAttachmentGroupByOutputType[P]>
+            : GetScalarType<T[P], MediaAttachmentGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MediaAttachmentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    mediaFileId?: boolean
+    movieId?: boolean
+    episodeId?: boolean
+    adId?: boolean
+    type?: boolean
+    mediaFile?: boolean | MediaFileDefaultArgs<ExtArgs>
+    movie?: boolean | MediaAttachment$movieArgs<ExtArgs>
+    episode?: boolean | MediaAttachment$episodeArgs<ExtArgs>
+    ad?: boolean | MediaAttachment$adArgs<ExtArgs>
+  }, ExtArgs["result"]["mediaAttachment"]>
+
+  export type MediaAttachmentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    mediaFileId?: boolean
+    movieId?: boolean
+    episodeId?: boolean
+    adId?: boolean
+    type?: boolean
+    mediaFile?: boolean | MediaFileDefaultArgs<ExtArgs>
+    movie?: boolean | MediaAttachment$movieArgs<ExtArgs>
+    episode?: boolean | MediaAttachment$episodeArgs<ExtArgs>
+    ad?: boolean | MediaAttachment$adArgs<ExtArgs>
+  }, ExtArgs["result"]["mediaAttachment"]>
+
+  export type MediaAttachmentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    mediaFileId?: boolean
+    movieId?: boolean
+    episodeId?: boolean
+    adId?: boolean
+    type?: boolean
+    mediaFile?: boolean | MediaFileDefaultArgs<ExtArgs>
+    movie?: boolean | MediaAttachment$movieArgs<ExtArgs>
+    episode?: boolean | MediaAttachment$episodeArgs<ExtArgs>
+    ad?: boolean | MediaAttachment$adArgs<ExtArgs>
+  }, ExtArgs["result"]["mediaAttachment"]>
+
+  export type MediaAttachmentSelectScalar = {
+    id?: boolean
+    mediaFileId?: boolean
+    movieId?: boolean
+    episodeId?: boolean
+    adId?: boolean
+    type?: boolean
+  }
+
+  export type MediaAttachmentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "mediaFileId" | "movieId" | "episodeId" | "adId" | "type", ExtArgs["result"]["mediaAttachment"]>
+  export type MediaAttachmentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    mediaFile?: boolean | MediaFileDefaultArgs<ExtArgs>
+    movie?: boolean | MediaAttachment$movieArgs<ExtArgs>
+    episode?: boolean | MediaAttachment$episodeArgs<ExtArgs>
+    ad?: boolean | MediaAttachment$adArgs<ExtArgs>
+  }
+  export type MediaAttachmentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    mediaFile?: boolean | MediaFileDefaultArgs<ExtArgs>
+    movie?: boolean | MediaAttachment$movieArgs<ExtArgs>
+    episode?: boolean | MediaAttachment$episodeArgs<ExtArgs>
+    ad?: boolean | MediaAttachment$adArgs<ExtArgs>
+  }
+  export type MediaAttachmentIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    mediaFile?: boolean | MediaFileDefaultArgs<ExtArgs>
+    movie?: boolean | MediaAttachment$movieArgs<ExtArgs>
+    episode?: boolean | MediaAttachment$episodeArgs<ExtArgs>
+    ad?: boolean | MediaAttachment$adArgs<ExtArgs>
+  }
+
+  export type $MediaAttachmentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "MediaAttachment"
+    objects: {
+      mediaFile: Prisma.$MediaFilePayload<ExtArgs>
+      movie: Prisma.$MoviePayload<ExtArgs> | null
+      episode: Prisma.$EpisodePayload<ExtArgs> | null
+      ad: Prisma.$AdPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      mediaFileId: string
+      movieId: string | null
+      episodeId: string | null
+      adId: string | null
+      type: $Enums.MediaAttachmentType
+    }, ExtArgs["result"]["mediaAttachment"]>
+    composites: {}
+  }
+
+  type MediaAttachmentGetPayload<S extends boolean | null | undefined | MediaAttachmentDefaultArgs> = $Result.GetResult<Prisma.$MediaAttachmentPayload, S>
+
+  type MediaAttachmentCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<MediaAttachmentFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: MediaAttachmentCountAggregateInputType | true
+    }
+
+  export interface MediaAttachmentDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['MediaAttachment'], meta: { name: 'MediaAttachment' } }
+    /**
+     * Find zero or one MediaAttachment that matches the filter.
+     * @param {MediaAttachmentFindUniqueArgs} args - Arguments to find a MediaAttachment
+     * @example
+     * // Get one MediaAttachment
+     * const mediaAttachment = await prisma.mediaAttachment.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends MediaAttachmentFindUniqueArgs>(args: SelectSubset<T, MediaAttachmentFindUniqueArgs<ExtArgs>>): Prisma__MediaAttachmentClient<$Result.GetResult<Prisma.$MediaAttachmentPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one MediaAttachment that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {MediaAttachmentFindUniqueOrThrowArgs} args - Arguments to find a MediaAttachment
+     * @example
+     * // Get one MediaAttachment
+     * const mediaAttachment = await prisma.mediaAttachment.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends MediaAttachmentFindUniqueOrThrowArgs>(args: SelectSubset<T, MediaAttachmentFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MediaAttachmentClient<$Result.GetResult<Prisma.$MediaAttachmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MediaAttachment that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaAttachmentFindFirstArgs} args - Arguments to find a MediaAttachment
+     * @example
+     * // Get one MediaAttachment
+     * const mediaAttachment = await prisma.mediaAttachment.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends MediaAttachmentFindFirstArgs>(args?: SelectSubset<T, MediaAttachmentFindFirstArgs<ExtArgs>>): Prisma__MediaAttachmentClient<$Result.GetResult<Prisma.$MediaAttachmentPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MediaAttachment that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaAttachmentFindFirstOrThrowArgs} args - Arguments to find a MediaAttachment
+     * @example
+     * // Get one MediaAttachment
+     * const mediaAttachment = await prisma.mediaAttachment.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends MediaAttachmentFindFirstOrThrowArgs>(args?: SelectSubset<T, MediaAttachmentFindFirstOrThrowArgs<ExtArgs>>): Prisma__MediaAttachmentClient<$Result.GetResult<Prisma.$MediaAttachmentPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more MediaAttachments that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaAttachmentFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all MediaAttachments
+     * const mediaAttachments = await prisma.mediaAttachment.findMany()
+     * 
+     * // Get first 10 MediaAttachments
+     * const mediaAttachments = await prisma.mediaAttachment.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const mediaAttachmentWithIdOnly = await prisma.mediaAttachment.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends MediaAttachmentFindManyArgs>(args?: SelectSubset<T, MediaAttachmentFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaAttachmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a MediaAttachment.
+     * @param {MediaAttachmentCreateArgs} args - Arguments to create a MediaAttachment.
+     * @example
+     * // Create one MediaAttachment
+     * const MediaAttachment = await prisma.mediaAttachment.create({
+     *   data: {
+     *     // ... data to create a MediaAttachment
+     *   }
+     * })
+     * 
+     */
+    create<T extends MediaAttachmentCreateArgs>(args: SelectSubset<T, MediaAttachmentCreateArgs<ExtArgs>>): Prisma__MediaAttachmentClient<$Result.GetResult<Prisma.$MediaAttachmentPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many MediaAttachments.
+     * @param {MediaAttachmentCreateManyArgs} args - Arguments to create many MediaAttachments.
+     * @example
+     * // Create many MediaAttachments
+     * const mediaAttachment = await prisma.mediaAttachment.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends MediaAttachmentCreateManyArgs>(args?: SelectSubset<T, MediaAttachmentCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many MediaAttachments and returns the data saved in the database.
+     * @param {MediaAttachmentCreateManyAndReturnArgs} args - Arguments to create many MediaAttachments.
+     * @example
+     * // Create many MediaAttachments
+     * const mediaAttachment = await prisma.mediaAttachment.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many MediaAttachments and only return the `id`
+     * const mediaAttachmentWithIdOnly = await prisma.mediaAttachment.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends MediaAttachmentCreateManyAndReturnArgs>(args?: SelectSubset<T, MediaAttachmentCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaAttachmentPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a MediaAttachment.
+     * @param {MediaAttachmentDeleteArgs} args - Arguments to delete one MediaAttachment.
+     * @example
+     * // Delete one MediaAttachment
+     * const MediaAttachment = await prisma.mediaAttachment.delete({
+     *   where: {
+     *     // ... filter to delete one MediaAttachment
+     *   }
+     * })
+     * 
+     */
+    delete<T extends MediaAttachmentDeleteArgs>(args: SelectSubset<T, MediaAttachmentDeleteArgs<ExtArgs>>): Prisma__MediaAttachmentClient<$Result.GetResult<Prisma.$MediaAttachmentPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one MediaAttachment.
+     * @param {MediaAttachmentUpdateArgs} args - Arguments to update one MediaAttachment.
+     * @example
+     * // Update one MediaAttachment
+     * const mediaAttachment = await prisma.mediaAttachment.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends MediaAttachmentUpdateArgs>(args: SelectSubset<T, MediaAttachmentUpdateArgs<ExtArgs>>): Prisma__MediaAttachmentClient<$Result.GetResult<Prisma.$MediaAttachmentPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more MediaAttachments.
+     * @param {MediaAttachmentDeleteManyArgs} args - Arguments to filter MediaAttachments to delete.
+     * @example
+     * // Delete a few MediaAttachments
+     * const { count } = await prisma.mediaAttachment.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends MediaAttachmentDeleteManyArgs>(args?: SelectSubset<T, MediaAttachmentDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MediaAttachments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaAttachmentUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many MediaAttachments
+     * const mediaAttachment = await prisma.mediaAttachment.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends MediaAttachmentUpdateManyArgs>(args: SelectSubset<T, MediaAttachmentUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MediaAttachments and returns the data updated in the database.
+     * @param {MediaAttachmentUpdateManyAndReturnArgs} args - Arguments to update many MediaAttachments.
+     * @example
+     * // Update many MediaAttachments
+     * const mediaAttachment = await prisma.mediaAttachment.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more MediaAttachments and only return the `id`
+     * const mediaAttachmentWithIdOnly = await prisma.mediaAttachment.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends MediaAttachmentUpdateManyAndReturnArgs>(args: SelectSubset<T, MediaAttachmentUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaAttachmentPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one MediaAttachment.
+     * @param {MediaAttachmentUpsertArgs} args - Arguments to update or create a MediaAttachment.
+     * @example
+     * // Update or create a MediaAttachment
+     * const mediaAttachment = await prisma.mediaAttachment.upsert({
+     *   create: {
+     *     // ... data to create a MediaAttachment
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the MediaAttachment we want to update
+     *   }
+     * })
+     */
+    upsert<T extends MediaAttachmentUpsertArgs>(args: SelectSubset<T, MediaAttachmentUpsertArgs<ExtArgs>>): Prisma__MediaAttachmentClient<$Result.GetResult<Prisma.$MediaAttachmentPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of MediaAttachments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaAttachmentCountArgs} args - Arguments to filter MediaAttachments to count.
+     * @example
+     * // Count the number of MediaAttachments
+     * const count = await prisma.mediaAttachment.count({
+     *   where: {
+     *     // ... the filter for the MediaAttachments we want to count
+     *   }
+     * })
+    **/
+    count<T extends MediaAttachmentCountArgs>(
+      args?: Subset<T, MediaAttachmentCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MediaAttachmentCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a MediaAttachment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaAttachmentAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MediaAttachmentAggregateArgs>(args: Subset<T, MediaAttachmentAggregateArgs>): Prisma.PrismaPromise<GetMediaAttachmentAggregateType<T>>
+
+    /**
+     * Group by MediaAttachment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaAttachmentGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MediaAttachmentGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MediaAttachmentGroupByArgs['orderBy'] }
+        : { orderBy?: MediaAttachmentGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MediaAttachmentGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMediaAttachmentGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the MediaAttachment model
+   */
+  readonly fields: MediaAttachmentFieldRefs;
   }
 
   /**
-   * VideoFile.comments
+   * The delegate class that acts as a "Promise-like" for MediaAttachment.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export type VideoFile$commentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface Prisma__MediaAttachmentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    mediaFile<T extends MediaFileDefaultArgs<ExtArgs> = {}>(args?: Subset<T, MediaFileDefaultArgs<ExtArgs>>): Prisma__MediaFileClient<$Result.GetResult<Prisma.$MediaFilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    movie<T extends MediaAttachment$movieArgs<ExtArgs> = {}>(args?: Subset<T, MediaAttachment$movieArgs<ExtArgs>>): Prisma__MovieClient<$Result.GetResult<Prisma.$MoviePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    episode<T extends MediaAttachment$episodeArgs<ExtArgs> = {}>(args?: Subset<T, MediaAttachment$episodeArgs<ExtArgs>>): Prisma__EpisodeClient<$Result.GetResult<Prisma.$EpisodePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    ad<T extends MediaAttachment$adArgs<ExtArgs> = {}>(args?: Subset<T, MediaAttachment$adArgs<ExtArgs>>): Prisma__AdClient<$Result.GetResult<Prisma.$AdPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
-     * Select specific fields to fetch from the Comment
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
      */
-    select?: CommentSelect<ExtArgs> | null
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
     /**
-     * Omit specific fields from the Comment
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
      */
-    omit?: CommentOmit<ExtArgs> | null
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the MediaAttachment model
+   */
+  interface MediaAttachmentFieldRefs {
+    readonly id: FieldRef<"MediaAttachment", 'String'>
+    readonly mediaFileId: FieldRef<"MediaAttachment", 'String'>
+    readonly movieId: FieldRef<"MediaAttachment", 'String'>
+    readonly episodeId: FieldRef<"MediaAttachment", 'String'>
+    readonly adId: FieldRef<"MediaAttachment", 'String'>
+    readonly type: FieldRef<"MediaAttachment", 'MediaAttachmentType'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * MediaAttachment findUnique
+   */
+  export type MediaAttachmentFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaAttachment
+     */
+    select?: MediaAttachmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaAttachment
+     */
+    omit?: MediaAttachmentOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: CommentInclude<ExtArgs> | null
-    where?: CommentWhereInput
-    orderBy?: CommentOrderByWithRelationInput | CommentOrderByWithRelationInput[]
-    cursor?: CommentWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: CommentScalarFieldEnum | CommentScalarFieldEnum[]
+    include?: MediaAttachmentInclude<ExtArgs> | null
+    /**
+     * Filter, which MediaAttachment to fetch.
+     */
+    where: MediaAttachmentWhereUniqueInput
   }
 
   /**
-   * VideoFile.UserVideoProgress
+   * MediaAttachment findUniqueOrThrow
    */
-  export type VideoFile$UserVideoProgressArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type MediaAttachmentFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the UserVideoView
+     * Select specific fields to fetch from the MediaAttachment
      */
-    select?: UserVideoViewSelect<ExtArgs> | null
+    select?: MediaAttachmentSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the UserVideoView
+     * Omit specific fields from the MediaAttachment
      */
-    omit?: UserVideoViewOmit<ExtArgs> | null
+    omit?: MediaAttachmentOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: UserVideoViewInclude<ExtArgs> | null
-    where?: UserVideoViewWhereInput
-    orderBy?: UserVideoViewOrderByWithRelationInput | UserVideoViewOrderByWithRelationInput[]
-    cursor?: UserVideoViewWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: UserVideoViewScalarFieldEnum | UserVideoViewScalarFieldEnum[]
+    include?: MediaAttachmentInclude<ExtArgs> | null
+    /**
+     * Filter, which MediaAttachment to fetch.
+     */
+    where: MediaAttachmentWhereUniqueInput
   }
 
   /**
-   * VideoFile without action
+   * MediaAttachment findFirst
    */
-  export type VideoFileDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type MediaAttachmentFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the VideoFile
+     * Select specific fields to fetch from the MediaAttachment
      */
-    select?: VideoFileSelect<ExtArgs> | null
+    select?: MediaAttachmentSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the VideoFile
+     * Omit specific fields from the MediaAttachment
      */
-    omit?: VideoFileOmit<ExtArgs> | null
+    omit?: MediaAttachmentOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: VideoFileInclude<ExtArgs> | null
+    include?: MediaAttachmentInclude<ExtArgs> | null
+    /**
+     * Filter, which MediaAttachment to fetch.
+     */
+    where?: MediaAttachmentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MediaAttachments to fetch.
+     */
+    orderBy?: MediaAttachmentOrderByWithRelationInput | MediaAttachmentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MediaAttachments.
+     */
+    cursor?: MediaAttachmentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MediaAttachments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MediaAttachments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MediaAttachments.
+     */
+    distinct?: MediaAttachmentScalarFieldEnum | MediaAttachmentScalarFieldEnum[]
+  }
+
+  /**
+   * MediaAttachment findFirstOrThrow
+   */
+  export type MediaAttachmentFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaAttachment
+     */
+    select?: MediaAttachmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaAttachment
+     */
+    omit?: MediaAttachmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaAttachmentInclude<ExtArgs> | null
+    /**
+     * Filter, which MediaAttachment to fetch.
+     */
+    where?: MediaAttachmentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MediaAttachments to fetch.
+     */
+    orderBy?: MediaAttachmentOrderByWithRelationInput | MediaAttachmentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MediaAttachments.
+     */
+    cursor?: MediaAttachmentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MediaAttachments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MediaAttachments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MediaAttachments.
+     */
+    distinct?: MediaAttachmentScalarFieldEnum | MediaAttachmentScalarFieldEnum[]
+  }
+
+  /**
+   * MediaAttachment findMany
+   */
+  export type MediaAttachmentFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaAttachment
+     */
+    select?: MediaAttachmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaAttachment
+     */
+    omit?: MediaAttachmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaAttachmentInclude<ExtArgs> | null
+    /**
+     * Filter, which MediaAttachments to fetch.
+     */
+    where?: MediaAttachmentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MediaAttachments to fetch.
+     */
+    orderBy?: MediaAttachmentOrderByWithRelationInput | MediaAttachmentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing MediaAttachments.
+     */
+    cursor?: MediaAttachmentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MediaAttachments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MediaAttachments.
+     */
+    skip?: number
+    distinct?: MediaAttachmentScalarFieldEnum | MediaAttachmentScalarFieldEnum[]
+  }
+
+  /**
+   * MediaAttachment create
+   */
+  export type MediaAttachmentCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaAttachment
+     */
+    select?: MediaAttachmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaAttachment
+     */
+    omit?: MediaAttachmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaAttachmentInclude<ExtArgs> | null
+    /**
+     * The data needed to create a MediaAttachment.
+     */
+    data: XOR<MediaAttachmentCreateInput, MediaAttachmentUncheckedCreateInput>
+  }
+
+  /**
+   * MediaAttachment createMany
+   */
+  export type MediaAttachmentCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many MediaAttachments.
+     */
+    data: MediaAttachmentCreateManyInput | MediaAttachmentCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * MediaAttachment createManyAndReturn
+   */
+  export type MediaAttachmentCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaAttachment
+     */
+    select?: MediaAttachmentSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaAttachment
+     */
+    omit?: MediaAttachmentOmit<ExtArgs> | null
+    /**
+     * The data used to create many MediaAttachments.
+     */
+    data: MediaAttachmentCreateManyInput | MediaAttachmentCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaAttachmentIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * MediaAttachment update
+   */
+  export type MediaAttachmentUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaAttachment
+     */
+    select?: MediaAttachmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaAttachment
+     */
+    omit?: MediaAttachmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaAttachmentInclude<ExtArgs> | null
+    /**
+     * The data needed to update a MediaAttachment.
+     */
+    data: XOR<MediaAttachmentUpdateInput, MediaAttachmentUncheckedUpdateInput>
+    /**
+     * Choose, which MediaAttachment to update.
+     */
+    where: MediaAttachmentWhereUniqueInput
+  }
+
+  /**
+   * MediaAttachment updateMany
+   */
+  export type MediaAttachmentUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update MediaAttachments.
+     */
+    data: XOR<MediaAttachmentUpdateManyMutationInput, MediaAttachmentUncheckedUpdateManyInput>
+    /**
+     * Filter which MediaAttachments to update
+     */
+    where?: MediaAttachmentWhereInput
+    /**
+     * Limit how many MediaAttachments to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * MediaAttachment updateManyAndReturn
+   */
+  export type MediaAttachmentUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaAttachment
+     */
+    select?: MediaAttachmentSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaAttachment
+     */
+    omit?: MediaAttachmentOmit<ExtArgs> | null
+    /**
+     * The data used to update MediaAttachments.
+     */
+    data: XOR<MediaAttachmentUpdateManyMutationInput, MediaAttachmentUncheckedUpdateManyInput>
+    /**
+     * Filter which MediaAttachments to update
+     */
+    where?: MediaAttachmentWhereInput
+    /**
+     * Limit how many MediaAttachments to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaAttachmentIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * MediaAttachment upsert
+   */
+  export type MediaAttachmentUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaAttachment
+     */
+    select?: MediaAttachmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaAttachment
+     */
+    omit?: MediaAttachmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaAttachmentInclude<ExtArgs> | null
+    /**
+     * The filter to search for the MediaAttachment to update in case it exists.
+     */
+    where: MediaAttachmentWhereUniqueInput
+    /**
+     * In case the MediaAttachment found by the `where` argument doesn't exist, create a new MediaAttachment with this data.
+     */
+    create: XOR<MediaAttachmentCreateInput, MediaAttachmentUncheckedCreateInput>
+    /**
+     * In case the MediaAttachment was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MediaAttachmentUpdateInput, MediaAttachmentUncheckedUpdateInput>
+  }
+
+  /**
+   * MediaAttachment delete
+   */
+  export type MediaAttachmentDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaAttachment
+     */
+    select?: MediaAttachmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaAttachment
+     */
+    omit?: MediaAttachmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaAttachmentInclude<ExtArgs> | null
+    /**
+     * Filter which MediaAttachment to delete.
+     */
+    where: MediaAttachmentWhereUniqueInput
+  }
+
+  /**
+   * MediaAttachment deleteMany
+   */
+  export type MediaAttachmentDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MediaAttachments to delete
+     */
+    where?: MediaAttachmentWhereInput
+    /**
+     * Limit how many MediaAttachments to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * MediaAttachment.movie
+   */
+  export type MediaAttachment$movieArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Movie
+     */
+    select?: MovieSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Movie
+     */
+    omit?: MovieOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovieInclude<ExtArgs> | null
+    where?: MovieWhereInput
+  }
+
+  /**
+   * MediaAttachment.episode
+   */
+  export type MediaAttachment$episodeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Episode
+     */
+    select?: EpisodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Episode
+     */
+    omit?: EpisodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EpisodeInclude<ExtArgs> | null
+    where?: EpisodeWhereInput
+  }
+
+  /**
+   * MediaAttachment.ad
+   */
+  export type MediaAttachment$adArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ad
+     */
+    select?: AdSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ad
+     */
+    omit?: AdOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdInclude<ExtArgs> | null
+    where?: AdWhereInput
+  }
+
+  /**
+   * MediaAttachment without action
+   */
+  export type MediaAttachmentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaAttachment
+     */
+    select?: MediaAttachmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaAttachment
+     */
+    omit?: MediaAttachmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaAttachmentInclude<ExtArgs> | null
   }
 
 
@@ -23132,8 +24361,7 @@ export namespace Prisma {
   export type MovieMinAggregateOutputType = {
     id: string | null
     metadataId: string | null
-    videoFileId: string | null
-    status: string | null
+    status: $Enums.ContentStatus | null
     type: string | null
     seasonCount: number | null
     rentalPrice: number | null
@@ -23144,8 +24372,7 @@ export namespace Prisma {
   export type MovieMaxAggregateOutputType = {
     id: string | null
     metadataId: string | null
-    videoFileId: string | null
-    status: string | null
+    status: $Enums.ContentStatus | null
     type: string | null
     seasonCount: number | null
     rentalPrice: number | null
@@ -23156,7 +24383,6 @@ export namespace Prisma {
   export type MovieCountAggregateOutputType = {
     id: number
     metadataId: number
-    videoFileId: number
     status: number
     type: number
     seasonCount: number
@@ -23180,7 +24406,6 @@ export namespace Prisma {
   export type MovieMinAggregateInputType = {
     id?: true
     metadataId?: true
-    videoFileId?: true
     status?: true
     type?: true
     seasonCount?: true
@@ -23192,7 +24417,6 @@ export namespace Prisma {
   export type MovieMaxAggregateInputType = {
     id?: true
     metadataId?: true
-    videoFileId?: true
     status?: true
     type?: true
     seasonCount?: true
@@ -23204,7 +24428,6 @@ export namespace Prisma {
   export type MovieCountAggregateInputType = {
     id?: true
     metadataId?: true
-    videoFileId?: true
     status?: true
     type?: true
     seasonCount?: true
@@ -23303,8 +24526,7 @@ export namespace Prisma {
   export type MovieGroupByOutputType = {
     id: string
     metadataId: string
-    videoFileId: string
-    status: string
+    status: $Enums.ContentStatus
     type: string
     seasonCount: number
     rentalPrice: number | null
@@ -23334,7 +24556,6 @@ export namespace Prisma {
   export type MovieSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     metadataId?: boolean
-    videoFileId?: boolean
     status?: boolean
     type?: boolean
     seasonCount?: boolean
@@ -23342,15 +24563,16 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     metadata?: boolean | VideoMetadataDefaultArgs<ExtArgs>
-    videoFile?: boolean | VideoFileDefaultArgs<ExtArgs>
     tags?: boolean | Movie$tagsArgs<ExtArgs>
+    attachment?: boolean | Movie$attachmentArgs<ExtArgs>
+    Comment?: boolean | Movie$CommentArgs<ExtArgs>
+    Purchase?: boolean | Movie$PurchaseArgs<ExtArgs>
     _count?: boolean | MovieCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["movie"]>
 
   export type MovieSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     metadataId?: boolean
-    videoFileId?: boolean
     status?: boolean
     type?: boolean
     seasonCount?: boolean
@@ -23358,13 +24580,11 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     metadata?: boolean | VideoMetadataDefaultArgs<ExtArgs>
-    videoFile?: boolean | VideoFileDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["movie"]>
 
   export type MovieSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     metadataId?: boolean
-    videoFileId?: boolean
     status?: boolean
     type?: boolean
     seasonCount?: boolean
@@ -23372,13 +24592,11 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     metadata?: boolean | VideoMetadataDefaultArgs<ExtArgs>
-    videoFile?: boolean | VideoFileDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["movie"]>
 
   export type MovieSelectScalar = {
     id?: boolean
     metadataId?: boolean
-    videoFileId?: boolean
     status?: boolean
     type?: boolean
     seasonCount?: boolean
@@ -23387,34 +24605,35 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type MovieOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "metadataId" | "videoFileId" | "status" | "type" | "seasonCount" | "rentalPrice" | "createdAt" | "updatedAt", ExtArgs["result"]["movie"]>
+  export type MovieOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "metadataId" | "status" | "type" | "seasonCount" | "rentalPrice" | "createdAt" | "updatedAt", ExtArgs["result"]["movie"]>
   export type MovieInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     metadata?: boolean | VideoMetadataDefaultArgs<ExtArgs>
-    videoFile?: boolean | VideoFileDefaultArgs<ExtArgs>
     tags?: boolean | Movie$tagsArgs<ExtArgs>
+    attachment?: boolean | Movie$attachmentArgs<ExtArgs>
+    Comment?: boolean | Movie$CommentArgs<ExtArgs>
+    Purchase?: boolean | Movie$PurchaseArgs<ExtArgs>
     _count?: boolean | MovieCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type MovieIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     metadata?: boolean | VideoMetadataDefaultArgs<ExtArgs>
-    videoFile?: boolean | VideoFileDefaultArgs<ExtArgs>
   }
   export type MovieIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     metadata?: boolean | VideoMetadataDefaultArgs<ExtArgs>
-    videoFile?: boolean | VideoFileDefaultArgs<ExtArgs>
   }
 
   export type $MoviePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Movie"
     objects: {
       metadata: Prisma.$VideoMetadataPayload<ExtArgs>
-      videoFile: Prisma.$VideoFilePayload<ExtArgs>
       tags: Prisma.$MovieTagPayload<ExtArgs>[]
+      attachment: Prisma.$MediaAttachmentPayload<ExtArgs>[]
+      Comment: Prisma.$CommentPayload<ExtArgs>[]
+      Purchase: Prisma.$PurchasePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       metadataId: string
-      videoFileId: string
-      status: string
+      status: $Enums.ContentStatus
       type: string
       seasonCount: number
       rentalPrice: number | null
@@ -23815,8 +25034,10 @@ export namespace Prisma {
   export interface Prisma__MovieClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     metadata<T extends VideoMetadataDefaultArgs<ExtArgs> = {}>(args?: Subset<T, VideoMetadataDefaultArgs<ExtArgs>>): Prisma__VideoMetadataClient<$Result.GetResult<Prisma.$VideoMetadataPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    videoFile<T extends VideoFileDefaultArgs<ExtArgs> = {}>(args?: Subset<T, VideoFileDefaultArgs<ExtArgs>>): Prisma__VideoFileClient<$Result.GetResult<Prisma.$VideoFilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     tags<T extends Movie$tagsArgs<ExtArgs> = {}>(args?: Subset<T, Movie$tagsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MovieTagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    attachment<T extends Movie$attachmentArgs<ExtArgs> = {}>(args?: Subset<T, Movie$attachmentArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaAttachmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    Comment<T extends Movie$CommentArgs<ExtArgs> = {}>(args?: Subset<T, Movie$CommentArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    Purchase<T extends Movie$PurchaseArgs<ExtArgs> = {}>(args?: Subset<T, Movie$PurchaseArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PurchasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -23848,8 +25069,7 @@ export namespace Prisma {
   interface MovieFieldRefs {
     readonly id: FieldRef<"Movie", 'String'>
     readonly metadataId: FieldRef<"Movie", 'String'>
-    readonly videoFileId: FieldRef<"Movie", 'String'>
-    readonly status: FieldRef<"Movie", 'String'>
+    readonly status: FieldRef<"Movie", 'ContentStatus'>
     readonly type: FieldRef<"Movie", 'String'>
     readonly seasonCount: FieldRef<"Movie", 'Int'>
     readonly rentalPrice: FieldRef<"Movie", 'Float'>
@@ -24275,6 +25495,78 @@ export namespace Prisma {
   }
 
   /**
+   * Movie.attachment
+   */
+  export type Movie$attachmentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaAttachment
+     */
+    select?: MediaAttachmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaAttachment
+     */
+    omit?: MediaAttachmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaAttachmentInclude<ExtArgs> | null
+    where?: MediaAttachmentWhereInput
+    orderBy?: MediaAttachmentOrderByWithRelationInput | MediaAttachmentOrderByWithRelationInput[]
+    cursor?: MediaAttachmentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MediaAttachmentScalarFieldEnum | MediaAttachmentScalarFieldEnum[]
+  }
+
+  /**
+   * Movie.Comment
+   */
+  export type Movie$CommentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comment
+     */
+    omit?: CommentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommentInclude<ExtArgs> | null
+    where?: CommentWhereInput
+    orderBy?: CommentOrderByWithRelationInput | CommentOrderByWithRelationInput[]
+    cursor?: CommentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CommentScalarFieldEnum | CommentScalarFieldEnum[]
+  }
+
+  /**
+   * Movie.Purchase
+   */
+  export type Movie$PurchaseArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Purchase
+     */
+    select?: PurchaseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Purchase
+     */
+    omit?: PurchaseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PurchaseInclude<ExtArgs> | null
+    where?: PurchaseWhereInput
+    orderBy?: PurchaseOrderByWithRelationInput | PurchaseOrderByWithRelationInput[]
+    cursor?: PurchaseWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PurchaseScalarFieldEnum | PurchaseScalarFieldEnum[]
+  }
+
+  /**
    * Movie without action
    */
   export type MovieDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -24294,28 +25586,28 @@ export namespace Prisma {
 
 
   /**
-   * Model Series
+   * Model Serie
    */
 
-  export type AggregateSeries = {
-    _count: SeriesCountAggregateOutputType | null
-    _avg: SeriesAvgAggregateOutputType | null
-    _sum: SeriesSumAggregateOutputType | null
-    _min: SeriesMinAggregateOutputType | null
-    _max: SeriesMaxAggregateOutputType | null
+  export type AggregateSerie = {
+    _count: SerieCountAggregateOutputType | null
+    _avg: SerieAvgAggregateOutputType | null
+    _sum: SerieSumAggregateOutputType | null
+    _min: SerieMinAggregateOutputType | null
+    _max: SerieMaxAggregateOutputType | null
   }
 
-  export type SeriesAvgAggregateOutputType = {
+  export type SerieAvgAggregateOutputType = {
     seasonCount: number | null
     rentalPrice: number | null
   }
 
-  export type SeriesSumAggregateOutputType = {
+  export type SerieSumAggregateOutputType = {
     seasonCount: number | null
     rentalPrice: number | null
   }
 
-  export type SeriesMinAggregateOutputType = {
+  export type SerieMinAggregateOutputType = {
     id: string | null
     metadataId: string | null
     status: string | null
@@ -24326,7 +25618,7 @@ export namespace Prisma {
     updatedAt: Date | null
   }
 
-  export type SeriesMaxAggregateOutputType = {
+  export type SerieMaxAggregateOutputType = {
     id: string | null
     metadataId: string | null
     status: string | null
@@ -24337,7 +25629,7 @@ export namespace Prisma {
     updatedAt: Date | null
   }
 
-  export type SeriesCountAggregateOutputType = {
+  export type SerieCountAggregateOutputType = {
     id: number
     metadataId: number
     status: number
@@ -24350,17 +25642,17 @@ export namespace Prisma {
   }
 
 
-  export type SeriesAvgAggregateInputType = {
+  export type SerieAvgAggregateInputType = {
     seasonCount?: true
     rentalPrice?: true
   }
 
-  export type SeriesSumAggregateInputType = {
+  export type SerieSumAggregateInputType = {
     seasonCount?: true
     rentalPrice?: true
   }
 
-  export type SeriesMinAggregateInputType = {
+  export type SerieMinAggregateInputType = {
     id?: true
     metadataId?: true
     status?: true
@@ -24371,7 +25663,7 @@ export namespace Prisma {
     updatedAt?: true
   }
 
-  export type SeriesMaxAggregateInputType = {
+  export type SerieMaxAggregateInputType = {
     id?: true
     metadataId?: true
     status?: true
@@ -24382,7 +25674,7 @@ export namespace Prisma {
     updatedAt?: true
   }
 
-  export type SeriesCountAggregateInputType = {
+  export type SerieCountAggregateInputType = {
     id?: true
     metadataId?: true
     status?: true
@@ -24394,23 +25686,23 @@ export namespace Prisma {
     _all?: true
   }
 
-  export type SeriesAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SerieAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Series to aggregate.
+     * Filter which Serie to aggregate.
      */
-    where?: SeriesWhereInput
+    where?: SerieWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
      * Determine the order of Series to fetch.
      */
-    orderBy?: SeriesOrderByWithRelationInput | SeriesOrderByWithRelationInput[]
+    orderBy?: SerieOrderByWithRelationInput | SerieOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: SeriesWhereUniqueInput
+    cursor?: SerieWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
@@ -24428,59 +25720,59 @@ export namespace Prisma {
      * 
      * Count returned Series
     **/
-    _count?: true | SeriesCountAggregateInputType
+    _count?: true | SerieCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: SeriesAvgAggregateInputType
+    _avg?: SerieAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: SeriesSumAggregateInputType
+    _sum?: SerieSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: SeriesMinAggregateInputType
+    _min?: SerieMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: SeriesMaxAggregateInputType
+    _max?: SerieMaxAggregateInputType
   }
 
-  export type GetSeriesAggregateType<T extends SeriesAggregateArgs> = {
-        [P in keyof T & keyof AggregateSeries]: P extends '_count' | 'count'
+  export type GetSerieAggregateType<T extends SerieAggregateArgs> = {
+        [P in keyof T & keyof AggregateSerie]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateSeries[P]>
-      : GetScalarType<T[P], AggregateSeries[P]>
+        : GetScalarType<T[P], AggregateSerie[P]>
+      : GetScalarType<T[P], AggregateSerie[P]>
   }
 
 
 
 
-  export type SeriesGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: SeriesWhereInput
-    orderBy?: SeriesOrderByWithAggregationInput | SeriesOrderByWithAggregationInput[]
-    by: SeriesScalarFieldEnum[] | SeriesScalarFieldEnum
-    having?: SeriesScalarWhereWithAggregatesInput
+  export type SerieGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SerieWhereInput
+    orderBy?: SerieOrderByWithAggregationInput | SerieOrderByWithAggregationInput[]
+    by: SerieScalarFieldEnum[] | SerieScalarFieldEnum
+    having?: SerieScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: SeriesCountAggregateInputType | true
-    _avg?: SeriesAvgAggregateInputType
-    _sum?: SeriesSumAggregateInputType
-    _min?: SeriesMinAggregateInputType
-    _max?: SeriesMaxAggregateInputType
+    _count?: SerieCountAggregateInputType | true
+    _avg?: SerieAvgAggregateInputType
+    _sum?: SerieSumAggregateInputType
+    _min?: SerieMinAggregateInputType
+    _max?: SerieMaxAggregateInputType
   }
 
-  export type SeriesGroupByOutputType = {
+  export type SerieGroupByOutputType = {
     id: string
     metadataId: string
     status: string
@@ -24489,28 +25781,28 @@ export namespace Prisma {
     rentalPrice: number | null
     createdAt: Date
     updatedAt: Date
-    _count: SeriesCountAggregateOutputType | null
-    _avg: SeriesAvgAggregateOutputType | null
-    _sum: SeriesSumAggregateOutputType | null
-    _min: SeriesMinAggregateOutputType | null
-    _max: SeriesMaxAggregateOutputType | null
+    _count: SerieCountAggregateOutputType | null
+    _avg: SerieAvgAggregateOutputType | null
+    _sum: SerieSumAggregateOutputType | null
+    _min: SerieMinAggregateOutputType | null
+    _max: SerieMaxAggregateOutputType | null
   }
 
-  type GetSeriesGroupByPayload<T extends SeriesGroupByArgs> = Prisma.PrismaPromise<
+  type GetSerieGroupByPayload<T extends SerieGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<SeriesGroupByOutputType, T['by']> &
+      PickEnumerable<SerieGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof SeriesGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof SerieGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], SeriesGroupByOutputType[P]>
-            : GetScalarType<T[P], SeriesGroupByOutputType[P]>
+              : GetScalarType<T[P], SerieGroupByOutputType[P]>
+            : GetScalarType<T[P], SerieGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type SeriesSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type SerieSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     metadataId?: boolean
     status?: boolean
@@ -24520,13 +25812,14 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     metadata?: boolean | VideoMetadataDefaultArgs<ExtArgs>
-    seasons?: boolean | Series$seasonsArgs<ExtArgs>
-    tags?: boolean | Series$tagsArgs<ExtArgs>
-    SeriesView?: boolean | Series$SeriesViewArgs<ExtArgs>
-    _count?: boolean | SeriesCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["series"]>
+    seasons?: boolean | Serie$seasonsArgs<ExtArgs>
+    tags?: boolean | Serie$tagsArgs<ExtArgs>
+    SerieView?: boolean | Serie$SerieViewArgs<ExtArgs>
+    Purchase?: boolean | Serie$PurchaseArgs<ExtArgs>
+    _count?: boolean | SerieCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["serie"]>
 
-  export type SeriesSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type SerieSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     metadataId?: boolean
     status?: boolean
@@ -24536,9 +25829,9 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     metadata?: boolean | VideoMetadataDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["series"]>
+  }, ExtArgs["result"]["serie"]>
 
-  export type SeriesSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type SerieSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     metadataId?: boolean
     status?: boolean
@@ -24548,9 +25841,9 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     metadata?: boolean | VideoMetadataDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["series"]>
+  }, ExtArgs["result"]["serie"]>
 
-  export type SeriesSelectScalar = {
+  export type SerieSelectScalar = {
     id?: boolean
     metadataId?: boolean
     status?: boolean
@@ -24561,28 +25854,30 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type SeriesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "metadataId" | "status" | "type" | "seasonCount" | "rentalPrice" | "createdAt" | "updatedAt", ExtArgs["result"]["series"]>
-  export type SeriesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SerieOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "metadataId" | "status" | "type" | "seasonCount" | "rentalPrice" | "createdAt" | "updatedAt", ExtArgs["result"]["serie"]>
+  export type SerieInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     metadata?: boolean | VideoMetadataDefaultArgs<ExtArgs>
-    seasons?: boolean | Series$seasonsArgs<ExtArgs>
-    tags?: boolean | Series$tagsArgs<ExtArgs>
-    SeriesView?: boolean | Series$SeriesViewArgs<ExtArgs>
-    _count?: boolean | SeriesCountOutputTypeDefaultArgs<ExtArgs>
+    seasons?: boolean | Serie$seasonsArgs<ExtArgs>
+    tags?: boolean | Serie$tagsArgs<ExtArgs>
+    SerieView?: boolean | Serie$SerieViewArgs<ExtArgs>
+    Purchase?: boolean | Serie$PurchaseArgs<ExtArgs>
+    _count?: boolean | SerieCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type SeriesIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SerieIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     metadata?: boolean | VideoMetadataDefaultArgs<ExtArgs>
   }
-  export type SeriesIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SerieIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     metadata?: boolean | VideoMetadataDefaultArgs<ExtArgs>
   }
 
-  export type $SeriesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Series"
+  export type $SeriePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Serie"
     objects: {
       metadata: Prisma.$VideoMetadataPayload<ExtArgs>
       seasons: Prisma.$SeasonPayload<ExtArgs>[]
       tags: Prisma.$SeriesTagPayload<ExtArgs>[]
-      SeriesView: Prisma.$SeriesViewPayload<ExtArgs>[]
+      SerieView: Prisma.$SerieViewPayload<ExtArgs>[]
+      Purchase: Prisma.$PurchasePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -24593,136 +25888,136 @@ export namespace Prisma {
       rentalPrice: number | null
       createdAt: Date
       updatedAt: Date
-    }, ExtArgs["result"]["series"]>
+    }, ExtArgs["result"]["serie"]>
     composites: {}
   }
 
-  type SeriesGetPayload<S extends boolean | null | undefined | SeriesDefaultArgs> = $Result.GetResult<Prisma.$SeriesPayload, S>
+  type SerieGetPayload<S extends boolean | null | undefined | SerieDefaultArgs> = $Result.GetResult<Prisma.$SeriePayload, S>
 
-  type SeriesCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<SeriesFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: SeriesCountAggregateInputType | true
+  type SerieCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SerieFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SerieCountAggregateInputType | true
     }
 
-  export interface SeriesDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Series'], meta: { name: 'Series' } }
+  export interface SerieDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Serie'], meta: { name: 'Serie' } }
     /**
-     * Find zero or one Series that matches the filter.
-     * @param {SeriesFindUniqueArgs} args - Arguments to find a Series
+     * Find zero or one Serie that matches the filter.
+     * @param {SerieFindUniqueArgs} args - Arguments to find a Serie
      * @example
-     * // Get one Series
-     * const series = await prisma.series.findUnique({
+     * // Get one Serie
+     * const serie = await prisma.serie.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends SeriesFindUniqueArgs>(args: SelectSubset<T, SeriesFindUniqueArgs<ExtArgs>>): Prisma__SeriesClient<$Result.GetResult<Prisma.$SeriesPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends SerieFindUniqueArgs>(args: SelectSubset<T, SerieFindUniqueArgs<ExtArgs>>): Prisma__SerieClient<$Result.GetResult<Prisma.$SeriePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Series that matches the filter or throw an error with `error.code='P2025'`
+     * Find one Serie that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {SeriesFindUniqueOrThrowArgs} args - Arguments to find a Series
+     * @param {SerieFindUniqueOrThrowArgs} args - Arguments to find a Serie
      * @example
-     * // Get one Series
-     * const series = await prisma.series.findUniqueOrThrow({
+     * // Get one Serie
+     * const serie = await prisma.serie.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends SeriesFindUniqueOrThrowArgs>(args: SelectSubset<T, SeriesFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SeriesClient<$Result.GetResult<Prisma.$SeriesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends SerieFindUniqueOrThrowArgs>(args: SelectSubset<T, SerieFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SerieClient<$Result.GetResult<Prisma.$SeriePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Series that matches the filter.
+     * Find the first Serie that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SeriesFindFirstArgs} args - Arguments to find a Series
+     * @param {SerieFindFirstArgs} args - Arguments to find a Serie
      * @example
-     * // Get one Series
-     * const series = await prisma.series.findFirst({
+     * // Get one Serie
+     * const serie = await prisma.serie.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends SeriesFindFirstArgs>(args?: SelectSubset<T, SeriesFindFirstArgs<ExtArgs>>): Prisma__SeriesClient<$Result.GetResult<Prisma.$SeriesPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends SerieFindFirstArgs>(args?: SelectSubset<T, SerieFindFirstArgs<ExtArgs>>): Prisma__SerieClient<$Result.GetResult<Prisma.$SeriePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Series that matches the filter or
+     * Find the first Serie that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SeriesFindFirstOrThrowArgs} args - Arguments to find a Series
+     * @param {SerieFindFirstOrThrowArgs} args - Arguments to find a Serie
      * @example
-     * // Get one Series
-     * const series = await prisma.series.findFirstOrThrow({
+     * // Get one Serie
+     * const serie = await prisma.serie.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends SeriesFindFirstOrThrowArgs>(args?: SelectSubset<T, SeriesFindFirstOrThrowArgs<ExtArgs>>): Prisma__SeriesClient<$Result.GetResult<Prisma.$SeriesPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends SerieFindFirstOrThrowArgs>(args?: SelectSubset<T, SerieFindFirstOrThrowArgs<ExtArgs>>): Prisma__SerieClient<$Result.GetResult<Prisma.$SeriePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find zero or more Series that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SeriesFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {SerieFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
      * // Get all Series
-     * const series = await prisma.series.findMany()
+     * const series = await prisma.serie.findMany()
      * 
      * // Get first 10 Series
-     * const series = await prisma.series.findMany({ take: 10 })
+     * const series = await prisma.serie.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const seriesWithIdOnly = await prisma.series.findMany({ select: { id: true } })
+     * const serieWithIdOnly = await prisma.serie.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends SeriesFindManyArgs>(args?: SelectSubset<T, SeriesFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SeriesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends SerieFindManyArgs>(args?: SelectSubset<T, SerieFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SeriePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a Series.
-     * @param {SeriesCreateArgs} args - Arguments to create a Series.
+     * Create a Serie.
+     * @param {SerieCreateArgs} args - Arguments to create a Serie.
      * @example
-     * // Create one Series
-     * const Series = await prisma.series.create({
+     * // Create one Serie
+     * const Serie = await prisma.serie.create({
      *   data: {
-     *     // ... data to create a Series
+     *     // ... data to create a Serie
      *   }
      * })
      * 
      */
-    create<T extends SeriesCreateArgs>(args: SelectSubset<T, SeriesCreateArgs<ExtArgs>>): Prisma__SeriesClient<$Result.GetResult<Prisma.$SeriesPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends SerieCreateArgs>(args: SelectSubset<T, SerieCreateArgs<ExtArgs>>): Prisma__SerieClient<$Result.GetResult<Prisma.$SeriePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Create many Series.
-     * @param {SeriesCreateManyArgs} args - Arguments to create many Series.
+     * @param {SerieCreateManyArgs} args - Arguments to create many Series.
      * @example
      * // Create many Series
-     * const series = await prisma.series.createMany({
+     * const serie = await prisma.serie.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends SeriesCreateManyArgs>(args?: SelectSubset<T, SeriesCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends SerieCreateManyArgs>(args?: SelectSubset<T, SerieCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
      * Create many Series and returns the data saved in the database.
-     * @param {SeriesCreateManyAndReturnArgs} args - Arguments to create many Series.
+     * @param {SerieCreateManyAndReturnArgs} args - Arguments to create many Series.
      * @example
      * // Create many Series
-     * const series = await prisma.series.createManyAndReturn({
+     * const serie = await prisma.serie.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
      * // Create many Series and only return the `id`
-     * const seriesWithIdOnly = await prisma.series.createManyAndReturn({
+     * const serieWithIdOnly = await prisma.serie.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -24732,28 +26027,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends SeriesCreateManyAndReturnArgs>(args?: SelectSubset<T, SeriesCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SeriesPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends SerieCreateManyAndReturnArgs>(args?: SelectSubset<T, SerieCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SeriePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a Series.
-     * @param {SeriesDeleteArgs} args - Arguments to delete one Series.
+     * Delete a Serie.
+     * @param {SerieDeleteArgs} args - Arguments to delete one Serie.
      * @example
-     * // Delete one Series
-     * const Series = await prisma.series.delete({
+     * // Delete one Serie
+     * const Serie = await prisma.serie.delete({
      *   where: {
-     *     // ... filter to delete one Series
+     *     // ... filter to delete one Serie
      *   }
      * })
      * 
      */
-    delete<T extends SeriesDeleteArgs>(args: SelectSubset<T, SeriesDeleteArgs<ExtArgs>>): Prisma__SeriesClient<$Result.GetResult<Prisma.$SeriesPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends SerieDeleteArgs>(args: SelectSubset<T, SerieDeleteArgs<ExtArgs>>): Prisma__SerieClient<$Result.GetResult<Prisma.$SeriePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one Series.
-     * @param {SeriesUpdateArgs} args - Arguments to update one Series.
+     * Update one Serie.
+     * @param {SerieUpdateArgs} args - Arguments to update one Serie.
      * @example
-     * // Update one Series
-     * const series = await prisma.series.update({
+     * // Update one Serie
+     * const serie = await prisma.serie.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -24763,30 +26058,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends SeriesUpdateArgs>(args: SelectSubset<T, SeriesUpdateArgs<ExtArgs>>): Prisma__SeriesClient<$Result.GetResult<Prisma.$SeriesPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends SerieUpdateArgs>(args: SelectSubset<T, SerieUpdateArgs<ExtArgs>>): Prisma__SerieClient<$Result.GetResult<Prisma.$SeriePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Delete zero or more Series.
-     * @param {SeriesDeleteManyArgs} args - Arguments to filter Series to delete.
+     * @param {SerieDeleteManyArgs} args - Arguments to filter Series to delete.
      * @example
      * // Delete a few Series
-     * const { count } = await prisma.series.deleteMany({
+     * const { count } = await prisma.serie.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends SeriesDeleteManyArgs>(args?: SelectSubset<T, SeriesDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends SerieDeleteManyArgs>(args?: SelectSubset<T, SerieDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
      * Update zero or more Series.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SeriesUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {SerieUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
      * // Update many Series
-     * const series = await prisma.series.updateMany({
+     * const serie = await prisma.serie.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -24796,14 +26091,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends SeriesUpdateManyArgs>(args: SelectSubset<T, SeriesUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends SerieUpdateManyArgs>(args: SelectSubset<T, SerieUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
      * Update zero or more Series and returns the data updated in the database.
-     * @param {SeriesUpdateManyAndReturnArgs} args - Arguments to update many Series.
+     * @param {SerieUpdateManyAndReturnArgs} args - Arguments to update many Series.
      * @example
      * // Update many Series
-     * const series = await prisma.series.updateManyAndReturn({
+     * const serie = await prisma.serie.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -24813,7 +26108,7 @@ export namespace Prisma {
      * })
      * 
      * // Update zero or more Series and only return the `id`
-     * const seriesWithIdOnly = await prisma.series.updateManyAndReturn({
+     * const serieWithIdOnly = await prisma.serie.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -24826,56 +26121,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends SeriesUpdateManyAndReturnArgs>(args: SelectSubset<T, SeriesUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SeriesPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends SerieUpdateManyAndReturnArgs>(args: SelectSubset<T, SerieUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SeriePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one Series.
-     * @param {SeriesUpsertArgs} args - Arguments to update or create a Series.
+     * Create or update one Serie.
+     * @param {SerieUpsertArgs} args - Arguments to update or create a Serie.
      * @example
-     * // Update or create a Series
-     * const series = await prisma.series.upsert({
+     * // Update or create a Serie
+     * const serie = await prisma.serie.upsert({
      *   create: {
-     *     // ... data to create a Series
+     *     // ... data to create a Serie
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Series we want to update
+     *     // ... the filter for the Serie we want to update
      *   }
      * })
      */
-    upsert<T extends SeriesUpsertArgs>(args: SelectSubset<T, SeriesUpsertArgs<ExtArgs>>): Prisma__SeriesClient<$Result.GetResult<Prisma.$SeriesPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends SerieUpsertArgs>(args: SelectSubset<T, SerieUpsertArgs<ExtArgs>>): Prisma__SerieClient<$Result.GetResult<Prisma.$SeriePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
      * Count the number of Series.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SeriesCountArgs} args - Arguments to filter Series to count.
+     * @param {SerieCountArgs} args - Arguments to filter Series to count.
      * @example
      * // Count the number of Series
-     * const count = await prisma.series.count({
+     * const count = await prisma.serie.count({
      *   where: {
      *     // ... the filter for the Series we want to count
      *   }
      * })
     **/
-    count<T extends SeriesCountArgs>(
-      args?: Subset<T, SeriesCountArgs>,
+    count<T extends SerieCountArgs>(
+      args?: Subset<T, SerieCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], SeriesCountAggregateOutputType>
+          : GetScalarType<T['select'], SerieCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Series.
+     * Allows you to perform aggregations operations on a Serie.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SeriesAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {SerieAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -24895,13 +26190,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends SeriesAggregateArgs>(args: Subset<T, SeriesAggregateArgs>): Prisma.PrismaPromise<GetSeriesAggregateType<T>>
+    aggregate<T extends SerieAggregateArgs>(args: Subset<T, SerieAggregateArgs>): Prisma.PrismaPromise<GetSerieAggregateType<T>>
 
     /**
-     * Group by Series.
+     * Group by Serie.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SeriesGroupByArgs} args - Group by arguments.
+     * @param {SerieGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -24916,14 +26211,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends SeriesGroupByArgs,
+      T extends SerieGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: SeriesGroupByArgs['orderBy'] }
-        : { orderBy?: SeriesGroupByArgs['orderBy'] },
+        ? { orderBy: SerieGroupByArgs['orderBy'] }
+        : { orderBy?: SerieGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -24972,25 +26267,26 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, SeriesGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSeriesGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, SerieGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSerieGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the Series model
+   * Fields of the Serie model
    */
-  readonly fields: SeriesFieldRefs;
+  readonly fields: SerieFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for Series.
+   * The delegate class that acts as a "Promise-like" for Serie.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__SeriesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__SerieClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     metadata<T extends VideoMetadataDefaultArgs<ExtArgs> = {}>(args?: Subset<T, VideoMetadataDefaultArgs<ExtArgs>>): Prisma__VideoMetadataClient<$Result.GetResult<Prisma.$VideoMetadataPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    seasons<T extends Series$seasonsArgs<ExtArgs> = {}>(args?: Subset<T, Series$seasonsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SeasonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    tags<T extends Series$tagsArgs<ExtArgs> = {}>(args?: Subset<T, Series$tagsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SeriesTagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    SeriesView<T extends Series$SeriesViewArgs<ExtArgs> = {}>(args?: Subset<T, Series$SeriesViewArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SeriesViewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    seasons<T extends Serie$seasonsArgs<ExtArgs> = {}>(args?: Subset<T, Serie$seasonsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SeasonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    tags<T extends Serie$tagsArgs<ExtArgs> = {}>(args?: Subset<T, Serie$tagsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SeriesTagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    SerieView<T extends Serie$SerieViewArgs<ExtArgs> = {}>(args?: Subset<T, Serie$SerieViewArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SerieViewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    Purchase<T extends Serie$PurchaseArgs<ExtArgs> = {}>(args?: Subset<T, Serie$PurchaseArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PurchasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -25017,97 +26313,97 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the Series model
+   * Fields of the Serie model
    */
-  interface SeriesFieldRefs {
-    readonly id: FieldRef<"Series", 'String'>
-    readonly metadataId: FieldRef<"Series", 'String'>
-    readonly status: FieldRef<"Series", 'String'>
-    readonly type: FieldRef<"Series", 'String'>
-    readonly seasonCount: FieldRef<"Series", 'Int'>
-    readonly rentalPrice: FieldRef<"Series", 'Float'>
-    readonly createdAt: FieldRef<"Series", 'DateTime'>
-    readonly updatedAt: FieldRef<"Series", 'DateTime'>
+  interface SerieFieldRefs {
+    readonly id: FieldRef<"Serie", 'String'>
+    readonly metadataId: FieldRef<"Serie", 'String'>
+    readonly status: FieldRef<"Serie", 'String'>
+    readonly type: FieldRef<"Serie", 'String'>
+    readonly seasonCount: FieldRef<"Serie", 'Int'>
+    readonly rentalPrice: FieldRef<"Serie", 'Float'>
+    readonly createdAt: FieldRef<"Serie", 'DateTime'>
+    readonly updatedAt: FieldRef<"Serie", 'DateTime'>
   }
     
 
   // Custom InputTypes
   /**
-   * Series findUnique
+   * Serie findUnique
    */
-  export type SeriesFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SerieFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Series
+     * Select specific fields to fetch from the Serie
      */
-    select?: SeriesSelect<ExtArgs> | null
+    select?: SerieSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Series
+     * Omit specific fields from the Serie
      */
-    omit?: SeriesOmit<ExtArgs> | null
+    omit?: SerieOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SeriesInclude<ExtArgs> | null
+    include?: SerieInclude<ExtArgs> | null
     /**
-     * Filter, which Series to fetch.
+     * Filter, which Serie to fetch.
      */
-    where: SeriesWhereUniqueInput
+    where: SerieWhereUniqueInput
   }
 
   /**
-   * Series findUniqueOrThrow
+   * Serie findUniqueOrThrow
    */
-  export type SeriesFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SerieFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Series
+     * Select specific fields to fetch from the Serie
      */
-    select?: SeriesSelect<ExtArgs> | null
+    select?: SerieSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Series
+     * Omit specific fields from the Serie
      */
-    omit?: SeriesOmit<ExtArgs> | null
+    omit?: SerieOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SeriesInclude<ExtArgs> | null
+    include?: SerieInclude<ExtArgs> | null
     /**
-     * Filter, which Series to fetch.
+     * Filter, which Serie to fetch.
      */
-    where: SeriesWhereUniqueInput
+    where: SerieWhereUniqueInput
   }
 
   /**
-   * Series findFirst
+   * Serie findFirst
    */
-  export type SeriesFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SerieFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Series
+     * Select specific fields to fetch from the Serie
      */
-    select?: SeriesSelect<ExtArgs> | null
+    select?: SerieSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Series
+     * Omit specific fields from the Serie
      */
-    omit?: SeriesOmit<ExtArgs> | null
+    omit?: SerieOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SeriesInclude<ExtArgs> | null
+    include?: SerieInclude<ExtArgs> | null
     /**
-     * Filter, which Series to fetch.
+     * Filter, which Serie to fetch.
      */
-    where?: SeriesWhereInput
+    where?: SerieWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
      * Determine the order of Series to fetch.
      */
-    orderBy?: SeriesOrderByWithRelationInput | SeriesOrderByWithRelationInput[]
+    orderBy?: SerieOrderByWithRelationInput | SerieOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the position for searching for Series.
      */
-    cursor?: SeriesWhereUniqueInput
+    cursor?: SerieWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
@@ -25125,41 +26421,41 @@ export namespace Prisma {
      * 
      * Filter by unique combinations of Series.
      */
-    distinct?: SeriesScalarFieldEnum | SeriesScalarFieldEnum[]
+    distinct?: SerieScalarFieldEnum | SerieScalarFieldEnum[]
   }
 
   /**
-   * Series findFirstOrThrow
+   * Serie findFirstOrThrow
    */
-  export type SeriesFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SerieFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Series
+     * Select specific fields to fetch from the Serie
      */
-    select?: SeriesSelect<ExtArgs> | null
+    select?: SerieSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Series
+     * Omit specific fields from the Serie
      */
-    omit?: SeriesOmit<ExtArgs> | null
+    omit?: SerieOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SeriesInclude<ExtArgs> | null
+    include?: SerieInclude<ExtArgs> | null
     /**
-     * Filter, which Series to fetch.
+     * Filter, which Serie to fetch.
      */
-    where?: SeriesWhereInput
+    where?: SerieWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
      * Determine the order of Series to fetch.
      */
-    orderBy?: SeriesOrderByWithRelationInput | SeriesOrderByWithRelationInput[]
+    orderBy?: SerieOrderByWithRelationInput | SerieOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the position for searching for Series.
      */
-    cursor?: SeriesWhereUniqueInput
+    cursor?: SerieWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
@@ -25177,41 +26473,41 @@ export namespace Prisma {
      * 
      * Filter by unique combinations of Series.
      */
-    distinct?: SeriesScalarFieldEnum | SeriesScalarFieldEnum[]
+    distinct?: SerieScalarFieldEnum | SerieScalarFieldEnum[]
   }
 
   /**
-   * Series findMany
+   * Serie findMany
    */
-  export type SeriesFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SerieFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Series
+     * Select specific fields to fetch from the Serie
      */
-    select?: SeriesSelect<ExtArgs> | null
+    select?: SerieSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Series
+     * Omit specific fields from the Serie
      */
-    omit?: SeriesOmit<ExtArgs> | null
+    omit?: SerieOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SeriesInclude<ExtArgs> | null
+    include?: SerieInclude<ExtArgs> | null
     /**
      * Filter, which Series to fetch.
      */
-    where?: SeriesWhereInput
+    where?: SerieWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
      * Determine the order of Series to fetch.
      */
-    orderBy?: SeriesOrderByWithRelationInput | SeriesOrderByWithRelationInput[]
+    orderBy?: SerieOrderByWithRelationInput | SerieOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the position for listing Series.
      */
-    cursor?: SeriesWhereUniqueInput
+    cursor?: SerieWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
@@ -25224,103 +26520,103 @@ export namespace Prisma {
      * Skip the first `n` Series.
      */
     skip?: number
-    distinct?: SeriesScalarFieldEnum | SeriesScalarFieldEnum[]
+    distinct?: SerieScalarFieldEnum | SerieScalarFieldEnum[]
   }
 
   /**
-   * Series create
+   * Serie create
    */
-  export type SeriesCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SerieCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Series
+     * Select specific fields to fetch from the Serie
      */
-    select?: SeriesSelect<ExtArgs> | null
+    select?: SerieSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Series
+     * Omit specific fields from the Serie
      */
-    omit?: SeriesOmit<ExtArgs> | null
+    omit?: SerieOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SeriesInclude<ExtArgs> | null
+    include?: SerieInclude<ExtArgs> | null
     /**
-     * The data needed to create a Series.
+     * The data needed to create a Serie.
      */
-    data: XOR<SeriesCreateInput, SeriesUncheckedCreateInput>
+    data: XOR<SerieCreateInput, SerieUncheckedCreateInput>
   }
 
   /**
-   * Series createMany
+   * Serie createMany
    */
-  export type SeriesCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SerieCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * The data used to create many Series.
      */
-    data: SeriesCreateManyInput | SeriesCreateManyInput[]
+    data: SerieCreateManyInput | SerieCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * Series createManyAndReturn
+   * Serie createManyAndReturn
    */
-  export type SeriesCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SerieCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Series
+     * Select specific fields to fetch from the Serie
      */
-    select?: SeriesSelectCreateManyAndReturn<ExtArgs> | null
+    select?: SerieSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Series
+     * Omit specific fields from the Serie
      */
-    omit?: SeriesOmit<ExtArgs> | null
+    omit?: SerieOmit<ExtArgs> | null
     /**
      * The data used to create many Series.
      */
-    data: SeriesCreateManyInput | SeriesCreateManyInput[]
+    data: SerieCreateManyInput | SerieCreateManyInput[]
     skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SeriesIncludeCreateManyAndReturn<ExtArgs> | null
+    include?: SerieIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * Series update
+   * Serie update
    */
-  export type SeriesUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SerieUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Series
+     * Select specific fields to fetch from the Serie
      */
-    select?: SeriesSelect<ExtArgs> | null
+    select?: SerieSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Series
+     * Omit specific fields from the Serie
      */
-    omit?: SeriesOmit<ExtArgs> | null
+    omit?: SerieOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SeriesInclude<ExtArgs> | null
+    include?: SerieInclude<ExtArgs> | null
     /**
-     * The data needed to update a Series.
+     * The data needed to update a Serie.
      */
-    data: XOR<SeriesUpdateInput, SeriesUncheckedUpdateInput>
+    data: XOR<SerieUpdateInput, SerieUncheckedUpdateInput>
     /**
-     * Choose, which Series to update.
+     * Choose, which Serie to update.
      */
-    where: SeriesWhereUniqueInput
+    where: SerieWhereUniqueInput
   }
 
   /**
-   * Series updateMany
+   * Serie updateMany
    */
-  export type SeriesUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SerieUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * The data used to update Series.
      */
-    data: XOR<SeriesUpdateManyMutationInput, SeriesUncheckedUpdateManyInput>
+    data: XOR<SerieUpdateManyMutationInput, SerieUncheckedUpdateManyInput>
     /**
      * Filter which Series to update
      */
-    where?: SeriesWhereInput
+    where?: SerieWhereInput
     /**
      * Limit how many Series to update.
      */
@@ -25328,25 +26624,25 @@ export namespace Prisma {
   }
 
   /**
-   * Series updateManyAndReturn
+   * Serie updateManyAndReturn
    */
-  export type SeriesUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SerieUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Series
+     * Select specific fields to fetch from the Serie
      */
-    select?: SeriesSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: SerieSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Series
+     * Omit specific fields from the Serie
      */
-    omit?: SeriesOmit<ExtArgs> | null
+    omit?: SerieOmit<ExtArgs> | null
     /**
      * The data used to update Series.
      */
-    data: XOR<SeriesUpdateManyMutationInput, SeriesUncheckedUpdateManyInput>
+    data: XOR<SerieUpdateManyMutationInput, SerieUncheckedUpdateManyInput>
     /**
      * Filter which Series to update
      */
-    where?: SeriesWhereInput
+    where?: SerieWhereInput
     /**
      * Limit how many Series to update.
      */
@@ -25354,69 +26650,69 @@ export namespace Prisma {
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SeriesIncludeUpdateManyAndReturn<ExtArgs> | null
+    include?: SerieIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * Series upsert
+   * Serie upsert
    */
-  export type SeriesUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SerieUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Series
+     * Select specific fields to fetch from the Serie
      */
-    select?: SeriesSelect<ExtArgs> | null
+    select?: SerieSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Series
+     * Omit specific fields from the Serie
      */
-    omit?: SeriesOmit<ExtArgs> | null
+    omit?: SerieOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SeriesInclude<ExtArgs> | null
+    include?: SerieInclude<ExtArgs> | null
     /**
-     * The filter to search for the Series to update in case it exists.
+     * The filter to search for the Serie to update in case it exists.
      */
-    where: SeriesWhereUniqueInput
+    where: SerieWhereUniqueInput
     /**
-     * In case the Series found by the `where` argument doesn't exist, create a new Series with this data.
+     * In case the Serie found by the `where` argument doesn't exist, create a new Serie with this data.
      */
-    create: XOR<SeriesCreateInput, SeriesUncheckedCreateInput>
+    create: XOR<SerieCreateInput, SerieUncheckedCreateInput>
     /**
-     * In case the Series was found with the provided `where` argument, update it with this data.
+     * In case the Serie was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<SeriesUpdateInput, SeriesUncheckedUpdateInput>
+    update: XOR<SerieUpdateInput, SerieUncheckedUpdateInput>
   }
 
   /**
-   * Series delete
+   * Serie delete
    */
-  export type SeriesDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SerieDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Series
+     * Select specific fields to fetch from the Serie
      */
-    select?: SeriesSelect<ExtArgs> | null
+    select?: SerieSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Series
+     * Omit specific fields from the Serie
      */
-    omit?: SeriesOmit<ExtArgs> | null
+    omit?: SerieOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SeriesInclude<ExtArgs> | null
+    include?: SerieInclude<ExtArgs> | null
     /**
-     * Filter which Series to delete.
+     * Filter which Serie to delete.
      */
-    where: SeriesWhereUniqueInput
+    where: SerieWhereUniqueInput
   }
 
   /**
-   * Series deleteMany
+   * Serie deleteMany
    */
-  export type SeriesDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SerieDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Filter which Series to delete
      */
-    where?: SeriesWhereInput
+    where?: SerieWhereInput
     /**
      * Limit how many Series to delete.
      */
@@ -25424,9 +26720,9 @@ export namespace Prisma {
   }
 
   /**
-   * Series.seasons
+   * Serie.seasons
    */
-  export type Series$seasonsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Serie$seasonsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Season
      */
@@ -25448,9 +26744,9 @@ export namespace Prisma {
   }
 
   /**
-   * Series.tags
+   * Serie.tags
    */
-  export type Series$tagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Serie$tagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the SeriesTag
      */
@@ -25472,45 +26768,69 @@ export namespace Prisma {
   }
 
   /**
-   * Series.SeriesView
+   * Serie.SerieView
    */
-  export type Series$SeriesViewArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Serie$SerieViewArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the SeriesView
+     * Select specific fields to fetch from the SerieView
      */
-    select?: SeriesViewSelect<ExtArgs> | null
+    select?: SerieViewSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the SeriesView
+     * Omit specific fields from the SerieView
      */
-    omit?: SeriesViewOmit<ExtArgs> | null
+    omit?: SerieViewOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SeriesViewInclude<ExtArgs> | null
-    where?: SeriesViewWhereInput
-    orderBy?: SeriesViewOrderByWithRelationInput | SeriesViewOrderByWithRelationInput[]
-    cursor?: SeriesViewWhereUniqueInput
+    include?: SerieViewInclude<ExtArgs> | null
+    where?: SerieViewWhereInput
+    orderBy?: SerieViewOrderByWithRelationInput | SerieViewOrderByWithRelationInput[]
+    cursor?: SerieViewWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: SeriesViewScalarFieldEnum | SeriesViewScalarFieldEnum[]
+    distinct?: SerieViewScalarFieldEnum | SerieViewScalarFieldEnum[]
   }
 
   /**
-   * Series without action
+   * Serie.Purchase
    */
-  export type SeriesDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Serie$PurchaseArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Series
+     * Select specific fields to fetch from the Purchase
      */
-    select?: SeriesSelect<ExtArgs> | null
+    select?: PurchaseSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Series
+     * Omit specific fields from the Purchase
      */
-    omit?: SeriesOmit<ExtArgs> | null
+    omit?: PurchaseOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SeriesInclude<ExtArgs> | null
+    include?: PurchaseInclude<ExtArgs> | null
+    where?: PurchaseWhereInput
+    orderBy?: PurchaseOrderByWithRelationInput | PurchaseOrderByWithRelationInput[]
+    cursor?: PurchaseWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PurchaseScalarFieldEnum | PurchaseScalarFieldEnum[]
+  }
+
+  /**
+   * Serie without action
+   */
+  export type SerieDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Serie
+     */
+    select?: SerieSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Serie
+     */
+    omit?: SerieOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SerieInclude<ExtArgs> | null
   }
 
 
@@ -25536,7 +26856,7 @@ export namespace Prisma {
 
   export type SeasonMinAggregateOutputType = {
     id: string | null
-    seriesId: string | null
+    serieId: string | null
     number: number | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -25544,7 +26864,7 @@ export namespace Prisma {
 
   export type SeasonMaxAggregateOutputType = {
     id: string | null
-    seriesId: string | null
+    serieId: string | null
     number: number | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -25552,7 +26872,7 @@ export namespace Prisma {
 
   export type SeasonCountAggregateOutputType = {
     id: number
-    seriesId: number
+    serieId: number
     number: number
     createdAt: number
     updatedAt: number
@@ -25570,7 +26890,7 @@ export namespace Prisma {
 
   export type SeasonMinAggregateInputType = {
     id?: true
-    seriesId?: true
+    serieId?: true
     number?: true
     createdAt?: true
     updatedAt?: true
@@ -25578,7 +26898,7 @@ export namespace Prisma {
 
   export type SeasonMaxAggregateInputType = {
     id?: true
-    seriesId?: true
+    serieId?: true
     number?: true
     createdAt?: true
     updatedAt?: true
@@ -25586,7 +26906,7 @@ export namespace Prisma {
 
   export type SeasonCountAggregateInputType = {
     id?: true
-    seriesId?: true
+    serieId?: true
     number?: true
     createdAt?: true
     updatedAt?: true
@@ -25681,7 +27001,7 @@ export namespace Prisma {
 
   export type SeasonGroupByOutputType = {
     id: string
-    seriesId: string
+    serieId: string
     number: number
     createdAt: Date
     updatedAt: Date
@@ -25708,11 +27028,11 @@ export namespace Prisma {
 
   export type SeasonSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    seriesId?: boolean
+    serieId?: boolean
     number?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    series?: boolean | SeriesDefaultArgs<ExtArgs>
+    serie?: boolean | SerieDefaultArgs<ExtArgs>
     episodes?: boolean | Season$episodesArgs<ExtArgs>
     SeasonView?: boolean | Season$SeasonViewArgs<ExtArgs>
     _count?: boolean | SeasonCountOutputTypeDefaultArgs<ExtArgs>
@@ -25720,54 +27040,54 @@ export namespace Prisma {
 
   export type SeasonSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    seriesId?: boolean
+    serieId?: boolean
     number?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    series?: boolean | SeriesDefaultArgs<ExtArgs>
+    serie?: boolean | SerieDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["season"]>
 
   export type SeasonSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    seriesId?: boolean
+    serieId?: boolean
     number?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    series?: boolean | SeriesDefaultArgs<ExtArgs>
+    serie?: boolean | SerieDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["season"]>
 
   export type SeasonSelectScalar = {
     id?: boolean
-    seriesId?: boolean
+    serieId?: boolean
     number?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type SeasonOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "seriesId" | "number" | "createdAt" | "updatedAt", ExtArgs["result"]["season"]>
+  export type SeasonOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "serieId" | "number" | "createdAt" | "updatedAt", ExtArgs["result"]["season"]>
   export type SeasonInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    series?: boolean | SeriesDefaultArgs<ExtArgs>
+    serie?: boolean | SerieDefaultArgs<ExtArgs>
     episodes?: boolean | Season$episodesArgs<ExtArgs>
     SeasonView?: boolean | Season$SeasonViewArgs<ExtArgs>
     _count?: boolean | SeasonCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type SeasonIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    series?: boolean | SeriesDefaultArgs<ExtArgs>
+    serie?: boolean | SerieDefaultArgs<ExtArgs>
   }
   export type SeasonIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    series?: boolean | SeriesDefaultArgs<ExtArgs>
+    serie?: boolean | SerieDefaultArgs<ExtArgs>
   }
 
   export type $SeasonPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Season"
     objects: {
-      series: Prisma.$SeriesPayload<ExtArgs>
+      serie: Prisma.$SeriePayload<ExtArgs>
       episodes: Prisma.$EpisodePayload<ExtArgs>[]
       SeasonView: Prisma.$SeasonViewPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      seriesId: string
+      serieId: string
       number: number
       createdAt: Date
       updatedAt: Date
@@ -26165,7 +27485,7 @@ export namespace Prisma {
    */
   export interface Prisma__SeasonClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    series<T extends SeriesDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SeriesDefaultArgs<ExtArgs>>): Prisma__SeriesClient<$Result.GetResult<Prisma.$SeriesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    serie<T extends SerieDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SerieDefaultArgs<ExtArgs>>): Prisma__SerieClient<$Result.GetResult<Prisma.$SeriePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     episodes<T extends Season$episodesArgs<ExtArgs> = {}>(args?: Subset<T, Season$episodesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EpisodePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     SeasonView<T extends Season$SeasonViewArgs<ExtArgs> = {}>(args?: Subset<T, Season$SeasonViewArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SeasonViewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
@@ -26198,7 +27518,7 @@ export namespace Prisma {
    */
   interface SeasonFieldRefs {
     readonly id: FieldRef<"Season", 'String'>
-    readonly seriesId: FieldRef<"Season", 'String'>
+    readonly serieId: FieldRef<"Season", 'String'>
     readonly number: FieldRef<"Season", 'Int'>
     readonly createdAt: FieldRef<"Season", 'DateTime'>
     readonly updatedAt: FieldRef<"Season", 'DateTime'>
@@ -26688,7 +28008,6 @@ export namespace Prisma {
     id: string | null
     seasonId: string | null
     number: number | null
-    videoFileId: string | null
     title: string | null
     releaseDate: Date | null
     plateformeDAte: Date | null
@@ -26703,7 +28022,6 @@ export namespace Prisma {
     id: string | null
     seasonId: string | null
     number: number | null
-    videoFileId: string | null
     title: string | null
     releaseDate: Date | null
     plateformeDAte: Date | null
@@ -26718,7 +28036,6 @@ export namespace Prisma {
     id: number
     seasonId: number
     number: number
-    videoFileId: number
     title: number
     releaseDate: number
     plateformeDAte: number
@@ -26743,7 +28060,6 @@ export namespace Prisma {
     id?: true
     seasonId?: true
     number?: true
-    videoFileId?: true
     title?: true
     releaseDate?: true
     plateformeDAte?: true
@@ -26758,7 +28074,6 @@ export namespace Prisma {
     id?: true
     seasonId?: true
     number?: true
-    videoFileId?: true
     title?: true
     releaseDate?: true
     plateformeDAte?: true
@@ -26773,7 +28088,6 @@ export namespace Prisma {
     id?: true
     seasonId?: true
     number?: true
-    videoFileId?: true
     title?: true
     releaseDate?: true
     plateformeDAte?: true
@@ -26875,7 +28189,6 @@ export namespace Prisma {
     id: string
     seasonId: string
     number: number
-    videoFileId: string
     title: string | null
     releaseDate: Date
     plateformeDAte: Date
@@ -26909,7 +28222,6 @@ export namespace Prisma {
     id?: boolean
     seasonId?: boolean
     number?: boolean
-    videoFileId?: boolean
     title?: boolean
     releaseDate?: boolean
     plateformeDAte?: boolean
@@ -26919,14 +28231,15 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     season?: boolean | SeasonDefaultArgs<ExtArgs>
-    videoFile?: boolean | VideoFileDefaultArgs<ExtArgs>
+    videoAttachment?: boolean | Episode$videoAttachmentArgs<ExtArgs>
+    Comment?: boolean | Episode$CommentArgs<ExtArgs>
+    _count?: boolean | EpisodeCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["episode"]>
 
   export type EpisodeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     seasonId?: boolean
     number?: boolean
-    videoFileId?: boolean
     title?: boolean
     releaseDate?: boolean
     plateformeDAte?: boolean
@@ -26936,14 +28249,12 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     season?: boolean | SeasonDefaultArgs<ExtArgs>
-    videoFile?: boolean | VideoFileDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["episode"]>
 
   export type EpisodeSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     seasonId?: boolean
     number?: boolean
-    videoFileId?: boolean
     title?: boolean
     releaseDate?: boolean
     plateformeDAte?: boolean
@@ -26953,14 +28264,12 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     season?: boolean | SeasonDefaultArgs<ExtArgs>
-    videoFile?: boolean | VideoFileDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["episode"]>
 
   export type EpisodeSelectScalar = {
     id?: boolean
     seasonId?: boolean
     number?: boolean
-    videoFileId?: boolean
     title?: boolean
     releaseDate?: boolean
     plateformeDAte?: boolean
@@ -26971,31 +28280,31 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type EpisodeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "seasonId" | "number" | "videoFileId" | "title" | "releaseDate" | "plateformeDAte" | "director" | "description" | "isSaFliixProd" | "createdAt" | "updatedAt", ExtArgs["result"]["episode"]>
+  export type EpisodeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "seasonId" | "number" | "title" | "releaseDate" | "plateformeDAte" | "director" | "description" | "isSaFliixProd" | "createdAt" | "updatedAt", ExtArgs["result"]["episode"]>
   export type EpisodeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     season?: boolean | SeasonDefaultArgs<ExtArgs>
-    videoFile?: boolean | VideoFileDefaultArgs<ExtArgs>
+    videoAttachment?: boolean | Episode$videoAttachmentArgs<ExtArgs>
+    Comment?: boolean | Episode$CommentArgs<ExtArgs>
+    _count?: boolean | EpisodeCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type EpisodeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     season?: boolean | SeasonDefaultArgs<ExtArgs>
-    videoFile?: boolean | VideoFileDefaultArgs<ExtArgs>
   }
   export type EpisodeIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     season?: boolean | SeasonDefaultArgs<ExtArgs>
-    videoFile?: boolean | VideoFileDefaultArgs<ExtArgs>
   }
 
   export type $EpisodePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Episode"
     objects: {
       season: Prisma.$SeasonPayload<ExtArgs>
-      videoFile: Prisma.$VideoFilePayload<ExtArgs>
+      videoAttachment: Prisma.$MediaAttachmentPayload<ExtArgs>[]
+      Comment: Prisma.$CommentPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       seasonId: string
       number: number
-      videoFileId: string
       title: string | null
       releaseDate: Date
       plateformeDAte: Date
@@ -27399,7 +28708,8 @@ export namespace Prisma {
   export interface Prisma__EpisodeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     season<T extends SeasonDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SeasonDefaultArgs<ExtArgs>>): Prisma__SeasonClient<$Result.GetResult<Prisma.$SeasonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    videoFile<T extends VideoFileDefaultArgs<ExtArgs> = {}>(args?: Subset<T, VideoFileDefaultArgs<ExtArgs>>): Prisma__VideoFileClient<$Result.GetResult<Prisma.$VideoFilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    videoAttachment<T extends Episode$videoAttachmentArgs<ExtArgs> = {}>(args?: Subset<T, Episode$videoAttachmentArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaAttachmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    Comment<T extends Episode$CommentArgs<ExtArgs> = {}>(args?: Subset<T, Episode$CommentArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -27432,7 +28742,6 @@ export namespace Prisma {
     readonly id: FieldRef<"Episode", 'String'>
     readonly seasonId: FieldRef<"Episode", 'String'>
     readonly number: FieldRef<"Episode", 'Int'>
-    readonly videoFileId: FieldRef<"Episode", 'String'>
     readonly title: FieldRef<"Episode", 'String'>
     readonly releaseDate: FieldRef<"Episode", 'DateTime'>
     readonly plateformeDAte: FieldRef<"Episode", 'DateTime'>
@@ -27837,6 +29146,54 @@ export namespace Prisma {
   }
 
   /**
+   * Episode.videoAttachment
+   */
+  export type Episode$videoAttachmentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaAttachment
+     */
+    select?: MediaAttachmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaAttachment
+     */
+    omit?: MediaAttachmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaAttachmentInclude<ExtArgs> | null
+    where?: MediaAttachmentWhereInput
+    orderBy?: MediaAttachmentOrderByWithRelationInput | MediaAttachmentOrderByWithRelationInput[]
+    cursor?: MediaAttachmentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MediaAttachmentScalarFieldEnum | MediaAttachmentScalarFieldEnum[]
+  }
+
+  /**
+   * Episode.Comment
+   */
+  export type Episode$CommentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comment
+     */
+    omit?: CommentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommentInclude<ExtArgs> | null
+    where?: CommentWhereInput
+    orderBy?: CommentOrderByWithRelationInput | CommentOrderByWithRelationInput[]
+    cursor?: CommentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CommentScalarFieldEnum | CommentScalarFieldEnum[]
+  }
+
+  /**
    * Episode without action
    */
   export type EpisodeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -28122,7 +29479,6 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-    video?: boolean | VideoFileDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userVideoView"]>
 
   export type UserVideoViewSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -28140,7 +29496,6 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-    video?: boolean | VideoFileDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userVideoView"]>
 
   export type UserVideoViewSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -28158,7 +29513,6 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-    video?: boolean | VideoFileDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userVideoView"]>
 
   export type UserVideoViewSelectScalar = {
@@ -28180,22 +29534,18 @@ export namespace Prisma {
   export type UserVideoViewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "profileId" | "videoId" | "progress" | "completed" | "country" | "device" | "rating" | "startedAt" | "endedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["userVideoView"]>
   export type UserVideoViewInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
-    video?: boolean | VideoFileDefaultArgs<ExtArgs>
   }
   export type UserVideoViewIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
-    video?: boolean | VideoFileDefaultArgs<ExtArgs>
   }
   export type UserVideoViewIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
-    video?: boolean | VideoFileDefaultArgs<ExtArgs>
   }
 
   export type $UserVideoViewPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "UserVideoView"
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
-      video: Prisma.$VideoFilePayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -28606,7 +29956,6 @@ export namespace Prisma {
   export interface Prisma__UserVideoViewClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    video<T extends VideoFileDefaultArgs<ExtArgs> = {}>(args?: Subset<T, VideoFileDefaultArgs<ExtArgs>>): Prisma__VideoFileClient<$Result.GetResult<Prisma.$VideoFilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -30224,32 +31573,32 @@ export namespace Prisma {
 
 
   /**
-   * Model SeriesView
+   * Model SerieView
    */
 
-  export type AggregateSeriesView = {
-    _count: SeriesViewCountAggregateOutputType | null
-    _avg: SeriesViewAvgAggregateOutputType | null
-    _sum: SeriesViewSumAggregateOutputType | null
-    _min: SeriesViewMinAggregateOutputType | null
-    _max: SeriesViewMaxAggregateOutputType | null
+  export type AggregateSerieView = {
+    _count: SerieViewCountAggregateOutputType | null
+    _avg: SerieViewAvgAggregateOutputType | null
+    _sum: SerieViewSumAggregateOutputType | null
+    _min: SerieViewMinAggregateOutputType | null
+    _max: SerieViewMaxAggregateOutputType | null
   }
 
-  export type SeriesViewAvgAggregateOutputType = {
+  export type SerieViewAvgAggregateOutputType = {
     seasonsWatched: number | null
     episodesWatched: number | null
     totalTimeSpent: number | null
     rating: number | null
   }
 
-  export type SeriesViewSumAggregateOutputType = {
+  export type SerieViewSumAggregateOutputType = {
     seasonsWatched: number | null
     episodesWatched: number | null
     totalTimeSpent: number | null
     rating: number | null
   }
 
-  export type SeriesViewMinAggregateOutputType = {
+  export type SerieViewMinAggregateOutputType = {
     id: string | null
     seriesId: string | null
     userId: string | null
@@ -30262,7 +31611,7 @@ export namespace Prisma {
     updatedAt: Date | null
   }
 
-  export type SeriesViewMaxAggregateOutputType = {
+  export type SerieViewMaxAggregateOutputType = {
     id: string | null
     seriesId: string | null
     userId: string | null
@@ -30275,7 +31624,7 @@ export namespace Prisma {
     updatedAt: Date | null
   }
 
-  export type SeriesViewCountAggregateOutputType = {
+  export type SerieViewCountAggregateOutputType = {
     id: number
     seriesId: number
     userId: number
@@ -30290,21 +31639,21 @@ export namespace Prisma {
   }
 
 
-  export type SeriesViewAvgAggregateInputType = {
+  export type SerieViewAvgAggregateInputType = {
     seasonsWatched?: true
     episodesWatched?: true
     totalTimeSpent?: true
     rating?: true
   }
 
-  export type SeriesViewSumAggregateInputType = {
+  export type SerieViewSumAggregateInputType = {
     seasonsWatched?: true
     episodesWatched?: true
     totalTimeSpent?: true
     rating?: true
   }
 
-  export type SeriesViewMinAggregateInputType = {
+  export type SerieViewMinAggregateInputType = {
     id?: true
     seriesId?: true
     userId?: true
@@ -30317,7 +31666,7 @@ export namespace Prisma {
     updatedAt?: true
   }
 
-  export type SeriesViewMaxAggregateInputType = {
+  export type SerieViewMaxAggregateInputType = {
     id?: true
     seriesId?: true
     userId?: true
@@ -30330,7 +31679,7 @@ export namespace Prisma {
     updatedAt?: true
   }
 
-  export type SeriesViewCountAggregateInputType = {
+  export type SerieViewCountAggregateInputType = {
     id?: true
     seriesId?: true
     userId?: true
@@ -30344,93 +31693,93 @@ export namespace Prisma {
     _all?: true
   }
 
-  export type SeriesViewAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SerieViewAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which SeriesView to aggregate.
+     * Filter which SerieView to aggregate.
      */
-    where?: SeriesViewWhereInput
+    where?: SerieViewWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of SeriesViews to fetch.
+     * Determine the order of SerieViews to fetch.
      */
-    orderBy?: SeriesViewOrderByWithRelationInput | SeriesViewOrderByWithRelationInput[]
+    orderBy?: SerieViewOrderByWithRelationInput | SerieViewOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: SeriesViewWhereUniqueInput
+    cursor?: SerieViewWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` SeriesViews from the position of the cursor.
+     * Take `±n` SerieViews from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` SeriesViews.
+     * Skip the first `n` SerieViews.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned SeriesViews
+     * Count returned SerieViews
     **/
-    _count?: true | SeriesViewCountAggregateInputType
+    _count?: true | SerieViewCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: SeriesViewAvgAggregateInputType
+    _avg?: SerieViewAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: SeriesViewSumAggregateInputType
+    _sum?: SerieViewSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: SeriesViewMinAggregateInputType
+    _min?: SerieViewMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: SeriesViewMaxAggregateInputType
+    _max?: SerieViewMaxAggregateInputType
   }
 
-  export type GetSeriesViewAggregateType<T extends SeriesViewAggregateArgs> = {
-        [P in keyof T & keyof AggregateSeriesView]: P extends '_count' | 'count'
+  export type GetSerieViewAggregateType<T extends SerieViewAggregateArgs> = {
+        [P in keyof T & keyof AggregateSerieView]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateSeriesView[P]>
-      : GetScalarType<T[P], AggregateSeriesView[P]>
+        : GetScalarType<T[P], AggregateSerieView[P]>
+      : GetScalarType<T[P], AggregateSerieView[P]>
   }
 
 
 
 
-  export type SeriesViewGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: SeriesViewWhereInput
-    orderBy?: SeriesViewOrderByWithAggregationInput | SeriesViewOrderByWithAggregationInput[]
-    by: SeriesViewScalarFieldEnum[] | SeriesViewScalarFieldEnum
-    having?: SeriesViewScalarWhereWithAggregatesInput
+  export type SerieViewGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SerieViewWhereInput
+    orderBy?: SerieViewOrderByWithAggregationInput | SerieViewOrderByWithAggregationInput[]
+    by: SerieViewScalarFieldEnum[] | SerieViewScalarFieldEnum
+    having?: SerieViewScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: SeriesViewCountAggregateInputType | true
-    _avg?: SeriesViewAvgAggregateInputType
-    _sum?: SeriesViewSumAggregateInputType
-    _min?: SeriesViewMinAggregateInputType
-    _max?: SeriesViewMaxAggregateInputType
+    _count?: SerieViewCountAggregateInputType | true
+    _avg?: SerieViewAvgAggregateInputType
+    _sum?: SerieViewSumAggregateInputType
+    _min?: SerieViewMinAggregateInputType
+    _max?: SerieViewMaxAggregateInputType
   }
 
-  export type SeriesViewGroupByOutputType = {
+  export type SerieViewGroupByOutputType = {
     id: string
     seriesId: string
     userId: string
@@ -30441,28 +31790,28 @@ export namespace Prisma {
     rating: number | null
     createdAt: Date
     updatedAt: Date
-    _count: SeriesViewCountAggregateOutputType | null
-    _avg: SeriesViewAvgAggregateOutputType | null
-    _sum: SeriesViewSumAggregateOutputType | null
-    _min: SeriesViewMinAggregateOutputType | null
-    _max: SeriesViewMaxAggregateOutputType | null
+    _count: SerieViewCountAggregateOutputType | null
+    _avg: SerieViewAvgAggregateOutputType | null
+    _sum: SerieViewSumAggregateOutputType | null
+    _min: SerieViewMinAggregateOutputType | null
+    _max: SerieViewMaxAggregateOutputType | null
   }
 
-  type GetSeriesViewGroupByPayload<T extends SeriesViewGroupByArgs> = Prisma.PrismaPromise<
+  type GetSerieViewGroupByPayload<T extends SerieViewGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<SeriesViewGroupByOutputType, T['by']> &
+      PickEnumerable<SerieViewGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof SeriesViewGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof SerieViewGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], SeriesViewGroupByOutputType[P]>
-            : GetScalarType<T[P], SeriesViewGroupByOutputType[P]>
+              : GetScalarType<T[P], SerieViewGroupByOutputType[P]>
+            : GetScalarType<T[P], SerieViewGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type SeriesViewSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type SerieViewSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     seriesId?: boolean
     userId?: boolean
@@ -30473,10 +31822,10 @@ export namespace Prisma {
     rating?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    series?: boolean | SeriesDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["seriesView"]>
+    series?: boolean | SerieDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["serieView"]>
 
-  export type SeriesViewSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type SerieViewSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     seriesId?: boolean
     userId?: boolean
@@ -30487,10 +31836,10 @@ export namespace Prisma {
     rating?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    series?: boolean | SeriesDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["seriesView"]>
+    series?: boolean | SerieDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["serieView"]>
 
-  export type SeriesViewSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type SerieViewSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     seriesId?: boolean
     userId?: boolean
@@ -30501,10 +31850,10 @@ export namespace Prisma {
     rating?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    series?: boolean | SeriesDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["seriesView"]>
+    series?: boolean | SerieDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["serieView"]>
 
-  export type SeriesViewSelectScalar = {
+  export type SerieViewSelectScalar = {
     id?: boolean
     seriesId?: boolean
     userId?: boolean
@@ -30517,21 +31866,21 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type SeriesViewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "seriesId" | "userId" | "viewedAt" | "seasonsWatched" | "episodesWatched" | "totalTimeSpent" | "rating" | "createdAt" | "updatedAt", ExtArgs["result"]["seriesView"]>
-  export type SeriesViewInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    series?: boolean | SeriesDefaultArgs<ExtArgs>
+  export type SerieViewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "seriesId" | "userId" | "viewedAt" | "seasonsWatched" | "episodesWatched" | "totalTimeSpent" | "rating" | "createdAt" | "updatedAt", ExtArgs["result"]["serieView"]>
+  export type SerieViewInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    series?: boolean | SerieDefaultArgs<ExtArgs>
   }
-  export type SeriesViewIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    series?: boolean | SeriesDefaultArgs<ExtArgs>
+  export type SerieViewIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    series?: boolean | SerieDefaultArgs<ExtArgs>
   }
-  export type SeriesViewIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    series?: boolean | SeriesDefaultArgs<ExtArgs>
+  export type SerieViewIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    series?: boolean | SerieDefaultArgs<ExtArgs>
   }
 
-  export type $SeriesViewPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "SeriesView"
+  export type $SerieViewPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SerieView"
     objects: {
-      series: Prisma.$SeriesPayload<ExtArgs>
+      series: Prisma.$SeriePayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -30544,136 +31893,136 @@ export namespace Prisma {
       rating: number | null
       createdAt: Date
       updatedAt: Date
-    }, ExtArgs["result"]["seriesView"]>
+    }, ExtArgs["result"]["serieView"]>
     composites: {}
   }
 
-  type SeriesViewGetPayload<S extends boolean | null | undefined | SeriesViewDefaultArgs> = $Result.GetResult<Prisma.$SeriesViewPayload, S>
+  type SerieViewGetPayload<S extends boolean | null | undefined | SerieViewDefaultArgs> = $Result.GetResult<Prisma.$SerieViewPayload, S>
 
-  type SeriesViewCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<SeriesViewFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: SeriesViewCountAggregateInputType | true
+  type SerieViewCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SerieViewFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SerieViewCountAggregateInputType | true
     }
 
-  export interface SeriesViewDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SeriesView'], meta: { name: 'SeriesView' } }
+  export interface SerieViewDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SerieView'], meta: { name: 'SerieView' } }
     /**
-     * Find zero or one SeriesView that matches the filter.
-     * @param {SeriesViewFindUniqueArgs} args - Arguments to find a SeriesView
+     * Find zero or one SerieView that matches the filter.
+     * @param {SerieViewFindUniqueArgs} args - Arguments to find a SerieView
      * @example
-     * // Get one SeriesView
-     * const seriesView = await prisma.seriesView.findUnique({
+     * // Get one SerieView
+     * const serieView = await prisma.serieView.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends SeriesViewFindUniqueArgs>(args: SelectSubset<T, SeriesViewFindUniqueArgs<ExtArgs>>): Prisma__SeriesViewClient<$Result.GetResult<Prisma.$SeriesViewPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends SerieViewFindUniqueArgs>(args: SelectSubset<T, SerieViewFindUniqueArgs<ExtArgs>>): Prisma__SerieViewClient<$Result.GetResult<Prisma.$SerieViewPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one SeriesView that matches the filter or throw an error with `error.code='P2025'`
+     * Find one SerieView that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {SeriesViewFindUniqueOrThrowArgs} args - Arguments to find a SeriesView
+     * @param {SerieViewFindUniqueOrThrowArgs} args - Arguments to find a SerieView
      * @example
-     * // Get one SeriesView
-     * const seriesView = await prisma.seriesView.findUniqueOrThrow({
+     * // Get one SerieView
+     * const serieView = await prisma.serieView.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends SeriesViewFindUniqueOrThrowArgs>(args: SelectSubset<T, SeriesViewFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SeriesViewClient<$Result.GetResult<Prisma.$SeriesViewPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends SerieViewFindUniqueOrThrowArgs>(args: SelectSubset<T, SerieViewFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SerieViewClient<$Result.GetResult<Prisma.$SerieViewPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first SeriesView that matches the filter.
+     * Find the first SerieView that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SeriesViewFindFirstArgs} args - Arguments to find a SeriesView
+     * @param {SerieViewFindFirstArgs} args - Arguments to find a SerieView
      * @example
-     * // Get one SeriesView
-     * const seriesView = await prisma.seriesView.findFirst({
+     * // Get one SerieView
+     * const serieView = await prisma.serieView.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends SeriesViewFindFirstArgs>(args?: SelectSubset<T, SeriesViewFindFirstArgs<ExtArgs>>): Prisma__SeriesViewClient<$Result.GetResult<Prisma.$SeriesViewPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends SerieViewFindFirstArgs>(args?: SelectSubset<T, SerieViewFindFirstArgs<ExtArgs>>): Prisma__SerieViewClient<$Result.GetResult<Prisma.$SerieViewPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first SeriesView that matches the filter or
+     * Find the first SerieView that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SeriesViewFindFirstOrThrowArgs} args - Arguments to find a SeriesView
+     * @param {SerieViewFindFirstOrThrowArgs} args - Arguments to find a SerieView
      * @example
-     * // Get one SeriesView
-     * const seriesView = await prisma.seriesView.findFirstOrThrow({
+     * // Get one SerieView
+     * const serieView = await prisma.serieView.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends SeriesViewFindFirstOrThrowArgs>(args?: SelectSubset<T, SeriesViewFindFirstOrThrowArgs<ExtArgs>>): Prisma__SeriesViewClient<$Result.GetResult<Prisma.$SeriesViewPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends SerieViewFindFirstOrThrowArgs>(args?: SelectSubset<T, SerieViewFindFirstOrThrowArgs<ExtArgs>>): Prisma__SerieViewClient<$Result.GetResult<Prisma.$SerieViewPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more SeriesViews that matches the filter.
+     * Find zero or more SerieViews that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SeriesViewFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {SerieViewFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all SeriesViews
-     * const seriesViews = await prisma.seriesView.findMany()
+     * // Get all SerieViews
+     * const serieViews = await prisma.serieView.findMany()
      * 
-     * // Get first 10 SeriesViews
-     * const seriesViews = await prisma.seriesView.findMany({ take: 10 })
+     * // Get first 10 SerieViews
+     * const serieViews = await prisma.serieView.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const seriesViewWithIdOnly = await prisma.seriesView.findMany({ select: { id: true } })
+     * const serieViewWithIdOnly = await prisma.serieView.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends SeriesViewFindManyArgs>(args?: SelectSubset<T, SeriesViewFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SeriesViewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends SerieViewFindManyArgs>(args?: SelectSubset<T, SerieViewFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SerieViewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a SeriesView.
-     * @param {SeriesViewCreateArgs} args - Arguments to create a SeriesView.
+     * Create a SerieView.
+     * @param {SerieViewCreateArgs} args - Arguments to create a SerieView.
      * @example
-     * // Create one SeriesView
-     * const SeriesView = await prisma.seriesView.create({
+     * // Create one SerieView
+     * const SerieView = await prisma.serieView.create({
      *   data: {
-     *     // ... data to create a SeriesView
+     *     // ... data to create a SerieView
      *   }
      * })
      * 
      */
-    create<T extends SeriesViewCreateArgs>(args: SelectSubset<T, SeriesViewCreateArgs<ExtArgs>>): Prisma__SeriesViewClient<$Result.GetResult<Prisma.$SeriesViewPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends SerieViewCreateArgs>(args: SelectSubset<T, SerieViewCreateArgs<ExtArgs>>): Prisma__SerieViewClient<$Result.GetResult<Prisma.$SerieViewPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many SeriesViews.
-     * @param {SeriesViewCreateManyArgs} args - Arguments to create many SeriesViews.
+     * Create many SerieViews.
+     * @param {SerieViewCreateManyArgs} args - Arguments to create many SerieViews.
      * @example
-     * // Create many SeriesViews
-     * const seriesView = await prisma.seriesView.createMany({
+     * // Create many SerieViews
+     * const serieView = await prisma.serieView.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends SeriesViewCreateManyArgs>(args?: SelectSubset<T, SeriesViewCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends SerieViewCreateManyArgs>(args?: SelectSubset<T, SerieViewCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many SeriesViews and returns the data saved in the database.
-     * @param {SeriesViewCreateManyAndReturnArgs} args - Arguments to create many SeriesViews.
+     * Create many SerieViews and returns the data saved in the database.
+     * @param {SerieViewCreateManyAndReturnArgs} args - Arguments to create many SerieViews.
      * @example
-     * // Create many SeriesViews
-     * const seriesView = await prisma.seriesView.createManyAndReturn({
+     * // Create many SerieViews
+     * const serieView = await prisma.serieView.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many SeriesViews and only return the `id`
-     * const seriesViewWithIdOnly = await prisma.seriesView.createManyAndReturn({
+     * // Create many SerieViews and only return the `id`
+     * const serieViewWithIdOnly = await prisma.serieView.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -30683,28 +32032,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends SeriesViewCreateManyAndReturnArgs>(args?: SelectSubset<T, SeriesViewCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SeriesViewPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends SerieViewCreateManyAndReturnArgs>(args?: SelectSubset<T, SerieViewCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SerieViewPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a SeriesView.
-     * @param {SeriesViewDeleteArgs} args - Arguments to delete one SeriesView.
+     * Delete a SerieView.
+     * @param {SerieViewDeleteArgs} args - Arguments to delete one SerieView.
      * @example
-     * // Delete one SeriesView
-     * const SeriesView = await prisma.seriesView.delete({
+     * // Delete one SerieView
+     * const SerieView = await prisma.serieView.delete({
      *   where: {
-     *     // ... filter to delete one SeriesView
+     *     // ... filter to delete one SerieView
      *   }
      * })
      * 
      */
-    delete<T extends SeriesViewDeleteArgs>(args: SelectSubset<T, SeriesViewDeleteArgs<ExtArgs>>): Prisma__SeriesViewClient<$Result.GetResult<Prisma.$SeriesViewPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends SerieViewDeleteArgs>(args: SelectSubset<T, SerieViewDeleteArgs<ExtArgs>>): Prisma__SerieViewClient<$Result.GetResult<Prisma.$SerieViewPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one SeriesView.
-     * @param {SeriesViewUpdateArgs} args - Arguments to update one SeriesView.
+     * Update one SerieView.
+     * @param {SerieViewUpdateArgs} args - Arguments to update one SerieView.
      * @example
-     * // Update one SeriesView
-     * const seriesView = await prisma.seriesView.update({
+     * // Update one SerieView
+     * const serieView = await prisma.serieView.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -30714,30 +32063,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends SeriesViewUpdateArgs>(args: SelectSubset<T, SeriesViewUpdateArgs<ExtArgs>>): Prisma__SeriesViewClient<$Result.GetResult<Prisma.$SeriesViewPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends SerieViewUpdateArgs>(args: SelectSubset<T, SerieViewUpdateArgs<ExtArgs>>): Prisma__SerieViewClient<$Result.GetResult<Prisma.$SerieViewPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more SeriesViews.
-     * @param {SeriesViewDeleteManyArgs} args - Arguments to filter SeriesViews to delete.
+     * Delete zero or more SerieViews.
+     * @param {SerieViewDeleteManyArgs} args - Arguments to filter SerieViews to delete.
      * @example
-     * // Delete a few SeriesViews
-     * const { count } = await prisma.seriesView.deleteMany({
+     * // Delete a few SerieViews
+     * const { count } = await prisma.serieView.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends SeriesViewDeleteManyArgs>(args?: SelectSubset<T, SeriesViewDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends SerieViewDeleteManyArgs>(args?: SelectSubset<T, SerieViewDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more SeriesViews.
+     * Update zero or more SerieViews.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SeriesViewUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {SerieViewUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many SeriesViews
-     * const seriesView = await prisma.seriesView.updateMany({
+     * // Update many SerieViews
+     * const serieView = await prisma.serieView.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -30747,14 +32096,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends SeriesViewUpdateManyArgs>(args: SelectSubset<T, SeriesViewUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends SerieViewUpdateManyArgs>(args: SelectSubset<T, SerieViewUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more SeriesViews and returns the data updated in the database.
-     * @param {SeriesViewUpdateManyAndReturnArgs} args - Arguments to update many SeriesViews.
+     * Update zero or more SerieViews and returns the data updated in the database.
+     * @param {SerieViewUpdateManyAndReturnArgs} args - Arguments to update many SerieViews.
      * @example
-     * // Update many SeriesViews
-     * const seriesView = await prisma.seriesView.updateManyAndReturn({
+     * // Update many SerieViews
+     * const serieView = await prisma.serieView.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -30763,8 +32112,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more SeriesViews and only return the `id`
-     * const seriesViewWithIdOnly = await prisma.seriesView.updateManyAndReturn({
+     * // Update zero or more SerieViews and only return the `id`
+     * const serieViewWithIdOnly = await prisma.serieView.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -30777,56 +32126,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends SeriesViewUpdateManyAndReturnArgs>(args: SelectSubset<T, SeriesViewUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SeriesViewPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends SerieViewUpdateManyAndReturnArgs>(args: SelectSubset<T, SerieViewUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SerieViewPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one SeriesView.
-     * @param {SeriesViewUpsertArgs} args - Arguments to update or create a SeriesView.
+     * Create or update one SerieView.
+     * @param {SerieViewUpsertArgs} args - Arguments to update or create a SerieView.
      * @example
-     * // Update or create a SeriesView
-     * const seriesView = await prisma.seriesView.upsert({
+     * // Update or create a SerieView
+     * const serieView = await prisma.serieView.upsert({
      *   create: {
-     *     // ... data to create a SeriesView
+     *     // ... data to create a SerieView
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the SeriesView we want to update
+     *     // ... the filter for the SerieView we want to update
      *   }
      * })
      */
-    upsert<T extends SeriesViewUpsertArgs>(args: SelectSubset<T, SeriesViewUpsertArgs<ExtArgs>>): Prisma__SeriesViewClient<$Result.GetResult<Prisma.$SeriesViewPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends SerieViewUpsertArgs>(args: SelectSubset<T, SerieViewUpsertArgs<ExtArgs>>): Prisma__SerieViewClient<$Result.GetResult<Prisma.$SerieViewPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of SeriesViews.
+     * Count the number of SerieViews.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SeriesViewCountArgs} args - Arguments to filter SeriesViews to count.
+     * @param {SerieViewCountArgs} args - Arguments to filter SerieViews to count.
      * @example
-     * // Count the number of SeriesViews
-     * const count = await prisma.seriesView.count({
+     * // Count the number of SerieViews
+     * const count = await prisma.serieView.count({
      *   where: {
-     *     // ... the filter for the SeriesViews we want to count
+     *     // ... the filter for the SerieViews we want to count
      *   }
      * })
     **/
-    count<T extends SeriesViewCountArgs>(
-      args?: Subset<T, SeriesViewCountArgs>,
+    count<T extends SerieViewCountArgs>(
+      args?: Subset<T, SerieViewCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], SeriesViewCountAggregateOutputType>
+          : GetScalarType<T['select'], SerieViewCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a SeriesView.
+     * Allows you to perform aggregations operations on a SerieView.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SeriesViewAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {SerieViewAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -30846,13 +32195,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends SeriesViewAggregateArgs>(args: Subset<T, SeriesViewAggregateArgs>): Prisma.PrismaPromise<GetSeriesViewAggregateType<T>>
+    aggregate<T extends SerieViewAggregateArgs>(args: Subset<T, SerieViewAggregateArgs>): Prisma.PrismaPromise<GetSerieViewAggregateType<T>>
 
     /**
-     * Group by SeriesView.
+     * Group by SerieView.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SeriesViewGroupByArgs} args - Group by arguments.
+     * @param {SerieViewGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -30867,14 +32216,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends SeriesViewGroupByArgs,
+      T extends SerieViewGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: SeriesViewGroupByArgs['orderBy'] }
-        : { orderBy?: SeriesViewGroupByArgs['orderBy'] },
+        ? { orderBy: SerieViewGroupByArgs['orderBy'] }
+        : { orderBy?: SerieViewGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -30923,22 +32272,22 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, SeriesViewGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSeriesViewGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, SerieViewGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSerieViewGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the SeriesView model
+   * Fields of the SerieView model
    */
-  readonly fields: SeriesViewFieldRefs;
+  readonly fields: SerieViewFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for SeriesView.
+   * The delegate class that acts as a "Promise-like" for SerieView.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__SeriesViewClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__SerieViewClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    series<T extends SeriesDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SeriesDefaultArgs<ExtArgs>>): Prisma__SeriesClient<$Result.GetResult<Prisma.$SeriesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    series<T extends SerieDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SerieDefaultArgs<ExtArgs>>): Prisma__SerieClient<$Result.GetResult<Prisma.$SeriePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -30965,430 +32314,430 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the SeriesView model
+   * Fields of the SerieView model
    */
-  interface SeriesViewFieldRefs {
-    readonly id: FieldRef<"SeriesView", 'String'>
-    readonly seriesId: FieldRef<"SeriesView", 'String'>
-    readonly userId: FieldRef<"SeriesView", 'String'>
-    readonly viewedAt: FieldRef<"SeriesView", 'DateTime'>
-    readonly seasonsWatched: FieldRef<"SeriesView", 'Int'>
-    readonly episodesWatched: FieldRef<"SeriesView", 'Int'>
-    readonly totalTimeSpent: FieldRef<"SeriesView", 'Int'>
-    readonly rating: FieldRef<"SeriesView", 'Float'>
-    readonly createdAt: FieldRef<"SeriesView", 'DateTime'>
-    readonly updatedAt: FieldRef<"SeriesView", 'DateTime'>
+  interface SerieViewFieldRefs {
+    readonly id: FieldRef<"SerieView", 'String'>
+    readonly seriesId: FieldRef<"SerieView", 'String'>
+    readonly userId: FieldRef<"SerieView", 'String'>
+    readonly viewedAt: FieldRef<"SerieView", 'DateTime'>
+    readonly seasonsWatched: FieldRef<"SerieView", 'Int'>
+    readonly episodesWatched: FieldRef<"SerieView", 'Int'>
+    readonly totalTimeSpent: FieldRef<"SerieView", 'Int'>
+    readonly rating: FieldRef<"SerieView", 'Float'>
+    readonly createdAt: FieldRef<"SerieView", 'DateTime'>
+    readonly updatedAt: FieldRef<"SerieView", 'DateTime'>
   }
     
 
   // Custom InputTypes
   /**
-   * SeriesView findUnique
+   * SerieView findUnique
    */
-  export type SeriesViewFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SerieViewFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the SeriesView
+     * Select specific fields to fetch from the SerieView
      */
-    select?: SeriesViewSelect<ExtArgs> | null
+    select?: SerieViewSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the SeriesView
+     * Omit specific fields from the SerieView
      */
-    omit?: SeriesViewOmit<ExtArgs> | null
+    omit?: SerieViewOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SeriesViewInclude<ExtArgs> | null
+    include?: SerieViewInclude<ExtArgs> | null
     /**
-     * Filter, which SeriesView to fetch.
+     * Filter, which SerieView to fetch.
      */
-    where: SeriesViewWhereUniqueInput
+    where: SerieViewWhereUniqueInput
   }
 
   /**
-   * SeriesView findUniqueOrThrow
+   * SerieView findUniqueOrThrow
    */
-  export type SeriesViewFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SerieViewFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the SeriesView
+     * Select specific fields to fetch from the SerieView
      */
-    select?: SeriesViewSelect<ExtArgs> | null
+    select?: SerieViewSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the SeriesView
+     * Omit specific fields from the SerieView
      */
-    omit?: SeriesViewOmit<ExtArgs> | null
+    omit?: SerieViewOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SeriesViewInclude<ExtArgs> | null
+    include?: SerieViewInclude<ExtArgs> | null
     /**
-     * Filter, which SeriesView to fetch.
+     * Filter, which SerieView to fetch.
      */
-    where: SeriesViewWhereUniqueInput
+    where: SerieViewWhereUniqueInput
   }
 
   /**
-   * SeriesView findFirst
+   * SerieView findFirst
    */
-  export type SeriesViewFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SerieViewFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the SeriesView
+     * Select specific fields to fetch from the SerieView
      */
-    select?: SeriesViewSelect<ExtArgs> | null
+    select?: SerieViewSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the SeriesView
+     * Omit specific fields from the SerieView
      */
-    omit?: SeriesViewOmit<ExtArgs> | null
+    omit?: SerieViewOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SeriesViewInclude<ExtArgs> | null
+    include?: SerieViewInclude<ExtArgs> | null
     /**
-     * Filter, which SeriesView to fetch.
+     * Filter, which SerieView to fetch.
      */
-    where?: SeriesViewWhereInput
+    where?: SerieViewWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of SeriesViews to fetch.
+     * Determine the order of SerieViews to fetch.
      */
-    orderBy?: SeriesViewOrderByWithRelationInput | SeriesViewOrderByWithRelationInput[]
+    orderBy?: SerieViewOrderByWithRelationInput | SerieViewOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for SeriesViews.
+     * Sets the position for searching for SerieViews.
      */
-    cursor?: SeriesViewWhereUniqueInput
+    cursor?: SerieViewWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` SeriesViews from the position of the cursor.
+     * Take `±n` SerieViews from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` SeriesViews.
+     * Skip the first `n` SerieViews.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of SeriesViews.
+     * Filter by unique combinations of SerieViews.
      */
-    distinct?: SeriesViewScalarFieldEnum | SeriesViewScalarFieldEnum[]
+    distinct?: SerieViewScalarFieldEnum | SerieViewScalarFieldEnum[]
   }
 
   /**
-   * SeriesView findFirstOrThrow
+   * SerieView findFirstOrThrow
    */
-  export type SeriesViewFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SerieViewFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the SeriesView
+     * Select specific fields to fetch from the SerieView
      */
-    select?: SeriesViewSelect<ExtArgs> | null
+    select?: SerieViewSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the SeriesView
+     * Omit specific fields from the SerieView
      */
-    omit?: SeriesViewOmit<ExtArgs> | null
+    omit?: SerieViewOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SeriesViewInclude<ExtArgs> | null
+    include?: SerieViewInclude<ExtArgs> | null
     /**
-     * Filter, which SeriesView to fetch.
+     * Filter, which SerieView to fetch.
      */
-    where?: SeriesViewWhereInput
+    where?: SerieViewWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of SeriesViews to fetch.
+     * Determine the order of SerieViews to fetch.
      */
-    orderBy?: SeriesViewOrderByWithRelationInput | SeriesViewOrderByWithRelationInput[]
+    orderBy?: SerieViewOrderByWithRelationInput | SerieViewOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for SeriesViews.
+     * Sets the position for searching for SerieViews.
      */
-    cursor?: SeriesViewWhereUniqueInput
+    cursor?: SerieViewWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` SeriesViews from the position of the cursor.
+     * Take `±n` SerieViews from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` SeriesViews.
+     * Skip the first `n` SerieViews.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of SeriesViews.
+     * Filter by unique combinations of SerieViews.
      */
-    distinct?: SeriesViewScalarFieldEnum | SeriesViewScalarFieldEnum[]
+    distinct?: SerieViewScalarFieldEnum | SerieViewScalarFieldEnum[]
   }
 
   /**
-   * SeriesView findMany
+   * SerieView findMany
    */
-  export type SeriesViewFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SerieViewFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the SeriesView
+     * Select specific fields to fetch from the SerieView
      */
-    select?: SeriesViewSelect<ExtArgs> | null
+    select?: SerieViewSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the SeriesView
+     * Omit specific fields from the SerieView
      */
-    omit?: SeriesViewOmit<ExtArgs> | null
+    omit?: SerieViewOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SeriesViewInclude<ExtArgs> | null
+    include?: SerieViewInclude<ExtArgs> | null
     /**
-     * Filter, which SeriesViews to fetch.
+     * Filter, which SerieViews to fetch.
      */
-    where?: SeriesViewWhereInput
+    where?: SerieViewWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of SeriesViews to fetch.
+     * Determine the order of SerieViews to fetch.
      */
-    orderBy?: SeriesViewOrderByWithRelationInput | SeriesViewOrderByWithRelationInput[]
+    orderBy?: SerieViewOrderByWithRelationInput | SerieViewOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing SeriesViews.
+     * Sets the position for listing SerieViews.
      */
-    cursor?: SeriesViewWhereUniqueInput
+    cursor?: SerieViewWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` SeriesViews from the position of the cursor.
+     * Take `±n` SerieViews from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` SeriesViews.
+     * Skip the first `n` SerieViews.
      */
     skip?: number
-    distinct?: SeriesViewScalarFieldEnum | SeriesViewScalarFieldEnum[]
+    distinct?: SerieViewScalarFieldEnum | SerieViewScalarFieldEnum[]
   }
 
   /**
-   * SeriesView create
+   * SerieView create
    */
-  export type SeriesViewCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SerieViewCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the SeriesView
+     * Select specific fields to fetch from the SerieView
      */
-    select?: SeriesViewSelect<ExtArgs> | null
+    select?: SerieViewSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the SeriesView
+     * Omit specific fields from the SerieView
      */
-    omit?: SeriesViewOmit<ExtArgs> | null
+    omit?: SerieViewOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SeriesViewInclude<ExtArgs> | null
+    include?: SerieViewInclude<ExtArgs> | null
     /**
-     * The data needed to create a SeriesView.
+     * The data needed to create a SerieView.
      */
-    data: XOR<SeriesViewCreateInput, SeriesViewUncheckedCreateInput>
+    data: XOR<SerieViewCreateInput, SerieViewUncheckedCreateInput>
   }
 
   /**
-   * SeriesView createMany
+   * SerieView createMany
    */
-  export type SeriesViewCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SerieViewCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many SeriesViews.
+     * The data used to create many SerieViews.
      */
-    data: SeriesViewCreateManyInput | SeriesViewCreateManyInput[]
+    data: SerieViewCreateManyInput | SerieViewCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * SeriesView createManyAndReturn
+   * SerieView createManyAndReturn
    */
-  export type SeriesViewCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SerieViewCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the SeriesView
+     * Select specific fields to fetch from the SerieView
      */
-    select?: SeriesViewSelectCreateManyAndReturn<ExtArgs> | null
+    select?: SerieViewSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the SeriesView
+     * Omit specific fields from the SerieView
      */
-    omit?: SeriesViewOmit<ExtArgs> | null
+    omit?: SerieViewOmit<ExtArgs> | null
     /**
-     * The data used to create many SeriesViews.
+     * The data used to create many SerieViews.
      */
-    data: SeriesViewCreateManyInput | SeriesViewCreateManyInput[]
+    data: SerieViewCreateManyInput | SerieViewCreateManyInput[]
     skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SeriesViewIncludeCreateManyAndReturn<ExtArgs> | null
+    include?: SerieViewIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * SeriesView update
+   * SerieView update
    */
-  export type SeriesViewUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SerieViewUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the SeriesView
+     * Select specific fields to fetch from the SerieView
      */
-    select?: SeriesViewSelect<ExtArgs> | null
+    select?: SerieViewSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the SeriesView
+     * Omit specific fields from the SerieView
      */
-    omit?: SeriesViewOmit<ExtArgs> | null
+    omit?: SerieViewOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SeriesViewInclude<ExtArgs> | null
+    include?: SerieViewInclude<ExtArgs> | null
     /**
-     * The data needed to update a SeriesView.
+     * The data needed to update a SerieView.
      */
-    data: XOR<SeriesViewUpdateInput, SeriesViewUncheckedUpdateInput>
+    data: XOR<SerieViewUpdateInput, SerieViewUncheckedUpdateInput>
     /**
-     * Choose, which SeriesView to update.
+     * Choose, which SerieView to update.
      */
-    where: SeriesViewWhereUniqueInput
+    where: SerieViewWhereUniqueInput
   }
 
   /**
-   * SeriesView updateMany
+   * SerieView updateMany
    */
-  export type SeriesViewUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SerieViewUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update SeriesViews.
+     * The data used to update SerieViews.
      */
-    data: XOR<SeriesViewUpdateManyMutationInput, SeriesViewUncheckedUpdateManyInput>
+    data: XOR<SerieViewUpdateManyMutationInput, SerieViewUncheckedUpdateManyInput>
     /**
-     * Filter which SeriesViews to update
+     * Filter which SerieViews to update
      */
-    where?: SeriesViewWhereInput
+    where?: SerieViewWhereInput
     /**
-     * Limit how many SeriesViews to update.
+     * Limit how many SerieViews to update.
      */
     limit?: number
   }
 
   /**
-   * SeriesView updateManyAndReturn
+   * SerieView updateManyAndReturn
    */
-  export type SeriesViewUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SerieViewUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the SeriesView
+     * Select specific fields to fetch from the SerieView
      */
-    select?: SeriesViewSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: SerieViewSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the SeriesView
+     * Omit specific fields from the SerieView
      */
-    omit?: SeriesViewOmit<ExtArgs> | null
+    omit?: SerieViewOmit<ExtArgs> | null
     /**
-     * The data used to update SeriesViews.
+     * The data used to update SerieViews.
      */
-    data: XOR<SeriesViewUpdateManyMutationInput, SeriesViewUncheckedUpdateManyInput>
+    data: XOR<SerieViewUpdateManyMutationInput, SerieViewUncheckedUpdateManyInput>
     /**
-     * Filter which SeriesViews to update
+     * Filter which SerieViews to update
      */
-    where?: SeriesViewWhereInput
+    where?: SerieViewWhereInput
     /**
-     * Limit how many SeriesViews to update.
+     * Limit how many SerieViews to update.
      */
     limit?: number
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SeriesViewIncludeUpdateManyAndReturn<ExtArgs> | null
+    include?: SerieViewIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * SeriesView upsert
+   * SerieView upsert
    */
-  export type SeriesViewUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SerieViewUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the SeriesView
+     * Select specific fields to fetch from the SerieView
      */
-    select?: SeriesViewSelect<ExtArgs> | null
+    select?: SerieViewSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the SeriesView
+     * Omit specific fields from the SerieView
      */
-    omit?: SeriesViewOmit<ExtArgs> | null
+    omit?: SerieViewOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SeriesViewInclude<ExtArgs> | null
+    include?: SerieViewInclude<ExtArgs> | null
     /**
-     * The filter to search for the SeriesView to update in case it exists.
+     * The filter to search for the SerieView to update in case it exists.
      */
-    where: SeriesViewWhereUniqueInput
+    where: SerieViewWhereUniqueInput
     /**
-     * In case the SeriesView found by the `where` argument doesn't exist, create a new SeriesView with this data.
+     * In case the SerieView found by the `where` argument doesn't exist, create a new SerieView with this data.
      */
-    create: XOR<SeriesViewCreateInput, SeriesViewUncheckedCreateInput>
+    create: XOR<SerieViewCreateInput, SerieViewUncheckedCreateInput>
     /**
-     * In case the SeriesView was found with the provided `where` argument, update it with this data.
+     * In case the SerieView was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<SeriesViewUpdateInput, SeriesViewUncheckedUpdateInput>
+    update: XOR<SerieViewUpdateInput, SerieViewUncheckedUpdateInput>
   }
 
   /**
-   * SeriesView delete
+   * SerieView delete
    */
-  export type SeriesViewDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SerieViewDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the SeriesView
+     * Select specific fields to fetch from the SerieView
      */
-    select?: SeriesViewSelect<ExtArgs> | null
+    select?: SerieViewSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the SeriesView
+     * Omit specific fields from the SerieView
      */
-    omit?: SeriesViewOmit<ExtArgs> | null
+    omit?: SerieViewOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SeriesViewInclude<ExtArgs> | null
+    include?: SerieViewInclude<ExtArgs> | null
     /**
-     * Filter which SeriesView to delete.
+     * Filter which SerieView to delete.
      */
-    where: SeriesViewWhereUniqueInput
+    where: SerieViewWhereUniqueInput
   }
 
   /**
-   * SeriesView deleteMany
+   * SerieView deleteMany
    */
-  export type SeriesViewDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SerieViewDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which SeriesViews to delete
+     * Filter which SerieViews to delete
      */
-    where?: SeriesViewWhereInput
+    where?: SerieViewWhereInput
     /**
-     * Limit how many SeriesViews to delete.
+     * Limit how many SerieViews to delete.
      */
     limit?: number
   }
 
   /**
-   * SeriesView without action
+   * SerieView without action
    */
-  export type SeriesViewDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SerieViewDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the SeriesView
+     * Select specific fields to fetch from the SerieView
      */
-    select?: SeriesViewSelect<ExtArgs> | null
+    select?: SerieViewSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the SeriesView
+     * Omit specific fields from the SerieView
      */
-    omit?: SeriesViewOmit<ExtArgs> | null
+    omit?: SerieViewOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SeriesViewInclude<ExtArgs> | null
+    include?: SerieViewInclude<ExtArgs> | null
   }
 
 
@@ -33618,21 +34967,21 @@ export namespace Prisma {
   export type SeriesTagSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     seriesId?: boolean
     tagId?: boolean
-    series?: boolean | SeriesDefaultArgs<ExtArgs>
+    series?: boolean | SerieDefaultArgs<ExtArgs>
     tag?: boolean | TagDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["seriesTag"]>
 
   export type SeriesTagSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     seriesId?: boolean
     tagId?: boolean
-    series?: boolean | SeriesDefaultArgs<ExtArgs>
+    series?: boolean | SerieDefaultArgs<ExtArgs>
     tag?: boolean | TagDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["seriesTag"]>
 
   export type SeriesTagSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     seriesId?: boolean
     tagId?: boolean
-    series?: boolean | SeriesDefaultArgs<ExtArgs>
+    series?: boolean | SerieDefaultArgs<ExtArgs>
     tag?: boolean | TagDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["seriesTag"]>
 
@@ -33643,22 +34992,22 @@ export namespace Prisma {
 
   export type SeriesTagOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"seriesId" | "tagId", ExtArgs["result"]["seriesTag"]>
   export type SeriesTagInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    series?: boolean | SeriesDefaultArgs<ExtArgs>
+    series?: boolean | SerieDefaultArgs<ExtArgs>
     tag?: boolean | TagDefaultArgs<ExtArgs>
   }
   export type SeriesTagIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    series?: boolean | SeriesDefaultArgs<ExtArgs>
+    series?: boolean | SerieDefaultArgs<ExtArgs>
     tag?: boolean | TagDefaultArgs<ExtArgs>
   }
   export type SeriesTagIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    series?: boolean | SeriesDefaultArgs<ExtArgs>
+    series?: boolean | SerieDefaultArgs<ExtArgs>
     tag?: boolean | TagDefaultArgs<ExtArgs>
   }
 
   export type $SeriesTagPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "SeriesTag"
     objects: {
-      series: Prisma.$SeriesPayload<ExtArgs>
+      series: Prisma.$SeriePayload<ExtArgs>
       tag: Prisma.$TagPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -34058,7 +35407,7 @@ export namespace Prisma {
    */
   export interface Prisma__SeriesTagClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    series<T extends SeriesDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SeriesDefaultArgs<ExtArgs>>): Prisma__SeriesClient<$Result.GetResult<Prisma.$SeriesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    series<T extends SerieDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SerieDefaultArgs<ExtArgs>>): Prisma__SerieClient<$Result.GetResult<Prisma.$SeriePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     tag<T extends TagDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TagDefaultArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -34661,7 +36010,7 @@ export namespace Prisma {
     language?: boolean
     subtitleUrl?: boolean
     videoMetadataId?: boolean
-    video?: boolean | VideoFileDefaultArgs<ExtArgs>
+    video?: boolean | MediaFileDefaultArgs<ExtArgs>
     videoMetadata?: boolean | Subtitle$videoMetadataArgs<ExtArgs>
   }, ExtArgs["result"]["subtitle"]>
 
@@ -34670,7 +36019,7 @@ export namespace Prisma {
     language?: boolean
     subtitleUrl?: boolean
     videoMetadataId?: boolean
-    video?: boolean | VideoFileDefaultArgs<ExtArgs>
+    video?: boolean | MediaFileDefaultArgs<ExtArgs>
     videoMetadata?: boolean | Subtitle$videoMetadataArgs<ExtArgs>
   }, ExtArgs["result"]["subtitle"]>
 
@@ -34679,7 +36028,7 @@ export namespace Prisma {
     language?: boolean
     subtitleUrl?: boolean
     videoMetadataId?: boolean
-    video?: boolean | VideoFileDefaultArgs<ExtArgs>
+    video?: boolean | MediaFileDefaultArgs<ExtArgs>
     videoMetadata?: boolean | Subtitle$videoMetadataArgs<ExtArgs>
   }, ExtArgs["result"]["subtitle"]>
 
@@ -34692,22 +36041,22 @@ export namespace Prisma {
 
   export type SubtitleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"videoId" | "language" | "subtitleUrl" | "videoMetadataId", ExtArgs["result"]["subtitle"]>
   export type SubtitleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    video?: boolean | VideoFileDefaultArgs<ExtArgs>
+    video?: boolean | MediaFileDefaultArgs<ExtArgs>
     videoMetadata?: boolean | Subtitle$videoMetadataArgs<ExtArgs>
   }
   export type SubtitleIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    video?: boolean | VideoFileDefaultArgs<ExtArgs>
+    video?: boolean | MediaFileDefaultArgs<ExtArgs>
     videoMetadata?: boolean | Subtitle$videoMetadataArgs<ExtArgs>
   }
   export type SubtitleIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    video?: boolean | VideoFileDefaultArgs<ExtArgs>
+    video?: boolean | MediaFileDefaultArgs<ExtArgs>
     videoMetadata?: boolean | Subtitle$videoMetadataArgs<ExtArgs>
   }
 
   export type $SubtitlePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Subtitle"
     objects: {
-      video: Prisma.$VideoFilePayload<ExtArgs>
+      video: Prisma.$MediaFilePayload<ExtArgs>
       videoMetadata: Prisma.$VideoMetadataPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -35109,7 +36458,7 @@ export namespace Prisma {
    */
   export interface Prisma__SubtitleClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    video<T extends VideoFileDefaultArgs<ExtArgs> = {}>(args?: Subset<T, VideoFileDefaultArgs<ExtArgs>>): Prisma__VideoFileClient<$Result.GetResult<Prisma.$VideoFilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    video<T extends MediaFileDefaultArgs<ExtArgs> = {}>(args?: Subset<T, MediaFileDefaultArgs<ExtArgs>>): Prisma__MediaFileClient<$Result.GetResult<Prisma.$MediaFilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     videoMetadata<T extends Subtitle$videoMetadataArgs<ExtArgs> = {}>(args?: Subset<T, Subtitle$videoMetadataArgs<ExtArgs>>): Prisma__VideoMetadataClient<$Result.GetResult<Prisma.$VideoMetadataPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -35590,7 +36939,8 @@ export namespace Prisma {
   export type PurchaseMinAggregateOutputType = {
     id: string | null
     userId: string | null
-    videoId: string | null
+    movieId: string | null
+    serieId: string | null
     purchaseDate: Date | null
     expirationDate: Date | null
     country: string | null
@@ -35599,7 +36949,8 @@ export namespace Prisma {
   export type PurchaseMaxAggregateOutputType = {
     id: string | null
     userId: string | null
-    videoId: string | null
+    movieId: string | null
+    serieId: string | null
     purchaseDate: Date | null
     expirationDate: Date | null
     country: string | null
@@ -35608,7 +36959,8 @@ export namespace Prisma {
   export type PurchaseCountAggregateOutputType = {
     id: number
     userId: number
-    videoId: number
+    movieId: number
+    serieId: number
     purchaseDate: number
     expirationDate: number
     country: number
@@ -35619,7 +36971,8 @@ export namespace Prisma {
   export type PurchaseMinAggregateInputType = {
     id?: true
     userId?: true
-    videoId?: true
+    movieId?: true
+    serieId?: true
     purchaseDate?: true
     expirationDate?: true
     country?: true
@@ -35628,7 +36981,8 @@ export namespace Prisma {
   export type PurchaseMaxAggregateInputType = {
     id?: true
     userId?: true
-    videoId?: true
+    movieId?: true
+    serieId?: true
     purchaseDate?: true
     expirationDate?: true
     country?: true
@@ -35637,7 +36991,8 @@ export namespace Prisma {
   export type PurchaseCountAggregateInputType = {
     id?: true
     userId?: true
-    videoId?: true
+    movieId?: true
+    serieId?: true
     purchaseDate?: true
     expirationDate?: true
     country?: true
@@ -35719,7 +37074,8 @@ export namespace Prisma {
   export type PurchaseGroupByOutputType = {
     id: string
     userId: string
-    videoId: string
+    movieId: string | null
+    serieId: string | null
     purchaseDate: Date
     expirationDate: Date | null
     country: string
@@ -35745,69 +37101,81 @@ export namespace Prisma {
   export type PurchaseSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
-    videoId?: boolean
+    movieId?: boolean
+    serieId?: boolean
     purchaseDate?: boolean
     expirationDate?: boolean
     country?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-    video?: boolean | VideoFileDefaultArgs<ExtArgs>
+    movie?: boolean | Purchase$movieArgs<ExtArgs>
+    serie?: boolean | Purchase$serieArgs<ExtArgs>
   }, ExtArgs["result"]["purchase"]>
 
   export type PurchaseSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
-    videoId?: boolean
+    movieId?: boolean
+    serieId?: boolean
     purchaseDate?: boolean
     expirationDate?: boolean
     country?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-    video?: boolean | VideoFileDefaultArgs<ExtArgs>
+    movie?: boolean | Purchase$movieArgs<ExtArgs>
+    serie?: boolean | Purchase$serieArgs<ExtArgs>
   }, ExtArgs["result"]["purchase"]>
 
   export type PurchaseSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
-    videoId?: boolean
+    movieId?: boolean
+    serieId?: boolean
     purchaseDate?: boolean
     expirationDate?: boolean
     country?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-    video?: boolean | VideoFileDefaultArgs<ExtArgs>
+    movie?: boolean | Purchase$movieArgs<ExtArgs>
+    serie?: boolean | Purchase$serieArgs<ExtArgs>
   }, ExtArgs["result"]["purchase"]>
 
   export type PurchaseSelectScalar = {
     id?: boolean
     userId?: boolean
-    videoId?: boolean
+    movieId?: boolean
+    serieId?: boolean
     purchaseDate?: boolean
     expirationDate?: boolean
     country?: boolean
   }
 
-  export type PurchaseOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "videoId" | "purchaseDate" | "expirationDate" | "country", ExtArgs["result"]["purchase"]>
+  export type PurchaseOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "movieId" | "serieId" | "purchaseDate" | "expirationDate" | "country", ExtArgs["result"]["purchase"]>
   export type PurchaseInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
-    video?: boolean | VideoFileDefaultArgs<ExtArgs>
+    movie?: boolean | Purchase$movieArgs<ExtArgs>
+    serie?: boolean | Purchase$serieArgs<ExtArgs>
   }
   export type PurchaseIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
-    video?: boolean | VideoFileDefaultArgs<ExtArgs>
+    movie?: boolean | Purchase$movieArgs<ExtArgs>
+    serie?: boolean | Purchase$serieArgs<ExtArgs>
   }
   export type PurchaseIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
-    video?: boolean | VideoFileDefaultArgs<ExtArgs>
+    movie?: boolean | Purchase$movieArgs<ExtArgs>
+    serie?: boolean | Purchase$serieArgs<ExtArgs>
   }
 
   export type $PurchasePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Purchase"
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
-      video: Prisma.$VideoFilePayload<ExtArgs>
+      movie: Prisma.$MoviePayload<ExtArgs> | null
+      serie: Prisma.$SeriePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       userId: string
-      videoId: string
+      movieId: string | null
+      serieId: string | null
       purchaseDate: Date
       expirationDate: Date | null
       country: string
@@ -36206,7 +37574,8 @@ export namespace Prisma {
   export interface Prisma__PurchaseClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    video<T extends VideoFileDefaultArgs<ExtArgs> = {}>(args?: Subset<T, VideoFileDefaultArgs<ExtArgs>>): Prisma__VideoFileClient<$Result.GetResult<Prisma.$VideoFilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    movie<T extends Purchase$movieArgs<ExtArgs> = {}>(args?: Subset<T, Purchase$movieArgs<ExtArgs>>): Prisma__MovieClient<$Result.GetResult<Prisma.$MoviePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    serie<T extends Purchase$serieArgs<ExtArgs> = {}>(args?: Subset<T, Purchase$serieArgs<ExtArgs>>): Prisma__SerieClient<$Result.GetResult<Prisma.$SeriePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -36238,7 +37607,8 @@ export namespace Prisma {
   interface PurchaseFieldRefs {
     readonly id: FieldRef<"Purchase", 'String'>
     readonly userId: FieldRef<"Purchase", 'String'>
-    readonly videoId: FieldRef<"Purchase", 'String'>
+    readonly movieId: FieldRef<"Purchase", 'String'>
+    readonly serieId: FieldRef<"Purchase", 'String'>
     readonly purchaseDate: FieldRef<"Purchase", 'DateTime'>
     readonly expirationDate: FieldRef<"Purchase", 'DateTime'>
     readonly country: FieldRef<"Purchase", 'String'>
@@ -36638,6 +38008,44 @@ export namespace Prisma {
   }
 
   /**
+   * Purchase.movie
+   */
+  export type Purchase$movieArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Movie
+     */
+    select?: MovieSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Movie
+     */
+    omit?: MovieOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovieInclude<ExtArgs> | null
+    where?: MovieWhereInput
+  }
+
+  /**
+   * Purchase.serie
+   */
+  export type Purchase$serieArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Serie
+     */
+    select?: SerieSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Serie
+     */
+    omit?: SerieOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SerieInclude<ExtArgs> | null
+    where?: SerieWhereInput
+  }
+
+  /**
    * Purchase without action
    */
   export type PurchaseDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -36669,7 +38077,8 @@ export namespace Prisma {
   export type CommentMinAggregateOutputType = {
     id: string | null
     userId: string | null
-    videoId: string | null
+    movieId: string | null
+    epiisodeId: string | null
     text: string | null
     createdAt: Date | null
     parentCommentId: string | null
@@ -36678,7 +38087,8 @@ export namespace Prisma {
   export type CommentMaxAggregateOutputType = {
     id: string | null
     userId: string | null
-    videoId: string | null
+    movieId: string | null
+    epiisodeId: string | null
     text: string | null
     createdAt: Date | null
     parentCommentId: string | null
@@ -36687,7 +38097,8 @@ export namespace Prisma {
   export type CommentCountAggregateOutputType = {
     id: number
     userId: number
-    videoId: number
+    movieId: number
+    epiisodeId: number
     text: number
     createdAt: number
     parentCommentId: number
@@ -36698,7 +38109,8 @@ export namespace Prisma {
   export type CommentMinAggregateInputType = {
     id?: true
     userId?: true
-    videoId?: true
+    movieId?: true
+    epiisodeId?: true
     text?: true
     createdAt?: true
     parentCommentId?: true
@@ -36707,7 +38119,8 @@ export namespace Prisma {
   export type CommentMaxAggregateInputType = {
     id?: true
     userId?: true
-    videoId?: true
+    movieId?: true
+    epiisodeId?: true
     text?: true
     createdAt?: true
     parentCommentId?: true
@@ -36716,7 +38129,8 @@ export namespace Prisma {
   export type CommentCountAggregateInputType = {
     id?: true
     userId?: true
-    videoId?: true
+    movieId?: true
+    epiisodeId?: true
     text?: true
     createdAt?: true
     parentCommentId?: true
@@ -36798,7 +38212,8 @@ export namespace Prisma {
   export type CommentGroupByOutputType = {
     id: string
     userId: string
-    videoId: string
+    movieId: string | null
+    epiisodeId: string | null
     text: string
     createdAt: Date
     parentCommentId: string | null
@@ -36824,81 +38239,93 @@ export namespace Prisma {
   export type CommentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
-    videoId?: boolean
+    movieId?: boolean
+    epiisodeId?: boolean
     text?: boolean
     createdAt?: boolean
     parentCommentId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-    video?: boolean | VideoFileDefaultArgs<ExtArgs>
     parent?: boolean | Comment$parentArgs<ExtArgs>
     replies?: boolean | Comment$repliesArgs<ExtArgs>
+    movie?: boolean | Comment$movieArgs<ExtArgs>
+    episode?: boolean | Comment$episodeArgs<ExtArgs>
     _count?: boolean | CommentCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["comment"]>
 
   export type CommentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
-    videoId?: boolean
+    movieId?: boolean
+    epiisodeId?: boolean
     text?: boolean
     createdAt?: boolean
     parentCommentId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-    video?: boolean | VideoFileDefaultArgs<ExtArgs>
     parent?: boolean | Comment$parentArgs<ExtArgs>
+    movie?: boolean | Comment$movieArgs<ExtArgs>
+    episode?: boolean | Comment$episodeArgs<ExtArgs>
   }, ExtArgs["result"]["comment"]>
 
   export type CommentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
-    videoId?: boolean
+    movieId?: boolean
+    epiisodeId?: boolean
     text?: boolean
     createdAt?: boolean
     parentCommentId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-    video?: boolean | VideoFileDefaultArgs<ExtArgs>
     parent?: boolean | Comment$parentArgs<ExtArgs>
+    movie?: boolean | Comment$movieArgs<ExtArgs>
+    episode?: boolean | Comment$episodeArgs<ExtArgs>
   }, ExtArgs["result"]["comment"]>
 
   export type CommentSelectScalar = {
     id?: boolean
     userId?: boolean
-    videoId?: boolean
+    movieId?: boolean
+    epiisodeId?: boolean
     text?: boolean
     createdAt?: boolean
     parentCommentId?: boolean
   }
 
-  export type CommentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "videoId" | "text" | "createdAt" | "parentCommentId", ExtArgs["result"]["comment"]>
+  export type CommentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "movieId" | "epiisodeId" | "text" | "createdAt" | "parentCommentId", ExtArgs["result"]["comment"]>
   export type CommentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
-    video?: boolean | VideoFileDefaultArgs<ExtArgs>
     parent?: boolean | Comment$parentArgs<ExtArgs>
     replies?: boolean | Comment$repliesArgs<ExtArgs>
+    movie?: boolean | Comment$movieArgs<ExtArgs>
+    episode?: boolean | Comment$episodeArgs<ExtArgs>
     _count?: boolean | CommentCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type CommentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
-    video?: boolean | VideoFileDefaultArgs<ExtArgs>
     parent?: boolean | Comment$parentArgs<ExtArgs>
+    movie?: boolean | Comment$movieArgs<ExtArgs>
+    episode?: boolean | Comment$episodeArgs<ExtArgs>
   }
   export type CommentIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
-    video?: boolean | VideoFileDefaultArgs<ExtArgs>
     parent?: boolean | Comment$parentArgs<ExtArgs>
+    movie?: boolean | Comment$movieArgs<ExtArgs>
+    episode?: boolean | Comment$episodeArgs<ExtArgs>
   }
 
   export type $CommentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Comment"
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
-      video: Prisma.$VideoFilePayload<ExtArgs>
       parent: Prisma.$CommentPayload<ExtArgs> | null
       replies: Prisma.$CommentPayload<ExtArgs>[]
+      movie: Prisma.$MoviePayload<ExtArgs> | null
+      episode: Prisma.$EpisodePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       userId: string
-      videoId: string
+      movieId: string | null
+      epiisodeId: string | null
       text: string
       createdAt: Date
       parentCommentId: string | null
@@ -37297,9 +38724,10 @@ export namespace Prisma {
   export interface Prisma__CommentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    video<T extends VideoFileDefaultArgs<ExtArgs> = {}>(args?: Subset<T, VideoFileDefaultArgs<ExtArgs>>): Prisma__VideoFileClient<$Result.GetResult<Prisma.$VideoFilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     parent<T extends Comment$parentArgs<ExtArgs> = {}>(args?: Subset<T, Comment$parentArgs<ExtArgs>>): Prisma__CommentClient<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     replies<T extends Comment$repliesArgs<ExtArgs> = {}>(args?: Subset<T, Comment$repliesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    movie<T extends Comment$movieArgs<ExtArgs> = {}>(args?: Subset<T, Comment$movieArgs<ExtArgs>>): Prisma__MovieClient<$Result.GetResult<Prisma.$MoviePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    episode<T extends Comment$episodeArgs<ExtArgs> = {}>(args?: Subset<T, Comment$episodeArgs<ExtArgs>>): Prisma__EpisodeClient<$Result.GetResult<Prisma.$EpisodePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -37331,7 +38759,8 @@ export namespace Prisma {
   interface CommentFieldRefs {
     readonly id: FieldRef<"Comment", 'String'>
     readonly userId: FieldRef<"Comment", 'String'>
-    readonly videoId: FieldRef<"Comment", 'String'>
+    readonly movieId: FieldRef<"Comment", 'String'>
+    readonly epiisodeId: FieldRef<"Comment", 'String'>
     readonly text: FieldRef<"Comment", 'String'>
     readonly createdAt: FieldRef<"Comment", 'DateTime'>
     readonly parentCommentId: FieldRef<"Comment", 'String'>
@@ -37774,6 +39203,44 @@ export namespace Prisma {
   }
 
   /**
+   * Comment.movie
+   */
+  export type Comment$movieArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Movie
+     */
+    select?: MovieSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Movie
+     */
+    omit?: MovieOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MovieInclude<ExtArgs> | null
+    where?: MovieWhereInput
+  }
+
+  /**
+   * Comment.episode
+   */
+  export type Comment$episodeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Episode
+     */
+    select?: EpisodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Episode
+     */
+    omit?: EpisodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EpisodeInclude<ExtArgs> | null
+    where?: EpisodeWhereInput
+  }
+
+  /**
    * Comment without action
    */
   export type CommentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -37805,31 +39272,28 @@ export namespace Prisma {
   export type AdMinAggregateOutputType = {
     id: string | null
     title: string | null
-    image_url: string | null
-    video_url: string | null
-    start_date: Date | null
-    end_date: Date | null
-    is_active: boolean | null
+    imageUrl: string | null
+    startDate: Date | null
+    endDate: Date | null
+    isActive: boolean | null
   }
 
   export type AdMaxAggregateOutputType = {
     id: string | null
     title: string | null
-    image_url: string | null
-    video_url: string | null
-    start_date: Date | null
-    end_date: Date | null
-    is_active: boolean | null
+    imageUrl: string | null
+    startDate: Date | null
+    endDate: Date | null
+    isActive: boolean | null
   }
 
   export type AdCountAggregateOutputType = {
     id: number
     title: number
-    image_url: number
-    video_url: number
-    start_date: number
-    end_date: number
-    is_active: number
+    imageUrl: number
+    startDate: number
+    endDate: number
+    isActive: number
     _all: number
   }
 
@@ -37837,31 +39301,28 @@ export namespace Prisma {
   export type AdMinAggregateInputType = {
     id?: true
     title?: true
-    image_url?: true
-    video_url?: true
-    start_date?: true
-    end_date?: true
-    is_active?: true
+    imageUrl?: true
+    startDate?: true
+    endDate?: true
+    isActive?: true
   }
 
   export type AdMaxAggregateInputType = {
     id?: true
     title?: true
-    image_url?: true
-    video_url?: true
-    start_date?: true
-    end_date?: true
-    is_active?: true
+    imageUrl?: true
+    startDate?: true
+    endDate?: true
+    isActive?: true
   }
 
   export type AdCountAggregateInputType = {
     id?: true
     title?: true
-    image_url?: true
-    video_url?: true
-    start_date?: true
-    end_date?: true
-    is_active?: true
+    imageUrl?: true
+    startDate?: true
+    endDate?: true
+    isActive?: true
     _all?: true
   }
 
@@ -37940,11 +39401,10 @@ export namespace Prisma {
   export type AdGroupByOutputType = {
     id: string
     title: string
-    image_url: string
-    video_url: string | null
-    start_date: Date
-    end_date: Date
-    is_active: boolean
+    imageUrl: string
+    startDate: Date
+    endDate: Date
+    isActive: boolean
     _count: AdCountAggregateOutputType | null
     _min: AdMinAggregateOutputType | null
     _max: AdMaxAggregateOutputType | null
@@ -37967,11 +39427,11 @@ export namespace Prisma {
   export type AdSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     title?: boolean
-    image_url?: boolean
-    video_url?: boolean
-    start_date?: boolean
-    end_date?: boolean
-    is_active?: boolean
+    imageUrl?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    isActive?: boolean
+    videoAttachment?: boolean | Ad$videoAttachmentArgs<ExtArgs>
     views?: boolean | Ad$viewsArgs<ExtArgs>
     _count?: boolean | AdCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["ad"]>
@@ -37979,35 +39439,33 @@ export namespace Prisma {
   export type AdSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     title?: boolean
-    image_url?: boolean
-    video_url?: boolean
-    start_date?: boolean
-    end_date?: boolean
-    is_active?: boolean
+    imageUrl?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    isActive?: boolean
   }, ExtArgs["result"]["ad"]>
 
   export type AdSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     title?: boolean
-    image_url?: boolean
-    video_url?: boolean
-    start_date?: boolean
-    end_date?: boolean
-    is_active?: boolean
+    imageUrl?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    isActive?: boolean
   }, ExtArgs["result"]["ad"]>
 
   export type AdSelectScalar = {
     id?: boolean
     title?: boolean
-    image_url?: boolean
-    video_url?: boolean
-    start_date?: boolean
-    end_date?: boolean
-    is_active?: boolean
+    imageUrl?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    isActive?: boolean
   }
 
-  export type AdOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "image_url" | "video_url" | "start_date" | "end_date" | "is_active", ExtArgs["result"]["ad"]>
+  export type AdOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "imageUrl" | "startDate" | "endDate" | "isActive", ExtArgs["result"]["ad"]>
   export type AdInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    videoAttachment?: boolean | Ad$videoAttachmentArgs<ExtArgs>
     views?: boolean | Ad$viewsArgs<ExtArgs>
     _count?: boolean | AdCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -38017,16 +39475,16 @@ export namespace Prisma {
   export type $AdPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Ad"
     objects: {
+      videoAttachment: Prisma.$MediaAttachmentPayload<ExtArgs>[]
       views: Prisma.$AdViewPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       title: string
-      image_url: string
-      video_url: string | null
-      start_date: Date
-      end_date: Date
-      is_active: boolean
+      imageUrl: string
+      startDate: Date
+      endDate: Date
+      isActive: boolean
     }, ExtArgs["result"]["ad"]>
     composites: {}
   }
@@ -38421,6 +39879,7 @@ export namespace Prisma {
    */
   export interface Prisma__AdClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    videoAttachment<T extends Ad$videoAttachmentArgs<ExtArgs> = {}>(args?: Subset<T, Ad$videoAttachmentArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaAttachmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     views<T extends Ad$viewsArgs<ExtArgs> = {}>(args?: Subset<T, Ad$viewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdViewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -38453,11 +39912,10 @@ export namespace Prisma {
   interface AdFieldRefs {
     readonly id: FieldRef<"Ad", 'String'>
     readonly title: FieldRef<"Ad", 'String'>
-    readonly image_url: FieldRef<"Ad", 'String'>
-    readonly video_url: FieldRef<"Ad", 'String'>
-    readonly start_date: FieldRef<"Ad", 'DateTime'>
-    readonly end_date: FieldRef<"Ad", 'DateTime'>
-    readonly is_active: FieldRef<"Ad", 'Boolean'>
+    readonly imageUrl: FieldRef<"Ad", 'String'>
+    readonly startDate: FieldRef<"Ad", 'DateTime'>
+    readonly endDate: FieldRef<"Ad", 'DateTime'>
+    readonly isActive: FieldRef<"Ad", 'Boolean'>
   }
     
 
@@ -38843,6 +40301,30 @@ export namespace Prisma {
      * Limit how many Ads to delete.
      */
     limit?: number
+  }
+
+  /**
+   * Ad.videoAttachment
+   */
+  export type Ad$videoAttachmentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaAttachment
+     */
+    select?: MediaAttachmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaAttachment
+     */
+    omit?: MediaAttachmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaAttachmentInclude<ExtArgs> | null
+    where?: MediaAttachmentWhereInput
+    orderBy?: MediaAttachmentOrderByWithRelationInput | MediaAttachmentOrderByWithRelationInput[]
+    cursor?: MediaAttachmentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MediaAttachmentScalarFieldEnum | MediaAttachmentScalarFieldEnum[]
   }
 
   /**
@@ -41193,8 +42675,6 @@ export namespace Prisma {
     id: 'id',
     title: 'title',
     description: 'description',
-    thumbnailUrl: 'thumbnailUrl',
-    secondaryImage: 'secondaryImage',
     releaseDate: 'releaseDate',
     platformDate: 'platformDate',
     ageRating: 'ageRating',
@@ -41212,19 +42692,31 @@ export namespace Prisma {
   export type VideoMetadataScalarFieldEnum = (typeof VideoMetadataScalarFieldEnum)[keyof typeof VideoMetadataScalarFieldEnum]
 
 
-  export const VideoFileScalarFieldEnum: {
+  export const MediaFileScalarFieldEnum: {
     id: 'id',
-    filePath: 'filePath',
-    trailerPath: 'trailerPath',
+    s3Key: 's3Key',
     duration: 'duration',
     width: 'width',
     height: 'height',
     status: 'status',
+    mediaType: 'mediaType',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
 
-  export type VideoFileScalarFieldEnum = (typeof VideoFileScalarFieldEnum)[keyof typeof VideoFileScalarFieldEnum]
+  export type MediaFileScalarFieldEnum = (typeof MediaFileScalarFieldEnum)[keyof typeof MediaFileScalarFieldEnum]
+
+
+  export const MediaAttachmentScalarFieldEnum: {
+    id: 'id',
+    mediaFileId: 'mediaFileId',
+    movieId: 'movieId',
+    episodeId: 'episodeId',
+    adId: 'adId',
+    type: 'type'
+  };
+
+  export type MediaAttachmentScalarFieldEnum = (typeof MediaAttachmentScalarFieldEnum)[keyof typeof MediaAttachmentScalarFieldEnum]
 
 
   export const VideoGenreScalarFieldEnum: {
@@ -41294,7 +42786,6 @@ export namespace Prisma {
   export const MovieScalarFieldEnum: {
     id: 'id',
     metadataId: 'metadataId',
-    videoFileId: 'videoFileId',
     status: 'status',
     type: 'type',
     seasonCount: 'seasonCount',
@@ -41306,7 +42797,7 @@ export namespace Prisma {
   export type MovieScalarFieldEnum = (typeof MovieScalarFieldEnum)[keyof typeof MovieScalarFieldEnum]
 
 
-  export const SeriesScalarFieldEnum: {
+  export const SerieScalarFieldEnum: {
     id: 'id',
     metadataId: 'metadataId',
     status: 'status',
@@ -41317,12 +42808,12 @@ export namespace Prisma {
     updatedAt: 'updatedAt'
   };
 
-  export type SeriesScalarFieldEnum = (typeof SeriesScalarFieldEnum)[keyof typeof SeriesScalarFieldEnum]
+  export type SerieScalarFieldEnum = (typeof SerieScalarFieldEnum)[keyof typeof SerieScalarFieldEnum]
 
 
   export const SeasonScalarFieldEnum: {
     id: 'id',
-    seriesId: 'seriesId',
+    serieId: 'serieId',
     number: 'number',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -41335,7 +42826,6 @@ export namespace Prisma {
     id: 'id',
     seasonId: 'seasonId',
     number: 'number',
-    videoFileId: 'videoFileId',
     title: 'title',
     releaseDate: 'releaseDate',
     plateformeDAte: 'plateformeDAte',
@@ -41383,7 +42873,7 @@ export namespace Prisma {
   export type SeasonViewScalarFieldEnum = (typeof SeasonViewScalarFieldEnum)[keyof typeof SeasonViewScalarFieldEnum]
 
 
-  export const SeriesViewScalarFieldEnum: {
+  export const SerieViewScalarFieldEnum: {
     id: 'id',
     seriesId: 'seriesId',
     userId: 'userId',
@@ -41396,7 +42886,7 @@ export namespace Prisma {
     updatedAt: 'updatedAt'
   };
 
-  export type SeriesViewScalarFieldEnum = (typeof SeriesViewScalarFieldEnum)[keyof typeof SeriesViewScalarFieldEnum]
+  export type SerieViewScalarFieldEnum = (typeof SerieViewScalarFieldEnum)[keyof typeof SerieViewScalarFieldEnum]
 
 
   export const TagScalarFieldEnum: {
@@ -41436,7 +42926,8 @@ export namespace Prisma {
   export const PurchaseScalarFieldEnum: {
     id: 'id',
     userId: 'userId',
-    videoId: 'videoId',
+    movieId: 'movieId',
+    serieId: 'serieId',
     purchaseDate: 'purchaseDate',
     expirationDate: 'expirationDate',
     country: 'country'
@@ -41448,7 +42939,8 @@ export namespace Prisma {
   export const CommentScalarFieldEnum: {
     id: 'id',
     userId: 'userId',
-    videoId: 'videoId',
+    movieId: 'movieId',
+    epiisodeId: 'epiisodeId',
     text: 'text',
     createdAt: 'createdAt',
     parentCommentId: 'parentCommentId'
@@ -41460,11 +42952,10 @@ export namespace Prisma {
   export const AdScalarFieldEnum: {
     id: 'id',
     title: 'title',
-    image_url: 'image_url',
-    video_url: 'video_url',
-    start_date: 'start_date',
-    end_date: 'end_date',
-    is_active: 'is_active'
+    imageUrl: 'imageUrl',
+    startDate: 'startDate',
+    endDate: 'endDate',
+    isActive: 'isActive'
   };
 
   export type AdScalarFieldEnum = (typeof AdScalarFieldEnum)[keyof typeof AdScalarFieldEnum]
@@ -41672,16 +43163,44 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'VideoFileStatus'
+   * Reference to a field of type 'MediaFileStatus'
    */
-  export type EnumVideoFileStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'VideoFileStatus'>
+  export type EnumMediaFileStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MediaFileStatus'>
     
 
 
   /**
-   * Reference to a field of type 'VideoFileStatus[]'
+   * Reference to a field of type 'MediaFileStatus[]'
    */
-  export type ListEnumVideoFileStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'VideoFileStatus[]'>
+  export type ListEnumMediaFileStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MediaFileStatus[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'MediaType'
+   */
+  export type EnumMediaTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MediaType'>
+    
+
+
+  /**
+   * Reference to a field of type 'MediaType[]'
+   */
+  export type ListEnumMediaTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MediaType[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'MediaAttachmentType'
+   */
+  export type EnumMediaAttachmentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MediaAttachmentType'>
+    
+
+
+  /**
+   * Reference to a field of type 'MediaAttachmentType[]'
+   */
+  export type ListEnumMediaAttachmentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MediaAttachmentType[]'>
     
 
 
@@ -42384,8 +43903,6 @@ export namespace Prisma {
     id?: StringFilter<"VideoMetadata"> | string
     title?: StringFilter<"VideoMetadata"> | string
     description?: StringFilter<"VideoMetadata"> | string
-    thumbnailUrl?: StringFilter<"VideoMetadata"> | string
-    secondaryImage?: StringNullableFilter<"VideoMetadata"> | string | null
     releaseDate?: DateTimeFilter<"VideoMetadata"> | Date | string
     platformDate?: DateTimeFilter<"VideoMetadata"> | Date | string
     ageRating?: StringFilter<"VideoMetadata"> | string
@@ -42402,7 +43919,7 @@ export namespace Prisma {
     category?: XOR<VideoCategoryScalarRelationFilter, VideoCategoryWhereInput>
     gender?: XOR<VideoGenreScalarRelationFilter, VideoGenreWhereInput>
     movie?: XOR<MovieNullableScalarRelationFilter, MovieWhereInput> | null
-    series?: XOR<SeriesNullableScalarRelationFilter, SeriesWhereInput> | null
+    series?: XOR<SerieNullableScalarRelationFilter, SerieWhereInput> | null
     actors?: VideoActorListRelationFilter
     subtitles?: SubtitleListRelationFilter
     languages?: VideoLanguageListRelationFilter
@@ -42412,8 +43929,6 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
-    thumbnailUrl?: SortOrder
-    secondaryImage?: SortOrderInput | SortOrder
     releaseDate?: SortOrder
     platformDate?: SortOrder
     ageRating?: SortOrder
@@ -42430,7 +43945,7 @@ export namespace Prisma {
     category?: VideoCategoryOrderByWithRelationInput
     gender?: VideoGenreOrderByWithRelationInput
     movie?: MovieOrderByWithRelationInput
-    series?: SeriesOrderByWithRelationInput
+    series?: SerieOrderByWithRelationInput
     actors?: VideoActorOrderByRelationAggregateInput
     subtitles?: SubtitleOrderByRelationAggregateInput
     languages?: VideoLanguageOrderByRelationAggregateInput
@@ -42443,8 +43958,6 @@ export namespace Prisma {
     NOT?: VideoMetadataWhereInput | VideoMetadataWhereInput[]
     title?: StringFilter<"VideoMetadata"> | string
     description?: StringFilter<"VideoMetadata"> | string
-    thumbnailUrl?: StringFilter<"VideoMetadata"> | string
-    secondaryImage?: StringNullableFilter<"VideoMetadata"> | string | null
     releaseDate?: DateTimeFilter<"VideoMetadata"> | Date | string
     platformDate?: DateTimeFilter<"VideoMetadata"> | Date | string
     ageRating?: StringFilter<"VideoMetadata"> | string
@@ -42461,7 +43974,7 @@ export namespace Prisma {
     category?: XOR<VideoCategoryScalarRelationFilter, VideoCategoryWhereInput>
     gender?: XOR<VideoGenreScalarRelationFilter, VideoGenreWhereInput>
     movie?: XOR<MovieNullableScalarRelationFilter, MovieWhereInput> | null
-    series?: XOR<SeriesNullableScalarRelationFilter, SeriesWhereInput> | null
+    series?: XOR<SerieNullableScalarRelationFilter, SerieWhereInput> | null
     actors?: VideoActorListRelationFilter
     subtitles?: SubtitleListRelationFilter
     languages?: VideoLanguageListRelationFilter
@@ -42471,8 +43984,6 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
-    thumbnailUrl?: SortOrder
-    secondaryImage?: SortOrderInput | SortOrder
     releaseDate?: SortOrder
     platformDate?: SortOrder
     ageRating?: SortOrder
@@ -42497,8 +44008,6 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"VideoMetadata"> | string
     title?: StringWithAggregatesFilter<"VideoMetadata"> | string
     description?: StringWithAggregatesFilter<"VideoMetadata"> | string
-    thumbnailUrl?: StringWithAggregatesFilter<"VideoMetadata"> | string
-    secondaryImage?: StringNullableWithAggregatesFilter<"VideoMetadata"> | string | null
     releaseDate?: DateTimeWithAggregatesFilter<"VideoMetadata"> | Date | string
     platformDate?: DateTimeWithAggregatesFilter<"VideoMetadata"> | Date | string
     ageRating?: StringWithAggregatesFilter<"VideoMetadata"> | string
@@ -42513,96 +44022,153 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"VideoMetadata"> | Date | string
   }
 
-  export type VideoFileWhereInput = {
-    AND?: VideoFileWhereInput | VideoFileWhereInput[]
-    OR?: VideoFileWhereInput[]
-    NOT?: VideoFileWhereInput | VideoFileWhereInput[]
-    id?: StringFilter<"VideoFile"> | string
-    filePath?: StringFilter<"VideoFile"> | string
-    trailerPath?: StringNullableFilter<"VideoFile"> | string | null
-    duration?: IntFilter<"VideoFile"> | number
-    width?: IntNullableFilter<"VideoFile"> | number | null
-    height?: IntNullableFilter<"VideoFile"> | number | null
-    status?: EnumVideoFileStatusFilter<"VideoFile"> | $Enums.VideoFileStatus
-    createdAt?: DateTimeFilter<"VideoFile"> | Date | string
-    updatedAt?: DateTimeFilter<"VideoFile"> | Date | string
-    movie?: XOR<MovieNullableScalarRelationFilter, MovieWhereInput> | null
-    episode?: XOR<EpisodeNullableScalarRelationFilter, EpisodeWhereInput> | null
-    subtitles?: SubtitleListRelationFilter
-    purchases?: PurchaseListRelationFilter
-    comments?: CommentListRelationFilter
-    UserVideoProgress?: UserVideoViewListRelationFilter
+  export type MediaFileWhereInput = {
+    AND?: MediaFileWhereInput | MediaFileWhereInput[]
+    OR?: MediaFileWhereInput[]
+    NOT?: MediaFileWhereInput | MediaFileWhereInput[]
+    id?: StringFilter<"MediaFile"> | string
+    s3Key?: StringFilter<"MediaFile"> | string
+    duration?: IntNullableFilter<"MediaFile"> | number | null
+    width?: IntNullableFilter<"MediaFile"> | number | null
+    height?: IntNullableFilter<"MediaFile"> | number | null
+    status?: EnumMediaFileStatusFilter<"MediaFile"> | $Enums.MediaFileStatus
+    mediaType?: EnumMediaTypeFilter<"MediaFile"> | $Enums.MediaType
+    createdAt?: DateTimeFilter<"MediaFile"> | Date | string
+    updatedAt?: DateTimeFilter<"MediaFile"> | Date | string
+    attachments?: MediaAttachmentListRelationFilter
+    Subtitle?: SubtitleListRelationFilter
   }
 
-  export type VideoFileOrderByWithRelationInput = {
+  export type MediaFileOrderByWithRelationInput = {
     id?: SortOrder
-    filePath?: SortOrder
-    trailerPath?: SortOrderInput | SortOrder
-    duration?: SortOrder
+    s3Key?: SortOrder
+    duration?: SortOrderInput | SortOrder
     width?: SortOrderInput | SortOrder
     height?: SortOrderInput | SortOrder
     status?: SortOrder
+    mediaType?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    movie?: MovieOrderByWithRelationInput
-    episode?: EpisodeOrderByWithRelationInput
-    subtitles?: SubtitleOrderByRelationAggregateInput
-    purchases?: PurchaseOrderByRelationAggregateInput
-    comments?: CommentOrderByRelationAggregateInput
-    UserVideoProgress?: UserVideoViewOrderByRelationAggregateInput
+    attachments?: MediaAttachmentOrderByRelationAggregateInput
+    Subtitle?: SubtitleOrderByRelationAggregateInput
   }
 
-  export type VideoFileWhereUniqueInput = Prisma.AtLeast<{
+  export type MediaFileWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    AND?: VideoFileWhereInput | VideoFileWhereInput[]
-    OR?: VideoFileWhereInput[]
-    NOT?: VideoFileWhereInput | VideoFileWhereInput[]
-    filePath?: StringFilter<"VideoFile"> | string
-    trailerPath?: StringNullableFilter<"VideoFile"> | string | null
-    duration?: IntFilter<"VideoFile"> | number
-    width?: IntNullableFilter<"VideoFile"> | number | null
-    height?: IntNullableFilter<"VideoFile"> | number | null
-    status?: EnumVideoFileStatusFilter<"VideoFile"> | $Enums.VideoFileStatus
-    createdAt?: DateTimeFilter<"VideoFile"> | Date | string
-    updatedAt?: DateTimeFilter<"VideoFile"> | Date | string
-    movie?: XOR<MovieNullableScalarRelationFilter, MovieWhereInput> | null
-    episode?: XOR<EpisodeNullableScalarRelationFilter, EpisodeWhereInput> | null
-    subtitles?: SubtitleListRelationFilter
-    purchases?: PurchaseListRelationFilter
-    comments?: CommentListRelationFilter
-    UserVideoProgress?: UserVideoViewListRelationFilter
+    AND?: MediaFileWhereInput | MediaFileWhereInput[]
+    OR?: MediaFileWhereInput[]
+    NOT?: MediaFileWhereInput | MediaFileWhereInput[]
+    s3Key?: StringFilter<"MediaFile"> | string
+    duration?: IntNullableFilter<"MediaFile"> | number | null
+    width?: IntNullableFilter<"MediaFile"> | number | null
+    height?: IntNullableFilter<"MediaFile"> | number | null
+    status?: EnumMediaFileStatusFilter<"MediaFile"> | $Enums.MediaFileStatus
+    mediaType?: EnumMediaTypeFilter<"MediaFile"> | $Enums.MediaType
+    createdAt?: DateTimeFilter<"MediaFile"> | Date | string
+    updatedAt?: DateTimeFilter<"MediaFile"> | Date | string
+    attachments?: MediaAttachmentListRelationFilter
+    Subtitle?: SubtitleListRelationFilter
   }, "id">
 
-  export type VideoFileOrderByWithAggregationInput = {
+  export type MediaFileOrderByWithAggregationInput = {
     id?: SortOrder
-    filePath?: SortOrder
-    trailerPath?: SortOrderInput | SortOrder
-    duration?: SortOrder
+    s3Key?: SortOrder
+    duration?: SortOrderInput | SortOrder
     width?: SortOrderInput | SortOrder
     height?: SortOrderInput | SortOrder
     status?: SortOrder
+    mediaType?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    _count?: VideoFileCountOrderByAggregateInput
-    _avg?: VideoFileAvgOrderByAggregateInput
-    _max?: VideoFileMaxOrderByAggregateInput
-    _min?: VideoFileMinOrderByAggregateInput
-    _sum?: VideoFileSumOrderByAggregateInput
+    _count?: MediaFileCountOrderByAggregateInput
+    _avg?: MediaFileAvgOrderByAggregateInput
+    _max?: MediaFileMaxOrderByAggregateInput
+    _min?: MediaFileMinOrderByAggregateInput
+    _sum?: MediaFileSumOrderByAggregateInput
   }
 
-  export type VideoFileScalarWhereWithAggregatesInput = {
-    AND?: VideoFileScalarWhereWithAggregatesInput | VideoFileScalarWhereWithAggregatesInput[]
-    OR?: VideoFileScalarWhereWithAggregatesInput[]
-    NOT?: VideoFileScalarWhereWithAggregatesInput | VideoFileScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"VideoFile"> | string
-    filePath?: StringWithAggregatesFilter<"VideoFile"> | string
-    trailerPath?: StringNullableWithAggregatesFilter<"VideoFile"> | string | null
-    duration?: IntWithAggregatesFilter<"VideoFile"> | number
-    width?: IntNullableWithAggregatesFilter<"VideoFile"> | number | null
-    height?: IntNullableWithAggregatesFilter<"VideoFile"> | number | null
-    status?: EnumVideoFileStatusWithAggregatesFilter<"VideoFile"> | $Enums.VideoFileStatus
-    createdAt?: DateTimeWithAggregatesFilter<"VideoFile"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"VideoFile"> | Date | string
+  export type MediaFileScalarWhereWithAggregatesInput = {
+    AND?: MediaFileScalarWhereWithAggregatesInput | MediaFileScalarWhereWithAggregatesInput[]
+    OR?: MediaFileScalarWhereWithAggregatesInput[]
+    NOT?: MediaFileScalarWhereWithAggregatesInput | MediaFileScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"MediaFile"> | string
+    s3Key?: StringWithAggregatesFilter<"MediaFile"> | string
+    duration?: IntNullableWithAggregatesFilter<"MediaFile"> | number | null
+    width?: IntNullableWithAggregatesFilter<"MediaFile"> | number | null
+    height?: IntNullableWithAggregatesFilter<"MediaFile"> | number | null
+    status?: EnumMediaFileStatusWithAggregatesFilter<"MediaFile"> | $Enums.MediaFileStatus
+    mediaType?: EnumMediaTypeWithAggregatesFilter<"MediaFile"> | $Enums.MediaType
+    createdAt?: DateTimeWithAggregatesFilter<"MediaFile"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"MediaFile"> | Date | string
+  }
+
+  export type MediaAttachmentWhereInput = {
+    AND?: MediaAttachmentWhereInput | MediaAttachmentWhereInput[]
+    OR?: MediaAttachmentWhereInput[]
+    NOT?: MediaAttachmentWhereInput | MediaAttachmentWhereInput[]
+    id?: StringFilter<"MediaAttachment"> | string
+    mediaFileId?: StringFilter<"MediaAttachment"> | string
+    movieId?: StringNullableFilter<"MediaAttachment"> | string | null
+    episodeId?: StringNullableFilter<"MediaAttachment"> | string | null
+    adId?: StringNullableFilter<"MediaAttachment"> | string | null
+    type?: EnumMediaAttachmentTypeFilter<"MediaAttachment"> | $Enums.MediaAttachmentType
+    mediaFile?: XOR<MediaFileScalarRelationFilter, MediaFileWhereInput>
+    movie?: XOR<MovieNullableScalarRelationFilter, MovieWhereInput> | null
+    episode?: XOR<EpisodeNullableScalarRelationFilter, EpisodeWhereInput> | null
+    ad?: XOR<AdNullableScalarRelationFilter, AdWhereInput> | null
+  }
+
+  export type MediaAttachmentOrderByWithRelationInput = {
+    id?: SortOrder
+    mediaFileId?: SortOrder
+    movieId?: SortOrderInput | SortOrder
+    episodeId?: SortOrderInput | SortOrder
+    adId?: SortOrderInput | SortOrder
+    type?: SortOrder
+    mediaFile?: MediaFileOrderByWithRelationInput
+    movie?: MovieOrderByWithRelationInput
+    episode?: EpisodeOrderByWithRelationInput
+    ad?: AdOrderByWithRelationInput
+  }
+
+  export type MediaAttachmentWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: MediaAttachmentWhereInput | MediaAttachmentWhereInput[]
+    OR?: MediaAttachmentWhereInput[]
+    NOT?: MediaAttachmentWhereInput | MediaAttachmentWhereInput[]
+    mediaFileId?: StringFilter<"MediaAttachment"> | string
+    movieId?: StringNullableFilter<"MediaAttachment"> | string | null
+    episodeId?: StringNullableFilter<"MediaAttachment"> | string | null
+    adId?: StringNullableFilter<"MediaAttachment"> | string | null
+    type?: EnumMediaAttachmentTypeFilter<"MediaAttachment"> | $Enums.MediaAttachmentType
+    mediaFile?: XOR<MediaFileScalarRelationFilter, MediaFileWhereInput>
+    movie?: XOR<MovieNullableScalarRelationFilter, MovieWhereInput> | null
+    episode?: XOR<EpisodeNullableScalarRelationFilter, EpisodeWhereInput> | null
+    ad?: XOR<AdNullableScalarRelationFilter, AdWhereInput> | null
+  }, "id">
+
+  export type MediaAttachmentOrderByWithAggregationInput = {
+    id?: SortOrder
+    mediaFileId?: SortOrder
+    movieId?: SortOrderInput | SortOrder
+    episodeId?: SortOrderInput | SortOrder
+    adId?: SortOrderInput | SortOrder
+    type?: SortOrder
+    _count?: MediaAttachmentCountOrderByAggregateInput
+    _max?: MediaAttachmentMaxOrderByAggregateInput
+    _min?: MediaAttachmentMinOrderByAggregateInput
+  }
+
+  export type MediaAttachmentScalarWhereWithAggregatesInput = {
+    AND?: MediaAttachmentScalarWhereWithAggregatesInput | MediaAttachmentScalarWhereWithAggregatesInput[]
+    OR?: MediaAttachmentScalarWhereWithAggregatesInput[]
+    NOT?: MediaAttachmentScalarWhereWithAggregatesInput | MediaAttachmentScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"MediaAttachment"> | string
+    mediaFileId?: StringWithAggregatesFilter<"MediaAttachment"> | string
+    movieId?: StringNullableWithAggregatesFilter<"MediaAttachment"> | string | null
+    episodeId?: StringNullableWithAggregatesFilter<"MediaAttachment"> | string | null
+    adId?: StringNullableWithAggregatesFilter<"MediaAttachment"> | string | null
+    type?: EnumMediaAttachmentTypeWithAggregatesFilter<"MediaAttachment"> | $Enums.MediaAttachmentType
   }
 
   export type VideoGenreWhereInput = {
@@ -42935,22 +44501,22 @@ export namespace Prisma {
     NOT?: MovieWhereInput | MovieWhereInput[]
     id?: StringFilter<"Movie"> | string
     metadataId?: StringFilter<"Movie"> | string
-    videoFileId?: StringFilter<"Movie"> | string
-    status?: StringFilter<"Movie"> | string
+    status?: EnumContentStatusFilter<"Movie"> | $Enums.ContentStatus
     type?: StringFilter<"Movie"> | string
     seasonCount?: IntFilter<"Movie"> | number
     rentalPrice?: FloatNullableFilter<"Movie"> | number | null
     createdAt?: DateTimeFilter<"Movie"> | Date | string
     updatedAt?: DateTimeFilter<"Movie"> | Date | string
     metadata?: XOR<VideoMetadataScalarRelationFilter, VideoMetadataWhereInput>
-    videoFile?: XOR<VideoFileScalarRelationFilter, VideoFileWhereInput>
     tags?: MovieTagListRelationFilter
+    attachment?: MediaAttachmentListRelationFilter
+    Comment?: CommentListRelationFilter
+    Purchase?: PurchaseListRelationFilter
   }
 
   export type MovieOrderByWithRelationInput = {
     id?: SortOrder
     metadataId?: SortOrder
-    videoFileId?: SortOrder
     status?: SortOrder
     type?: SortOrder
     seasonCount?: SortOrder
@@ -42958,32 +44524,34 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     metadata?: VideoMetadataOrderByWithRelationInput
-    videoFile?: VideoFileOrderByWithRelationInput
     tags?: MovieTagOrderByRelationAggregateInput
+    attachment?: MediaAttachmentOrderByRelationAggregateInput
+    Comment?: CommentOrderByRelationAggregateInput
+    Purchase?: PurchaseOrderByRelationAggregateInput
   }
 
   export type MovieWhereUniqueInput = Prisma.AtLeast<{
     id?: string
     metadataId?: string
-    videoFileId?: string
     AND?: MovieWhereInput | MovieWhereInput[]
     OR?: MovieWhereInput[]
     NOT?: MovieWhereInput | MovieWhereInput[]
-    status?: StringFilter<"Movie"> | string
+    status?: EnumContentStatusFilter<"Movie"> | $Enums.ContentStatus
     type?: StringFilter<"Movie"> | string
     seasonCount?: IntFilter<"Movie"> | number
     rentalPrice?: FloatNullableFilter<"Movie"> | number | null
     createdAt?: DateTimeFilter<"Movie"> | Date | string
     updatedAt?: DateTimeFilter<"Movie"> | Date | string
     metadata?: XOR<VideoMetadataScalarRelationFilter, VideoMetadataWhereInput>
-    videoFile?: XOR<VideoFileScalarRelationFilter, VideoFileWhereInput>
     tags?: MovieTagListRelationFilter
-  }, "id" | "metadataId" | "videoFileId">
+    attachment?: MediaAttachmentListRelationFilter
+    Comment?: CommentListRelationFilter
+    Purchase?: PurchaseListRelationFilter
+  }, "id" | "metadataId">
 
   export type MovieOrderByWithAggregationInput = {
     id?: SortOrder
     metadataId?: SortOrder
-    videoFileId?: SortOrder
     status?: SortOrder
     type?: SortOrder
     seasonCount?: SortOrder
@@ -43003,8 +44571,7 @@ export namespace Prisma {
     NOT?: MovieScalarWhereWithAggregatesInput | MovieScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Movie"> | string
     metadataId?: StringWithAggregatesFilter<"Movie"> | string
-    videoFileId?: StringWithAggregatesFilter<"Movie"> | string
-    status?: StringWithAggregatesFilter<"Movie"> | string
+    status?: EnumContentStatusWithAggregatesFilter<"Movie"> | $Enums.ContentStatus
     type?: StringWithAggregatesFilter<"Movie"> | string
     seasonCount?: IntWithAggregatesFilter<"Movie"> | number
     rentalPrice?: FloatNullableWithAggregatesFilter<"Movie"> | number | null
@@ -43012,25 +44579,26 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Movie"> | Date | string
   }
 
-  export type SeriesWhereInput = {
-    AND?: SeriesWhereInput | SeriesWhereInput[]
-    OR?: SeriesWhereInput[]
-    NOT?: SeriesWhereInput | SeriesWhereInput[]
-    id?: StringFilter<"Series"> | string
-    metadataId?: StringFilter<"Series"> | string
-    status?: StringFilter<"Series"> | string
-    type?: StringFilter<"Series"> | string
-    seasonCount?: IntFilter<"Series"> | number
-    rentalPrice?: FloatNullableFilter<"Series"> | number | null
-    createdAt?: DateTimeFilter<"Series"> | Date | string
-    updatedAt?: DateTimeFilter<"Series"> | Date | string
+  export type SerieWhereInput = {
+    AND?: SerieWhereInput | SerieWhereInput[]
+    OR?: SerieWhereInput[]
+    NOT?: SerieWhereInput | SerieWhereInput[]
+    id?: StringFilter<"Serie"> | string
+    metadataId?: StringFilter<"Serie"> | string
+    status?: StringFilter<"Serie"> | string
+    type?: StringFilter<"Serie"> | string
+    seasonCount?: IntFilter<"Serie"> | number
+    rentalPrice?: FloatNullableFilter<"Serie"> | number | null
+    createdAt?: DateTimeFilter<"Serie"> | Date | string
+    updatedAt?: DateTimeFilter<"Serie"> | Date | string
     metadata?: XOR<VideoMetadataScalarRelationFilter, VideoMetadataWhereInput>
     seasons?: SeasonListRelationFilter
     tags?: SeriesTagListRelationFilter
-    SeriesView?: SeriesViewListRelationFilter
+    SerieView?: SerieViewListRelationFilter
+    Purchase?: PurchaseListRelationFilter
   }
 
-  export type SeriesOrderByWithRelationInput = {
+  export type SerieOrderByWithRelationInput = {
     id?: SortOrder
     metadataId?: SortOrder
     status?: SortOrder
@@ -43042,28 +44610,30 @@ export namespace Prisma {
     metadata?: VideoMetadataOrderByWithRelationInput
     seasons?: SeasonOrderByRelationAggregateInput
     tags?: SeriesTagOrderByRelationAggregateInput
-    SeriesView?: SeriesViewOrderByRelationAggregateInput
+    SerieView?: SerieViewOrderByRelationAggregateInput
+    Purchase?: PurchaseOrderByRelationAggregateInput
   }
 
-  export type SeriesWhereUniqueInput = Prisma.AtLeast<{
+  export type SerieWhereUniqueInput = Prisma.AtLeast<{
     id?: string
     metadataId?: string
-    AND?: SeriesWhereInput | SeriesWhereInput[]
-    OR?: SeriesWhereInput[]
-    NOT?: SeriesWhereInput | SeriesWhereInput[]
-    status?: StringFilter<"Series"> | string
-    type?: StringFilter<"Series"> | string
-    seasonCount?: IntFilter<"Series"> | number
-    rentalPrice?: FloatNullableFilter<"Series"> | number | null
-    createdAt?: DateTimeFilter<"Series"> | Date | string
-    updatedAt?: DateTimeFilter<"Series"> | Date | string
+    AND?: SerieWhereInput | SerieWhereInput[]
+    OR?: SerieWhereInput[]
+    NOT?: SerieWhereInput | SerieWhereInput[]
+    status?: StringFilter<"Serie"> | string
+    type?: StringFilter<"Serie"> | string
+    seasonCount?: IntFilter<"Serie"> | number
+    rentalPrice?: FloatNullableFilter<"Serie"> | number | null
+    createdAt?: DateTimeFilter<"Serie"> | Date | string
+    updatedAt?: DateTimeFilter<"Serie"> | Date | string
     metadata?: XOR<VideoMetadataScalarRelationFilter, VideoMetadataWhereInput>
     seasons?: SeasonListRelationFilter
     tags?: SeriesTagListRelationFilter
-    SeriesView?: SeriesViewListRelationFilter
+    SerieView?: SerieViewListRelationFilter
+    Purchase?: PurchaseListRelationFilter
   }, "id" | "metadataId">
 
-  export type SeriesOrderByWithAggregationInput = {
+  export type SerieOrderByWithAggregationInput = {
     id?: SortOrder
     metadataId?: SortOrder
     status?: SortOrder
@@ -43072,25 +44642,25 @@ export namespace Prisma {
     rentalPrice?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    _count?: SeriesCountOrderByAggregateInput
-    _avg?: SeriesAvgOrderByAggregateInput
-    _max?: SeriesMaxOrderByAggregateInput
-    _min?: SeriesMinOrderByAggregateInput
-    _sum?: SeriesSumOrderByAggregateInput
+    _count?: SerieCountOrderByAggregateInput
+    _avg?: SerieAvgOrderByAggregateInput
+    _max?: SerieMaxOrderByAggregateInput
+    _min?: SerieMinOrderByAggregateInput
+    _sum?: SerieSumOrderByAggregateInput
   }
 
-  export type SeriesScalarWhereWithAggregatesInput = {
-    AND?: SeriesScalarWhereWithAggregatesInput | SeriesScalarWhereWithAggregatesInput[]
-    OR?: SeriesScalarWhereWithAggregatesInput[]
-    NOT?: SeriesScalarWhereWithAggregatesInput | SeriesScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"Series"> | string
-    metadataId?: StringWithAggregatesFilter<"Series"> | string
-    status?: StringWithAggregatesFilter<"Series"> | string
-    type?: StringWithAggregatesFilter<"Series"> | string
-    seasonCount?: IntWithAggregatesFilter<"Series"> | number
-    rentalPrice?: FloatNullableWithAggregatesFilter<"Series"> | number | null
-    createdAt?: DateTimeWithAggregatesFilter<"Series"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"Series"> | Date | string
+  export type SerieScalarWhereWithAggregatesInput = {
+    AND?: SerieScalarWhereWithAggregatesInput | SerieScalarWhereWithAggregatesInput[]
+    OR?: SerieScalarWhereWithAggregatesInput[]
+    NOT?: SerieScalarWhereWithAggregatesInput | SerieScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Serie"> | string
+    metadataId?: StringWithAggregatesFilter<"Serie"> | string
+    status?: StringWithAggregatesFilter<"Serie"> | string
+    type?: StringWithAggregatesFilter<"Serie"> | string
+    seasonCount?: IntWithAggregatesFilter<"Serie"> | number
+    rentalPrice?: FloatNullableWithAggregatesFilter<"Serie"> | number | null
+    createdAt?: DateTimeWithAggregatesFilter<"Serie"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Serie"> | Date | string
   }
 
   export type SeasonWhereInput = {
@@ -43098,44 +44668,44 @@ export namespace Prisma {
     OR?: SeasonWhereInput[]
     NOT?: SeasonWhereInput | SeasonWhereInput[]
     id?: StringFilter<"Season"> | string
-    seriesId?: StringFilter<"Season"> | string
+    serieId?: StringFilter<"Season"> | string
     number?: IntFilter<"Season"> | number
     createdAt?: DateTimeFilter<"Season"> | Date | string
     updatedAt?: DateTimeFilter<"Season"> | Date | string
-    series?: XOR<SeriesScalarRelationFilter, SeriesWhereInput>
+    serie?: XOR<SerieScalarRelationFilter, SerieWhereInput>
     episodes?: EpisodeListRelationFilter
     SeasonView?: SeasonViewListRelationFilter
   }
 
   export type SeasonOrderByWithRelationInput = {
     id?: SortOrder
-    seriesId?: SortOrder
+    serieId?: SortOrder
     number?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    series?: SeriesOrderByWithRelationInput
+    serie?: SerieOrderByWithRelationInput
     episodes?: EpisodeOrderByRelationAggregateInput
     SeasonView?: SeasonViewOrderByRelationAggregateInput
   }
 
   export type SeasonWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    seriesId_number?: SeasonSeriesIdNumberCompoundUniqueInput
+    serieId_number?: SeasonSerieIdNumberCompoundUniqueInput
     AND?: SeasonWhereInput | SeasonWhereInput[]
     OR?: SeasonWhereInput[]
     NOT?: SeasonWhereInput | SeasonWhereInput[]
-    seriesId?: StringFilter<"Season"> | string
+    serieId?: StringFilter<"Season"> | string
     number?: IntFilter<"Season"> | number
     createdAt?: DateTimeFilter<"Season"> | Date | string
     updatedAt?: DateTimeFilter<"Season"> | Date | string
-    series?: XOR<SeriesScalarRelationFilter, SeriesWhereInput>
+    serie?: XOR<SerieScalarRelationFilter, SerieWhereInput>
     episodes?: EpisodeListRelationFilter
     SeasonView?: SeasonViewListRelationFilter
-  }, "id" | "seriesId_number">
+  }, "id" | "serieId_number">
 
   export type SeasonOrderByWithAggregationInput = {
     id?: SortOrder
-    seriesId?: SortOrder
+    serieId?: SortOrder
     number?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -43151,7 +44721,7 @@ export namespace Prisma {
     OR?: SeasonScalarWhereWithAggregatesInput[]
     NOT?: SeasonScalarWhereWithAggregatesInput | SeasonScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Season"> | string
-    seriesId?: StringWithAggregatesFilter<"Season"> | string
+    serieId?: StringWithAggregatesFilter<"Season"> | string
     number?: IntWithAggregatesFilter<"Season"> | number
     createdAt?: DateTimeWithAggregatesFilter<"Season"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Season"> | Date | string
@@ -43164,7 +44734,6 @@ export namespace Prisma {
     id?: StringFilter<"Episode"> | string
     seasonId?: StringFilter<"Episode"> | string
     number?: IntFilter<"Episode"> | number
-    videoFileId?: StringFilter<"Episode"> | string
     title?: StringNullableFilter<"Episode"> | string | null
     releaseDate?: DateTimeFilter<"Episode"> | Date | string
     plateformeDAte?: DateTimeFilter<"Episode"> | Date | string
@@ -43174,14 +44743,14 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Episode"> | Date | string
     updatedAt?: DateTimeFilter<"Episode"> | Date | string
     season?: XOR<SeasonScalarRelationFilter, SeasonWhereInput>
-    videoFile?: XOR<VideoFileScalarRelationFilter, VideoFileWhereInput>
+    videoAttachment?: MediaAttachmentListRelationFilter
+    Comment?: CommentListRelationFilter
   }
 
   export type EpisodeOrderByWithRelationInput = {
     id?: SortOrder
     seasonId?: SortOrder
     number?: SortOrder
-    videoFileId?: SortOrder
     title?: SortOrderInput | SortOrder
     releaseDate?: SortOrder
     plateformeDAte?: SortOrder
@@ -43191,12 +44760,12 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     season?: SeasonOrderByWithRelationInput
-    videoFile?: VideoFileOrderByWithRelationInput
+    videoAttachment?: MediaAttachmentOrderByRelationAggregateInput
+    Comment?: CommentOrderByRelationAggregateInput
   }
 
   export type EpisodeWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    videoFileId?: string
     seasonId_number?: EpisodeSeasonIdNumberCompoundUniqueInput
     AND?: EpisodeWhereInput | EpisodeWhereInput[]
     OR?: EpisodeWhereInput[]
@@ -43212,14 +44781,14 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Episode"> | Date | string
     updatedAt?: DateTimeFilter<"Episode"> | Date | string
     season?: XOR<SeasonScalarRelationFilter, SeasonWhereInput>
-    videoFile?: XOR<VideoFileScalarRelationFilter, VideoFileWhereInput>
-  }, "id" | "videoFileId" | "seasonId_number">
+    videoAttachment?: MediaAttachmentListRelationFilter
+    Comment?: CommentListRelationFilter
+  }, "id" | "seasonId_number">
 
   export type EpisodeOrderByWithAggregationInput = {
     id?: SortOrder
     seasonId?: SortOrder
     number?: SortOrder
-    videoFileId?: SortOrder
     title?: SortOrderInput | SortOrder
     releaseDate?: SortOrder
     plateformeDAte?: SortOrder
@@ -43242,7 +44811,6 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Episode"> | string
     seasonId?: StringWithAggregatesFilter<"Episode"> | string
     number?: IntWithAggregatesFilter<"Episode"> | number
-    videoFileId?: StringWithAggregatesFilter<"Episode"> | string
     title?: StringNullableWithAggregatesFilter<"Episode"> | string | null
     releaseDate?: DateTimeWithAggregatesFilter<"Episode"> | Date | string
     plateformeDAte?: DateTimeWithAggregatesFilter<"Episode"> | Date | string
@@ -43271,7 +44839,6 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"UserVideoView"> | Date | string
     updatedAt?: DateTimeFilter<"UserVideoView"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    video?: XOR<VideoFileScalarRelationFilter, VideoFileWhereInput>
   }
 
   export type UserVideoViewOrderByWithRelationInput = {
@@ -43289,7 +44856,6 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     user?: UserOrderByWithRelationInput
-    video?: VideoFileOrderByWithRelationInput
   }
 
   export type UserVideoViewWhereUniqueInput = Prisma.AtLeast<{
@@ -43310,7 +44876,6 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"UserVideoView"> | Date | string
     updatedAt?: DateTimeFilter<"UserVideoView"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    video?: XOR<VideoFileScalarRelationFilter, VideoFileWhereInput>
   }, "id">
 
   export type UserVideoViewOrderByWithAggregationInput = {
@@ -43434,24 +44999,24 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"SeasonView"> | Date | string
   }
 
-  export type SeriesViewWhereInput = {
-    AND?: SeriesViewWhereInput | SeriesViewWhereInput[]
-    OR?: SeriesViewWhereInput[]
-    NOT?: SeriesViewWhereInput | SeriesViewWhereInput[]
-    id?: StringFilter<"SeriesView"> | string
-    seriesId?: StringFilter<"SeriesView"> | string
-    userId?: StringFilter<"SeriesView"> | string
-    viewedAt?: DateTimeFilter<"SeriesView"> | Date | string
-    seasonsWatched?: IntNullableFilter<"SeriesView"> | number | null
-    episodesWatched?: IntNullableFilter<"SeriesView"> | number | null
-    totalTimeSpent?: IntNullableFilter<"SeriesView"> | number | null
-    rating?: FloatNullableFilter<"SeriesView"> | number | null
-    createdAt?: DateTimeFilter<"SeriesView"> | Date | string
-    updatedAt?: DateTimeFilter<"SeriesView"> | Date | string
-    series?: XOR<SeriesScalarRelationFilter, SeriesWhereInput>
+  export type SerieViewWhereInput = {
+    AND?: SerieViewWhereInput | SerieViewWhereInput[]
+    OR?: SerieViewWhereInput[]
+    NOT?: SerieViewWhereInput | SerieViewWhereInput[]
+    id?: StringFilter<"SerieView"> | string
+    seriesId?: StringFilter<"SerieView"> | string
+    userId?: StringFilter<"SerieView"> | string
+    viewedAt?: DateTimeFilter<"SerieView"> | Date | string
+    seasonsWatched?: IntNullableFilter<"SerieView"> | number | null
+    episodesWatched?: IntNullableFilter<"SerieView"> | number | null
+    totalTimeSpent?: IntNullableFilter<"SerieView"> | number | null
+    rating?: FloatNullableFilter<"SerieView"> | number | null
+    createdAt?: DateTimeFilter<"SerieView"> | Date | string
+    updatedAt?: DateTimeFilter<"SerieView"> | Date | string
+    series?: XOR<SerieScalarRelationFilter, SerieWhereInput>
   }
 
-  export type SeriesViewOrderByWithRelationInput = {
+  export type SerieViewOrderByWithRelationInput = {
     id?: SortOrder
     seriesId?: SortOrder
     userId?: SortOrder
@@ -43462,28 +45027,28 @@ export namespace Prisma {
     rating?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    series?: SeriesOrderByWithRelationInput
+    series?: SerieOrderByWithRelationInput
   }
 
-  export type SeriesViewWhereUniqueInput = Prisma.AtLeast<{
+  export type SerieViewWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    seriesId_userId?: SeriesViewSeriesIdUserIdCompoundUniqueInput
-    AND?: SeriesViewWhereInput | SeriesViewWhereInput[]
-    OR?: SeriesViewWhereInput[]
-    NOT?: SeriesViewWhereInput | SeriesViewWhereInput[]
-    seriesId?: StringFilter<"SeriesView"> | string
-    userId?: StringFilter<"SeriesView"> | string
-    viewedAt?: DateTimeFilter<"SeriesView"> | Date | string
-    seasonsWatched?: IntNullableFilter<"SeriesView"> | number | null
-    episodesWatched?: IntNullableFilter<"SeriesView"> | number | null
-    totalTimeSpent?: IntNullableFilter<"SeriesView"> | number | null
-    rating?: FloatNullableFilter<"SeriesView"> | number | null
-    createdAt?: DateTimeFilter<"SeriesView"> | Date | string
-    updatedAt?: DateTimeFilter<"SeriesView"> | Date | string
-    series?: XOR<SeriesScalarRelationFilter, SeriesWhereInput>
+    seriesId_userId?: SerieViewSeriesIdUserIdCompoundUniqueInput
+    AND?: SerieViewWhereInput | SerieViewWhereInput[]
+    OR?: SerieViewWhereInput[]
+    NOT?: SerieViewWhereInput | SerieViewWhereInput[]
+    seriesId?: StringFilter<"SerieView"> | string
+    userId?: StringFilter<"SerieView"> | string
+    viewedAt?: DateTimeFilter<"SerieView"> | Date | string
+    seasonsWatched?: IntNullableFilter<"SerieView"> | number | null
+    episodesWatched?: IntNullableFilter<"SerieView"> | number | null
+    totalTimeSpent?: IntNullableFilter<"SerieView"> | number | null
+    rating?: FloatNullableFilter<"SerieView"> | number | null
+    createdAt?: DateTimeFilter<"SerieView"> | Date | string
+    updatedAt?: DateTimeFilter<"SerieView"> | Date | string
+    series?: XOR<SerieScalarRelationFilter, SerieWhereInput>
   }, "id" | "seriesId_userId">
 
-  export type SeriesViewOrderByWithAggregationInput = {
+  export type SerieViewOrderByWithAggregationInput = {
     id?: SortOrder
     seriesId?: SortOrder
     userId?: SortOrder
@@ -43494,27 +45059,27 @@ export namespace Prisma {
     rating?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    _count?: SeriesViewCountOrderByAggregateInput
-    _avg?: SeriesViewAvgOrderByAggregateInput
-    _max?: SeriesViewMaxOrderByAggregateInput
-    _min?: SeriesViewMinOrderByAggregateInput
-    _sum?: SeriesViewSumOrderByAggregateInput
+    _count?: SerieViewCountOrderByAggregateInput
+    _avg?: SerieViewAvgOrderByAggregateInput
+    _max?: SerieViewMaxOrderByAggregateInput
+    _min?: SerieViewMinOrderByAggregateInput
+    _sum?: SerieViewSumOrderByAggregateInput
   }
 
-  export type SeriesViewScalarWhereWithAggregatesInput = {
-    AND?: SeriesViewScalarWhereWithAggregatesInput | SeriesViewScalarWhereWithAggregatesInput[]
-    OR?: SeriesViewScalarWhereWithAggregatesInput[]
-    NOT?: SeriesViewScalarWhereWithAggregatesInput | SeriesViewScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"SeriesView"> | string
-    seriesId?: StringWithAggregatesFilter<"SeriesView"> | string
-    userId?: StringWithAggregatesFilter<"SeriesView"> | string
-    viewedAt?: DateTimeWithAggregatesFilter<"SeriesView"> | Date | string
-    seasonsWatched?: IntNullableWithAggregatesFilter<"SeriesView"> | number | null
-    episodesWatched?: IntNullableWithAggregatesFilter<"SeriesView"> | number | null
-    totalTimeSpent?: IntNullableWithAggregatesFilter<"SeriesView"> | number | null
-    rating?: FloatNullableWithAggregatesFilter<"SeriesView"> | number | null
-    createdAt?: DateTimeWithAggregatesFilter<"SeriesView"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"SeriesView"> | Date | string
+  export type SerieViewScalarWhereWithAggregatesInput = {
+    AND?: SerieViewScalarWhereWithAggregatesInput | SerieViewScalarWhereWithAggregatesInput[]
+    OR?: SerieViewScalarWhereWithAggregatesInput[]
+    NOT?: SerieViewScalarWhereWithAggregatesInput | SerieViewScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"SerieView"> | string
+    seriesId?: StringWithAggregatesFilter<"SerieView"> | string
+    userId?: StringWithAggregatesFilter<"SerieView"> | string
+    viewedAt?: DateTimeWithAggregatesFilter<"SerieView"> | Date | string
+    seasonsWatched?: IntNullableWithAggregatesFilter<"SerieView"> | number | null
+    episodesWatched?: IntNullableWithAggregatesFilter<"SerieView"> | number | null
+    totalTimeSpent?: IntNullableWithAggregatesFilter<"SerieView"> | number | null
+    rating?: FloatNullableWithAggregatesFilter<"SerieView"> | number | null
+    createdAt?: DateTimeWithAggregatesFilter<"SerieView"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"SerieView"> | Date | string
   }
 
   export type TagWhereInput = {
@@ -43610,14 +45175,14 @@ export namespace Prisma {
     NOT?: SeriesTagWhereInput | SeriesTagWhereInput[]
     seriesId?: StringFilter<"SeriesTag"> | string
     tagId?: StringFilter<"SeriesTag"> | string
-    series?: XOR<SeriesScalarRelationFilter, SeriesWhereInput>
+    series?: XOR<SerieScalarRelationFilter, SerieWhereInput>
     tag?: XOR<TagScalarRelationFilter, TagWhereInput>
   }
 
   export type SeriesTagOrderByWithRelationInput = {
     seriesId?: SortOrder
     tagId?: SortOrder
-    series?: SeriesOrderByWithRelationInput
+    series?: SerieOrderByWithRelationInput
     tag?: TagOrderByWithRelationInput
   }
 
@@ -43628,7 +45193,7 @@ export namespace Prisma {
     NOT?: SeriesTagWhereInput | SeriesTagWhereInput[]
     seriesId?: StringFilter<"SeriesTag"> | string
     tagId?: StringFilter<"SeriesTag"> | string
-    series?: XOR<SeriesScalarRelationFilter, SeriesWhereInput>
+    series?: XOR<SerieScalarRelationFilter, SerieWhereInput>
     tag?: XOR<TagScalarRelationFilter, TagWhereInput>
   }, "seriesId_tagId">
 
@@ -43656,7 +45221,7 @@ export namespace Prisma {
     language?: StringFilter<"Subtitle"> | string
     subtitleUrl?: StringFilter<"Subtitle"> | string
     videoMetadataId?: StringNullableFilter<"Subtitle"> | string | null
-    video?: XOR<VideoFileScalarRelationFilter, VideoFileWhereInput>
+    video?: XOR<MediaFileScalarRelationFilter, MediaFileWhereInput>
     videoMetadata?: XOR<VideoMetadataNullableScalarRelationFilter, VideoMetadataWhereInput> | null
   }
 
@@ -43665,7 +45230,7 @@ export namespace Prisma {
     language?: SortOrder
     subtitleUrl?: SortOrder
     videoMetadataId?: SortOrderInput | SortOrder
-    video?: VideoFileOrderByWithRelationInput
+    video?: MediaFileOrderByWithRelationInput
     videoMetadata?: VideoMetadataOrderByWithRelationInput
   }
 
@@ -43678,7 +45243,7 @@ export namespace Prisma {
     language?: StringFilter<"Subtitle"> | string
     subtitleUrl?: StringFilter<"Subtitle"> | string
     videoMetadataId?: StringNullableFilter<"Subtitle"> | string | null
-    video?: XOR<VideoFileScalarRelationFilter, VideoFileWhereInput>
+    video?: XOR<MediaFileScalarRelationFilter, MediaFileWhereInput>
     videoMetadata?: XOR<VideoMetadataNullableScalarRelationFilter, VideoMetadataWhereInput> | null
   }, "videoId_language">
 
@@ -43708,23 +45273,27 @@ export namespace Prisma {
     NOT?: PurchaseWhereInput | PurchaseWhereInput[]
     id?: StringFilter<"Purchase"> | string
     userId?: StringFilter<"Purchase"> | string
-    videoId?: StringFilter<"Purchase"> | string
+    movieId?: StringNullableFilter<"Purchase"> | string | null
+    serieId?: StringNullableFilter<"Purchase"> | string | null
     purchaseDate?: DateTimeFilter<"Purchase"> | Date | string
     expirationDate?: DateTimeNullableFilter<"Purchase"> | Date | string | null
     country?: StringFilter<"Purchase"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    video?: XOR<VideoFileScalarRelationFilter, VideoFileWhereInput>
+    movie?: XOR<MovieNullableScalarRelationFilter, MovieWhereInput> | null
+    serie?: XOR<SerieNullableScalarRelationFilter, SerieWhereInput> | null
   }
 
   export type PurchaseOrderByWithRelationInput = {
     id?: SortOrder
     userId?: SortOrder
-    videoId?: SortOrder
+    movieId?: SortOrderInput | SortOrder
+    serieId?: SortOrderInput | SortOrder
     purchaseDate?: SortOrder
     expirationDate?: SortOrderInput | SortOrder
     country?: SortOrder
     user?: UserOrderByWithRelationInput
-    video?: VideoFileOrderByWithRelationInput
+    movie?: MovieOrderByWithRelationInput
+    serie?: SerieOrderByWithRelationInput
   }
 
   export type PurchaseWhereUniqueInput = Prisma.AtLeast<{
@@ -43733,18 +45302,21 @@ export namespace Prisma {
     OR?: PurchaseWhereInput[]
     NOT?: PurchaseWhereInput | PurchaseWhereInput[]
     userId?: StringFilter<"Purchase"> | string
-    videoId?: StringFilter<"Purchase"> | string
+    movieId?: StringNullableFilter<"Purchase"> | string | null
+    serieId?: StringNullableFilter<"Purchase"> | string | null
     purchaseDate?: DateTimeFilter<"Purchase"> | Date | string
     expirationDate?: DateTimeNullableFilter<"Purchase"> | Date | string | null
     country?: StringFilter<"Purchase"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    video?: XOR<VideoFileScalarRelationFilter, VideoFileWhereInput>
+    movie?: XOR<MovieNullableScalarRelationFilter, MovieWhereInput> | null
+    serie?: XOR<SerieNullableScalarRelationFilter, SerieWhereInput> | null
   }, "id">
 
   export type PurchaseOrderByWithAggregationInput = {
     id?: SortOrder
     userId?: SortOrder
-    videoId?: SortOrder
+    movieId?: SortOrderInput | SortOrder
+    serieId?: SortOrderInput | SortOrder
     purchaseDate?: SortOrder
     expirationDate?: SortOrderInput | SortOrder
     country?: SortOrder
@@ -43759,7 +45331,8 @@ export namespace Prisma {
     NOT?: PurchaseScalarWhereWithAggregatesInput | PurchaseScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Purchase"> | string
     userId?: StringWithAggregatesFilter<"Purchase"> | string
-    videoId?: StringWithAggregatesFilter<"Purchase"> | string
+    movieId?: StringNullableWithAggregatesFilter<"Purchase"> | string | null
+    serieId?: StringNullableWithAggregatesFilter<"Purchase"> | string | null
     purchaseDate?: DateTimeWithAggregatesFilter<"Purchase"> | Date | string
     expirationDate?: DateTimeNullableWithAggregatesFilter<"Purchase"> | Date | string | null
     country?: StringWithAggregatesFilter<"Purchase"> | string
@@ -43771,27 +45344,31 @@ export namespace Prisma {
     NOT?: CommentWhereInput | CommentWhereInput[]
     id?: StringFilter<"Comment"> | string
     userId?: StringFilter<"Comment"> | string
-    videoId?: StringFilter<"Comment"> | string
+    movieId?: StringNullableFilter<"Comment"> | string | null
+    epiisodeId?: StringNullableFilter<"Comment"> | string | null
     text?: StringFilter<"Comment"> | string
     createdAt?: DateTimeFilter<"Comment"> | Date | string
     parentCommentId?: StringNullableFilter<"Comment"> | string | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    video?: XOR<VideoFileScalarRelationFilter, VideoFileWhereInput>
     parent?: XOR<CommentNullableScalarRelationFilter, CommentWhereInput> | null
     replies?: CommentListRelationFilter
+    movie?: XOR<MovieNullableScalarRelationFilter, MovieWhereInput> | null
+    episode?: XOR<EpisodeNullableScalarRelationFilter, EpisodeWhereInput> | null
   }
 
   export type CommentOrderByWithRelationInput = {
     id?: SortOrder
     userId?: SortOrder
-    videoId?: SortOrder
+    movieId?: SortOrderInput | SortOrder
+    epiisodeId?: SortOrderInput | SortOrder
     text?: SortOrder
     createdAt?: SortOrder
     parentCommentId?: SortOrderInput | SortOrder
     user?: UserOrderByWithRelationInput
-    video?: VideoFileOrderByWithRelationInput
     parent?: CommentOrderByWithRelationInput
     replies?: CommentOrderByRelationAggregateInput
+    movie?: MovieOrderByWithRelationInput
+    episode?: EpisodeOrderByWithRelationInput
   }
 
   export type CommentWhereUniqueInput = Prisma.AtLeast<{
@@ -43800,20 +45377,23 @@ export namespace Prisma {
     OR?: CommentWhereInput[]
     NOT?: CommentWhereInput | CommentWhereInput[]
     userId?: StringFilter<"Comment"> | string
-    videoId?: StringFilter<"Comment"> | string
+    movieId?: StringNullableFilter<"Comment"> | string | null
+    epiisodeId?: StringNullableFilter<"Comment"> | string | null
     text?: StringFilter<"Comment"> | string
     createdAt?: DateTimeFilter<"Comment"> | Date | string
     parentCommentId?: StringNullableFilter<"Comment"> | string | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    video?: XOR<VideoFileScalarRelationFilter, VideoFileWhereInput>
     parent?: XOR<CommentNullableScalarRelationFilter, CommentWhereInput> | null
     replies?: CommentListRelationFilter
+    movie?: XOR<MovieNullableScalarRelationFilter, MovieWhereInput> | null
+    episode?: XOR<EpisodeNullableScalarRelationFilter, EpisodeWhereInput> | null
   }, "id">
 
   export type CommentOrderByWithAggregationInput = {
     id?: SortOrder
     userId?: SortOrder
-    videoId?: SortOrder
+    movieId?: SortOrderInput | SortOrder
+    epiisodeId?: SortOrderInput | SortOrder
     text?: SortOrder
     createdAt?: SortOrder
     parentCommentId?: SortOrderInput | SortOrder
@@ -43828,7 +45408,8 @@ export namespace Prisma {
     NOT?: CommentScalarWhereWithAggregatesInput | CommentScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Comment"> | string
     userId?: StringWithAggregatesFilter<"Comment"> | string
-    videoId?: StringWithAggregatesFilter<"Comment"> | string
+    movieId?: StringNullableWithAggregatesFilter<"Comment"> | string | null
+    epiisodeId?: StringNullableWithAggregatesFilter<"Comment"> | string | null
     text?: StringWithAggregatesFilter<"Comment"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Comment"> | Date | string
     parentCommentId?: StringNullableWithAggregatesFilter<"Comment"> | string | null
@@ -43840,22 +45421,22 @@ export namespace Prisma {
     NOT?: AdWhereInput | AdWhereInput[]
     id?: StringFilter<"Ad"> | string
     title?: StringFilter<"Ad"> | string
-    image_url?: StringFilter<"Ad"> | string
-    video_url?: StringNullableFilter<"Ad"> | string | null
-    start_date?: DateTimeFilter<"Ad"> | Date | string
-    end_date?: DateTimeFilter<"Ad"> | Date | string
-    is_active?: BoolFilter<"Ad"> | boolean
+    imageUrl?: StringFilter<"Ad"> | string
+    startDate?: DateTimeFilter<"Ad"> | Date | string
+    endDate?: DateTimeFilter<"Ad"> | Date | string
+    isActive?: BoolFilter<"Ad"> | boolean
+    videoAttachment?: MediaAttachmentListRelationFilter
     views?: AdViewListRelationFilter
   }
 
   export type AdOrderByWithRelationInput = {
     id?: SortOrder
     title?: SortOrder
-    image_url?: SortOrder
-    video_url?: SortOrderInput | SortOrder
-    start_date?: SortOrder
-    end_date?: SortOrder
-    is_active?: SortOrder
+    imageUrl?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    isActive?: SortOrder
+    videoAttachment?: MediaAttachmentOrderByRelationAggregateInput
     views?: AdViewOrderByRelationAggregateInput
   }
 
@@ -43865,22 +45446,21 @@ export namespace Prisma {
     OR?: AdWhereInput[]
     NOT?: AdWhereInput | AdWhereInput[]
     title?: StringFilter<"Ad"> | string
-    image_url?: StringFilter<"Ad"> | string
-    video_url?: StringNullableFilter<"Ad"> | string | null
-    start_date?: DateTimeFilter<"Ad"> | Date | string
-    end_date?: DateTimeFilter<"Ad"> | Date | string
-    is_active?: BoolFilter<"Ad"> | boolean
+    imageUrl?: StringFilter<"Ad"> | string
+    startDate?: DateTimeFilter<"Ad"> | Date | string
+    endDate?: DateTimeFilter<"Ad"> | Date | string
+    isActive?: BoolFilter<"Ad"> | boolean
+    videoAttachment?: MediaAttachmentListRelationFilter
     views?: AdViewListRelationFilter
   }, "id">
 
   export type AdOrderByWithAggregationInput = {
     id?: SortOrder
     title?: SortOrder
-    image_url?: SortOrder
-    video_url?: SortOrderInput | SortOrder
-    start_date?: SortOrder
-    end_date?: SortOrder
-    is_active?: SortOrder
+    imageUrl?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    isActive?: SortOrder
     _count?: AdCountOrderByAggregateInput
     _max?: AdMaxOrderByAggregateInput
     _min?: AdMinOrderByAggregateInput
@@ -43892,11 +45472,10 @@ export namespace Prisma {
     NOT?: AdScalarWhereWithAggregatesInput | AdScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Ad"> | string
     title?: StringWithAggregatesFilter<"Ad"> | string
-    image_url?: StringWithAggregatesFilter<"Ad"> | string
-    video_url?: StringNullableWithAggregatesFilter<"Ad"> | string | null
-    start_date?: DateTimeWithAggregatesFilter<"Ad"> | Date | string
-    end_date?: DateTimeWithAggregatesFilter<"Ad"> | Date | string
-    is_active?: BoolWithAggregatesFilter<"Ad"> | boolean
+    imageUrl?: StringWithAggregatesFilter<"Ad"> | string
+    startDate?: DateTimeWithAggregatesFilter<"Ad"> | Date | string
+    endDate?: DateTimeWithAggregatesFilter<"Ad"> | Date | string
+    isActive?: BoolWithAggregatesFilter<"Ad"> | boolean
   }
 
   export type AdViewWhereInput = {
@@ -44753,8 +46332,6 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
-    thumbnailUrl: string
-    secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
@@ -44768,7 +46345,7 @@ export namespace Prisma {
     category: VideoCategoryCreateNestedOneWithoutVideosInput
     gender: VideoGenreCreateNestedOneWithoutVideosInput
     movie?: MovieCreateNestedOneWithoutMetadataInput
-    series?: SeriesCreateNestedOneWithoutMetadataInput
+    series?: SerieCreateNestedOneWithoutMetadataInput
     actors?: VideoActorCreateNestedManyWithoutVideoInput
     subtitles?: SubtitleCreateNestedManyWithoutVideoMetadataInput
     languages?: VideoLanguageCreateNestedManyWithoutVideosInput
@@ -44778,8 +46355,6 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
-    thumbnailUrl: string
-    secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
@@ -44793,7 +46368,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     movie?: MovieUncheckedCreateNestedOneWithoutMetadataInput
-    series?: SeriesUncheckedCreateNestedOneWithoutMetadataInput
+    series?: SerieUncheckedCreateNestedOneWithoutMetadataInput
     actors?: VideoActorUncheckedCreateNestedManyWithoutVideoInput
     subtitles?: SubtitleUncheckedCreateNestedManyWithoutVideoMetadataInput
     languages?: VideoLanguageUncheckedCreateNestedManyWithoutVideosInput
@@ -44803,8 +46378,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    thumbnailUrl?: StringFieldUpdateOperationsInput | string
-    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -44818,7 +46391,7 @@ export namespace Prisma {
     category?: VideoCategoryUpdateOneRequiredWithoutVideosNestedInput
     gender?: VideoGenreUpdateOneRequiredWithoutVideosNestedInput
     movie?: MovieUpdateOneWithoutMetadataNestedInput
-    series?: SeriesUpdateOneWithoutMetadataNestedInput
+    series?: SerieUpdateOneWithoutMetadataNestedInput
     actors?: VideoActorUpdateManyWithoutVideoNestedInput
     subtitles?: SubtitleUpdateManyWithoutVideoMetadataNestedInput
     languages?: VideoLanguageUpdateManyWithoutVideosNestedInput
@@ -44828,8 +46401,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    thumbnailUrl?: StringFieldUpdateOperationsInput | string
-    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -44843,7 +46414,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     movie?: MovieUncheckedUpdateOneWithoutMetadataNestedInput
-    series?: SeriesUncheckedUpdateOneWithoutMetadataNestedInput
+    series?: SerieUncheckedUpdateOneWithoutMetadataNestedInput
     actors?: VideoActorUncheckedUpdateManyWithoutVideoNestedInput
     subtitles?: SubtitleUncheckedUpdateManyWithoutVideoMetadataNestedInput
     languages?: VideoLanguageUncheckedUpdateManyWithoutVideosNestedInput
@@ -44853,8 +46424,6 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
-    thumbnailUrl: string
-    secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
@@ -44873,8 +46442,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    thumbnailUrl?: StringFieldUpdateOperationsInput | string
-    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -44890,8 +46457,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    thumbnailUrl?: StringFieldUpdateOperationsInput | string
-    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -44906,112 +46471,155 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type VideoFileCreateInput = {
+  export type MediaFileCreateInput = {
     id?: string
-    filePath: string
-    trailerPath?: string | null
-    duration: number
+    s3Key: string
+    duration?: number | null
     width?: number | null
     height?: number | null
-    status?: $Enums.VideoFileStatus
+    status: $Enums.MediaFileStatus
+    mediaType: $Enums.MediaType
     createdAt?: Date | string
     updatedAt?: Date | string
-    movie?: MovieCreateNestedOneWithoutVideoFileInput
-    episode?: EpisodeCreateNestedOneWithoutVideoFileInput
-    subtitles?: SubtitleCreateNestedManyWithoutVideoInput
-    purchases?: PurchaseCreateNestedManyWithoutVideoInput
-    comments?: CommentCreateNestedManyWithoutVideoInput
-    UserVideoProgress?: UserVideoViewCreateNestedManyWithoutVideoInput
+    attachments?: MediaAttachmentCreateNestedManyWithoutMediaFileInput
+    Subtitle?: SubtitleCreateNestedManyWithoutVideoInput
   }
 
-  export type VideoFileUncheckedCreateInput = {
+  export type MediaFileUncheckedCreateInput = {
     id?: string
-    filePath: string
-    trailerPath?: string | null
-    duration: number
+    s3Key: string
+    duration?: number | null
     width?: number | null
     height?: number | null
-    status?: $Enums.VideoFileStatus
+    status: $Enums.MediaFileStatus
+    mediaType: $Enums.MediaType
     createdAt?: Date | string
     updatedAt?: Date | string
-    movie?: MovieUncheckedCreateNestedOneWithoutVideoFileInput
-    episode?: EpisodeUncheckedCreateNestedOneWithoutVideoFileInput
-    subtitles?: SubtitleUncheckedCreateNestedManyWithoutVideoInput
-    purchases?: PurchaseUncheckedCreateNestedManyWithoutVideoInput
-    comments?: CommentUncheckedCreateNestedManyWithoutVideoInput
-    UserVideoProgress?: UserVideoViewUncheckedCreateNestedManyWithoutVideoInput
+    attachments?: MediaAttachmentUncheckedCreateNestedManyWithoutMediaFileInput
+    Subtitle?: SubtitleUncheckedCreateNestedManyWithoutVideoInput
   }
 
-  export type VideoFileUpdateInput = {
+  export type MediaFileUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    filePath?: StringFieldUpdateOperationsInput | string
-    trailerPath?: NullableStringFieldUpdateOperationsInput | string | null
-    duration?: IntFieldUpdateOperationsInput | number
+    s3Key?: StringFieldUpdateOperationsInput | string
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
     width?: NullableIntFieldUpdateOperationsInput | number | null
     height?: NullableIntFieldUpdateOperationsInput | number | null
-    status?: EnumVideoFileStatusFieldUpdateOperationsInput | $Enums.VideoFileStatus
+    status?: EnumMediaFileStatusFieldUpdateOperationsInput | $Enums.MediaFileStatus
+    mediaType?: EnumMediaTypeFieldUpdateOperationsInput | $Enums.MediaType
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    movie?: MovieUpdateOneWithoutVideoFileNestedInput
-    episode?: EpisodeUpdateOneWithoutVideoFileNestedInput
-    subtitles?: SubtitleUpdateManyWithoutVideoNestedInput
-    purchases?: PurchaseUpdateManyWithoutVideoNestedInput
-    comments?: CommentUpdateManyWithoutVideoNestedInput
-    UserVideoProgress?: UserVideoViewUpdateManyWithoutVideoNestedInput
+    attachments?: MediaAttachmentUpdateManyWithoutMediaFileNestedInput
+    Subtitle?: SubtitleUpdateManyWithoutVideoNestedInput
   }
 
-  export type VideoFileUncheckedUpdateInput = {
+  export type MediaFileUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    filePath?: StringFieldUpdateOperationsInput | string
-    trailerPath?: NullableStringFieldUpdateOperationsInput | string | null
-    duration?: IntFieldUpdateOperationsInput | number
+    s3Key?: StringFieldUpdateOperationsInput | string
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
     width?: NullableIntFieldUpdateOperationsInput | number | null
     height?: NullableIntFieldUpdateOperationsInput | number | null
-    status?: EnumVideoFileStatusFieldUpdateOperationsInput | $Enums.VideoFileStatus
+    status?: EnumMediaFileStatusFieldUpdateOperationsInput | $Enums.MediaFileStatus
+    mediaType?: EnumMediaTypeFieldUpdateOperationsInput | $Enums.MediaType
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    movie?: MovieUncheckedUpdateOneWithoutVideoFileNestedInput
-    episode?: EpisodeUncheckedUpdateOneWithoutVideoFileNestedInput
-    subtitles?: SubtitleUncheckedUpdateManyWithoutVideoNestedInput
-    purchases?: PurchaseUncheckedUpdateManyWithoutVideoNestedInput
-    comments?: CommentUncheckedUpdateManyWithoutVideoNestedInput
-    UserVideoProgress?: UserVideoViewUncheckedUpdateManyWithoutVideoNestedInput
+    attachments?: MediaAttachmentUncheckedUpdateManyWithoutMediaFileNestedInput
+    Subtitle?: SubtitleUncheckedUpdateManyWithoutVideoNestedInput
   }
 
-  export type VideoFileCreateManyInput = {
+  export type MediaFileCreateManyInput = {
     id?: string
-    filePath: string
-    trailerPath?: string | null
-    duration: number
+    s3Key: string
+    duration?: number | null
     width?: number | null
     height?: number | null
-    status?: $Enums.VideoFileStatus
+    status: $Enums.MediaFileStatus
+    mediaType: $Enums.MediaType
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type VideoFileUpdateManyMutationInput = {
+  export type MediaFileUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    filePath?: StringFieldUpdateOperationsInput | string
-    trailerPath?: NullableStringFieldUpdateOperationsInput | string | null
-    duration?: IntFieldUpdateOperationsInput | number
+    s3Key?: StringFieldUpdateOperationsInput | string
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
     width?: NullableIntFieldUpdateOperationsInput | number | null
     height?: NullableIntFieldUpdateOperationsInput | number | null
-    status?: EnumVideoFileStatusFieldUpdateOperationsInput | $Enums.VideoFileStatus
+    status?: EnumMediaFileStatusFieldUpdateOperationsInput | $Enums.MediaFileStatus
+    mediaType?: EnumMediaTypeFieldUpdateOperationsInput | $Enums.MediaType
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type VideoFileUncheckedUpdateManyInput = {
+  export type MediaFileUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    filePath?: StringFieldUpdateOperationsInput | string
-    trailerPath?: NullableStringFieldUpdateOperationsInput | string | null
-    duration?: IntFieldUpdateOperationsInput | number
+    s3Key?: StringFieldUpdateOperationsInput | string
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
     width?: NullableIntFieldUpdateOperationsInput | number | null
     height?: NullableIntFieldUpdateOperationsInput | number | null
-    status?: EnumVideoFileStatusFieldUpdateOperationsInput | $Enums.VideoFileStatus
+    status?: EnumMediaFileStatusFieldUpdateOperationsInput | $Enums.MediaFileStatus
+    mediaType?: EnumMediaTypeFieldUpdateOperationsInput | $Enums.MediaType
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MediaAttachmentCreateInput = {
+    id?: string
+    type: $Enums.MediaAttachmentType
+    mediaFile: MediaFileCreateNestedOneWithoutAttachmentsInput
+    movie?: MovieCreateNestedOneWithoutAttachmentInput
+    episode?: EpisodeCreateNestedOneWithoutVideoAttachmentInput
+    ad?: AdCreateNestedOneWithoutVideoAttachmentInput
+  }
+
+  export type MediaAttachmentUncheckedCreateInput = {
+    id?: string
+    mediaFileId: string
+    movieId?: string | null
+    episodeId?: string | null
+    adId?: string | null
+    type: $Enums.MediaAttachmentType
+  }
+
+  export type MediaAttachmentUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumMediaAttachmentTypeFieldUpdateOperationsInput | $Enums.MediaAttachmentType
+    mediaFile?: MediaFileUpdateOneRequiredWithoutAttachmentsNestedInput
+    movie?: MovieUpdateOneWithoutAttachmentNestedInput
+    episode?: EpisodeUpdateOneWithoutVideoAttachmentNestedInput
+    ad?: AdUpdateOneWithoutVideoAttachmentNestedInput
+  }
+
+  export type MediaAttachmentUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    mediaFileId?: StringFieldUpdateOperationsInput | string
+    movieId?: NullableStringFieldUpdateOperationsInput | string | null
+    episodeId?: NullableStringFieldUpdateOperationsInput | string | null
+    adId?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumMediaAttachmentTypeFieldUpdateOperationsInput | $Enums.MediaAttachmentType
+  }
+
+  export type MediaAttachmentCreateManyInput = {
+    id?: string
+    mediaFileId: string
+    movieId?: string | null
+    episodeId?: string | null
+    adId?: string | null
+    type: $Enums.MediaAttachmentType
+  }
+
+  export type MediaAttachmentUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumMediaAttachmentTypeFieldUpdateOperationsInput | $Enums.MediaAttachmentType
+  }
+
+  export type MediaAttachmentUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    mediaFileId?: StringFieldUpdateOperationsInput | string
+    movieId?: NullableStringFieldUpdateOperationsInput | string | null
+    episodeId?: NullableStringFieldUpdateOperationsInput | string | null
+    adId?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumMediaAttachmentTypeFieldUpdateOperationsInput | $Enums.MediaAttachmentType
   }
 
   export type VideoGenreCreateInput = {
@@ -45356,61 +46964,68 @@ export namespace Prisma {
 
   export type MovieCreateInput = {
     id?: string
-    status?: string
+    status?: $Enums.ContentStatus
     type?: string
     seasonCount?: number
     rentalPrice?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     metadata: VideoMetadataCreateNestedOneWithoutMovieInput
-    videoFile: VideoFileCreateNestedOneWithoutMovieInput
     tags?: MovieTagCreateNestedManyWithoutMovieInput
+    attachment?: MediaAttachmentCreateNestedManyWithoutMovieInput
+    Comment?: CommentCreateNestedManyWithoutMovieInput
+    Purchase?: PurchaseCreateNestedManyWithoutMovieInput
   }
 
   export type MovieUncheckedCreateInput = {
     id?: string
     metadataId: string
-    videoFileId: string
-    status?: string
+    status?: $Enums.ContentStatus
     type?: string
     seasonCount?: number
     rentalPrice?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     tags?: MovieTagUncheckedCreateNestedManyWithoutMovieInput
+    attachment?: MediaAttachmentUncheckedCreateNestedManyWithoutMovieInput
+    Comment?: CommentUncheckedCreateNestedManyWithoutMovieInput
+    Purchase?: PurchaseUncheckedCreateNestedManyWithoutMovieInput
   }
 
   export type MovieUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
     type?: StringFieldUpdateOperationsInput | string
     seasonCount?: IntFieldUpdateOperationsInput | number
     rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     metadata?: VideoMetadataUpdateOneRequiredWithoutMovieNestedInput
-    videoFile?: VideoFileUpdateOneRequiredWithoutMovieNestedInput
     tags?: MovieTagUpdateManyWithoutMovieNestedInput
+    attachment?: MediaAttachmentUpdateManyWithoutMovieNestedInput
+    Comment?: CommentUpdateManyWithoutMovieNestedInput
+    Purchase?: PurchaseUpdateManyWithoutMovieNestedInput
   }
 
   export type MovieUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     metadataId?: StringFieldUpdateOperationsInput | string
-    videoFileId?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
     type?: StringFieldUpdateOperationsInput | string
     seasonCount?: IntFieldUpdateOperationsInput | number
     rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tags?: MovieTagUncheckedUpdateManyWithoutMovieNestedInput
+    attachment?: MediaAttachmentUncheckedUpdateManyWithoutMovieNestedInput
+    Comment?: CommentUncheckedUpdateManyWithoutMovieNestedInput
+    Purchase?: PurchaseUncheckedUpdateManyWithoutMovieNestedInput
   }
 
   export type MovieCreateManyInput = {
     id?: string
     metadataId: string
-    videoFileId: string
-    status?: string
+    status?: $Enums.ContentStatus
     type?: string
     seasonCount?: number
     rentalPrice?: number | null
@@ -45420,7 +47035,7 @@ export namespace Prisma {
 
   export type MovieUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
     type?: StringFieldUpdateOperationsInput | string
     seasonCount?: IntFieldUpdateOperationsInput | number
     rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -45431,8 +47046,7 @@ export namespace Prisma {
   export type MovieUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     metadataId?: StringFieldUpdateOperationsInput | string
-    videoFileId?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
     type?: StringFieldUpdateOperationsInput | string
     seasonCount?: IntFieldUpdateOperationsInput | number
     rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -45440,7 +47054,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type SeriesCreateInput = {
+  export type SerieCreateInput = {
     id?: string
     status?: string
     type?: string
@@ -45449,12 +47063,13 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     metadata: VideoMetadataCreateNestedOneWithoutSeriesInput
-    seasons?: SeasonCreateNestedManyWithoutSeriesInput
+    seasons?: SeasonCreateNestedManyWithoutSerieInput
     tags?: SeriesTagCreateNestedManyWithoutSeriesInput
-    SeriesView?: SeriesViewCreateNestedManyWithoutSeriesInput
+    SerieView?: SerieViewCreateNestedManyWithoutSeriesInput
+    Purchase?: PurchaseCreateNestedManyWithoutSerieInput
   }
 
-  export type SeriesUncheckedCreateInput = {
+  export type SerieUncheckedCreateInput = {
     id?: string
     metadataId: string
     status?: string
@@ -45463,12 +47078,13 @@ export namespace Prisma {
     rentalPrice?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    seasons?: SeasonUncheckedCreateNestedManyWithoutSeriesInput
+    seasons?: SeasonUncheckedCreateNestedManyWithoutSerieInput
     tags?: SeriesTagUncheckedCreateNestedManyWithoutSeriesInput
-    SeriesView?: SeriesViewUncheckedCreateNestedManyWithoutSeriesInput
+    SerieView?: SerieViewUncheckedCreateNestedManyWithoutSeriesInput
+    Purchase?: PurchaseUncheckedCreateNestedManyWithoutSerieInput
   }
 
-  export type SeriesUpdateInput = {
+  export type SerieUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
@@ -45477,12 +47093,13 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     metadata?: VideoMetadataUpdateOneRequiredWithoutSeriesNestedInput
-    seasons?: SeasonUpdateManyWithoutSeriesNestedInput
+    seasons?: SeasonUpdateManyWithoutSerieNestedInput
     tags?: SeriesTagUpdateManyWithoutSeriesNestedInput
-    SeriesView?: SeriesViewUpdateManyWithoutSeriesNestedInput
+    SerieView?: SerieViewUpdateManyWithoutSeriesNestedInput
+    Purchase?: PurchaseUpdateManyWithoutSerieNestedInput
   }
 
-  export type SeriesUncheckedUpdateInput = {
+  export type SerieUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     metadataId?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
@@ -45491,12 +47108,13 @@ export namespace Prisma {
     rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    seasons?: SeasonUncheckedUpdateManyWithoutSeriesNestedInput
+    seasons?: SeasonUncheckedUpdateManyWithoutSerieNestedInput
     tags?: SeriesTagUncheckedUpdateManyWithoutSeriesNestedInput
-    SeriesView?: SeriesViewUncheckedUpdateManyWithoutSeriesNestedInput
+    SerieView?: SerieViewUncheckedUpdateManyWithoutSeriesNestedInput
+    Purchase?: PurchaseUncheckedUpdateManyWithoutSerieNestedInput
   }
 
-  export type SeriesCreateManyInput = {
+  export type SerieCreateManyInput = {
     id?: string
     metadataId: string
     status?: string
@@ -45507,7 +47125,7 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type SeriesUpdateManyMutationInput = {
+  export type SerieUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
@@ -45517,7 +47135,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type SeriesUncheckedUpdateManyInput = {
+  export type SerieUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     metadataId?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
@@ -45533,14 +47151,14 @@ export namespace Prisma {
     number: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    series: SeriesCreateNestedOneWithoutSeasonsInput
+    serie: SerieCreateNestedOneWithoutSeasonsInput
     episodes?: EpisodeCreateNestedManyWithoutSeasonInput
     SeasonView?: SeasonViewCreateNestedManyWithoutSeasonInput
   }
 
   export type SeasonUncheckedCreateInput = {
     id?: string
-    seriesId: string
+    serieId: string
     number: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -45553,14 +47171,14 @@ export namespace Prisma {
     number?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    series?: SeriesUpdateOneRequiredWithoutSeasonsNestedInput
+    serie?: SerieUpdateOneRequiredWithoutSeasonsNestedInput
     episodes?: EpisodeUpdateManyWithoutSeasonNestedInput
     SeasonView?: SeasonViewUpdateManyWithoutSeasonNestedInput
   }
 
   export type SeasonUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    seriesId?: StringFieldUpdateOperationsInput | string
+    serieId?: StringFieldUpdateOperationsInput | string
     number?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -45570,7 +47188,7 @@ export namespace Prisma {
 
   export type SeasonCreateManyInput = {
     id?: string
-    seriesId: string
+    serieId: string
     number: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -45585,7 +47203,7 @@ export namespace Prisma {
 
   export type SeasonUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    seriesId?: StringFieldUpdateOperationsInput | string
+    serieId?: StringFieldUpdateOperationsInput | string
     number?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -45603,14 +47221,14 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     season: SeasonCreateNestedOneWithoutEpisodesInput
-    videoFile: VideoFileCreateNestedOneWithoutEpisodeInput
+    videoAttachment?: MediaAttachmentCreateNestedManyWithoutEpisodeInput
+    Comment?: CommentCreateNestedManyWithoutEpisodeInput
   }
 
   export type EpisodeUncheckedCreateInput = {
     id?: string
     seasonId: string
     number: number
-    videoFileId: string
     title?: string | null
     releaseDate: Date | string
     plateformeDAte: Date | string
@@ -45619,6 +47237,8 @@ export namespace Prisma {
     isSaFliixProd: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    videoAttachment?: MediaAttachmentUncheckedCreateNestedManyWithoutEpisodeInput
+    Comment?: CommentUncheckedCreateNestedManyWithoutEpisodeInput
   }
 
   export type EpisodeUpdateInput = {
@@ -45633,14 +47253,14 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     season?: SeasonUpdateOneRequiredWithoutEpisodesNestedInput
-    videoFile?: VideoFileUpdateOneRequiredWithoutEpisodeNestedInput
+    videoAttachment?: MediaAttachmentUpdateManyWithoutEpisodeNestedInput
+    Comment?: CommentUpdateManyWithoutEpisodeNestedInput
   }
 
   export type EpisodeUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     seasonId?: StringFieldUpdateOperationsInput | string
     number?: IntFieldUpdateOperationsInput | number
-    videoFileId?: StringFieldUpdateOperationsInput | string
     title?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     plateformeDAte?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -45649,13 +47269,14 @@ export namespace Prisma {
     isSaFliixProd?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    videoAttachment?: MediaAttachmentUncheckedUpdateManyWithoutEpisodeNestedInput
+    Comment?: CommentUncheckedUpdateManyWithoutEpisodeNestedInput
   }
 
   export type EpisodeCreateManyInput = {
     id?: string
     seasonId: string
     number: number
-    videoFileId: string
     title?: string | null
     releaseDate: Date | string
     plateformeDAte: Date | string
@@ -45683,7 +47304,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     seasonId?: StringFieldUpdateOperationsInput | string
     number?: IntFieldUpdateOperationsInput | number
-    videoFileId?: StringFieldUpdateOperationsInput | string
     title?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     plateformeDAte?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -45697,6 +47317,7 @@ export namespace Prisma {
   export type UserVideoViewCreateInput = {
     id?: string
     profileId?: string | null
+    videoId: string
     progress?: number
     completed?: boolean
     country?: string | null
@@ -45707,7 +47328,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutUserVideoViewInput
-    video: VideoFileCreateNestedOneWithoutUserVideoProgressInput
   }
 
   export type UserVideoViewUncheckedCreateInput = {
@@ -45729,6 +47349,7 @@ export namespace Prisma {
   export type UserVideoViewUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     profileId?: NullableStringFieldUpdateOperationsInput | string | null
+    videoId?: StringFieldUpdateOperationsInput | string
     progress?: IntFieldUpdateOperationsInput | number
     completed?: BoolFieldUpdateOperationsInput | boolean
     country?: NullableStringFieldUpdateOperationsInput | string | null
@@ -45739,7 +47360,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutUserVideoViewNestedInput
-    video?: VideoFileUpdateOneRequiredWithoutUserVideoProgressNestedInput
   }
 
   export type UserVideoViewUncheckedUpdateInput = {
@@ -45777,6 +47397,7 @@ export namespace Prisma {
   export type UserVideoViewUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     profileId?: NullableStringFieldUpdateOperationsInput | string | null
+    videoId?: StringFieldUpdateOperationsInput | string
     progress?: IntFieldUpdateOperationsInput | number
     completed?: BoolFieldUpdateOperationsInput | boolean
     country?: NullableStringFieldUpdateOperationsInput | string | null
@@ -45886,7 +47507,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type SeriesViewCreateInput = {
+  export type SerieViewCreateInput = {
     id?: string
     userId: string
     viewedAt?: Date | string
@@ -45896,10 +47517,10 @@ export namespace Prisma {
     rating?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    series: SeriesCreateNestedOneWithoutSeriesViewInput
+    series: SerieCreateNestedOneWithoutSerieViewInput
   }
 
-  export type SeriesViewUncheckedCreateInput = {
+  export type SerieViewUncheckedCreateInput = {
     id?: string
     seriesId: string
     userId: string
@@ -45912,7 +47533,7 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type SeriesViewUpdateInput = {
+  export type SerieViewUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     viewedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -45922,10 +47543,10 @@ export namespace Prisma {
     rating?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    series?: SeriesUpdateOneRequiredWithoutSeriesViewNestedInput
+    series?: SerieUpdateOneRequiredWithoutSerieViewNestedInput
   }
 
-  export type SeriesViewUncheckedUpdateInput = {
+  export type SerieViewUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     seriesId?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
@@ -45938,7 +47559,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type SeriesViewCreateManyInput = {
+  export type SerieViewCreateManyInput = {
     id?: string
     seriesId: string
     userId: string
@@ -45951,7 +47572,7 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type SeriesViewUpdateManyMutationInput = {
+  export type SerieViewUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     viewedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -45963,7 +47584,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type SeriesViewUncheckedUpdateManyInput = {
+  export type SerieViewUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     seriesId?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
@@ -46054,7 +47675,7 @@ export namespace Prisma {
   }
 
   export type SeriesTagCreateInput = {
-    series: SeriesCreateNestedOneWithoutTagsInput
+    series: SerieCreateNestedOneWithoutTagsInput
     tag: TagCreateNestedOneWithoutSeriesTagsInput
   }
 
@@ -46064,7 +47685,7 @@ export namespace Prisma {
   }
 
   export type SeriesTagUpdateInput = {
-    series?: SeriesUpdateOneRequiredWithoutTagsNestedInput
+    series?: SerieUpdateOneRequiredWithoutTagsNestedInput
     tag?: TagUpdateOneRequiredWithoutSeriesTagsNestedInput
   }
 
@@ -46090,7 +47711,7 @@ export namespace Prisma {
   export type SubtitleCreateInput = {
     language: string
     subtitleUrl: string
-    video: VideoFileCreateNestedOneWithoutSubtitlesInput
+    video: MediaFileCreateNestedOneWithoutSubtitleInput
     videoMetadata?: VideoMetadataCreateNestedOneWithoutSubtitlesInput
   }
 
@@ -46104,7 +47725,7 @@ export namespace Prisma {
   export type SubtitleUpdateInput = {
     language?: StringFieldUpdateOperationsInput | string
     subtitleUrl?: StringFieldUpdateOperationsInput | string
-    video?: VideoFileUpdateOneRequiredWithoutSubtitlesNestedInput
+    video?: MediaFileUpdateOneRequiredWithoutSubtitleNestedInput
     videoMetadata?: VideoMetadataUpdateOneWithoutSubtitlesNestedInput
   }
 
@@ -46140,13 +47761,15 @@ export namespace Prisma {
     expirationDate?: Date | string | null
     country: string
     user: UserCreateNestedOneWithoutPurchasesInput
-    video: VideoFileCreateNestedOneWithoutPurchasesInput
+    movie?: MovieCreateNestedOneWithoutPurchaseInput
+    serie?: SerieCreateNestedOneWithoutPurchaseInput
   }
 
   export type PurchaseUncheckedCreateInput = {
     id?: string
     userId: string
-    videoId: string
+    movieId?: string | null
+    serieId?: string | null
     purchaseDate?: Date | string
     expirationDate?: Date | string | null
     country: string
@@ -46158,13 +47781,15 @@ export namespace Prisma {
     expirationDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     country?: StringFieldUpdateOperationsInput | string
     user?: UserUpdateOneRequiredWithoutPurchasesNestedInput
-    video?: VideoFileUpdateOneRequiredWithoutPurchasesNestedInput
+    movie?: MovieUpdateOneWithoutPurchaseNestedInput
+    serie?: SerieUpdateOneWithoutPurchaseNestedInput
   }
 
   export type PurchaseUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    videoId?: StringFieldUpdateOperationsInput | string
+    movieId?: NullableStringFieldUpdateOperationsInput | string | null
+    serieId?: NullableStringFieldUpdateOperationsInput | string | null
     purchaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     expirationDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     country?: StringFieldUpdateOperationsInput | string
@@ -46173,7 +47798,8 @@ export namespace Prisma {
   export type PurchaseCreateManyInput = {
     id?: string
     userId: string
-    videoId: string
+    movieId?: string | null
+    serieId?: string | null
     purchaseDate?: Date | string
     expirationDate?: Date | string | null
     country: string
@@ -46189,7 +47815,8 @@ export namespace Prisma {
   export type PurchaseUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    videoId?: StringFieldUpdateOperationsInput | string
+    movieId?: NullableStringFieldUpdateOperationsInput | string | null
+    serieId?: NullableStringFieldUpdateOperationsInput | string | null
     purchaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     expirationDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     country?: StringFieldUpdateOperationsInput | string
@@ -46200,15 +47827,17 @@ export namespace Prisma {
     text: string
     createdAt?: Date | string
     user: UserCreateNestedOneWithoutCommentsInput
-    video: VideoFileCreateNestedOneWithoutCommentsInput
     parent?: CommentCreateNestedOneWithoutRepliesInput
     replies?: CommentCreateNestedManyWithoutParentInput
+    movie?: MovieCreateNestedOneWithoutCommentInput
+    episode?: EpisodeCreateNestedOneWithoutCommentInput
   }
 
   export type CommentUncheckedCreateInput = {
     id?: string
     userId: string
-    videoId: string
+    movieId?: string | null
+    epiisodeId?: string | null
     text: string
     createdAt?: Date | string
     parentCommentId?: string | null
@@ -46220,15 +47849,17 @@ export namespace Prisma {
     text?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutCommentsNestedInput
-    video?: VideoFileUpdateOneRequiredWithoutCommentsNestedInput
     parent?: CommentUpdateOneWithoutRepliesNestedInput
     replies?: CommentUpdateManyWithoutParentNestedInput
+    movie?: MovieUpdateOneWithoutCommentNestedInput
+    episode?: EpisodeUpdateOneWithoutCommentNestedInput
   }
 
   export type CommentUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    videoId?: StringFieldUpdateOperationsInput | string
+    movieId?: NullableStringFieldUpdateOperationsInput | string | null
+    epiisodeId?: NullableStringFieldUpdateOperationsInput | string | null
     text?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     parentCommentId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -46238,7 +47869,8 @@ export namespace Prisma {
   export type CommentCreateManyInput = {
     id?: string
     userId: string
-    videoId: string
+    movieId?: string | null
+    epiisodeId?: string | null
     text: string
     createdAt?: Date | string
     parentCommentId?: string | null
@@ -46253,7 +47885,8 @@ export namespace Prisma {
   export type CommentUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    videoId?: StringFieldUpdateOperationsInput | string
+    movieId?: NullableStringFieldUpdateOperationsInput | string | null
+    epiisodeId?: NullableStringFieldUpdateOperationsInput | string | null
     text?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     parentCommentId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -46262,75 +47895,72 @@ export namespace Prisma {
   export type AdCreateInput = {
     id?: string
     title: string
-    image_url: string
-    video_url?: string | null
-    start_date: Date | string
-    end_date: Date | string
-    is_active?: boolean
+    imageUrl: string
+    startDate: Date | string
+    endDate: Date | string
+    isActive?: boolean
+    videoAttachment?: MediaAttachmentCreateNestedManyWithoutAdInput
     views?: AdViewCreateNestedManyWithoutAdInput
   }
 
   export type AdUncheckedCreateInput = {
     id?: string
     title: string
-    image_url: string
-    video_url?: string | null
-    start_date: Date | string
-    end_date: Date | string
-    is_active?: boolean
+    imageUrl: string
+    startDate: Date | string
+    endDate: Date | string
+    isActive?: boolean
+    videoAttachment?: MediaAttachmentUncheckedCreateNestedManyWithoutAdInput
     views?: AdViewUncheckedCreateNestedManyWithoutAdInput
   }
 
   export type AdUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    image_url?: StringFieldUpdateOperationsInput | string
-    video_url?: NullableStringFieldUpdateOperationsInput | string | null
-    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    is_active?: BoolFieldUpdateOperationsInput | boolean
+    imageUrl?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    videoAttachment?: MediaAttachmentUpdateManyWithoutAdNestedInput
     views?: AdViewUpdateManyWithoutAdNestedInput
   }
 
   export type AdUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    image_url?: StringFieldUpdateOperationsInput | string
-    video_url?: NullableStringFieldUpdateOperationsInput | string | null
-    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    is_active?: BoolFieldUpdateOperationsInput | boolean
+    imageUrl?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    videoAttachment?: MediaAttachmentUncheckedUpdateManyWithoutAdNestedInput
     views?: AdViewUncheckedUpdateManyWithoutAdNestedInput
   }
 
   export type AdCreateManyInput = {
     id?: string
     title: string
-    image_url: string
-    video_url?: string | null
-    start_date: Date | string
-    end_date: Date | string
-    is_active?: boolean
+    imageUrl: string
+    startDate: Date | string
+    endDate: Date | string
+    isActive?: boolean
   }
 
   export type AdUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    image_url?: StringFieldUpdateOperationsInput | string
-    video_url?: NullableStringFieldUpdateOperationsInput | string | null
-    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    is_active?: BoolFieldUpdateOperationsInput | boolean
+    imageUrl?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type AdUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    image_url?: StringFieldUpdateOperationsInput | string
-    video_url?: NullableStringFieldUpdateOperationsInput | string | null
-    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    is_active?: BoolFieldUpdateOperationsInput | boolean
+    imageUrl?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type AdViewCreateInput = {
@@ -47178,9 +48808,9 @@ export namespace Prisma {
     isNot?: MovieWhereInput | null
   }
 
-  export type SeriesNullableScalarRelationFilter = {
-    is?: SeriesWhereInput | null
-    isNot?: SeriesWhereInput | null
+  export type SerieNullableScalarRelationFilter = {
+    is?: SerieWhereInput | null
+    isNot?: SerieWhereInput | null
   }
 
   export type VideoActorListRelationFilter = {
@@ -47217,8 +48847,6 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
-    thumbnailUrl?: SortOrder
-    secondaryImage?: SortOrder
     releaseDate?: SortOrder
     platformDate?: SortOrder
     ageRating?: SortOrder
@@ -47237,8 +48865,6 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
-    thumbnailUrl?: SortOrder
-    secondaryImage?: SortOrder
     releaseDate?: SortOrder
     platformDate?: SortOrder
     ageRating?: SortOrder
@@ -47257,8 +48883,6 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
-    thumbnailUrl?: SortOrder
-    secondaryImage?: SortOrder
     releaseDate?: SortOrder
     platformDate?: SortOrder
     ageRating?: SortOrder
@@ -47294,61 +48918,73 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
-  export type EnumVideoFileStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.VideoFileStatus | EnumVideoFileStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.VideoFileStatus[] | ListEnumVideoFileStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.VideoFileStatus[] | ListEnumVideoFileStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumVideoFileStatusFilter<$PrismaModel> | $Enums.VideoFileStatus
+  export type EnumMediaFileStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.MediaFileStatus | EnumMediaFileStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.MediaFileStatus[] | ListEnumMediaFileStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MediaFileStatus[] | ListEnumMediaFileStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumMediaFileStatusFilter<$PrismaModel> | $Enums.MediaFileStatus
   }
 
-  export type EpisodeNullableScalarRelationFilter = {
-    is?: EpisodeWhereInput | null
-    isNot?: EpisodeWhereInput | null
+  export type EnumMediaTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.MediaType | EnumMediaTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.MediaType[] | ListEnumMediaTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MediaType[] | ListEnumMediaTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumMediaTypeFilter<$PrismaModel> | $Enums.MediaType
   }
 
-  export type VideoFileCountOrderByAggregateInput = {
+  export type MediaAttachmentListRelationFilter = {
+    every?: MediaAttachmentWhereInput
+    some?: MediaAttachmentWhereInput
+    none?: MediaAttachmentWhereInput
+  }
+
+  export type MediaAttachmentOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type MediaFileCountOrderByAggregateInput = {
     id?: SortOrder
-    filePath?: SortOrder
-    trailerPath?: SortOrder
+    s3Key?: SortOrder
     duration?: SortOrder
     width?: SortOrder
     height?: SortOrder
     status?: SortOrder
+    mediaType?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
-  export type VideoFileAvgOrderByAggregateInput = {
+  export type MediaFileAvgOrderByAggregateInput = {
     duration?: SortOrder
     width?: SortOrder
     height?: SortOrder
   }
 
-  export type VideoFileMaxOrderByAggregateInput = {
+  export type MediaFileMaxOrderByAggregateInput = {
     id?: SortOrder
-    filePath?: SortOrder
-    trailerPath?: SortOrder
+    s3Key?: SortOrder
     duration?: SortOrder
     width?: SortOrder
     height?: SortOrder
     status?: SortOrder
+    mediaType?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
-  export type VideoFileMinOrderByAggregateInput = {
+  export type MediaFileMinOrderByAggregateInput = {
     id?: SortOrder
-    filePath?: SortOrder
-    trailerPath?: SortOrder
+    s3Key?: SortOrder
     duration?: SortOrder
     width?: SortOrder
     height?: SortOrder
     status?: SortOrder
+    mediaType?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
-  export type VideoFileSumOrderByAggregateInput = {
+  export type MediaFileSumOrderByAggregateInput = {
     duration?: SortOrder
     width?: SortOrder
     height?: SortOrder
@@ -47370,14 +49006,83 @@ export namespace Prisma {
     _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
-  export type EnumVideoFileStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.VideoFileStatus | EnumVideoFileStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.VideoFileStatus[] | ListEnumVideoFileStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.VideoFileStatus[] | ListEnumVideoFileStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumVideoFileStatusWithAggregatesFilter<$PrismaModel> | $Enums.VideoFileStatus
+  export type EnumMediaFileStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.MediaFileStatus | EnumMediaFileStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.MediaFileStatus[] | ListEnumMediaFileStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MediaFileStatus[] | ListEnumMediaFileStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumMediaFileStatusWithAggregatesFilter<$PrismaModel> | $Enums.MediaFileStatus
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumVideoFileStatusFilter<$PrismaModel>
-    _max?: NestedEnumVideoFileStatusFilter<$PrismaModel>
+    _min?: NestedEnumMediaFileStatusFilter<$PrismaModel>
+    _max?: NestedEnumMediaFileStatusFilter<$PrismaModel>
+  }
+
+  export type EnumMediaTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.MediaType | EnumMediaTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.MediaType[] | ListEnumMediaTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MediaType[] | ListEnumMediaTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumMediaTypeWithAggregatesFilter<$PrismaModel> | $Enums.MediaType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumMediaTypeFilter<$PrismaModel>
+    _max?: NestedEnumMediaTypeFilter<$PrismaModel>
+  }
+
+  export type EnumMediaAttachmentTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.MediaAttachmentType | EnumMediaAttachmentTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.MediaAttachmentType[] | ListEnumMediaAttachmentTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MediaAttachmentType[] | ListEnumMediaAttachmentTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumMediaAttachmentTypeFilter<$PrismaModel> | $Enums.MediaAttachmentType
+  }
+
+  export type MediaFileScalarRelationFilter = {
+    is?: MediaFileWhereInput
+    isNot?: MediaFileWhereInput
+  }
+
+  export type EpisodeNullableScalarRelationFilter = {
+    is?: EpisodeWhereInput | null
+    isNot?: EpisodeWhereInput | null
+  }
+
+  export type AdNullableScalarRelationFilter = {
+    is?: AdWhereInput | null
+    isNot?: AdWhereInput | null
+  }
+
+  export type MediaAttachmentCountOrderByAggregateInput = {
+    id?: SortOrder
+    mediaFileId?: SortOrder
+    movieId?: SortOrder
+    episodeId?: SortOrder
+    adId?: SortOrder
+    type?: SortOrder
+  }
+
+  export type MediaAttachmentMaxOrderByAggregateInput = {
+    id?: SortOrder
+    mediaFileId?: SortOrder
+    movieId?: SortOrder
+    episodeId?: SortOrder
+    adId?: SortOrder
+    type?: SortOrder
+  }
+
+  export type MediaAttachmentMinOrderByAggregateInput = {
+    id?: SortOrder
+    mediaFileId?: SortOrder
+    movieId?: SortOrder
+    episodeId?: SortOrder
+    adId?: SortOrder
+    type?: SortOrder
+  }
+
+  export type EnumMediaAttachmentTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.MediaAttachmentType | EnumMediaAttachmentTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.MediaAttachmentType[] | ListEnumMediaAttachmentTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MediaAttachmentType[] | ListEnumMediaAttachmentTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumMediaAttachmentTypeWithAggregatesFilter<$PrismaModel> | $Enums.MediaAttachmentType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumMediaAttachmentTypeFilter<$PrismaModel>
+    _max?: NestedEnumMediaAttachmentTypeFilter<$PrismaModel>
   }
 
   export type VideoMetadataListRelationFilter = {
@@ -47554,11 +49259,6 @@ export namespace Prisma {
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
-  export type VideoFileScalarRelationFilter = {
-    is?: VideoFileWhereInput
-    isNot?: VideoFileWhereInput
-  }
-
   export type MovieTagListRelationFilter = {
     every?: MovieTagWhereInput
     some?: MovieTagWhereInput
@@ -47572,7 +49272,6 @@ export namespace Prisma {
   export type MovieCountOrderByAggregateInput = {
     id?: SortOrder
     metadataId?: SortOrder
-    videoFileId?: SortOrder
     status?: SortOrder
     type?: SortOrder
     seasonCount?: SortOrder
@@ -47589,7 +49288,6 @@ export namespace Prisma {
   export type MovieMaxOrderByAggregateInput = {
     id?: SortOrder
     metadataId?: SortOrder
-    videoFileId?: SortOrder
     status?: SortOrder
     type?: SortOrder
     seasonCount?: SortOrder
@@ -47601,7 +49299,6 @@ export namespace Prisma {
   export type MovieMinOrderByAggregateInput = {
     id?: SortOrder
     metadataId?: SortOrder
-    videoFileId?: SortOrder
     status?: SortOrder
     type?: SortOrder
     seasonCount?: SortOrder
@@ -47643,10 +49340,10 @@ export namespace Prisma {
     none?: SeriesTagWhereInput
   }
 
-  export type SeriesViewListRelationFilter = {
-    every?: SeriesViewWhereInput
-    some?: SeriesViewWhereInput
-    none?: SeriesViewWhereInput
+  export type SerieViewListRelationFilter = {
+    every?: SerieViewWhereInput
+    some?: SerieViewWhereInput
+    none?: SerieViewWhereInput
   }
 
   export type SeasonOrderByRelationAggregateInput = {
@@ -47657,11 +49354,11 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type SeriesViewOrderByRelationAggregateInput = {
+  export type SerieViewOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type SeriesCountOrderByAggregateInput = {
+  export type SerieCountOrderByAggregateInput = {
     id?: SortOrder
     metadataId?: SortOrder
     status?: SortOrder
@@ -47672,12 +49369,12 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
-  export type SeriesAvgOrderByAggregateInput = {
+  export type SerieAvgOrderByAggregateInput = {
     seasonCount?: SortOrder
     rentalPrice?: SortOrder
   }
 
-  export type SeriesMaxOrderByAggregateInput = {
+  export type SerieMaxOrderByAggregateInput = {
     id?: SortOrder
     metadataId?: SortOrder
     status?: SortOrder
@@ -47688,7 +49385,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
-  export type SeriesMinOrderByAggregateInput = {
+  export type SerieMinOrderByAggregateInput = {
     id?: SortOrder
     metadataId?: SortOrder
     status?: SortOrder
@@ -47699,14 +49396,14 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
-  export type SeriesSumOrderByAggregateInput = {
+  export type SerieSumOrderByAggregateInput = {
     seasonCount?: SortOrder
     rentalPrice?: SortOrder
   }
 
-  export type SeriesScalarRelationFilter = {
-    is?: SeriesWhereInput
-    isNot?: SeriesWhereInput
+  export type SerieScalarRelationFilter = {
+    is?: SerieWhereInput
+    isNot?: SerieWhereInput
   }
 
   export type EpisodeListRelationFilter = {
@@ -47719,14 +49416,14 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type SeasonSeriesIdNumberCompoundUniqueInput = {
-    seriesId: string
+  export type SeasonSerieIdNumberCompoundUniqueInput = {
+    serieId: string
     number: number
   }
 
   export type SeasonCountOrderByAggregateInput = {
     id?: SortOrder
-    seriesId?: SortOrder
+    serieId?: SortOrder
     number?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -47738,7 +49435,7 @@ export namespace Prisma {
 
   export type SeasonMaxOrderByAggregateInput = {
     id?: SortOrder
-    seriesId?: SortOrder
+    serieId?: SortOrder
     number?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -47746,7 +49443,7 @@ export namespace Prisma {
 
   export type SeasonMinOrderByAggregateInput = {
     id?: SortOrder
-    seriesId?: SortOrder
+    serieId?: SortOrder
     number?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -47770,7 +49467,6 @@ export namespace Prisma {
     id?: SortOrder
     seasonId?: SortOrder
     number?: SortOrder
-    videoFileId?: SortOrder
     title?: SortOrder
     releaseDate?: SortOrder
     plateformeDAte?: SortOrder
@@ -47789,7 +49485,6 @@ export namespace Prisma {
     id?: SortOrder
     seasonId?: SortOrder
     number?: SortOrder
-    videoFileId?: SortOrder
     title?: SortOrder
     releaseDate?: SortOrder
     plateformeDAte?: SortOrder
@@ -47804,7 +49499,6 @@ export namespace Prisma {
     id?: SortOrder
     seasonId?: SortOrder
     number?: SortOrder
-    videoFileId?: SortOrder
     title?: SortOrder
     releaseDate?: SortOrder
     plateformeDAte?: SortOrder
@@ -47930,12 +49624,12 @@ export namespace Prisma {
     rating?: SortOrder
   }
 
-  export type SeriesViewSeriesIdUserIdCompoundUniqueInput = {
+  export type SerieViewSeriesIdUserIdCompoundUniqueInput = {
     seriesId: string
     userId: string
   }
 
-  export type SeriesViewCountOrderByAggregateInput = {
+  export type SerieViewCountOrderByAggregateInput = {
     id?: SortOrder
     seriesId?: SortOrder
     userId?: SortOrder
@@ -47948,14 +49642,14 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
-  export type SeriesViewAvgOrderByAggregateInput = {
+  export type SerieViewAvgOrderByAggregateInput = {
     seasonsWatched?: SortOrder
     episodesWatched?: SortOrder
     totalTimeSpent?: SortOrder
     rating?: SortOrder
   }
 
-  export type SeriesViewMaxOrderByAggregateInput = {
+  export type SerieViewMaxOrderByAggregateInput = {
     id?: SortOrder
     seriesId?: SortOrder
     userId?: SortOrder
@@ -47968,7 +49662,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
-  export type SeriesViewMinOrderByAggregateInput = {
+  export type SerieViewMinOrderByAggregateInput = {
     id?: SortOrder
     seriesId?: SortOrder
     userId?: SortOrder
@@ -47981,7 +49675,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
-  export type SeriesViewSumOrderByAggregateInput = {
+  export type SerieViewSumOrderByAggregateInput = {
     seasonsWatched?: SortOrder
     episodesWatched?: SortOrder
     totalTimeSpent?: SortOrder
@@ -48087,7 +49781,8 @@ export namespace Prisma {
   export type PurchaseCountOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
-    videoId?: SortOrder
+    movieId?: SortOrder
+    serieId?: SortOrder
     purchaseDate?: SortOrder
     expirationDate?: SortOrder
     country?: SortOrder
@@ -48096,7 +49791,8 @@ export namespace Prisma {
   export type PurchaseMaxOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
-    videoId?: SortOrder
+    movieId?: SortOrder
+    serieId?: SortOrder
     purchaseDate?: SortOrder
     expirationDate?: SortOrder
     country?: SortOrder
@@ -48105,7 +49801,8 @@ export namespace Prisma {
   export type PurchaseMinOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
-    videoId?: SortOrder
+    movieId?: SortOrder
+    serieId?: SortOrder
     purchaseDate?: SortOrder
     expirationDate?: SortOrder
     country?: SortOrder
@@ -48119,7 +49816,8 @@ export namespace Prisma {
   export type CommentCountOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
-    videoId?: SortOrder
+    movieId?: SortOrder
+    epiisodeId?: SortOrder
     text?: SortOrder
     createdAt?: SortOrder
     parentCommentId?: SortOrder
@@ -48128,7 +49826,8 @@ export namespace Prisma {
   export type CommentMaxOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
-    videoId?: SortOrder
+    movieId?: SortOrder
+    epiisodeId?: SortOrder
     text?: SortOrder
     createdAt?: SortOrder
     parentCommentId?: SortOrder
@@ -48137,7 +49836,8 @@ export namespace Prisma {
   export type CommentMinOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
-    videoId?: SortOrder
+    movieId?: SortOrder
+    epiisodeId?: SortOrder
     text?: SortOrder
     createdAt?: SortOrder
     parentCommentId?: SortOrder
@@ -48146,31 +49846,28 @@ export namespace Prisma {
   export type AdCountOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
-    image_url?: SortOrder
-    video_url?: SortOrder
-    start_date?: SortOrder
-    end_date?: SortOrder
-    is_active?: SortOrder
+    imageUrl?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    isActive?: SortOrder
   }
 
   export type AdMaxOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
-    image_url?: SortOrder
-    video_url?: SortOrder
-    start_date?: SortOrder
-    end_date?: SortOrder
-    is_active?: SortOrder
+    imageUrl?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    isActive?: SortOrder
   }
 
   export type AdMinOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
-    image_url?: SortOrder
-    video_url?: SortOrder
-    start_date?: SortOrder
-    end_date?: SortOrder
-    is_active?: SortOrder
+    imageUrl?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    isActive?: SortOrder
   }
 
   export type AdScalarRelationFilter = {
@@ -49182,10 +50879,10 @@ export namespace Prisma {
     connect?: MovieWhereUniqueInput
   }
 
-  export type SeriesCreateNestedOneWithoutMetadataInput = {
-    create?: XOR<SeriesCreateWithoutMetadataInput, SeriesUncheckedCreateWithoutMetadataInput>
-    connectOrCreate?: SeriesCreateOrConnectWithoutMetadataInput
-    connect?: SeriesWhereUniqueInput
+  export type SerieCreateNestedOneWithoutMetadataInput = {
+    create?: XOR<SerieCreateWithoutMetadataInput, SerieUncheckedCreateWithoutMetadataInput>
+    connectOrCreate?: SerieCreateOrConnectWithoutMetadataInput
+    connect?: SerieWhereUniqueInput
   }
 
   export type VideoActorCreateNestedManyWithoutVideoInput = {
@@ -49214,10 +50911,10 @@ export namespace Prisma {
     connect?: MovieWhereUniqueInput
   }
 
-  export type SeriesUncheckedCreateNestedOneWithoutMetadataInput = {
-    create?: XOR<SeriesCreateWithoutMetadataInput, SeriesUncheckedCreateWithoutMetadataInput>
-    connectOrCreate?: SeriesCreateOrConnectWithoutMetadataInput
-    connect?: SeriesWhereUniqueInput
+  export type SerieUncheckedCreateNestedOneWithoutMetadataInput = {
+    create?: XOR<SerieCreateWithoutMetadataInput, SerieUncheckedCreateWithoutMetadataInput>
+    connectOrCreate?: SerieCreateOrConnectWithoutMetadataInput
+    connect?: SerieWhereUniqueInput
   }
 
   export type VideoActorUncheckedCreateNestedManyWithoutVideoInput = {
@@ -49280,14 +50977,14 @@ export namespace Prisma {
     update?: XOR<XOR<MovieUpdateToOneWithWhereWithoutMetadataInput, MovieUpdateWithoutMetadataInput>, MovieUncheckedUpdateWithoutMetadataInput>
   }
 
-  export type SeriesUpdateOneWithoutMetadataNestedInput = {
-    create?: XOR<SeriesCreateWithoutMetadataInput, SeriesUncheckedCreateWithoutMetadataInput>
-    connectOrCreate?: SeriesCreateOrConnectWithoutMetadataInput
-    upsert?: SeriesUpsertWithoutMetadataInput
-    disconnect?: SeriesWhereInput | boolean
-    delete?: SeriesWhereInput | boolean
-    connect?: SeriesWhereUniqueInput
-    update?: XOR<XOR<SeriesUpdateToOneWithWhereWithoutMetadataInput, SeriesUpdateWithoutMetadataInput>, SeriesUncheckedUpdateWithoutMetadataInput>
+  export type SerieUpdateOneWithoutMetadataNestedInput = {
+    create?: XOR<SerieCreateWithoutMetadataInput, SerieUncheckedCreateWithoutMetadataInput>
+    connectOrCreate?: SerieCreateOrConnectWithoutMetadataInput
+    upsert?: SerieUpsertWithoutMetadataInput
+    disconnect?: SerieWhereInput | boolean
+    delete?: SerieWhereInput | boolean
+    connect?: SerieWhereUniqueInput
+    update?: XOR<XOR<SerieUpdateToOneWithWhereWithoutMetadataInput, SerieUpdateWithoutMetadataInput>, SerieUncheckedUpdateWithoutMetadataInput>
   }
 
   export type VideoActorUpdateManyWithoutVideoNestedInput = {
@@ -49341,14 +51038,14 @@ export namespace Prisma {
     update?: XOR<XOR<MovieUpdateToOneWithWhereWithoutMetadataInput, MovieUpdateWithoutMetadataInput>, MovieUncheckedUpdateWithoutMetadataInput>
   }
 
-  export type SeriesUncheckedUpdateOneWithoutMetadataNestedInput = {
-    create?: XOR<SeriesCreateWithoutMetadataInput, SeriesUncheckedCreateWithoutMetadataInput>
-    connectOrCreate?: SeriesCreateOrConnectWithoutMetadataInput
-    upsert?: SeriesUpsertWithoutMetadataInput
-    disconnect?: SeriesWhereInput | boolean
-    delete?: SeriesWhereInput | boolean
-    connect?: SeriesWhereUniqueInput
-    update?: XOR<XOR<SeriesUpdateToOneWithWhereWithoutMetadataInput, SeriesUpdateWithoutMetadataInput>, SeriesUncheckedUpdateWithoutMetadataInput>
+  export type SerieUncheckedUpdateOneWithoutMetadataNestedInput = {
+    create?: XOR<SerieCreateWithoutMetadataInput, SerieUncheckedCreateWithoutMetadataInput>
+    connectOrCreate?: SerieCreateOrConnectWithoutMetadataInput
+    upsert?: SerieUpsertWithoutMetadataInput
+    disconnect?: SerieWhereInput | boolean
+    delete?: SerieWhereInput | boolean
+    connect?: SerieWhereUniqueInput
+    update?: XOR<XOR<SerieUpdateToOneWithWhereWithoutMetadataInput, SerieUpdateWithoutMetadataInput>, SerieUncheckedUpdateWithoutMetadataInput>
   }
 
   export type VideoActorUncheckedUpdateManyWithoutVideoNestedInput = {
@@ -49392,16 +51089,11 @@ export namespace Prisma {
     deleteMany?: VideoLanguageScalarWhereInput | VideoLanguageScalarWhereInput[]
   }
 
-  export type MovieCreateNestedOneWithoutVideoFileInput = {
-    create?: XOR<MovieCreateWithoutVideoFileInput, MovieUncheckedCreateWithoutVideoFileInput>
-    connectOrCreate?: MovieCreateOrConnectWithoutVideoFileInput
-    connect?: MovieWhereUniqueInput
-  }
-
-  export type EpisodeCreateNestedOneWithoutVideoFileInput = {
-    create?: XOR<EpisodeCreateWithoutVideoFileInput, EpisodeUncheckedCreateWithoutVideoFileInput>
-    connectOrCreate?: EpisodeCreateOrConnectWithoutVideoFileInput
-    connect?: EpisodeWhereUniqueInput
+  export type MediaAttachmentCreateNestedManyWithoutMediaFileInput = {
+    create?: XOR<MediaAttachmentCreateWithoutMediaFileInput, MediaAttachmentUncheckedCreateWithoutMediaFileInput> | MediaAttachmentCreateWithoutMediaFileInput[] | MediaAttachmentUncheckedCreateWithoutMediaFileInput[]
+    connectOrCreate?: MediaAttachmentCreateOrConnectWithoutMediaFileInput | MediaAttachmentCreateOrConnectWithoutMediaFileInput[]
+    createMany?: MediaAttachmentCreateManyMediaFileInputEnvelope
+    connect?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
   }
 
   export type SubtitleCreateNestedManyWithoutVideoInput = {
@@ -49411,37 +51103,11 @@ export namespace Prisma {
     connect?: SubtitleWhereUniqueInput | SubtitleWhereUniqueInput[]
   }
 
-  export type PurchaseCreateNestedManyWithoutVideoInput = {
-    create?: XOR<PurchaseCreateWithoutVideoInput, PurchaseUncheckedCreateWithoutVideoInput> | PurchaseCreateWithoutVideoInput[] | PurchaseUncheckedCreateWithoutVideoInput[]
-    connectOrCreate?: PurchaseCreateOrConnectWithoutVideoInput | PurchaseCreateOrConnectWithoutVideoInput[]
-    createMany?: PurchaseCreateManyVideoInputEnvelope
-    connect?: PurchaseWhereUniqueInput | PurchaseWhereUniqueInput[]
-  }
-
-  export type CommentCreateNestedManyWithoutVideoInput = {
-    create?: XOR<CommentCreateWithoutVideoInput, CommentUncheckedCreateWithoutVideoInput> | CommentCreateWithoutVideoInput[] | CommentUncheckedCreateWithoutVideoInput[]
-    connectOrCreate?: CommentCreateOrConnectWithoutVideoInput | CommentCreateOrConnectWithoutVideoInput[]
-    createMany?: CommentCreateManyVideoInputEnvelope
-    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
-  }
-
-  export type UserVideoViewCreateNestedManyWithoutVideoInput = {
-    create?: XOR<UserVideoViewCreateWithoutVideoInput, UserVideoViewUncheckedCreateWithoutVideoInput> | UserVideoViewCreateWithoutVideoInput[] | UserVideoViewUncheckedCreateWithoutVideoInput[]
-    connectOrCreate?: UserVideoViewCreateOrConnectWithoutVideoInput | UserVideoViewCreateOrConnectWithoutVideoInput[]
-    createMany?: UserVideoViewCreateManyVideoInputEnvelope
-    connect?: UserVideoViewWhereUniqueInput | UserVideoViewWhereUniqueInput[]
-  }
-
-  export type MovieUncheckedCreateNestedOneWithoutVideoFileInput = {
-    create?: XOR<MovieCreateWithoutVideoFileInput, MovieUncheckedCreateWithoutVideoFileInput>
-    connectOrCreate?: MovieCreateOrConnectWithoutVideoFileInput
-    connect?: MovieWhereUniqueInput
-  }
-
-  export type EpisodeUncheckedCreateNestedOneWithoutVideoFileInput = {
-    create?: XOR<EpisodeCreateWithoutVideoFileInput, EpisodeUncheckedCreateWithoutVideoFileInput>
-    connectOrCreate?: EpisodeCreateOrConnectWithoutVideoFileInput
-    connect?: EpisodeWhereUniqueInput
+  export type MediaAttachmentUncheckedCreateNestedManyWithoutMediaFileInput = {
+    create?: XOR<MediaAttachmentCreateWithoutMediaFileInput, MediaAttachmentUncheckedCreateWithoutMediaFileInput> | MediaAttachmentCreateWithoutMediaFileInput[] | MediaAttachmentUncheckedCreateWithoutMediaFileInput[]
+    connectOrCreate?: MediaAttachmentCreateOrConnectWithoutMediaFileInput | MediaAttachmentCreateOrConnectWithoutMediaFileInput[]
+    createMany?: MediaAttachmentCreateManyMediaFileInputEnvelope
+    connect?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
   }
 
   export type SubtitleUncheckedCreateNestedManyWithoutVideoInput = {
@@ -49449,27 +51115,6 @@ export namespace Prisma {
     connectOrCreate?: SubtitleCreateOrConnectWithoutVideoInput | SubtitleCreateOrConnectWithoutVideoInput[]
     createMany?: SubtitleCreateManyVideoInputEnvelope
     connect?: SubtitleWhereUniqueInput | SubtitleWhereUniqueInput[]
-  }
-
-  export type PurchaseUncheckedCreateNestedManyWithoutVideoInput = {
-    create?: XOR<PurchaseCreateWithoutVideoInput, PurchaseUncheckedCreateWithoutVideoInput> | PurchaseCreateWithoutVideoInput[] | PurchaseUncheckedCreateWithoutVideoInput[]
-    connectOrCreate?: PurchaseCreateOrConnectWithoutVideoInput | PurchaseCreateOrConnectWithoutVideoInput[]
-    createMany?: PurchaseCreateManyVideoInputEnvelope
-    connect?: PurchaseWhereUniqueInput | PurchaseWhereUniqueInput[]
-  }
-
-  export type CommentUncheckedCreateNestedManyWithoutVideoInput = {
-    create?: XOR<CommentCreateWithoutVideoInput, CommentUncheckedCreateWithoutVideoInput> | CommentCreateWithoutVideoInput[] | CommentUncheckedCreateWithoutVideoInput[]
-    connectOrCreate?: CommentCreateOrConnectWithoutVideoInput | CommentCreateOrConnectWithoutVideoInput[]
-    createMany?: CommentCreateManyVideoInputEnvelope
-    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
-  }
-
-  export type UserVideoViewUncheckedCreateNestedManyWithoutVideoInput = {
-    create?: XOR<UserVideoViewCreateWithoutVideoInput, UserVideoViewUncheckedCreateWithoutVideoInput> | UserVideoViewCreateWithoutVideoInput[] | UserVideoViewUncheckedCreateWithoutVideoInput[]
-    connectOrCreate?: UserVideoViewCreateOrConnectWithoutVideoInput | UserVideoViewCreateOrConnectWithoutVideoInput[]
-    createMany?: UserVideoViewCreateManyVideoInputEnvelope
-    connect?: UserVideoViewWhereUniqueInput | UserVideoViewWhereUniqueInput[]
   }
 
   export type NullableIntFieldUpdateOperationsInput = {
@@ -49480,28 +51125,26 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type EnumVideoFileStatusFieldUpdateOperationsInput = {
-    set?: $Enums.VideoFileStatus
+  export type EnumMediaFileStatusFieldUpdateOperationsInput = {
+    set?: $Enums.MediaFileStatus
   }
 
-  export type MovieUpdateOneWithoutVideoFileNestedInput = {
-    create?: XOR<MovieCreateWithoutVideoFileInput, MovieUncheckedCreateWithoutVideoFileInput>
-    connectOrCreate?: MovieCreateOrConnectWithoutVideoFileInput
-    upsert?: MovieUpsertWithoutVideoFileInput
-    disconnect?: MovieWhereInput | boolean
-    delete?: MovieWhereInput | boolean
-    connect?: MovieWhereUniqueInput
-    update?: XOR<XOR<MovieUpdateToOneWithWhereWithoutVideoFileInput, MovieUpdateWithoutVideoFileInput>, MovieUncheckedUpdateWithoutVideoFileInput>
+  export type EnumMediaTypeFieldUpdateOperationsInput = {
+    set?: $Enums.MediaType
   }
 
-  export type EpisodeUpdateOneWithoutVideoFileNestedInput = {
-    create?: XOR<EpisodeCreateWithoutVideoFileInput, EpisodeUncheckedCreateWithoutVideoFileInput>
-    connectOrCreate?: EpisodeCreateOrConnectWithoutVideoFileInput
-    upsert?: EpisodeUpsertWithoutVideoFileInput
-    disconnect?: EpisodeWhereInput | boolean
-    delete?: EpisodeWhereInput | boolean
-    connect?: EpisodeWhereUniqueInput
-    update?: XOR<XOR<EpisodeUpdateToOneWithWhereWithoutVideoFileInput, EpisodeUpdateWithoutVideoFileInput>, EpisodeUncheckedUpdateWithoutVideoFileInput>
+  export type MediaAttachmentUpdateManyWithoutMediaFileNestedInput = {
+    create?: XOR<MediaAttachmentCreateWithoutMediaFileInput, MediaAttachmentUncheckedCreateWithoutMediaFileInput> | MediaAttachmentCreateWithoutMediaFileInput[] | MediaAttachmentUncheckedCreateWithoutMediaFileInput[]
+    connectOrCreate?: MediaAttachmentCreateOrConnectWithoutMediaFileInput | MediaAttachmentCreateOrConnectWithoutMediaFileInput[]
+    upsert?: MediaAttachmentUpsertWithWhereUniqueWithoutMediaFileInput | MediaAttachmentUpsertWithWhereUniqueWithoutMediaFileInput[]
+    createMany?: MediaAttachmentCreateManyMediaFileInputEnvelope
+    set?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+    disconnect?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+    delete?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+    connect?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+    update?: MediaAttachmentUpdateWithWhereUniqueWithoutMediaFileInput | MediaAttachmentUpdateWithWhereUniqueWithoutMediaFileInput[]
+    updateMany?: MediaAttachmentUpdateManyWithWhereWithoutMediaFileInput | MediaAttachmentUpdateManyWithWhereWithoutMediaFileInput[]
+    deleteMany?: MediaAttachmentScalarWhereInput | MediaAttachmentScalarWhereInput[]
   }
 
   export type SubtitleUpdateManyWithoutVideoNestedInput = {
@@ -49518,66 +51161,18 @@ export namespace Prisma {
     deleteMany?: SubtitleScalarWhereInput | SubtitleScalarWhereInput[]
   }
 
-  export type PurchaseUpdateManyWithoutVideoNestedInput = {
-    create?: XOR<PurchaseCreateWithoutVideoInput, PurchaseUncheckedCreateWithoutVideoInput> | PurchaseCreateWithoutVideoInput[] | PurchaseUncheckedCreateWithoutVideoInput[]
-    connectOrCreate?: PurchaseCreateOrConnectWithoutVideoInput | PurchaseCreateOrConnectWithoutVideoInput[]
-    upsert?: PurchaseUpsertWithWhereUniqueWithoutVideoInput | PurchaseUpsertWithWhereUniqueWithoutVideoInput[]
-    createMany?: PurchaseCreateManyVideoInputEnvelope
-    set?: PurchaseWhereUniqueInput | PurchaseWhereUniqueInput[]
-    disconnect?: PurchaseWhereUniqueInput | PurchaseWhereUniqueInput[]
-    delete?: PurchaseWhereUniqueInput | PurchaseWhereUniqueInput[]
-    connect?: PurchaseWhereUniqueInput | PurchaseWhereUniqueInput[]
-    update?: PurchaseUpdateWithWhereUniqueWithoutVideoInput | PurchaseUpdateWithWhereUniqueWithoutVideoInput[]
-    updateMany?: PurchaseUpdateManyWithWhereWithoutVideoInput | PurchaseUpdateManyWithWhereWithoutVideoInput[]
-    deleteMany?: PurchaseScalarWhereInput | PurchaseScalarWhereInput[]
-  }
-
-  export type CommentUpdateManyWithoutVideoNestedInput = {
-    create?: XOR<CommentCreateWithoutVideoInput, CommentUncheckedCreateWithoutVideoInput> | CommentCreateWithoutVideoInput[] | CommentUncheckedCreateWithoutVideoInput[]
-    connectOrCreate?: CommentCreateOrConnectWithoutVideoInput | CommentCreateOrConnectWithoutVideoInput[]
-    upsert?: CommentUpsertWithWhereUniqueWithoutVideoInput | CommentUpsertWithWhereUniqueWithoutVideoInput[]
-    createMany?: CommentCreateManyVideoInputEnvelope
-    set?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
-    disconnect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
-    delete?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
-    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
-    update?: CommentUpdateWithWhereUniqueWithoutVideoInput | CommentUpdateWithWhereUniqueWithoutVideoInput[]
-    updateMany?: CommentUpdateManyWithWhereWithoutVideoInput | CommentUpdateManyWithWhereWithoutVideoInput[]
-    deleteMany?: CommentScalarWhereInput | CommentScalarWhereInput[]
-  }
-
-  export type UserVideoViewUpdateManyWithoutVideoNestedInput = {
-    create?: XOR<UserVideoViewCreateWithoutVideoInput, UserVideoViewUncheckedCreateWithoutVideoInput> | UserVideoViewCreateWithoutVideoInput[] | UserVideoViewUncheckedCreateWithoutVideoInput[]
-    connectOrCreate?: UserVideoViewCreateOrConnectWithoutVideoInput | UserVideoViewCreateOrConnectWithoutVideoInput[]
-    upsert?: UserVideoViewUpsertWithWhereUniqueWithoutVideoInput | UserVideoViewUpsertWithWhereUniqueWithoutVideoInput[]
-    createMany?: UserVideoViewCreateManyVideoInputEnvelope
-    set?: UserVideoViewWhereUniqueInput | UserVideoViewWhereUniqueInput[]
-    disconnect?: UserVideoViewWhereUniqueInput | UserVideoViewWhereUniqueInput[]
-    delete?: UserVideoViewWhereUniqueInput | UserVideoViewWhereUniqueInput[]
-    connect?: UserVideoViewWhereUniqueInput | UserVideoViewWhereUniqueInput[]
-    update?: UserVideoViewUpdateWithWhereUniqueWithoutVideoInput | UserVideoViewUpdateWithWhereUniqueWithoutVideoInput[]
-    updateMany?: UserVideoViewUpdateManyWithWhereWithoutVideoInput | UserVideoViewUpdateManyWithWhereWithoutVideoInput[]
-    deleteMany?: UserVideoViewScalarWhereInput | UserVideoViewScalarWhereInput[]
-  }
-
-  export type MovieUncheckedUpdateOneWithoutVideoFileNestedInput = {
-    create?: XOR<MovieCreateWithoutVideoFileInput, MovieUncheckedCreateWithoutVideoFileInput>
-    connectOrCreate?: MovieCreateOrConnectWithoutVideoFileInput
-    upsert?: MovieUpsertWithoutVideoFileInput
-    disconnect?: MovieWhereInput | boolean
-    delete?: MovieWhereInput | boolean
-    connect?: MovieWhereUniqueInput
-    update?: XOR<XOR<MovieUpdateToOneWithWhereWithoutVideoFileInput, MovieUpdateWithoutVideoFileInput>, MovieUncheckedUpdateWithoutVideoFileInput>
-  }
-
-  export type EpisodeUncheckedUpdateOneWithoutVideoFileNestedInput = {
-    create?: XOR<EpisodeCreateWithoutVideoFileInput, EpisodeUncheckedCreateWithoutVideoFileInput>
-    connectOrCreate?: EpisodeCreateOrConnectWithoutVideoFileInput
-    upsert?: EpisodeUpsertWithoutVideoFileInput
-    disconnect?: EpisodeWhereInput | boolean
-    delete?: EpisodeWhereInput | boolean
-    connect?: EpisodeWhereUniqueInput
-    update?: XOR<XOR<EpisodeUpdateToOneWithWhereWithoutVideoFileInput, EpisodeUpdateWithoutVideoFileInput>, EpisodeUncheckedUpdateWithoutVideoFileInput>
+  export type MediaAttachmentUncheckedUpdateManyWithoutMediaFileNestedInput = {
+    create?: XOR<MediaAttachmentCreateWithoutMediaFileInput, MediaAttachmentUncheckedCreateWithoutMediaFileInput> | MediaAttachmentCreateWithoutMediaFileInput[] | MediaAttachmentUncheckedCreateWithoutMediaFileInput[]
+    connectOrCreate?: MediaAttachmentCreateOrConnectWithoutMediaFileInput | MediaAttachmentCreateOrConnectWithoutMediaFileInput[]
+    upsert?: MediaAttachmentUpsertWithWhereUniqueWithoutMediaFileInput | MediaAttachmentUpsertWithWhereUniqueWithoutMediaFileInput[]
+    createMany?: MediaAttachmentCreateManyMediaFileInputEnvelope
+    set?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+    disconnect?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+    delete?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+    connect?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+    update?: MediaAttachmentUpdateWithWhereUniqueWithoutMediaFileInput | MediaAttachmentUpdateWithWhereUniqueWithoutMediaFileInput[]
+    updateMany?: MediaAttachmentUpdateManyWithWhereWithoutMediaFileInput | MediaAttachmentUpdateManyWithWhereWithoutMediaFileInput[]
+    deleteMany?: MediaAttachmentScalarWhereInput | MediaAttachmentScalarWhereInput[]
   }
 
   export type SubtitleUncheckedUpdateManyWithoutVideoNestedInput = {
@@ -49594,46 +51189,70 @@ export namespace Prisma {
     deleteMany?: SubtitleScalarWhereInput | SubtitleScalarWhereInput[]
   }
 
-  export type PurchaseUncheckedUpdateManyWithoutVideoNestedInput = {
-    create?: XOR<PurchaseCreateWithoutVideoInput, PurchaseUncheckedCreateWithoutVideoInput> | PurchaseCreateWithoutVideoInput[] | PurchaseUncheckedCreateWithoutVideoInput[]
-    connectOrCreate?: PurchaseCreateOrConnectWithoutVideoInput | PurchaseCreateOrConnectWithoutVideoInput[]
-    upsert?: PurchaseUpsertWithWhereUniqueWithoutVideoInput | PurchaseUpsertWithWhereUniqueWithoutVideoInput[]
-    createMany?: PurchaseCreateManyVideoInputEnvelope
-    set?: PurchaseWhereUniqueInput | PurchaseWhereUniqueInput[]
-    disconnect?: PurchaseWhereUniqueInput | PurchaseWhereUniqueInput[]
-    delete?: PurchaseWhereUniqueInput | PurchaseWhereUniqueInput[]
-    connect?: PurchaseWhereUniqueInput | PurchaseWhereUniqueInput[]
-    update?: PurchaseUpdateWithWhereUniqueWithoutVideoInput | PurchaseUpdateWithWhereUniqueWithoutVideoInput[]
-    updateMany?: PurchaseUpdateManyWithWhereWithoutVideoInput | PurchaseUpdateManyWithWhereWithoutVideoInput[]
-    deleteMany?: PurchaseScalarWhereInput | PurchaseScalarWhereInput[]
+  export type MediaFileCreateNestedOneWithoutAttachmentsInput = {
+    create?: XOR<MediaFileCreateWithoutAttachmentsInput, MediaFileUncheckedCreateWithoutAttachmentsInput>
+    connectOrCreate?: MediaFileCreateOrConnectWithoutAttachmentsInput
+    connect?: MediaFileWhereUniqueInput
   }
 
-  export type CommentUncheckedUpdateManyWithoutVideoNestedInput = {
-    create?: XOR<CommentCreateWithoutVideoInput, CommentUncheckedCreateWithoutVideoInput> | CommentCreateWithoutVideoInput[] | CommentUncheckedCreateWithoutVideoInput[]
-    connectOrCreate?: CommentCreateOrConnectWithoutVideoInput | CommentCreateOrConnectWithoutVideoInput[]
-    upsert?: CommentUpsertWithWhereUniqueWithoutVideoInput | CommentUpsertWithWhereUniqueWithoutVideoInput[]
-    createMany?: CommentCreateManyVideoInputEnvelope
-    set?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
-    disconnect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
-    delete?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
-    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
-    update?: CommentUpdateWithWhereUniqueWithoutVideoInput | CommentUpdateWithWhereUniqueWithoutVideoInput[]
-    updateMany?: CommentUpdateManyWithWhereWithoutVideoInput | CommentUpdateManyWithWhereWithoutVideoInput[]
-    deleteMany?: CommentScalarWhereInput | CommentScalarWhereInput[]
+  export type MovieCreateNestedOneWithoutAttachmentInput = {
+    create?: XOR<MovieCreateWithoutAttachmentInput, MovieUncheckedCreateWithoutAttachmentInput>
+    connectOrCreate?: MovieCreateOrConnectWithoutAttachmentInput
+    connect?: MovieWhereUniqueInput
   }
 
-  export type UserVideoViewUncheckedUpdateManyWithoutVideoNestedInput = {
-    create?: XOR<UserVideoViewCreateWithoutVideoInput, UserVideoViewUncheckedCreateWithoutVideoInput> | UserVideoViewCreateWithoutVideoInput[] | UserVideoViewUncheckedCreateWithoutVideoInput[]
-    connectOrCreate?: UserVideoViewCreateOrConnectWithoutVideoInput | UserVideoViewCreateOrConnectWithoutVideoInput[]
-    upsert?: UserVideoViewUpsertWithWhereUniqueWithoutVideoInput | UserVideoViewUpsertWithWhereUniqueWithoutVideoInput[]
-    createMany?: UserVideoViewCreateManyVideoInputEnvelope
-    set?: UserVideoViewWhereUniqueInput | UserVideoViewWhereUniqueInput[]
-    disconnect?: UserVideoViewWhereUniqueInput | UserVideoViewWhereUniqueInput[]
-    delete?: UserVideoViewWhereUniqueInput | UserVideoViewWhereUniqueInput[]
-    connect?: UserVideoViewWhereUniqueInput | UserVideoViewWhereUniqueInput[]
-    update?: UserVideoViewUpdateWithWhereUniqueWithoutVideoInput | UserVideoViewUpdateWithWhereUniqueWithoutVideoInput[]
-    updateMany?: UserVideoViewUpdateManyWithWhereWithoutVideoInput | UserVideoViewUpdateManyWithWhereWithoutVideoInput[]
-    deleteMany?: UserVideoViewScalarWhereInput | UserVideoViewScalarWhereInput[]
+  export type EpisodeCreateNestedOneWithoutVideoAttachmentInput = {
+    create?: XOR<EpisodeCreateWithoutVideoAttachmentInput, EpisodeUncheckedCreateWithoutVideoAttachmentInput>
+    connectOrCreate?: EpisodeCreateOrConnectWithoutVideoAttachmentInput
+    connect?: EpisodeWhereUniqueInput
+  }
+
+  export type AdCreateNestedOneWithoutVideoAttachmentInput = {
+    create?: XOR<AdCreateWithoutVideoAttachmentInput, AdUncheckedCreateWithoutVideoAttachmentInput>
+    connectOrCreate?: AdCreateOrConnectWithoutVideoAttachmentInput
+    connect?: AdWhereUniqueInput
+  }
+
+  export type EnumMediaAttachmentTypeFieldUpdateOperationsInput = {
+    set?: $Enums.MediaAttachmentType
+  }
+
+  export type MediaFileUpdateOneRequiredWithoutAttachmentsNestedInput = {
+    create?: XOR<MediaFileCreateWithoutAttachmentsInput, MediaFileUncheckedCreateWithoutAttachmentsInput>
+    connectOrCreate?: MediaFileCreateOrConnectWithoutAttachmentsInput
+    upsert?: MediaFileUpsertWithoutAttachmentsInput
+    connect?: MediaFileWhereUniqueInput
+    update?: XOR<XOR<MediaFileUpdateToOneWithWhereWithoutAttachmentsInput, MediaFileUpdateWithoutAttachmentsInput>, MediaFileUncheckedUpdateWithoutAttachmentsInput>
+  }
+
+  export type MovieUpdateOneWithoutAttachmentNestedInput = {
+    create?: XOR<MovieCreateWithoutAttachmentInput, MovieUncheckedCreateWithoutAttachmentInput>
+    connectOrCreate?: MovieCreateOrConnectWithoutAttachmentInput
+    upsert?: MovieUpsertWithoutAttachmentInput
+    disconnect?: MovieWhereInput | boolean
+    delete?: MovieWhereInput | boolean
+    connect?: MovieWhereUniqueInput
+    update?: XOR<XOR<MovieUpdateToOneWithWhereWithoutAttachmentInput, MovieUpdateWithoutAttachmentInput>, MovieUncheckedUpdateWithoutAttachmentInput>
+  }
+
+  export type EpisodeUpdateOneWithoutVideoAttachmentNestedInput = {
+    create?: XOR<EpisodeCreateWithoutVideoAttachmentInput, EpisodeUncheckedCreateWithoutVideoAttachmentInput>
+    connectOrCreate?: EpisodeCreateOrConnectWithoutVideoAttachmentInput
+    upsert?: EpisodeUpsertWithoutVideoAttachmentInput
+    disconnect?: EpisodeWhereInput | boolean
+    delete?: EpisodeWhereInput | boolean
+    connect?: EpisodeWhereUniqueInput
+    update?: XOR<XOR<EpisodeUpdateToOneWithWhereWithoutVideoAttachmentInput, EpisodeUpdateWithoutVideoAttachmentInput>, EpisodeUncheckedUpdateWithoutVideoAttachmentInput>
+  }
+
+  export type AdUpdateOneWithoutVideoAttachmentNestedInput = {
+    create?: XOR<AdCreateWithoutVideoAttachmentInput, AdUncheckedCreateWithoutVideoAttachmentInput>
+    connectOrCreate?: AdCreateOrConnectWithoutVideoAttachmentInput
+    upsert?: AdUpsertWithoutVideoAttachmentInput
+    disconnect?: AdWhereInput | boolean
+    delete?: AdWhereInput | boolean
+    connect?: AdWhereUniqueInput
+    update?: XOR<XOR<AdUpdateToOneWithWhereWithoutVideoAttachmentInput, AdUpdateWithoutVideoAttachmentInput>, AdUncheckedUpdateWithoutVideoAttachmentInput>
   }
 
   export type VideoMetadataCreateNestedManyWithoutGenderInput = {
@@ -49876,12 +51495,6 @@ export namespace Prisma {
     connect?: VideoMetadataWhereUniqueInput
   }
 
-  export type VideoFileCreateNestedOneWithoutMovieInput = {
-    create?: XOR<VideoFileCreateWithoutMovieInput, VideoFileUncheckedCreateWithoutMovieInput>
-    connectOrCreate?: VideoFileCreateOrConnectWithoutMovieInput
-    connect?: VideoFileWhereUniqueInput
-  }
-
   export type MovieTagCreateNestedManyWithoutMovieInput = {
     create?: XOR<MovieTagCreateWithoutMovieInput, MovieTagUncheckedCreateWithoutMovieInput> | MovieTagCreateWithoutMovieInput[] | MovieTagUncheckedCreateWithoutMovieInput[]
     connectOrCreate?: MovieTagCreateOrConnectWithoutMovieInput | MovieTagCreateOrConnectWithoutMovieInput[]
@@ -49889,11 +51502,53 @@ export namespace Prisma {
     connect?: MovieTagWhereUniqueInput | MovieTagWhereUniqueInput[]
   }
 
+  export type MediaAttachmentCreateNestedManyWithoutMovieInput = {
+    create?: XOR<MediaAttachmentCreateWithoutMovieInput, MediaAttachmentUncheckedCreateWithoutMovieInput> | MediaAttachmentCreateWithoutMovieInput[] | MediaAttachmentUncheckedCreateWithoutMovieInput[]
+    connectOrCreate?: MediaAttachmentCreateOrConnectWithoutMovieInput | MediaAttachmentCreateOrConnectWithoutMovieInput[]
+    createMany?: MediaAttachmentCreateManyMovieInputEnvelope
+    connect?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+  }
+
+  export type CommentCreateNestedManyWithoutMovieInput = {
+    create?: XOR<CommentCreateWithoutMovieInput, CommentUncheckedCreateWithoutMovieInput> | CommentCreateWithoutMovieInput[] | CommentUncheckedCreateWithoutMovieInput[]
+    connectOrCreate?: CommentCreateOrConnectWithoutMovieInput | CommentCreateOrConnectWithoutMovieInput[]
+    createMany?: CommentCreateManyMovieInputEnvelope
+    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+  }
+
+  export type PurchaseCreateNestedManyWithoutMovieInput = {
+    create?: XOR<PurchaseCreateWithoutMovieInput, PurchaseUncheckedCreateWithoutMovieInput> | PurchaseCreateWithoutMovieInput[] | PurchaseUncheckedCreateWithoutMovieInput[]
+    connectOrCreate?: PurchaseCreateOrConnectWithoutMovieInput | PurchaseCreateOrConnectWithoutMovieInput[]
+    createMany?: PurchaseCreateManyMovieInputEnvelope
+    connect?: PurchaseWhereUniqueInput | PurchaseWhereUniqueInput[]
+  }
+
   export type MovieTagUncheckedCreateNestedManyWithoutMovieInput = {
     create?: XOR<MovieTagCreateWithoutMovieInput, MovieTagUncheckedCreateWithoutMovieInput> | MovieTagCreateWithoutMovieInput[] | MovieTagUncheckedCreateWithoutMovieInput[]
     connectOrCreate?: MovieTagCreateOrConnectWithoutMovieInput | MovieTagCreateOrConnectWithoutMovieInput[]
     createMany?: MovieTagCreateManyMovieInputEnvelope
     connect?: MovieTagWhereUniqueInput | MovieTagWhereUniqueInput[]
+  }
+
+  export type MediaAttachmentUncheckedCreateNestedManyWithoutMovieInput = {
+    create?: XOR<MediaAttachmentCreateWithoutMovieInput, MediaAttachmentUncheckedCreateWithoutMovieInput> | MediaAttachmentCreateWithoutMovieInput[] | MediaAttachmentUncheckedCreateWithoutMovieInput[]
+    connectOrCreate?: MediaAttachmentCreateOrConnectWithoutMovieInput | MediaAttachmentCreateOrConnectWithoutMovieInput[]
+    createMany?: MediaAttachmentCreateManyMovieInputEnvelope
+    connect?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+  }
+
+  export type CommentUncheckedCreateNestedManyWithoutMovieInput = {
+    create?: XOR<CommentCreateWithoutMovieInput, CommentUncheckedCreateWithoutMovieInput> | CommentCreateWithoutMovieInput[] | CommentUncheckedCreateWithoutMovieInput[]
+    connectOrCreate?: CommentCreateOrConnectWithoutMovieInput | CommentCreateOrConnectWithoutMovieInput[]
+    createMany?: CommentCreateManyMovieInputEnvelope
+    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+  }
+
+  export type PurchaseUncheckedCreateNestedManyWithoutMovieInput = {
+    create?: XOR<PurchaseCreateWithoutMovieInput, PurchaseUncheckedCreateWithoutMovieInput> | PurchaseCreateWithoutMovieInput[] | PurchaseUncheckedCreateWithoutMovieInput[]
+    connectOrCreate?: PurchaseCreateOrConnectWithoutMovieInput | PurchaseCreateOrConnectWithoutMovieInput[]
+    createMany?: PurchaseCreateManyMovieInputEnvelope
+    connect?: PurchaseWhereUniqueInput | PurchaseWhereUniqueInput[]
   }
 
   export type NullableFloatFieldUpdateOperationsInput = {
@@ -49912,14 +51567,6 @@ export namespace Prisma {
     update?: XOR<XOR<VideoMetadataUpdateToOneWithWhereWithoutMovieInput, VideoMetadataUpdateWithoutMovieInput>, VideoMetadataUncheckedUpdateWithoutMovieInput>
   }
 
-  export type VideoFileUpdateOneRequiredWithoutMovieNestedInput = {
-    create?: XOR<VideoFileCreateWithoutMovieInput, VideoFileUncheckedCreateWithoutMovieInput>
-    connectOrCreate?: VideoFileCreateOrConnectWithoutMovieInput
-    upsert?: VideoFileUpsertWithoutMovieInput
-    connect?: VideoFileWhereUniqueInput
-    update?: XOR<XOR<VideoFileUpdateToOneWithWhereWithoutMovieInput, VideoFileUpdateWithoutMovieInput>, VideoFileUncheckedUpdateWithoutMovieInput>
-  }
-
   export type MovieTagUpdateManyWithoutMovieNestedInput = {
     create?: XOR<MovieTagCreateWithoutMovieInput, MovieTagUncheckedCreateWithoutMovieInput> | MovieTagCreateWithoutMovieInput[] | MovieTagUncheckedCreateWithoutMovieInput[]
     connectOrCreate?: MovieTagCreateOrConnectWithoutMovieInput | MovieTagCreateOrConnectWithoutMovieInput[]
@@ -49932,6 +51579,48 @@ export namespace Prisma {
     update?: MovieTagUpdateWithWhereUniqueWithoutMovieInput | MovieTagUpdateWithWhereUniqueWithoutMovieInput[]
     updateMany?: MovieTagUpdateManyWithWhereWithoutMovieInput | MovieTagUpdateManyWithWhereWithoutMovieInput[]
     deleteMany?: MovieTagScalarWhereInput | MovieTagScalarWhereInput[]
+  }
+
+  export type MediaAttachmentUpdateManyWithoutMovieNestedInput = {
+    create?: XOR<MediaAttachmentCreateWithoutMovieInput, MediaAttachmentUncheckedCreateWithoutMovieInput> | MediaAttachmentCreateWithoutMovieInput[] | MediaAttachmentUncheckedCreateWithoutMovieInput[]
+    connectOrCreate?: MediaAttachmentCreateOrConnectWithoutMovieInput | MediaAttachmentCreateOrConnectWithoutMovieInput[]
+    upsert?: MediaAttachmentUpsertWithWhereUniqueWithoutMovieInput | MediaAttachmentUpsertWithWhereUniqueWithoutMovieInput[]
+    createMany?: MediaAttachmentCreateManyMovieInputEnvelope
+    set?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+    disconnect?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+    delete?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+    connect?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+    update?: MediaAttachmentUpdateWithWhereUniqueWithoutMovieInput | MediaAttachmentUpdateWithWhereUniqueWithoutMovieInput[]
+    updateMany?: MediaAttachmentUpdateManyWithWhereWithoutMovieInput | MediaAttachmentUpdateManyWithWhereWithoutMovieInput[]
+    deleteMany?: MediaAttachmentScalarWhereInput | MediaAttachmentScalarWhereInput[]
+  }
+
+  export type CommentUpdateManyWithoutMovieNestedInput = {
+    create?: XOR<CommentCreateWithoutMovieInput, CommentUncheckedCreateWithoutMovieInput> | CommentCreateWithoutMovieInput[] | CommentUncheckedCreateWithoutMovieInput[]
+    connectOrCreate?: CommentCreateOrConnectWithoutMovieInput | CommentCreateOrConnectWithoutMovieInput[]
+    upsert?: CommentUpsertWithWhereUniqueWithoutMovieInput | CommentUpsertWithWhereUniqueWithoutMovieInput[]
+    createMany?: CommentCreateManyMovieInputEnvelope
+    set?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    disconnect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    delete?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    update?: CommentUpdateWithWhereUniqueWithoutMovieInput | CommentUpdateWithWhereUniqueWithoutMovieInput[]
+    updateMany?: CommentUpdateManyWithWhereWithoutMovieInput | CommentUpdateManyWithWhereWithoutMovieInput[]
+    deleteMany?: CommentScalarWhereInput | CommentScalarWhereInput[]
+  }
+
+  export type PurchaseUpdateManyWithoutMovieNestedInput = {
+    create?: XOR<PurchaseCreateWithoutMovieInput, PurchaseUncheckedCreateWithoutMovieInput> | PurchaseCreateWithoutMovieInput[] | PurchaseUncheckedCreateWithoutMovieInput[]
+    connectOrCreate?: PurchaseCreateOrConnectWithoutMovieInput | PurchaseCreateOrConnectWithoutMovieInput[]
+    upsert?: PurchaseUpsertWithWhereUniqueWithoutMovieInput | PurchaseUpsertWithWhereUniqueWithoutMovieInput[]
+    createMany?: PurchaseCreateManyMovieInputEnvelope
+    set?: PurchaseWhereUniqueInput | PurchaseWhereUniqueInput[]
+    disconnect?: PurchaseWhereUniqueInput | PurchaseWhereUniqueInput[]
+    delete?: PurchaseWhereUniqueInput | PurchaseWhereUniqueInput[]
+    connect?: PurchaseWhereUniqueInput | PurchaseWhereUniqueInput[]
+    update?: PurchaseUpdateWithWhereUniqueWithoutMovieInput | PurchaseUpdateWithWhereUniqueWithoutMovieInput[]
+    updateMany?: PurchaseUpdateManyWithWhereWithoutMovieInput | PurchaseUpdateManyWithWhereWithoutMovieInput[]
+    deleteMany?: PurchaseScalarWhereInput | PurchaseScalarWhereInput[]
   }
 
   export type MovieTagUncheckedUpdateManyWithoutMovieNestedInput = {
@@ -49948,16 +51637,58 @@ export namespace Prisma {
     deleteMany?: MovieTagScalarWhereInput | MovieTagScalarWhereInput[]
   }
 
+  export type MediaAttachmentUncheckedUpdateManyWithoutMovieNestedInput = {
+    create?: XOR<MediaAttachmentCreateWithoutMovieInput, MediaAttachmentUncheckedCreateWithoutMovieInput> | MediaAttachmentCreateWithoutMovieInput[] | MediaAttachmentUncheckedCreateWithoutMovieInput[]
+    connectOrCreate?: MediaAttachmentCreateOrConnectWithoutMovieInput | MediaAttachmentCreateOrConnectWithoutMovieInput[]
+    upsert?: MediaAttachmentUpsertWithWhereUniqueWithoutMovieInput | MediaAttachmentUpsertWithWhereUniqueWithoutMovieInput[]
+    createMany?: MediaAttachmentCreateManyMovieInputEnvelope
+    set?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+    disconnect?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+    delete?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+    connect?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+    update?: MediaAttachmentUpdateWithWhereUniqueWithoutMovieInput | MediaAttachmentUpdateWithWhereUniqueWithoutMovieInput[]
+    updateMany?: MediaAttachmentUpdateManyWithWhereWithoutMovieInput | MediaAttachmentUpdateManyWithWhereWithoutMovieInput[]
+    deleteMany?: MediaAttachmentScalarWhereInput | MediaAttachmentScalarWhereInput[]
+  }
+
+  export type CommentUncheckedUpdateManyWithoutMovieNestedInput = {
+    create?: XOR<CommentCreateWithoutMovieInput, CommentUncheckedCreateWithoutMovieInput> | CommentCreateWithoutMovieInput[] | CommentUncheckedCreateWithoutMovieInput[]
+    connectOrCreate?: CommentCreateOrConnectWithoutMovieInput | CommentCreateOrConnectWithoutMovieInput[]
+    upsert?: CommentUpsertWithWhereUniqueWithoutMovieInput | CommentUpsertWithWhereUniqueWithoutMovieInput[]
+    createMany?: CommentCreateManyMovieInputEnvelope
+    set?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    disconnect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    delete?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    update?: CommentUpdateWithWhereUniqueWithoutMovieInput | CommentUpdateWithWhereUniqueWithoutMovieInput[]
+    updateMany?: CommentUpdateManyWithWhereWithoutMovieInput | CommentUpdateManyWithWhereWithoutMovieInput[]
+    deleteMany?: CommentScalarWhereInput | CommentScalarWhereInput[]
+  }
+
+  export type PurchaseUncheckedUpdateManyWithoutMovieNestedInput = {
+    create?: XOR<PurchaseCreateWithoutMovieInput, PurchaseUncheckedCreateWithoutMovieInput> | PurchaseCreateWithoutMovieInput[] | PurchaseUncheckedCreateWithoutMovieInput[]
+    connectOrCreate?: PurchaseCreateOrConnectWithoutMovieInput | PurchaseCreateOrConnectWithoutMovieInput[]
+    upsert?: PurchaseUpsertWithWhereUniqueWithoutMovieInput | PurchaseUpsertWithWhereUniqueWithoutMovieInput[]
+    createMany?: PurchaseCreateManyMovieInputEnvelope
+    set?: PurchaseWhereUniqueInput | PurchaseWhereUniqueInput[]
+    disconnect?: PurchaseWhereUniqueInput | PurchaseWhereUniqueInput[]
+    delete?: PurchaseWhereUniqueInput | PurchaseWhereUniqueInput[]
+    connect?: PurchaseWhereUniqueInput | PurchaseWhereUniqueInput[]
+    update?: PurchaseUpdateWithWhereUniqueWithoutMovieInput | PurchaseUpdateWithWhereUniqueWithoutMovieInput[]
+    updateMany?: PurchaseUpdateManyWithWhereWithoutMovieInput | PurchaseUpdateManyWithWhereWithoutMovieInput[]
+    deleteMany?: PurchaseScalarWhereInput | PurchaseScalarWhereInput[]
+  }
+
   export type VideoMetadataCreateNestedOneWithoutSeriesInput = {
     create?: XOR<VideoMetadataCreateWithoutSeriesInput, VideoMetadataUncheckedCreateWithoutSeriesInput>
     connectOrCreate?: VideoMetadataCreateOrConnectWithoutSeriesInput
     connect?: VideoMetadataWhereUniqueInput
   }
 
-  export type SeasonCreateNestedManyWithoutSeriesInput = {
-    create?: XOR<SeasonCreateWithoutSeriesInput, SeasonUncheckedCreateWithoutSeriesInput> | SeasonCreateWithoutSeriesInput[] | SeasonUncheckedCreateWithoutSeriesInput[]
-    connectOrCreate?: SeasonCreateOrConnectWithoutSeriesInput | SeasonCreateOrConnectWithoutSeriesInput[]
-    createMany?: SeasonCreateManySeriesInputEnvelope
+  export type SeasonCreateNestedManyWithoutSerieInput = {
+    create?: XOR<SeasonCreateWithoutSerieInput, SeasonUncheckedCreateWithoutSerieInput> | SeasonCreateWithoutSerieInput[] | SeasonUncheckedCreateWithoutSerieInput[]
+    connectOrCreate?: SeasonCreateOrConnectWithoutSerieInput | SeasonCreateOrConnectWithoutSerieInput[]
+    createMany?: SeasonCreateManySerieInputEnvelope
     connect?: SeasonWhereUniqueInput | SeasonWhereUniqueInput[]
   }
 
@@ -49968,17 +51699,24 @@ export namespace Prisma {
     connect?: SeriesTagWhereUniqueInput | SeriesTagWhereUniqueInput[]
   }
 
-  export type SeriesViewCreateNestedManyWithoutSeriesInput = {
-    create?: XOR<SeriesViewCreateWithoutSeriesInput, SeriesViewUncheckedCreateWithoutSeriesInput> | SeriesViewCreateWithoutSeriesInput[] | SeriesViewUncheckedCreateWithoutSeriesInput[]
-    connectOrCreate?: SeriesViewCreateOrConnectWithoutSeriesInput | SeriesViewCreateOrConnectWithoutSeriesInput[]
-    createMany?: SeriesViewCreateManySeriesInputEnvelope
-    connect?: SeriesViewWhereUniqueInput | SeriesViewWhereUniqueInput[]
+  export type SerieViewCreateNestedManyWithoutSeriesInput = {
+    create?: XOR<SerieViewCreateWithoutSeriesInput, SerieViewUncheckedCreateWithoutSeriesInput> | SerieViewCreateWithoutSeriesInput[] | SerieViewUncheckedCreateWithoutSeriesInput[]
+    connectOrCreate?: SerieViewCreateOrConnectWithoutSeriesInput | SerieViewCreateOrConnectWithoutSeriesInput[]
+    createMany?: SerieViewCreateManySeriesInputEnvelope
+    connect?: SerieViewWhereUniqueInput | SerieViewWhereUniqueInput[]
   }
 
-  export type SeasonUncheckedCreateNestedManyWithoutSeriesInput = {
-    create?: XOR<SeasonCreateWithoutSeriesInput, SeasonUncheckedCreateWithoutSeriesInput> | SeasonCreateWithoutSeriesInput[] | SeasonUncheckedCreateWithoutSeriesInput[]
-    connectOrCreate?: SeasonCreateOrConnectWithoutSeriesInput | SeasonCreateOrConnectWithoutSeriesInput[]
-    createMany?: SeasonCreateManySeriesInputEnvelope
+  export type PurchaseCreateNestedManyWithoutSerieInput = {
+    create?: XOR<PurchaseCreateWithoutSerieInput, PurchaseUncheckedCreateWithoutSerieInput> | PurchaseCreateWithoutSerieInput[] | PurchaseUncheckedCreateWithoutSerieInput[]
+    connectOrCreate?: PurchaseCreateOrConnectWithoutSerieInput | PurchaseCreateOrConnectWithoutSerieInput[]
+    createMany?: PurchaseCreateManySerieInputEnvelope
+    connect?: PurchaseWhereUniqueInput | PurchaseWhereUniqueInput[]
+  }
+
+  export type SeasonUncheckedCreateNestedManyWithoutSerieInput = {
+    create?: XOR<SeasonCreateWithoutSerieInput, SeasonUncheckedCreateWithoutSerieInput> | SeasonCreateWithoutSerieInput[] | SeasonUncheckedCreateWithoutSerieInput[]
+    connectOrCreate?: SeasonCreateOrConnectWithoutSerieInput | SeasonCreateOrConnectWithoutSerieInput[]
+    createMany?: SeasonCreateManySerieInputEnvelope
     connect?: SeasonWhereUniqueInput | SeasonWhereUniqueInput[]
   }
 
@@ -49989,11 +51727,18 @@ export namespace Prisma {
     connect?: SeriesTagWhereUniqueInput | SeriesTagWhereUniqueInput[]
   }
 
-  export type SeriesViewUncheckedCreateNestedManyWithoutSeriesInput = {
-    create?: XOR<SeriesViewCreateWithoutSeriesInput, SeriesViewUncheckedCreateWithoutSeriesInput> | SeriesViewCreateWithoutSeriesInput[] | SeriesViewUncheckedCreateWithoutSeriesInput[]
-    connectOrCreate?: SeriesViewCreateOrConnectWithoutSeriesInput | SeriesViewCreateOrConnectWithoutSeriesInput[]
-    createMany?: SeriesViewCreateManySeriesInputEnvelope
-    connect?: SeriesViewWhereUniqueInput | SeriesViewWhereUniqueInput[]
+  export type SerieViewUncheckedCreateNestedManyWithoutSeriesInput = {
+    create?: XOR<SerieViewCreateWithoutSeriesInput, SerieViewUncheckedCreateWithoutSeriesInput> | SerieViewCreateWithoutSeriesInput[] | SerieViewUncheckedCreateWithoutSeriesInput[]
+    connectOrCreate?: SerieViewCreateOrConnectWithoutSeriesInput | SerieViewCreateOrConnectWithoutSeriesInput[]
+    createMany?: SerieViewCreateManySeriesInputEnvelope
+    connect?: SerieViewWhereUniqueInput | SerieViewWhereUniqueInput[]
+  }
+
+  export type PurchaseUncheckedCreateNestedManyWithoutSerieInput = {
+    create?: XOR<PurchaseCreateWithoutSerieInput, PurchaseUncheckedCreateWithoutSerieInput> | PurchaseCreateWithoutSerieInput[] | PurchaseUncheckedCreateWithoutSerieInput[]
+    connectOrCreate?: PurchaseCreateOrConnectWithoutSerieInput | PurchaseCreateOrConnectWithoutSerieInput[]
+    createMany?: PurchaseCreateManySerieInputEnvelope
+    connect?: PurchaseWhereUniqueInput | PurchaseWhereUniqueInput[]
   }
 
   export type VideoMetadataUpdateOneRequiredWithoutSeriesNestedInput = {
@@ -50004,17 +51749,17 @@ export namespace Prisma {
     update?: XOR<XOR<VideoMetadataUpdateToOneWithWhereWithoutSeriesInput, VideoMetadataUpdateWithoutSeriesInput>, VideoMetadataUncheckedUpdateWithoutSeriesInput>
   }
 
-  export type SeasonUpdateManyWithoutSeriesNestedInput = {
-    create?: XOR<SeasonCreateWithoutSeriesInput, SeasonUncheckedCreateWithoutSeriesInput> | SeasonCreateWithoutSeriesInput[] | SeasonUncheckedCreateWithoutSeriesInput[]
-    connectOrCreate?: SeasonCreateOrConnectWithoutSeriesInput | SeasonCreateOrConnectWithoutSeriesInput[]
-    upsert?: SeasonUpsertWithWhereUniqueWithoutSeriesInput | SeasonUpsertWithWhereUniqueWithoutSeriesInput[]
-    createMany?: SeasonCreateManySeriesInputEnvelope
+  export type SeasonUpdateManyWithoutSerieNestedInput = {
+    create?: XOR<SeasonCreateWithoutSerieInput, SeasonUncheckedCreateWithoutSerieInput> | SeasonCreateWithoutSerieInput[] | SeasonUncheckedCreateWithoutSerieInput[]
+    connectOrCreate?: SeasonCreateOrConnectWithoutSerieInput | SeasonCreateOrConnectWithoutSerieInput[]
+    upsert?: SeasonUpsertWithWhereUniqueWithoutSerieInput | SeasonUpsertWithWhereUniqueWithoutSerieInput[]
+    createMany?: SeasonCreateManySerieInputEnvelope
     set?: SeasonWhereUniqueInput | SeasonWhereUniqueInput[]
     disconnect?: SeasonWhereUniqueInput | SeasonWhereUniqueInput[]
     delete?: SeasonWhereUniqueInput | SeasonWhereUniqueInput[]
     connect?: SeasonWhereUniqueInput | SeasonWhereUniqueInput[]
-    update?: SeasonUpdateWithWhereUniqueWithoutSeriesInput | SeasonUpdateWithWhereUniqueWithoutSeriesInput[]
-    updateMany?: SeasonUpdateManyWithWhereWithoutSeriesInput | SeasonUpdateManyWithWhereWithoutSeriesInput[]
+    update?: SeasonUpdateWithWhereUniqueWithoutSerieInput | SeasonUpdateWithWhereUniqueWithoutSerieInput[]
+    updateMany?: SeasonUpdateManyWithWhereWithoutSerieInput | SeasonUpdateManyWithWhereWithoutSerieInput[]
     deleteMany?: SeasonScalarWhereInput | SeasonScalarWhereInput[]
   }
 
@@ -50032,31 +51777,45 @@ export namespace Prisma {
     deleteMany?: SeriesTagScalarWhereInput | SeriesTagScalarWhereInput[]
   }
 
-  export type SeriesViewUpdateManyWithoutSeriesNestedInput = {
-    create?: XOR<SeriesViewCreateWithoutSeriesInput, SeriesViewUncheckedCreateWithoutSeriesInput> | SeriesViewCreateWithoutSeriesInput[] | SeriesViewUncheckedCreateWithoutSeriesInput[]
-    connectOrCreate?: SeriesViewCreateOrConnectWithoutSeriesInput | SeriesViewCreateOrConnectWithoutSeriesInput[]
-    upsert?: SeriesViewUpsertWithWhereUniqueWithoutSeriesInput | SeriesViewUpsertWithWhereUniqueWithoutSeriesInput[]
-    createMany?: SeriesViewCreateManySeriesInputEnvelope
-    set?: SeriesViewWhereUniqueInput | SeriesViewWhereUniqueInput[]
-    disconnect?: SeriesViewWhereUniqueInput | SeriesViewWhereUniqueInput[]
-    delete?: SeriesViewWhereUniqueInput | SeriesViewWhereUniqueInput[]
-    connect?: SeriesViewWhereUniqueInput | SeriesViewWhereUniqueInput[]
-    update?: SeriesViewUpdateWithWhereUniqueWithoutSeriesInput | SeriesViewUpdateWithWhereUniqueWithoutSeriesInput[]
-    updateMany?: SeriesViewUpdateManyWithWhereWithoutSeriesInput | SeriesViewUpdateManyWithWhereWithoutSeriesInput[]
-    deleteMany?: SeriesViewScalarWhereInput | SeriesViewScalarWhereInput[]
+  export type SerieViewUpdateManyWithoutSeriesNestedInput = {
+    create?: XOR<SerieViewCreateWithoutSeriesInput, SerieViewUncheckedCreateWithoutSeriesInput> | SerieViewCreateWithoutSeriesInput[] | SerieViewUncheckedCreateWithoutSeriesInput[]
+    connectOrCreate?: SerieViewCreateOrConnectWithoutSeriesInput | SerieViewCreateOrConnectWithoutSeriesInput[]
+    upsert?: SerieViewUpsertWithWhereUniqueWithoutSeriesInput | SerieViewUpsertWithWhereUniqueWithoutSeriesInput[]
+    createMany?: SerieViewCreateManySeriesInputEnvelope
+    set?: SerieViewWhereUniqueInput | SerieViewWhereUniqueInput[]
+    disconnect?: SerieViewWhereUniqueInput | SerieViewWhereUniqueInput[]
+    delete?: SerieViewWhereUniqueInput | SerieViewWhereUniqueInput[]
+    connect?: SerieViewWhereUniqueInput | SerieViewWhereUniqueInput[]
+    update?: SerieViewUpdateWithWhereUniqueWithoutSeriesInput | SerieViewUpdateWithWhereUniqueWithoutSeriesInput[]
+    updateMany?: SerieViewUpdateManyWithWhereWithoutSeriesInput | SerieViewUpdateManyWithWhereWithoutSeriesInput[]
+    deleteMany?: SerieViewScalarWhereInput | SerieViewScalarWhereInput[]
   }
 
-  export type SeasonUncheckedUpdateManyWithoutSeriesNestedInput = {
-    create?: XOR<SeasonCreateWithoutSeriesInput, SeasonUncheckedCreateWithoutSeriesInput> | SeasonCreateWithoutSeriesInput[] | SeasonUncheckedCreateWithoutSeriesInput[]
-    connectOrCreate?: SeasonCreateOrConnectWithoutSeriesInput | SeasonCreateOrConnectWithoutSeriesInput[]
-    upsert?: SeasonUpsertWithWhereUniqueWithoutSeriesInput | SeasonUpsertWithWhereUniqueWithoutSeriesInput[]
-    createMany?: SeasonCreateManySeriesInputEnvelope
+  export type PurchaseUpdateManyWithoutSerieNestedInput = {
+    create?: XOR<PurchaseCreateWithoutSerieInput, PurchaseUncheckedCreateWithoutSerieInput> | PurchaseCreateWithoutSerieInput[] | PurchaseUncheckedCreateWithoutSerieInput[]
+    connectOrCreate?: PurchaseCreateOrConnectWithoutSerieInput | PurchaseCreateOrConnectWithoutSerieInput[]
+    upsert?: PurchaseUpsertWithWhereUniqueWithoutSerieInput | PurchaseUpsertWithWhereUniqueWithoutSerieInput[]
+    createMany?: PurchaseCreateManySerieInputEnvelope
+    set?: PurchaseWhereUniqueInput | PurchaseWhereUniqueInput[]
+    disconnect?: PurchaseWhereUniqueInput | PurchaseWhereUniqueInput[]
+    delete?: PurchaseWhereUniqueInput | PurchaseWhereUniqueInput[]
+    connect?: PurchaseWhereUniqueInput | PurchaseWhereUniqueInput[]
+    update?: PurchaseUpdateWithWhereUniqueWithoutSerieInput | PurchaseUpdateWithWhereUniqueWithoutSerieInput[]
+    updateMany?: PurchaseUpdateManyWithWhereWithoutSerieInput | PurchaseUpdateManyWithWhereWithoutSerieInput[]
+    deleteMany?: PurchaseScalarWhereInput | PurchaseScalarWhereInput[]
+  }
+
+  export type SeasonUncheckedUpdateManyWithoutSerieNestedInput = {
+    create?: XOR<SeasonCreateWithoutSerieInput, SeasonUncheckedCreateWithoutSerieInput> | SeasonCreateWithoutSerieInput[] | SeasonUncheckedCreateWithoutSerieInput[]
+    connectOrCreate?: SeasonCreateOrConnectWithoutSerieInput | SeasonCreateOrConnectWithoutSerieInput[]
+    upsert?: SeasonUpsertWithWhereUniqueWithoutSerieInput | SeasonUpsertWithWhereUniqueWithoutSerieInput[]
+    createMany?: SeasonCreateManySerieInputEnvelope
     set?: SeasonWhereUniqueInput | SeasonWhereUniqueInput[]
     disconnect?: SeasonWhereUniqueInput | SeasonWhereUniqueInput[]
     delete?: SeasonWhereUniqueInput | SeasonWhereUniqueInput[]
     connect?: SeasonWhereUniqueInput | SeasonWhereUniqueInput[]
-    update?: SeasonUpdateWithWhereUniqueWithoutSeriesInput | SeasonUpdateWithWhereUniqueWithoutSeriesInput[]
-    updateMany?: SeasonUpdateManyWithWhereWithoutSeriesInput | SeasonUpdateManyWithWhereWithoutSeriesInput[]
+    update?: SeasonUpdateWithWhereUniqueWithoutSerieInput | SeasonUpdateWithWhereUniqueWithoutSerieInput[]
+    updateMany?: SeasonUpdateManyWithWhereWithoutSerieInput | SeasonUpdateManyWithWhereWithoutSerieInput[]
     deleteMany?: SeasonScalarWhereInput | SeasonScalarWhereInput[]
   }
 
@@ -50074,24 +51833,38 @@ export namespace Prisma {
     deleteMany?: SeriesTagScalarWhereInput | SeriesTagScalarWhereInput[]
   }
 
-  export type SeriesViewUncheckedUpdateManyWithoutSeriesNestedInput = {
-    create?: XOR<SeriesViewCreateWithoutSeriesInput, SeriesViewUncheckedCreateWithoutSeriesInput> | SeriesViewCreateWithoutSeriesInput[] | SeriesViewUncheckedCreateWithoutSeriesInput[]
-    connectOrCreate?: SeriesViewCreateOrConnectWithoutSeriesInput | SeriesViewCreateOrConnectWithoutSeriesInput[]
-    upsert?: SeriesViewUpsertWithWhereUniqueWithoutSeriesInput | SeriesViewUpsertWithWhereUniqueWithoutSeriesInput[]
-    createMany?: SeriesViewCreateManySeriesInputEnvelope
-    set?: SeriesViewWhereUniqueInput | SeriesViewWhereUniqueInput[]
-    disconnect?: SeriesViewWhereUniqueInput | SeriesViewWhereUniqueInput[]
-    delete?: SeriesViewWhereUniqueInput | SeriesViewWhereUniqueInput[]
-    connect?: SeriesViewWhereUniqueInput | SeriesViewWhereUniqueInput[]
-    update?: SeriesViewUpdateWithWhereUniqueWithoutSeriesInput | SeriesViewUpdateWithWhereUniqueWithoutSeriesInput[]
-    updateMany?: SeriesViewUpdateManyWithWhereWithoutSeriesInput | SeriesViewUpdateManyWithWhereWithoutSeriesInput[]
-    deleteMany?: SeriesViewScalarWhereInput | SeriesViewScalarWhereInput[]
+  export type SerieViewUncheckedUpdateManyWithoutSeriesNestedInput = {
+    create?: XOR<SerieViewCreateWithoutSeriesInput, SerieViewUncheckedCreateWithoutSeriesInput> | SerieViewCreateWithoutSeriesInput[] | SerieViewUncheckedCreateWithoutSeriesInput[]
+    connectOrCreate?: SerieViewCreateOrConnectWithoutSeriesInput | SerieViewCreateOrConnectWithoutSeriesInput[]
+    upsert?: SerieViewUpsertWithWhereUniqueWithoutSeriesInput | SerieViewUpsertWithWhereUniqueWithoutSeriesInput[]
+    createMany?: SerieViewCreateManySeriesInputEnvelope
+    set?: SerieViewWhereUniqueInput | SerieViewWhereUniqueInput[]
+    disconnect?: SerieViewWhereUniqueInput | SerieViewWhereUniqueInput[]
+    delete?: SerieViewWhereUniqueInput | SerieViewWhereUniqueInput[]
+    connect?: SerieViewWhereUniqueInput | SerieViewWhereUniqueInput[]
+    update?: SerieViewUpdateWithWhereUniqueWithoutSeriesInput | SerieViewUpdateWithWhereUniqueWithoutSeriesInput[]
+    updateMany?: SerieViewUpdateManyWithWhereWithoutSeriesInput | SerieViewUpdateManyWithWhereWithoutSeriesInput[]
+    deleteMany?: SerieViewScalarWhereInput | SerieViewScalarWhereInput[]
   }
 
-  export type SeriesCreateNestedOneWithoutSeasonsInput = {
-    create?: XOR<SeriesCreateWithoutSeasonsInput, SeriesUncheckedCreateWithoutSeasonsInput>
-    connectOrCreate?: SeriesCreateOrConnectWithoutSeasonsInput
-    connect?: SeriesWhereUniqueInput
+  export type PurchaseUncheckedUpdateManyWithoutSerieNestedInput = {
+    create?: XOR<PurchaseCreateWithoutSerieInput, PurchaseUncheckedCreateWithoutSerieInput> | PurchaseCreateWithoutSerieInput[] | PurchaseUncheckedCreateWithoutSerieInput[]
+    connectOrCreate?: PurchaseCreateOrConnectWithoutSerieInput | PurchaseCreateOrConnectWithoutSerieInput[]
+    upsert?: PurchaseUpsertWithWhereUniqueWithoutSerieInput | PurchaseUpsertWithWhereUniqueWithoutSerieInput[]
+    createMany?: PurchaseCreateManySerieInputEnvelope
+    set?: PurchaseWhereUniqueInput | PurchaseWhereUniqueInput[]
+    disconnect?: PurchaseWhereUniqueInput | PurchaseWhereUniqueInput[]
+    delete?: PurchaseWhereUniqueInput | PurchaseWhereUniqueInput[]
+    connect?: PurchaseWhereUniqueInput | PurchaseWhereUniqueInput[]
+    update?: PurchaseUpdateWithWhereUniqueWithoutSerieInput | PurchaseUpdateWithWhereUniqueWithoutSerieInput[]
+    updateMany?: PurchaseUpdateManyWithWhereWithoutSerieInput | PurchaseUpdateManyWithWhereWithoutSerieInput[]
+    deleteMany?: PurchaseScalarWhereInput | PurchaseScalarWhereInput[]
+  }
+
+  export type SerieCreateNestedOneWithoutSeasonsInput = {
+    create?: XOR<SerieCreateWithoutSeasonsInput, SerieUncheckedCreateWithoutSeasonsInput>
+    connectOrCreate?: SerieCreateOrConnectWithoutSeasonsInput
+    connect?: SerieWhereUniqueInput
   }
 
   export type EpisodeCreateNestedManyWithoutSeasonInput = {
@@ -50122,12 +51895,12 @@ export namespace Prisma {
     connect?: SeasonViewWhereUniqueInput | SeasonViewWhereUniqueInput[]
   }
 
-  export type SeriesUpdateOneRequiredWithoutSeasonsNestedInput = {
-    create?: XOR<SeriesCreateWithoutSeasonsInput, SeriesUncheckedCreateWithoutSeasonsInput>
-    connectOrCreate?: SeriesCreateOrConnectWithoutSeasonsInput
-    upsert?: SeriesUpsertWithoutSeasonsInput
-    connect?: SeriesWhereUniqueInput
-    update?: XOR<XOR<SeriesUpdateToOneWithWhereWithoutSeasonsInput, SeriesUpdateWithoutSeasonsInput>, SeriesUncheckedUpdateWithoutSeasonsInput>
+  export type SerieUpdateOneRequiredWithoutSeasonsNestedInput = {
+    create?: XOR<SerieCreateWithoutSeasonsInput, SerieUncheckedCreateWithoutSeasonsInput>
+    connectOrCreate?: SerieCreateOrConnectWithoutSeasonsInput
+    upsert?: SerieUpsertWithoutSeasonsInput
+    connect?: SerieWhereUniqueInput
+    update?: XOR<XOR<SerieUpdateToOneWithWhereWithoutSeasonsInput, SerieUpdateWithoutSeasonsInput>, SerieUncheckedUpdateWithoutSeasonsInput>
   }
 
   export type EpisodeUpdateManyWithoutSeasonNestedInput = {
@@ -50192,10 +51965,32 @@ export namespace Prisma {
     connect?: SeasonWhereUniqueInput
   }
 
-  export type VideoFileCreateNestedOneWithoutEpisodeInput = {
-    create?: XOR<VideoFileCreateWithoutEpisodeInput, VideoFileUncheckedCreateWithoutEpisodeInput>
-    connectOrCreate?: VideoFileCreateOrConnectWithoutEpisodeInput
-    connect?: VideoFileWhereUniqueInput
+  export type MediaAttachmentCreateNestedManyWithoutEpisodeInput = {
+    create?: XOR<MediaAttachmentCreateWithoutEpisodeInput, MediaAttachmentUncheckedCreateWithoutEpisodeInput> | MediaAttachmentCreateWithoutEpisodeInput[] | MediaAttachmentUncheckedCreateWithoutEpisodeInput[]
+    connectOrCreate?: MediaAttachmentCreateOrConnectWithoutEpisodeInput | MediaAttachmentCreateOrConnectWithoutEpisodeInput[]
+    createMany?: MediaAttachmentCreateManyEpisodeInputEnvelope
+    connect?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+  }
+
+  export type CommentCreateNestedManyWithoutEpisodeInput = {
+    create?: XOR<CommentCreateWithoutEpisodeInput, CommentUncheckedCreateWithoutEpisodeInput> | CommentCreateWithoutEpisodeInput[] | CommentUncheckedCreateWithoutEpisodeInput[]
+    connectOrCreate?: CommentCreateOrConnectWithoutEpisodeInput | CommentCreateOrConnectWithoutEpisodeInput[]
+    createMany?: CommentCreateManyEpisodeInputEnvelope
+    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+  }
+
+  export type MediaAttachmentUncheckedCreateNestedManyWithoutEpisodeInput = {
+    create?: XOR<MediaAttachmentCreateWithoutEpisodeInput, MediaAttachmentUncheckedCreateWithoutEpisodeInput> | MediaAttachmentCreateWithoutEpisodeInput[] | MediaAttachmentUncheckedCreateWithoutEpisodeInput[]
+    connectOrCreate?: MediaAttachmentCreateOrConnectWithoutEpisodeInput | MediaAttachmentCreateOrConnectWithoutEpisodeInput[]
+    createMany?: MediaAttachmentCreateManyEpisodeInputEnvelope
+    connect?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+  }
+
+  export type CommentUncheckedCreateNestedManyWithoutEpisodeInput = {
+    create?: XOR<CommentCreateWithoutEpisodeInput, CommentUncheckedCreateWithoutEpisodeInput> | CommentCreateWithoutEpisodeInput[] | CommentUncheckedCreateWithoutEpisodeInput[]
+    connectOrCreate?: CommentCreateOrConnectWithoutEpisodeInput | CommentCreateOrConnectWithoutEpisodeInput[]
+    createMany?: CommentCreateManyEpisodeInputEnvelope
+    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
   }
 
   export type SeasonUpdateOneRequiredWithoutEpisodesNestedInput = {
@@ -50206,12 +52001,60 @@ export namespace Prisma {
     update?: XOR<XOR<SeasonUpdateToOneWithWhereWithoutEpisodesInput, SeasonUpdateWithoutEpisodesInput>, SeasonUncheckedUpdateWithoutEpisodesInput>
   }
 
-  export type VideoFileUpdateOneRequiredWithoutEpisodeNestedInput = {
-    create?: XOR<VideoFileCreateWithoutEpisodeInput, VideoFileUncheckedCreateWithoutEpisodeInput>
-    connectOrCreate?: VideoFileCreateOrConnectWithoutEpisodeInput
-    upsert?: VideoFileUpsertWithoutEpisodeInput
-    connect?: VideoFileWhereUniqueInput
-    update?: XOR<XOR<VideoFileUpdateToOneWithWhereWithoutEpisodeInput, VideoFileUpdateWithoutEpisodeInput>, VideoFileUncheckedUpdateWithoutEpisodeInput>
+  export type MediaAttachmentUpdateManyWithoutEpisodeNestedInput = {
+    create?: XOR<MediaAttachmentCreateWithoutEpisodeInput, MediaAttachmentUncheckedCreateWithoutEpisodeInput> | MediaAttachmentCreateWithoutEpisodeInput[] | MediaAttachmentUncheckedCreateWithoutEpisodeInput[]
+    connectOrCreate?: MediaAttachmentCreateOrConnectWithoutEpisodeInput | MediaAttachmentCreateOrConnectWithoutEpisodeInput[]
+    upsert?: MediaAttachmentUpsertWithWhereUniqueWithoutEpisodeInput | MediaAttachmentUpsertWithWhereUniqueWithoutEpisodeInput[]
+    createMany?: MediaAttachmentCreateManyEpisodeInputEnvelope
+    set?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+    disconnect?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+    delete?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+    connect?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+    update?: MediaAttachmentUpdateWithWhereUniqueWithoutEpisodeInput | MediaAttachmentUpdateWithWhereUniqueWithoutEpisodeInput[]
+    updateMany?: MediaAttachmentUpdateManyWithWhereWithoutEpisodeInput | MediaAttachmentUpdateManyWithWhereWithoutEpisodeInput[]
+    deleteMany?: MediaAttachmentScalarWhereInput | MediaAttachmentScalarWhereInput[]
+  }
+
+  export type CommentUpdateManyWithoutEpisodeNestedInput = {
+    create?: XOR<CommentCreateWithoutEpisodeInput, CommentUncheckedCreateWithoutEpisodeInput> | CommentCreateWithoutEpisodeInput[] | CommentUncheckedCreateWithoutEpisodeInput[]
+    connectOrCreate?: CommentCreateOrConnectWithoutEpisodeInput | CommentCreateOrConnectWithoutEpisodeInput[]
+    upsert?: CommentUpsertWithWhereUniqueWithoutEpisodeInput | CommentUpsertWithWhereUniqueWithoutEpisodeInput[]
+    createMany?: CommentCreateManyEpisodeInputEnvelope
+    set?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    disconnect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    delete?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    update?: CommentUpdateWithWhereUniqueWithoutEpisodeInput | CommentUpdateWithWhereUniqueWithoutEpisodeInput[]
+    updateMany?: CommentUpdateManyWithWhereWithoutEpisodeInput | CommentUpdateManyWithWhereWithoutEpisodeInput[]
+    deleteMany?: CommentScalarWhereInput | CommentScalarWhereInput[]
+  }
+
+  export type MediaAttachmentUncheckedUpdateManyWithoutEpisodeNestedInput = {
+    create?: XOR<MediaAttachmentCreateWithoutEpisodeInput, MediaAttachmentUncheckedCreateWithoutEpisodeInput> | MediaAttachmentCreateWithoutEpisodeInput[] | MediaAttachmentUncheckedCreateWithoutEpisodeInput[]
+    connectOrCreate?: MediaAttachmentCreateOrConnectWithoutEpisodeInput | MediaAttachmentCreateOrConnectWithoutEpisodeInput[]
+    upsert?: MediaAttachmentUpsertWithWhereUniqueWithoutEpisodeInput | MediaAttachmentUpsertWithWhereUniqueWithoutEpisodeInput[]
+    createMany?: MediaAttachmentCreateManyEpisodeInputEnvelope
+    set?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+    disconnect?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+    delete?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+    connect?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+    update?: MediaAttachmentUpdateWithWhereUniqueWithoutEpisodeInput | MediaAttachmentUpdateWithWhereUniqueWithoutEpisodeInput[]
+    updateMany?: MediaAttachmentUpdateManyWithWhereWithoutEpisodeInput | MediaAttachmentUpdateManyWithWhereWithoutEpisodeInput[]
+    deleteMany?: MediaAttachmentScalarWhereInput | MediaAttachmentScalarWhereInput[]
+  }
+
+  export type CommentUncheckedUpdateManyWithoutEpisodeNestedInput = {
+    create?: XOR<CommentCreateWithoutEpisodeInput, CommentUncheckedCreateWithoutEpisodeInput> | CommentCreateWithoutEpisodeInput[] | CommentUncheckedCreateWithoutEpisodeInput[]
+    connectOrCreate?: CommentCreateOrConnectWithoutEpisodeInput | CommentCreateOrConnectWithoutEpisodeInput[]
+    upsert?: CommentUpsertWithWhereUniqueWithoutEpisodeInput | CommentUpsertWithWhereUniqueWithoutEpisodeInput[]
+    createMany?: CommentCreateManyEpisodeInputEnvelope
+    set?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    disconnect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    delete?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    update?: CommentUpdateWithWhereUniqueWithoutEpisodeInput | CommentUpdateWithWhereUniqueWithoutEpisodeInput[]
+    updateMany?: CommentUpdateManyWithWhereWithoutEpisodeInput | CommentUpdateManyWithWhereWithoutEpisodeInput[]
+    deleteMany?: CommentScalarWhereInput | CommentScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutUserVideoViewInput = {
@@ -50220,26 +52063,12 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
-  export type VideoFileCreateNestedOneWithoutUserVideoProgressInput = {
-    create?: XOR<VideoFileCreateWithoutUserVideoProgressInput, VideoFileUncheckedCreateWithoutUserVideoProgressInput>
-    connectOrCreate?: VideoFileCreateOrConnectWithoutUserVideoProgressInput
-    connect?: VideoFileWhereUniqueInput
-  }
-
   export type UserUpdateOneRequiredWithoutUserVideoViewNestedInput = {
     create?: XOR<UserCreateWithoutUserVideoViewInput, UserUncheckedCreateWithoutUserVideoViewInput>
     connectOrCreate?: UserCreateOrConnectWithoutUserVideoViewInput
     upsert?: UserUpsertWithoutUserVideoViewInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutUserVideoViewInput, UserUpdateWithoutUserVideoViewInput>, UserUncheckedUpdateWithoutUserVideoViewInput>
-  }
-
-  export type VideoFileUpdateOneRequiredWithoutUserVideoProgressNestedInput = {
-    create?: XOR<VideoFileCreateWithoutUserVideoProgressInput, VideoFileUncheckedCreateWithoutUserVideoProgressInput>
-    connectOrCreate?: VideoFileCreateOrConnectWithoutUserVideoProgressInput
-    upsert?: VideoFileUpsertWithoutUserVideoProgressInput
-    connect?: VideoFileWhereUniqueInput
-    update?: XOR<XOR<VideoFileUpdateToOneWithWhereWithoutUserVideoProgressInput, VideoFileUpdateWithoutUserVideoProgressInput>, VideoFileUncheckedUpdateWithoutUserVideoProgressInput>
   }
 
   export type SeasonCreateNestedOneWithoutSeasonViewInput = {
@@ -50270,18 +52099,18 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSeasonViewInput, UserUpdateWithoutSeasonViewInput>, UserUncheckedUpdateWithoutSeasonViewInput>
   }
 
-  export type SeriesCreateNestedOneWithoutSeriesViewInput = {
-    create?: XOR<SeriesCreateWithoutSeriesViewInput, SeriesUncheckedCreateWithoutSeriesViewInput>
-    connectOrCreate?: SeriesCreateOrConnectWithoutSeriesViewInput
-    connect?: SeriesWhereUniqueInput
+  export type SerieCreateNestedOneWithoutSerieViewInput = {
+    create?: XOR<SerieCreateWithoutSerieViewInput, SerieUncheckedCreateWithoutSerieViewInput>
+    connectOrCreate?: SerieCreateOrConnectWithoutSerieViewInput
+    connect?: SerieWhereUniqueInput
   }
 
-  export type SeriesUpdateOneRequiredWithoutSeriesViewNestedInput = {
-    create?: XOR<SeriesCreateWithoutSeriesViewInput, SeriesUncheckedCreateWithoutSeriesViewInput>
-    connectOrCreate?: SeriesCreateOrConnectWithoutSeriesViewInput
-    upsert?: SeriesUpsertWithoutSeriesViewInput
-    connect?: SeriesWhereUniqueInput
-    update?: XOR<XOR<SeriesUpdateToOneWithWhereWithoutSeriesViewInput, SeriesUpdateWithoutSeriesViewInput>, SeriesUncheckedUpdateWithoutSeriesViewInput>
+  export type SerieUpdateOneRequiredWithoutSerieViewNestedInput = {
+    create?: XOR<SerieCreateWithoutSerieViewInput, SerieUncheckedCreateWithoutSerieViewInput>
+    connectOrCreate?: SerieCreateOrConnectWithoutSerieViewInput
+    upsert?: SerieUpsertWithoutSerieViewInput
+    connect?: SerieWhereUniqueInput
+    update?: XOR<XOR<SerieUpdateToOneWithWhereWithoutSerieViewInput, SerieUpdateWithoutSerieViewInput>, SerieUncheckedUpdateWithoutSerieViewInput>
   }
 
   export type MovieTagCreateNestedManyWithoutTagInput = {
@@ -50396,10 +52225,10 @@ export namespace Prisma {
     update?: XOR<XOR<TagUpdateToOneWithWhereWithoutMovieTagsInput, TagUpdateWithoutMovieTagsInput>, TagUncheckedUpdateWithoutMovieTagsInput>
   }
 
-  export type SeriesCreateNestedOneWithoutTagsInput = {
-    create?: XOR<SeriesCreateWithoutTagsInput, SeriesUncheckedCreateWithoutTagsInput>
-    connectOrCreate?: SeriesCreateOrConnectWithoutTagsInput
-    connect?: SeriesWhereUniqueInput
+  export type SerieCreateNestedOneWithoutTagsInput = {
+    create?: XOR<SerieCreateWithoutTagsInput, SerieUncheckedCreateWithoutTagsInput>
+    connectOrCreate?: SerieCreateOrConnectWithoutTagsInput
+    connect?: SerieWhereUniqueInput
   }
 
   export type TagCreateNestedOneWithoutSeriesTagsInput = {
@@ -50408,12 +52237,12 @@ export namespace Prisma {
     connect?: TagWhereUniqueInput
   }
 
-  export type SeriesUpdateOneRequiredWithoutTagsNestedInput = {
-    create?: XOR<SeriesCreateWithoutTagsInput, SeriesUncheckedCreateWithoutTagsInput>
-    connectOrCreate?: SeriesCreateOrConnectWithoutTagsInput
-    upsert?: SeriesUpsertWithoutTagsInput
-    connect?: SeriesWhereUniqueInput
-    update?: XOR<XOR<SeriesUpdateToOneWithWhereWithoutTagsInput, SeriesUpdateWithoutTagsInput>, SeriesUncheckedUpdateWithoutTagsInput>
+  export type SerieUpdateOneRequiredWithoutTagsNestedInput = {
+    create?: XOR<SerieCreateWithoutTagsInput, SerieUncheckedCreateWithoutTagsInput>
+    connectOrCreate?: SerieCreateOrConnectWithoutTagsInput
+    upsert?: SerieUpsertWithoutTagsInput
+    connect?: SerieWhereUniqueInput
+    update?: XOR<XOR<SerieUpdateToOneWithWhereWithoutTagsInput, SerieUpdateWithoutTagsInput>, SerieUncheckedUpdateWithoutTagsInput>
   }
 
   export type TagUpdateOneRequiredWithoutSeriesTagsNestedInput = {
@@ -50424,10 +52253,10 @@ export namespace Prisma {
     update?: XOR<XOR<TagUpdateToOneWithWhereWithoutSeriesTagsInput, TagUpdateWithoutSeriesTagsInput>, TagUncheckedUpdateWithoutSeriesTagsInput>
   }
 
-  export type VideoFileCreateNestedOneWithoutSubtitlesInput = {
-    create?: XOR<VideoFileCreateWithoutSubtitlesInput, VideoFileUncheckedCreateWithoutSubtitlesInput>
-    connectOrCreate?: VideoFileCreateOrConnectWithoutSubtitlesInput
-    connect?: VideoFileWhereUniqueInput
+  export type MediaFileCreateNestedOneWithoutSubtitleInput = {
+    create?: XOR<MediaFileCreateWithoutSubtitleInput, MediaFileUncheckedCreateWithoutSubtitleInput>
+    connectOrCreate?: MediaFileCreateOrConnectWithoutSubtitleInput
+    connect?: MediaFileWhereUniqueInput
   }
 
   export type VideoMetadataCreateNestedOneWithoutSubtitlesInput = {
@@ -50436,12 +52265,12 @@ export namespace Prisma {
     connect?: VideoMetadataWhereUniqueInput
   }
 
-  export type VideoFileUpdateOneRequiredWithoutSubtitlesNestedInput = {
-    create?: XOR<VideoFileCreateWithoutSubtitlesInput, VideoFileUncheckedCreateWithoutSubtitlesInput>
-    connectOrCreate?: VideoFileCreateOrConnectWithoutSubtitlesInput
-    upsert?: VideoFileUpsertWithoutSubtitlesInput
-    connect?: VideoFileWhereUniqueInput
-    update?: XOR<XOR<VideoFileUpdateToOneWithWhereWithoutSubtitlesInput, VideoFileUpdateWithoutSubtitlesInput>, VideoFileUncheckedUpdateWithoutSubtitlesInput>
+  export type MediaFileUpdateOneRequiredWithoutSubtitleNestedInput = {
+    create?: XOR<MediaFileCreateWithoutSubtitleInput, MediaFileUncheckedCreateWithoutSubtitleInput>
+    connectOrCreate?: MediaFileCreateOrConnectWithoutSubtitleInput
+    upsert?: MediaFileUpsertWithoutSubtitleInput
+    connect?: MediaFileWhereUniqueInput
+    update?: XOR<XOR<MediaFileUpdateToOneWithWhereWithoutSubtitleInput, MediaFileUpdateWithoutSubtitleInput>, MediaFileUncheckedUpdateWithoutSubtitleInput>
   }
 
   export type VideoMetadataUpdateOneWithoutSubtitlesNestedInput = {
@@ -50460,10 +52289,16 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
-  export type VideoFileCreateNestedOneWithoutPurchasesInput = {
-    create?: XOR<VideoFileCreateWithoutPurchasesInput, VideoFileUncheckedCreateWithoutPurchasesInput>
-    connectOrCreate?: VideoFileCreateOrConnectWithoutPurchasesInput
-    connect?: VideoFileWhereUniqueInput
+  export type MovieCreateNestedOneWithoutPurchaseInput = {
+    create?: XOR<MovieCreateWithoutPurchaseInput, MovieUncheckedCreateWithoutPurchaseInput>
+    connectOrCreate?: MovieCreateOrConnectWithoutPurchaseInput
+    connect?: MovieWhereUniqueInput
+  }
+
+  export type SerieCreateNestedOneWithoutPurchaseInput = {
+    create?: XOR<SerieCreateWithoutPurchaseInput, SerieUncheckedCreateWithoutPurchaseInput>
+    connectOrCreate?: SerieCreateOrConnectWithoutPurchaseInput
+    connect?: SerieWhereUniqueInput
   }
 
   export type UserUpdateOneRequiredWithoutPurchasesNestedInput = {
@@ -50474,24 +52309,30 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutPurchasesInput, UserUpdateWithoutPurchasesInput>, UserUncheckedUpdateWithoutPurchasesInput>
   }
 
-  export type VideoFileUpdateOneRequiredWithoutPurchasesNestedInput = {
-    create?: XOR<VideoFileCreateWithoutPurchasesInput, VideoFileUncheckedCreateWithoutPurchasesInput>
-    connectOrCreate?: VideoFileCreateOrConnectWithoutPurchasesInput
-    upsert?: VideoFileUpsertWithoutPurchasesInput
-    connect?: VideoFileWhereUniqueInput
-    update?: XOR<XOR<VideoFileUpdateToOneWithWhereWithoutPurchasesInput, VideoFileUpdateWithoutPurchasesInput>, VideoFileUncheckedUpdateWithoutPurchasesInput>
+  export type MovieUpdateOneWithoutPurchaseNestedInput = {
+    create?: XOR<MovieCreateWithoutPurchaseInput, MovieUncheckedCreateWithoutPurchaseInput>
+    connectOrCreate?: MovieCreateOrConnectWithoutPurchaseInput
+    upsert?: MovieUpsertWithoutPurchaseInput
+    disconnect?: MovieWhereInput | boolean
+    delete?: MovieWhereInput | boolean
+    connect?: MovieWhereUniqueInput
+    update?: XOR<XOR<MovieUpdateToOneWithWhereWithoutPurchaseInput, MovieUpdateWithoutPurchaseInput>, MovieUncheckedUpdateWithoutPurchaseInput>
+  }
+
+  export type SerieUpdateOneWithoutPurchaseNestedInput = {
+    create?: XOR<SerieCreateWithoutPurchaseInput, SerieUncheckedCreateWithoutPurchaseInput>
+    connectOrCreate?: SerieCreateOrConnectWithoutPurchaseInput
+    upsert?: SerieUpsertWithoutPurchaseInput
+    disconnect?: SerieWhereInput | boolean
+    delete?: SerieWhereInput | boolean
+    connect?: SerieWhereUniqueInput
+    update?: XOR<XOR<SerieUpdateToOneWithWhereWithoutPurchaseInput, SerieUpdateWithoutPurchaseInput>, SerieUncheckedUpdateWithoutPurchaseInput>
   }
 
   export type UserCreateNestedOneWithoutCommentsInput = {
     create?: XOR<UserCreateWithoutCommentsInput, UserUncheckedCreateWithoutCommentsInput>
     connectOrCreate?: UserCreateOrConnectWithoutCommentsInput
     connect?: UserWhereUniqueInput
-  }
-
-  export type VideoFileCreateNestedOneWithoutCommentsInput = {
-    create?: XOR<VideoFileCreateWithoutCommentsInput, VideoFileUncheckedCreateWithoutCommentsInput>
-    connectOrCreate?: VideoFileCreateOrConnectWithoutCommentsInput
-    connect?: VideoFileWhereUniqueInput
   }
 
   export type CommentCreateNestedOneWithoutRepliesInput = {
@@ -50507,6 +52348,18 @@ export namespace Prisma {
     connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
   }
 
+  export type MovieCreateNestedOneWithoutCommentInput = {
+    create?: XOR<MovieCreateWithoutCommentInput, MovieUncheckedCreateWithoutCommentInput>
+    connectOrCreate?: MovieCreateOrConnectWithoutCommentInput
+    connect?: MovieWhereUniqueInput
+  }
+
+  export type EpisodeCreateNestedOneWithoutCommentInput = {
+    create?: XOR<EpisodeCreateWithoutCommentInput, EpisodeUncheckedCreateWithoutCommentInput>
+    connectOrCreate?: EpisodeCreateOrConnectWithoutCommentInput
+    connect?: EpisodeWhereUniqueInput
+  }
+
   export type CommentUncheckedCreateNestedManyWithoutParentInput = {
     create?: XOR<CommentCreateWithoutParentInput, CommentUncheckedCreateWithoutParentInput> | CommentCreateWithoutParentInput[] | CommentUncheckedCreateWithoutParentInput[]
     connectOrCreate?: CommentCreateOrConnectWithoutParentInput | CommentCreateOrConnectWithoutParentInput[]
@@ -50520,14 +52373,6 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutCommentsInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCommentsInput, UserUpdateWithoutCommentsInput>, UserUncheckedUpdateWithoutCommentsInput>
-  }
-
-  export type VideoFileUpdateOneRequiredWithoutCommentsNestedInput = {
-    create?: XOR<VideoFileCreateWithoutCommentsInput, VideoFileUncheckedCreateWithoutCommentsInput>
-    connectOrCreate?: VideoFileCreateOrConnectWithoutCommentsInput
-    upsert?: VideoFileUpsertWithoutCommentsInput
-    connect?: VideoFileWhereUniqueInput
-    update?: XOR<XOR<VideoFileUpdateToOneWithWhereWithoutCommentsInput, VideoFileUpdateWithoutCommentsInput>, VideoFileUncheckedUpdateWithoutCommentsInput>
   }
 
   export type CommentUpdateOneWithoutRepliesNestedInput = {
@@ -50554,6 +52399,26 @@ export namespace Prisma {
     deleteMany?: CommentScalarWhereInput | CommentScalarWhereInput[]
   }
 
+  export type MovieUpdateOneWithoutCommentNestedInput = {
+    create?: XOR<MovieCreateWithoutCommentInput, MovieUncheckedCreateWithoutCommentInput>
+    connectOrCreate?: MovieCreateOrConnectWithoutCommentInput
+    upsert?: MovieUpsertWithoutCommentInput
+    disconnect?: MovieWhereInput | boolean
+    delete?: MovieWhereInput | boolean
+    connect?: MovieWhereUniqueInput
+    update?: XOR<XOR<MovieUpdateToOneWithWhereWithoutCommentInput, MovieUpdateWithoutCommentInput>, MovieUncheckedUpdateWithoutCommentInput>
+  }
+
+  export type EpisodeUpdateOneWithoutCommentNestedInput = {
+    create?: XOR<EpisodeCreateWithoutCommentInput, EpisodeUncheckedCreateWithoutCommentInput>
+    connectOrCreate?: EpisodeCreateOrConnectWithoutCommentInput
+    upsert?: EpisodeUpsertWithoutCommentInput
+    disconnect?: EpisodeWhereInput | boolean
+    delete?: EpisodeWhereInput | boolean
+    connect?: EpisodeWhereUniqueInput
+    update?: XOR<XOR<EpisodeUpdateToOneWithWhereWithoutCommentInput, EpisodeUpdateWithoutCommentInput>, EpisodeUncheckedUpdateWithoutCommentInput>
+  }
+
   export type CommentUncheckedUpdateManyWithoutParentNestedInput = {
     create?: XOR<CommentCreateWithoutParentInput, CommentUncheckedCreateWithoutParentInput> | CommentCreateWithoutParentInput[] | CommentUncheckedCreateWithoutParentInput[]
     connectOrCreate?: CommentCreateOrConnectWithoutParentInput | CommentCreateOrConnectWithoutParentInput[]
@@ -50568,6 +52433,13 @@ export namespace Prisma {
     deleteMany?: CommentScalarWhereInput | CommentScalarWhereInput[]
   }
 
+  export type MediaAttachmentCreateNestedManyWithoutAdInput = {
+    create?: XOR<MediaAttachmentCreateWithoutAdInput, MediaAttachmentUncheckedCreateWithoutAdInput> | MediaAttachmentCreateWithoutAdInput[] | MediaAttachmentUncheckedCreateWithoutAdInput[]
+    connectOrCreate?: MediaAttachmentCreateOrConnectWithoutAdInput | MediaAttachmentCreateOrConnectWithoutAdInput[]
+    createMany?: MediaAttachmentCreateManyAdInputEnvelope
+    connect?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+  }
+
   export type AdViewCreateNestedManyWithoutAdInput = {
     create?: XOR<AdViewCreateWithoutAdInput, AdViewUncheckedCreateWithoutAdInput> | AdViewCreateWithoutAdInput[] | AdViewUncheckedCreateWithoutAdInput[]
     connectOrCreate?: AdViewCreateOrConnectWithoutAdInput | AdViewCreateOrConnectWithoutAdInput[]
@@ -50575,11 +52447,32 @@ export namespace Prisma {
     connect?: AdViewWhereUniqueInput | AdViewWhereUniqueInput[]
   }
 
+  export type MediaAttachmentUncheckedCreateNestedManyWithoutAdInput = {
+    create?: XOR<MediaAttachmentCreateWithoutAdInput, MediaAttachmentUncheckedCreateWithoutAdInput> | MediaAttachmentCreateWithoutAdInput[] | MediaAttachmentUncheckedCreateWithoutAdInput[]
+    connectOrCreate?: MediaAttachmentCreateOrConnectWithoutAdInput | MediaAttachmentCreateOrConnectWithoutAdInput[]
+    createMany?: MediaAttachmentCreateManyAdInputEnvelope
+    connect?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+  }
+
   export type AdViewUncheckedCreateNestedManyWithoutAdInput = {
     create?: XOR<AdViewCreateWithoutAdInput, AdViewUncheckedCreateWithoutAdInput> | AdViewCreateWithoutAdInput[] | AdViewUncheckedCreateWithoutAdInput[]
     connectOrCreate?: AdViewCreateOrConnectWithoutAdInput | AdViewCreateOrConnectWithoutAdInput[]
     createMany?: AdViewCreateManyAdInputEnvelope
     connect?: AdViewWhereUniqueInput | AdViewWhereUniqueInput[]
+  }
+
+  export type MediaAttachmentUpdateManyWithoutAdNestedInput = {
+    create?: XOR<MediaAttachmentCreateWithoutAdInput, MediaAttachmentUncheckedCreateWithoutAdInput> | MediaAttachmentCreateWithoutAdInput[] | MediaAttachmentUncheckedCreateWithoutAdInput[]
+    connectOrCreate?: MediaAttachmentCreateOrConnectWithoutAdInput | MediaAttachmentCreateOrConnectWithoutAdInput[]
+    upsert?: MediaAttachmentUpsertWithWhereUniqueWithoutAdInput | MediaAttachmentUpsertWithWhereUniqueWithoutAdInput[]
+    createMany?: MediaAttachmentCreateManyAdInputEnvelope
+    set?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+    disconnect?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+    delete?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+    connect?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+    update?: MediaAttachmentUpdateWithWhereUniqueWithoutAdInput | MediaAttachmentUpdateWithWhereUniqueWithoutAdInput[]
+    updateMany?: MediaAttachmentUpdateManyWithWhereWithoutAdInput | MediaAttachmentUpdateManyWithWhereWithoutAdInput[]
+    deleteMany?: MediaAttachmentScalarWhereInput | MediaAttachmentScalarWhereInput[]
   }
 
   export type AdViewUpdateManyWithoutAdNestedInput = {
@@ -50594,6 +52487,20 @@ export namespace Prisma {
     update?: AdViewUpdateWithWhereUniqueWithoutAdInput | AdViewUpdateWithWhereUniqueWithoutAdInput[]
     updateMany?: AdViewUpdateManyWithWhereWithoutAdInput | AdViewUpdateManyWithWhereWithoutAdInput[]
     deleteMany?: AdViewScalarWhereInput | AdViewScalarWhereInput[]
+  }
+
+  export type MediaAttachmentUncheckedUpdateManyWithoutAdNestedInput = {
+    create?: XOR<MediaAttachmentCreateWithoutAdInput, MediaAttachmentUncheckedCreateWithoutAdInput> | MediaAttachmentCreateWithoutAdInput[] | MediaAttachmentUncheckedCreateWithoutAdInput[]
+    connectOrCreate?: MediaAttachmentCreateOrConnectWithoutAdInput | MediaAttachmentCreateOrConnectWithoutAdInput[]
+    upsert?: MediaAttachmentUpsertWithWhereUniqueWithoutAdInput | MediaAttachmentUpsertWithWhereUniqueWithoutAdInput[]
+    createMany?: MediaAttachmentCreateManyAdInputEnvelope
+    set?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+    disconnect?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+    delete?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+    connect?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+    update?: MediaAttachmentUpdateWithWhereUniqueWithoutAdInput | MediaAttachmentUpdateWithWhereUniqueWithoutAdInput[]
+    updateMany?: MediaAttachmentUpdateManyWithWhereWithoutAdInput | MediaAttachmentUpdateManyWithWhereWithoutAdInput[]
+    deleteMany?: MediaAttachmentScalarWhereInput | MediaAttachmentScalarWhereInput[]
   }
 
   export type AdViewUncheckedUpdateManyWithoutAdNestedInput = {
@@ -50949,11 +52856,18 @@ export namespace Prisma {
     _max?: NestedEnumContentStatusFilter<$PrismaModel>
   }
 
-  export type NestedEnumVideoFileStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.VideoFileStatus | EnumVideoFileStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.VideoFileStatus[] | ListEnumVideoFileStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.VideoFileStatus[] | ListEnumVideoFileStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumVideoFileStatusFilter<$PrismaModel> | $Enums.VideoFileStatus
+  export type NestedEnumMediaFileStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.MediaFileStatus | EnumMediaFileStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.MediaFileStatus[] | ListEnumMediaFileStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MediaFileStatus[] | ListEnumMediaFileStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumMediaFileStatusFilter<$PrismaModel> | $Enums.MediaFileStatus
+  }
+
+  export type NestedEnumMediaTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.MediaType | EnumMediaTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.MediaType[] | ListEnumMediaTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MediaType[] | ListEnumMediaTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumMediaTypeFilter<$PrismaModel> | $Enums.MediaType
   }
 
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -50983,14 +52897,41 @@ export namespace Prisma {
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
-  export type NestedEnumVideoFileStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.VideoFileStatus | EnumVideoFileStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.VideoFileStatus[] | ListEnumVideoFileStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.VideoFileStatus[] | ListEnumVideoFileStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumVideoFileStatusWithAggregatesFilter<$PrismaModel> | $Enums.VideoFileStatus
+  export type NestedEnumMediaFileStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.MediaFileStatus | EnumMediaFileStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.MediaFileStatus[] | ListEnumMediaFileStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MediaFileStatus[] | ListEnumMediaFileStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumMediaFileStatusWithAggregatesFilter<$PrismaModel> | $Enums.MediaFileStatus
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumVideoFileStatusFilter<$PrismaModel>
-    _max?: NestedEnumVideoFileStatusFilter<$PrismaModel>
+    _min?: NestedEnumMediaFileStatusFilter<$PrismaModel>
+    _max?: NestedEnumMediaFileStatusFilter<$PrismaModel>
+  }
+
+  export type NestedEnumMediaTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.MediaType | EnumMediaTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.MediaType[] | ListEnumMediaTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MediaType[] | ListEnumMediaTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumMediaTypeWithAggregatesFilter<$PrismaModel> | $Enums.MediaType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumMediaTypeFilter<$PrismaModel>
+    _max?: NestedEnumMediaTypeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumMediaAttachmentTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.MediaAttachmentType | EnumMediaAttachmentTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.MediaAttachmentType[] | ListEnumMediaAttachmentTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MediaAttachmentType[] | ListEnumMediaAttachmentTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumMediaAttachmentTypeFilter<$PrismaModel> | $Enums.MediaAttachmentType
+  }
+
+  export type NestedEnumMediaAttachmentTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.MediaAttachmentType | EnumMediaAttachmentTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.MediaAttachmentType[] | ListEnumMediaAttachmentTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MediaAttachmentType[] | ListEnumMediaAttachmentTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumMediaAttachmentTypeWithAggregatesFilter<$PrismaModel> | $Enums.MediaAttachmentType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumMediaAttachmentTypeFilter<$PrismaModel>
+    _max?: NestedEnumMediaAttachmentTypeFilter<$PrismaModel>
   }
 
   export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -51148,12 +53089,14 @@ export namespace Prisma {
     purchaseDate?: Date | string
     expirationDate?: Date | string | null
     country: string
-    video: VideoFileCreateNestedOneWithoutPurchasesInput
+    movie?: MovieCreateNestedOneWithoutPurchaseInput
+    serie?: SerieCreateNestedOneWithoutPurchaseInput
   }
 
   export type PurchaseUncheckedCreateWithoutUserInput = {
     id?: string
-    videoId: string
+    movieId?: string | null
+    serieId?: string | null
     purchaseDate?: Date | string
     expirationDate?: Date | string | null
     country: string
@@ -51173,14 +53116,16 @@ export namespace Prisma {
     id?: string
     text: string
     createdAt?: Date | string
-    video: VideoFileCreateNestedOneWithoutCommentsInput
     parent?: CommentCreateNestedOneWithoutRepliesInput
     replies?: CommentCreateNestedManyWithoutParentInput
+    movie?: MovieCreateNestedOneWithoutCommentInput
+    episode?: EpisodeCreateNestedOneWithoutCommentInput
   }
 
   export type CommentUncheckedCreateWithoutUserInput = {
     id?: string
-    videoId: string
+    movieId?: string | null
+    epiisodeId?: string | null
     text: string
     createdAt?: Date | string
     parentCommentId?: string | null
@@ -51224,6 +53169,7 @@ export namespace Prisma {
   export type UserVideoViewCreateWithoutUserInput = {
     id?: string
     profileId?: string | null
+    videoId: string
     progress?: number
     completed?: boolean
     country?: string | null
@@ -51233,7 +53179,6 @@ export namespace Prisma {
     endedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    video: VideoFileCreateNestedOneWithoutUserVideoProgressInput
   }
 
   export type UserVideoViewUncheckedCreateWithoutUserInput = {
@@ -51435,7 +53380,8 @@ export namespace Prisma {
     NOT?: PurchaseScalarWhereInput | PurchaseScalarWhereInput[]
     id?: StringFilter<"Purchase"> | string
     userId?: StringFilter<"Purchase"> | string
-    videoId?: StringFilter<"Purchase"> | string
+    movieId?: StringNullableFilter<"Purchase"> | string | null
+    serieId?: StringNullableFilter<"Purchase"> | string | null
     purchaseDate?: DateTimeFilter<"Purchase"> | Date | string
     expirationDate?: DateTimeNullableFilter<"Purchase"> | Date | string | null
     country?: StringFilter<"Purchase"> | string
@@ -51463,7 +53409,8 @@ export namespace Prisma {
     NOT?: CommentScalarWhereInput | CommentScalarWhereInput[]
     id?: StringFilter<"Comment"> | string
     userId?: StringFilter<"Comment"> | string
-    videoId?: StringFilter<"Comment"> | string
+    movieId?: StringNullableFilter<"Comment"> | string | null
+    epiisodeId?: StringNullableFilter<"Comment"> | string | null
     text?: StringFilter<"Comment"> | string
     createdAt?: DateTimeFilter<"Comment"> | Date | string
     parentCommentId?: StringNullableFilter<"Comment"> | string | null
@@ -52762,26 +54709,30 @@ export namespace Prisma {
 
   export type MovieCreateWithoutMetadataInput = {
     id?: string
-    status?: string
+    status?: $Enums.ContentStatus
     type?: string
     seasonCount?: number
     rentalPrice?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    videoFile: VideoFileCreateNestedOneWithoutMovieInput
     tags?: MovieTagCreateNestedManyWithoutMovieInput
+    attachment?: MediaAttachmentCreateNestedManyWithoutMovieInput
+    Comment?: CommentCreateNestedManyWithoutMovieInput
+    Purchase?: PurchaseCreateNestedManyWithoutMovieInput
   }
 
   export type MovieUncheckedCreateWithoutMetadataInput = {
     id?: string
-    videoFileId: string
-    status?: string
+    status?: $Enums.ContentStatus
     type?: string
     seasonCount?: number
     rentalPrice?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     tags?: MovieTagUncheckedCreateNestedManyWithoutMovieInput
+    attachment?: MediaAttachmentUncheckedCreateNestedManyWithoutMovieInput
+    Comment?: CommentUncheckedCreateNestedManyWithoutMovieInput
+    Purchase?: PurchaseUncheckedCreateNestedManyWithoutMovieInput
   }
 
   export type MovieCreateOrConnectWithoutMetadataInput = {
@@ -52789,7 +54740,7 @@ export namespace Prisma {
     create: XOR<MovieCreateWithoutMetadataInput, MovieUncheckedCreateWithoutMetadataInput>
   }
 
-  export type SeriesCreateWithoutMetadataInput = {
+  export type SerieCreateWithoutMetadataInput = {
     id?: string
     status?: string
     type?: string
@@ -52797,12 +54748,13 @@ export namespace Prisma {
     rentalPrice?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    seasons?: SeasonCreateNestedManyWithoutSeriesInput
+    seasons?: SeasonCreateNestedManyWithoutSerieInput
     tags?: SeriesTagCreateNestedManyWithoutSeriesInput
-    SeriesView?: SeriesViewCreateNestedManyWithoutSeriesInput
+    SerieView?: SerieViewCreateNestedManyWithoutSeriesInput
+    Purchase?: PurchaseCreateNestedManyWithoutSerieInput
   }
 
-  export type SeriesUncheckedCreateWithoutMetadataInput = {
+  export type SerieUncheckedCreateWithoutMetadataInput = {
     id?: string
     status?: string
     type?: string
@@ -52810,14 +54762,15 @@ export namespace Prisma {
     rentalPrice?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    seasons?: SeasonUncheckedCreateNestedManyWithoutSeriesInput
+    seasons?: SeasonUncheckedCreateNestedManyWithoutSerieInput
     tags?: SeriesTagUncheckedCreateNestedManyWithoutSeriesInput
-    SeriesView?: SeriesViewUncheckedCreateNestedManyWithoutSeriesInput
+    SerieView?: SerieViewUncheckedCreateNestedManyWithoutSeriesInput
+    Purchase?: PurchaseUncheckedCreateNestedManyWithoutSerieInput
   }
 
-  export type SeriesCreateOrConnectWithoutMetadataInput = {
-    where: SeriesWhereUniqueInput
-    create: XOR<SeriesCreateWithoutMetadataInput, SeriesUncheckedCreateWithoutMetadataInput>
+  export type SerieCreateOrConnectWithoutMetadataInput = {
+    where: SerieWhereUniqueInput
+    create: XOR<SerieCreateWithoutMetadataInput, SerieUncheckedCreateWithoutMetadataInput>
   }
 
   export type VideoActorCreateWithoutVideoInput = {
@@ -52847,7 +54800,7 @@ export namespace Prisma {
   export type SubtitleCreateWithoutVideoMetadataInput = {
     language: string
     subtitleUrl: string
-    video: VideoFileCreateNestedOneWithoutSubtitlesInput
+    video: MediaFileCreateNestedOneWithoutSubtitleInput
   }
 
   export type SubtitleUncheckedCreateWithoutVideoMetadataInput = {
@@ -52979,40 +54932,44 @@ export namespace Prisma {
 
   export type MovieUpdateWithoutMetadataInput = {
     id?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
     type?: StringFieldUpdateOperationsInput | string
     seasonCount?: IntFieldUpdateOperationsInput | number
     rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    videoFile?: VideoFileUpdateOneRequiredWithoutMovieNestedInput
     tags?: MovieTagUpdateManyWithoutMovieNestedInput
+    attachment?: MediaAttachmentUpdateManyWithoutMovieNestedInput
+    Comment?: CommentUpdateManyWithoutMovieNestedInput
+    Purchase?: PurchaseUpdateManyWithoutMovieNestedInput
   }
 
   export type MovieUncheckedUpdateWithoutMetadataInput = {
     id?: StringFieldUpdateOperationsInput | string
-    videoFileId?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
     type?: StringFieldUpdateOperationsInput | string
     seasonCount?: IntFieldUpdateOperationsInput | number
     rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tags?: MovieTagUncheckedUpdateManyWithoutMovieNestedInput
+    attachment?: MediaAttachmentUncheckedUpdateManyWithoutMovieNestedInput
+    Comment?: CommentUncheckedUpdateManyWithoutMovieNestedInput
+    Purchase?: PurchaseUncheckedUpdateManyWithoutMovieNestedInput
   }
 
-  export type SeriesUpsertWithoutMetadataInput = {
-    update: XOR<SeriesUpdateWithoutMetadataInput, SeriesUncheckedUpdateWithoutMetadataInput>
-    create: XOR<SeriesCreateWithoutMetadataInput, SeriesUncheckedCreateWithoutMetadataInput>
-    where?: SeriesWhereInput
+  export type SerieUpsertWithoutMetadataInput = {
+    update: XOR<SerieUpdateWithoutMetadataInput, SerieUncheckedUpdateWithoutMetadataInput>
+    create: XOR<SerieCreateWithoutMetadataInput, SerieUncheckedCreateWithoutMetadataInput>
+    where?: SerieWhereInput
   }
 
-  export type SeriesUpdateToOneWithWhereWithoutMetadataInput = {
-    where?: SeriesWhereInput
-    data: XOR<SeriesUpdateWithoutMetadataInput, SeriesUncheckedUpdateWithoutMetadataInput>
+  export type SerieUpdateToOneWithWhereWithoutMetadataInput = {
+    where?: SerieWhereInput
+    data: XOR<SerieUpdateWithoutMetadataInput, SerieUncheckedUpdateWithoutMetadataInput>
   }
 
-  export type SeriesUpdateWithoutMetadataInput = {
+  export type SerieUpdateWithoutMetadataInput = {
     id?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
@@ -53020,12 +54977,13 @@ export namespace Prisma {
     rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    seasons?: SeasonUpdateManyWithoutSeriesNestedInput
+    seasons?: SeasonUpdateManyWithoutSerieNestedInput
     tags?: SeriesTagUpdateManyWithoutSeriesNestedInput
-    SeriesView?: SeriesViewUpdateManyWithoutSeriesNestedInput
+    SerieView?: SerieViewUpdateManyWithoutSeriesNestedInput
+    Purchase?: PurchaseUpdateManyWithoutSerieNestedInput
   }
 
-  export type SeriesUncheckedUpdateWithoutMetadataInput = {
+  export type SerieUncheckedUpdateWithoutMetadataInput = {
     id?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
@@ -53033,9 +54991,10 @@ export namespace Prisma {
     rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    seasons?: SeasonUncheckedUpdateManyWithoutSeriesNestedInput
+    seasons?: SeasonUncheckedUpdateManyWithoutSerieNestedInput
     tags?: SeriesTagUncheckedUpdateManyWithoutSeriesNestedInput
-    SeriesView?: SeriesViewUncheckedUpdateManyWithoutSeriesNestedInput
+    SerieView?: SerieViewUncheckedUpdateManyWithoutSeriesNestedInput
+    Purchase?: PurchaseUncheckedUpdateManyWithoutSerieNestedInput
   }
 
   export type VideoActorUpsertWithWhereUniqueWithoutVideoInput = {
@@ -53118,66 +55077,30 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"VideoLanguage"> | Date | string
   }
 
-  export type MovieCreateWithoutVideoFileInput = {
+  export type MediaAttachmentCreateWithoutMediaFileInput = {
     id?: string
-    status?: string
-    type?: string
-    seasonCount?: number
-    rentalPrice?: number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    metadata: VideoMetadataCreateNestedOneWithoutMovieInput
-    tags?: MovieTagCreateNestedManyWithoutMovieInput
+    type: $Enums.MediaAttachmentType
+    movie?: MovieCreateNestedOneWithoutAttachmentInput
+    episode?: EpisodeCreateNestedOneWithoutVideoAttachmentInput
+    ad?: AdCreateNestedOneWithoutVideoAttachmentInput
   }
 
-  export type MovieUncheckedCreateWithoutVideoFileInput = {
+  export type MediaAttachmentUncheckedCreateWithoutMediaFileInput = {
     id?: string
-    metadataId: string
-    status?: string
-    type?: string
-    seasonCount?: number
-    rentalPrice?: number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    tags?: MovieTagUncheckedCreateNestedManyWithoutMovieInput
+    movieId?: string | null
+    episodeId?: string | null
+    adId?: string | null
+    type: $Enums.MediaAttachmentType
   }
 
-  export type MovieCreateOrConnectWithoutVideoFileInput = {
-    where: MovieWhereUniqueInput
-    create: XOR<MovieCreateWithoutVideoFileInput, MovieUncheckedCreateWithoutVideoFileInput>
+  export type MediaAttachmentCreateOrConnectWithoutMediaFileInput = {
+    where: MediaAttachmentWhereUniqueInput
+    create: XOR<MediaAttachmentCreateWithoutMediaFileInput, MediaAttachmentUncheckedCreateWithoutMediaFileInput>
   }
 
-  export type EpisodeCreateWithoutVideoFileInput = {
-    id?: string
-    number: number
-    title?: string | null
-    releaseDate: Date | string
-    plateformeDAte: Date | string
-    director: string
-    description?: string | null
-    isSaFliixProd: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    season: SeasonCreateNestedOneWithoutEpisodesInput
-  }
-
-  export type EpisodeUncheckedCreateWithoutVideoFileInput = {
-    id?: string
-    seasonId: string
-    number: number
-    title?: string | null
-    releaseDate: Date | string
-    plateformeDAte: Date | string
-    director: string
-    description?: string | null
-    isSaFliixProd: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type EpisodeCreateOrConnectWithoutVideoFileInput = {
-    where: EpisodeWhereUniqueInput
-    create: XOR<EpisodeCreateWithoutVideoFileInput, EpisodeUncheckedCreateWithoutVideoFileInput>
+  export type MediaAttachmentCreateManyMediaFileInputEnvelope = {
+    data: MediaAttachmentCreateManyMediaFileInput | MediaAttachmentCreateManyMediaFileInput[]
+    skipDuplicates?: boolean
   }
 
   export type SubtitleCreateWithoutVideoInput = {
@@ -53202,172 +55125,32 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type PurchaseCreateWithoutVideoInput = {
-    id?: string
-    purchaseDate?: Date | string
-    expirationDate?: Date | string | null
-    country: string
-    user: UserCreateNestedOneWithoutPurchasesInput
+  export type MediaAttachmentUpsertWithWhereUniqueWithoutMediaFileInput = {
+    where: MediaAttachmentWhereUniqueInput
+    update: XOR<MediaAttachmentUpdateWithoutMediaFileInput, MediaAttachmentUncheckedUpdateWithoutMediaFileInput>
+    create: XOR<MediaAttachmentCreateWithoutMediaFileInput, MediaAttachmentUncheckedCreateWithoutMediaFileInput>
   }
 
-  export type PurchaseUncheckedCreateWithoutVideoInput = {
-    id?: string
-    userId: string
-    purchaseDate?: Date | string
-    expirationDate?: Date | string | null
-    country: string
+  export type MediaAttachmentUpdateWithWhereUniqueWithoutMediaFileInput = {
+    where: MediaAttachmentWhereUniqueInput
+    data: XOR<MediaAttachmentUpdateWithoutMediaFileInput, MediaAttachmentUncheckedUpdateWithoutMediaFileInput>
   }
 
-  export type PurchaseCreateOrConnectWithoutVideoInput = {
-    where: PurchaseWhereUniqueInput
-    create: XOR<PurchaseCreateWithoutVideoInput, PurchaseUncheckedCreateWithoutVideoInput>
+  export type MediaAttachmentUpdateManyWithWhereWithoutMediaFileInput = {
+    where: MediaAttachmentScalarWhereInput
+    data: XOR<MediaAttachmentUpdateManyMutationInput, MediaAttachmentUncheckedUpdateManyWithoutMediaFileInput>
   }
 
-  export type PurchaseCreateManyVideoInputEnvelope = {
-    data: PurchaseCreateManyVideoInput | PurchaseCreateManyVideoInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type CommentCreateWithoutVideoInput = {
-    id?: string
-    text: string
-    createdAt?: Date | string
-    user: UserCreateNestedOneWithoutCommentsInput
-    parent?: CommentCreateNestedOneWithoutRepliesInput
-    replies?: CommentCreateNestedManyWithoutParentInput
-  }
-
-  export type CommentUncheckedCreateWithoutVideoInput = {
-    id?: string
-    userId: string
-    text: string
-    createdAt?: Date | string
-    parentCommentId?: string | null
-    replies?: CommentUncheckedCreateNestedManyWithoutParentInput
-  }
-
-  export type CommentCreateOrConnectWithoutVideoInput = {
-    where: CommentWhereUniqueInput
-    create: XOR<CommentCreateWithoutVideoInput, CommentUncheckedCreateWithoutVideoInput>
-  }
-
-  export type CommentCreateManyVideoInputEnvelope = {
-    data: CommentCreateManyVideoInput | CommentCreateManyVideoInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type UserVideoViewCreateWithoutVideoInput = {
-    id?: string
-    profileId?: string | null
-    progress?: number
-    completed?: boolean
-    country?: string | null
-    device?: string | null
-    rating?: number | null
-    startedAt?: Date | string | null
-    endedAt?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutUserVideoViewInput
-  }
-
-  export type UserVideoViewUncheckedCreateWithoutVideoInput = {
-    id?: string
-    userId: string
-    profileId?: string | null
-    progress?: number
-    completed?: boolean
-    country?: string | null
-    device?: string | null
-    rating?: number | null
-    startedAt?: Date | string | null
-    endedAt?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type UserVideoViewCreateOrConnectWithoutVideoInput = {
-    where: UserVideoViewWhereUniqueInput
-    create: XOR<UserVideoViewCreateWithoutVideoInput, UserVideoViewUncheckedCreateWithoutVideoInput>
-  }
-
-  export type UserVideoViewCreateManyVideoInputEnvelope = {
-    data: UserVideoViewCreateManyVideoInput | UserVideoViewCreateManyVideoInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type MovieUpsertWithoutVideoFileInput = {
-    update: XOR<MovieUpdateWithoutVideoFileInput, MovieUncheckedUpdateWithoutVideoFileInput>
-    create: XOR<MovieCreateWithoutVideoFileInput, MovieUncheckedCreateWithoutVideoFileInput>
-    where?: MovieWhereInput
-  }
-
-  export type MovieUpdateToOneWithWhereWithoutVideoFileInput = {
-    where?: MovieWhereInput
-    data: XOR<MovieUpdateWithoutVideoFileInput, MovieUncheckedUpdateWithoutVideoFileInput>
-  }
-
-  export type MovieUpdateWithoutVideoFileInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    seasonCount?: IntFieldUpdateOperationsInput | number
-    rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    metadata?: VideoMetadataUpdateOneRequiredWithoutMovieNestedInput
-    tags?: MovieTagUpdateManyWithoutMovieNestedInput
-  }
-
-  export type MovieUncheckedUpdateWithoutVideoFileInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    metadataId?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    seasonCount?: IntFieldUpdateOperationsInput | number
-    rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    tags?: MovieTagUncheckedUpdateManyWithoutMovieNestedInput
-  }
-
-  export type EpisodeUpsertWithoutVideoFileInput = {
-    update: XOR<EpisodeUpdateWithoutVideoFileInput, EpisodeUncheckedUpdateWithoutVideoFileInput>
-    create: XOR<EpisodeCreateWithoutVideoFileInput, EpisodeUncheckedCreateWithoutVideoFileInput>
-    where?: EpisodeWhereInput
-  }
-
-  export type EpisodeUpdateToOneWithWhereWithoutVideoFileInput = {
-    where?: EpisodeWhereInput
-    data: XOR<EpisodeUpdateWithoutVideoFileInput, EpisodeUncheckedUpdateWithoutVideoFileInput>
-  }
-
-  export type EpisodeUpdateWithoutVideoFileInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    number?: IntFieldUpdateOperationsInput | number
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    plateformeDAte?: DateTimeFieldUpdateOperationsInput | Date | string
-    director?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    isSaFliixProd?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    season?: SeasonUpdateOneRequiredWithoutEpisodesNestedInput
-  }
-
-  export type EpisodeUncheckedUpdateWithoutVideoFileInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    seasonId?: StringFieldUpdateOperationsInput | string
-    number?: IntFieldUpdateOperationsInput | number
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    plateformeDAte?: DateTimeFieldUpdateOperationsInput | Date | string
-    director?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    isSaFliixProd?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type MediaAttachmentScalarWhereInput = {
+    AND?: MediaAttachmentScalarWhereInput | MediaAttachmentScalarWhereInput[]
+    OR?: MediaAttachmentScalarWhereInput[]
+    NOT?: MediaAttachmentScalarWhereInput | MediaAttachmentScalarWhereInput[]
+    id?: StringFilter<"MediaAttachment"> | string
+    mediaFileId?: StringFilter<"MediaAttachment"> | string
+    movieId?: StringNullableFilter<"MediaAttachment"> | string | null
+    episodeId?: StringNullableFilter<"MediaAttachment"> | string | null
+    adId?: StringNullableFilter<"MediaAttachment"> | string | null
+    type?: EnumMediaAttachmentTypeFilter<"MediaAttachment"> | $Enums.MediaAttachmentType
   }
 
   export type SubtitleUpsertWithWhereUniqueWithoutVideoInput = {
@@ -53386,60 +55169,282 @@ export namespace Prisma {
     data: XOR<SubtitleUpdateManyMutationInput, SubtitleUncheckedUpdateManyWithoutVideoInput>
   }
 
-  export type PurchaseUpsertWithWhereUniqueWithoutVideoInput = {
-    where: PurchaseWhereUniqueInput
-    update: XOR<PurchaseUpdateWithoutVideoInput, PurchaseUncheckedUpdateWithoutVideoInput>
-    create: XOR<PurchaseCreateWithoutVideoInput, PurchaseUncheckedCreateWithoutVideoInput>
+  export type MediaFileCreateWithoutAttachmentsInput = {
+    id?: string
+    s3Key: string
+    duration?: number | null
+    width?: number | null
+    height?: number | null
+    status: $Enums.MediaFileStatus
+    mediaType: $Enums.MediaType
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Subtitle?: SubtitleCreateNestedManyWithoutVideoInput
   }
 
-  export type PurchaseUpdateWithWhereUniqueWithoutVideoInput = {
-    where: PurchaseWhereUniqueInput
-    data: XOR<PurchaseUpdateWithoutVideoInput, PurchaseUncheckedUpdateWithoutVideoInput>
+  export type MediaFileUncheckedCreateWithoutAttachmentsInput = {
+    id?: string
+    s3Key: string
+    duration?: number | null
+    width?: number | null
+    height?: number | null
+    status: $Enums.MediaFileStatus
+    mediaType: $Enums.MediaType
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Subtitle?: SubtitleUncheckedCreateNestedManyWithoutVideoInput
   }
 
-  export type PurchaseUpdateManyWithWhereWithoutVideoInput = {
-    where: PurchaseScalarWhereInput
-    data: XOR<PurchaseUpdateManyMutationInput, PurchaseUncheckedUpdateManyWithoutVideoInput>
+  export type MediaFileCreateOrConnectWithoutAttachmentsInput = {
+    where: MediaFileWhereUniqueInput
+    create: XOR<MediaFileCreateWithoutAttachmentsInput, MediaFileUncheckedCreateWithoutAttachmentsInput>
   }
 
-  export type CommentUpsertWithWhereUniqueWithoutVideoInput = {
-    where: CommentWhereUniqueInput
-    update: XOR<CommentUpdateWithoutVideoInput, CommentUncheckedUpdateWithoutVideoInput>
-    create: XOR<CommentCreateWithoutVideoInput, CommentUncheckedCreateWithoutVideoInput>
+  export type MovieCreateWithoutAttachmentInput = {
+    id?: string
+    status?: $Enums.ContentStatus
+    type?: string
+    seasonCount?: number
+    rentalPrice?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    metadata: VideoMetadataCreateNestedOneWithoutMovieInput
+    tags?: MovieTagCreateNestedManyWithoutMovieInput
+    Comment?: CommentCreateNestedManyWithoutMovieInput
+    Purchase?: PurchaseCreateNestedManyWithoutMovieInput
   }
 
-  export type CommentUpdateWithWhereUniqueWithoutVideoInput = {
-    where: CommentWhereUniqueInput
-    data: XOR<CommentUpdateWithoutVideoInput, CommentUncheckedUpdateWithoutVideoInput>
+  export type MovieUncheckedCreateWithoutAttachmentInput = {
+    id?: string
+    metadataId: string
+    status?: $Enums.ContentStatus
+    type?: string
+    seasonCount?: number
+    rentalPrice?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tags?: MovieTagUncheckedCreateNestedManyWithoutMovieInput
+    Comment?: CommentUncheckedCreateNestedManyWithoutMovieInput
+    Purchase?: PurchaseUncheckedCreateNestedManyWithoutMovieInput
   }
 
-  export type CommentUpdateManyWithWhereWithoutVideoInput = {
-    where: CommentScalarWhereInput
-    data: XOR<CommentUpdateManyMutationInput, CommentUncheckedUpdateManyWithoutVideoInput>
+  export type MovieCreateOrConnectWithoutAttachmentInput = {
+    where: MovieWhereUniqueInput
+    create: XOR<MovieCreateWithoutAttachmentInput, MovieUncheckedCreateWithoutAttachmentInput>
   }
 
-  export type UserVideoViewUpsertWithWhereUniqueWithoutVideoInput = {
-    where: UserVideoViewWhereUniqueInput
-    update: XOR<UserVideoViewUpdateWithoutVideoInput, UserVideoViewUncheckedUpdateWithoutVideoInput>
-    create: XOR<UserVideoViewCreateWithoutVideoInput, UserVideoViewUncheckedCreateWithoutVideoInput>
+  export type EpisodeCreateWithoutVideoAttachmentInput = {
+    id?: string
+    number: number
+    title?: string | null
+    releaseDate: Date | string
+    plateformeDAte: Date | string
+    director: string
+    description?: string | null
+    isSaFliixProd: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    season: SeasonCreateNestedOneWithoutEpisodesInput
+    Comment?: CommentCreateNestedManyWithoutEpisodeInput
   }
 
-  export type UserVideoViewUpdateWithWhereUniqueWithoutVideoInput = {
-    where: UserVideoViewWhereUniqueInput
-    data: XOR<UserVideoViewUpdateWithoutVideoInput, UserVideoViewUncheckedUpdateWithoutVideoInput>
+  export type EpisodeUncheckedCreateWithoutVideoAttachmentInput = {
+    id?: string
+    seasonId: string
+    number: number
+    title?: string | null
+    releaseDate: Date | string
+    plateformeDAte: Date | string
+    director: string
+    description?: string | null
+    isSaFliixProd: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Comment?: CommentUncheckedCreateNestedManyWithoutEpisodeInput
   }
 
-  export type UserVideoViewUpdateManyWithWhereWithoutVideoInput = {
-    where: UserVideoViewScalarWhereInput
-    data: XOR<UserVideoViewUpdateManyMutationInput, UserVideoViewUncheckedUpdateManyWithoutVideoInput>
+  export type EpisodeCreateOrConnectWithoutVideoAttachmentInput = {
+    where: EpisodeWhereUniqueInput
+    create: XOR<EpisodeCreateWithoutVideoAttachmentInput, EpisodeUncheckedCreateWithoutVideoAttachmentInput>
+  }
+
+  export type AdCreateWithoutVideoAttachmentInput = {
+    id?: string
+    title: string
+    imageUrl: string
+    startDate: Date | string
+    endDate: Date | string
+    isActive?: boolean
+    views?: AdViewCreateNestedManyWithoutAdInput
+  }
+
+  export type AdUncheckedCreateWithoutVideoAttachmentInput = {
+    id?: string
+    title: string
+    imageUrl: string
+    startDate: Date | string
+    endDate: Date | string
+    isActive?: boolean
+    views?: AdViewUncheckedCreateNestedManyWithoutAdInput
+  }
+
+  export type AdCreateOrConnectWithoutVideoAttachmentInput = {
+    where: AdWhereUniqueInput
+    create: XOR<AdCreateWithoutVideoAttachmentInput, AdUncheckedCreateWithoutVideoAttachmentInput>
+  }
+
+  export type MediaFileUpsertWithoutAttachmentsInput = {
+    update: XOR<MediaFileUpdateWithoutAttachmentsInput, MediaFileUncheckedUpdateWithoutAttachmentsInput>
+    create: XOR<MediaFileCreateWithoutAttachmentsInput, MediaFileUncheckedCreateWithoutAttachmentsInput>
+    where?: MediaFileWhereInput
+  }
+
+  export type MediaFileUpdateToOneWithWhereWithoutAttachmentsInput = {
+    where?: MediaFileWhereInput
+    data: XOR<MediaFileUpdateWithoutAttachmentsInput, MediaFileUncheckedUpdateWithoutAttachmentsInput>
+  }
+
+  export type MediaFileUpdateWithoutAttachmentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    s3Key?: StringFieldUpdateOperationsInput | string
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    width?: NullableIntFieldUpdateOperationsInput | number | null
+    height?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: EnumMediaFileStatusFieldUpdateOperationsInput | $Enums.MediaFileStatus
+    mediaType?: EnumMediaTypeFieldUpdateOperationsInput | $Enums.MediaType
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Subtitle?: SubtitleUpdateManyWithoutVideoNestedInput
+  }
+
+  export type MediaFileUncheckedUpdateWithoutAttachmentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    s3Key?: StringFieldUpdateOperationsInput | string
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    width?: NullableIntFieldUpdateOperationsInput | number | null
+    height?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: EnumMediaFileStatusFieldUpdateOperationsInput | $Enums.MediaFileStatus
+    mediaType?: EnumMediaTypeFieldUpdateOperationsInput | $Enums.MediaType
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Subtitle?: SubtitleUncheckedUpdateManyWithoutVideoNestedInput
+  }
+
+  export type MovieUpsertWithoutAttachmentInput = {
+    update: XOR<MovieUpdateWithoutAttachmentInput, MovieUncheckedUpdateWithoutAttachmentInput>
+    create: XOR<MovieCreateWithoutAttachmentInput, MovieUncheckedCreateWithoutAttachmentInput>
+    where?: MovieWhereInput
+  }
+
+  export type MovieUpdateToOneWithWhereWithoutAttachmentInput = {
+    where?: MovieWhereInput
+    data: XOR<MovieUpdateWithoutAttachmentInput, MovieUncheckedUpdateWithoutAttachmentInput>
+  }
+
+  export type MovieUpdateWithoutAttachmentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+    type?: StringFieldUpdateOperationsInput | string
+    seasonCount?: IntFieldUpdateOperationsInput | number
+    rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    metadata?: VideoMetadataUpdateOneRequiredWithoutMovieNestedInput
+    tags?: MovieTagUpdateManyWithoutMovieNestedInput
+    Comment?: CommentUpdateManyWithoutMovieNestedInput
+    Purchase?: PurchaseUpdateManyWithoutMovieNestedInput
+  }
+
+  export type MovieUncheckedUpdateWithoutAttachmentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    metadataId?: StringFieldUpdateOperationsInput | string
+    status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+    type?: StringFieldUpdateOperationsInput | string
+    seasonCount?: IntFieldUpdateOperationsInput | number
+    rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tags?: MovieTagUncheckedUpdateManyWithoutMovieNestedInput
+    Comment?: CommentUncheckedUpdateManyWithoutMovieNestedInput
+    Purchase?: PurchaseUncheckedUpdateManyWithoutMovieNestedInput
+  }
+
+  export type EpisodeUpsertWithoutVideoAttachmentInput = {
+    update: XOR<EpisodeUpdateWithoutVideoAttachmentInput, EpisodeUncheckedUpdateWithoutVideoAttachmentInput>
+    create: XOR<EpisodeCreateWithoutVideoAttachmentInput, EpisodeUncheckedCreateWithoutVideoAttachmentInput>
+    where?: EpisodeWhereInput
+  }
+
+  export type EpisodeUpdateToOneWithWhereWithoutVideoAttachmentInput = {
+    where?: EpisodeWhereInput
+    data: XOR<EpisodeUpdateWithoutVideoAttachmentInput, EpisodeUncheckedUpdateWithoutVideoAttachmentInput>
+  }
+
+  export type EpisodeUpdateWithoutVideoAttachmentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    number?: IntFieldUpdateOperationsInput | number
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    plateformeDAte?: DateTimeFieldUpdateOperationsInput | Date | string
+    director?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isSaFliixProd?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    season?: SeasonUpdateOneRequiredWithoutEpisodesNestedInput
+    Comment?: CommentUpdateManyWithoutEpisodeNestedInput
+  }
+
+  export type EpisodeUncheckedUpdateWithoutVideoAttachmentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    seasonId?: StringFieldUpdateOperationsInput | string
+    number?: IntFieldUpdateOperationsInput | number
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    plateformeDAte?: DateTimeFieldUpdateOperationsInput | Date | string
+    director?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isSaFliixProd?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Comment?: CommentUncheckedUpdateManyWithoutEpisodeNestedInput
+  }
+
+  export type AdUpsertWithoutVideoAttachmentInput = {
+    update: XOR<AdUpdateWithoutVideoAttachmentInput, AdUncheckedUpdateWithoutVideoAttachmentInput>
+    create: XOR<AdCreateWithoutVideoAttachmentInput, AdUncheckedCreateWithoutVideoAttachmentInput>
+    where?: AdWhereInput
+  }
+
+  export type AdUpdateToOneWithWhereWithoutVideoAttachmentInput = {
+    where?: AdWhereInput
+    data: XOR<AdUpdateWithoutVideoAttachmentInput, AdUncheckedUpdateWithoutVideoAttachmentInput>
+  }
+
+  export type AdUpdateWithoutVideoAttachmentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    imageUrl?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    views?: AdViewUpdateManyWithoutAdNestedInput
+  }
+
+  export type AdUncheckedUpdateWithoutVideoAttachmentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    imageUrl?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    views?: AdViewUncheckedUpdateManyWithoutAdNestedInput
   }
 
   export type VideoMetadataCreateWithoutGenderInput = {
     id?: string
     title: string
     description: string
-    thumbnailUrl: string
-    secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
@@ -53452,7 +55457,7 @@ export namespace Prisma {
     format?: VideoFormatCreateNestedOneWithoutVideosInput
     category: VideoCategoryCreateNestedOneWithoutVideosInput
     movie?: MovieCreateNestedOneWithoutMetadataInput
-    series?: SeriesCreateNestedOneWithoutMetadataInput
+    series?: SerieCreateNestedOneWithoutMetadataInput
     actors?: VideoActorCreateNestedManyWithoutVideoInput
     subtitles?: SubtitleCreateNestedManyWithoutVideoMetadataInput
     languages?: VideoLanguageCreateNestedManyWithoutVideosInput
@@ -53462,8 +55467,6 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
-    thumbnailUrl: string
-    secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
@@ -53476,7 +55479,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     movie?: MovieUncheckedCreateNestedOneWithoutMetadataInput
-    series?: SeriesUncheckedCreateNestedOneWithoutMetadataInput
+    series?: SerieUncheckedCreateNestedOneWithoutMetadataInput
     actors?: VideoActorUncheckedCreateNestedManyWithoutVideoInput
     subtitles?: SubtitleUncheckedCreateNestedManyWithoutVideoMetadataInput
     languages?: VideoLanguageUncheckedCreateNestedManyWithoutVideosInput
@@ -53515,8 +55518,6 @@ export namespace Prisma {
     id?: StringFilter<"VideoMetadata"> | string
     title?: StringFilter<"VideoMetadata"> | string
     description?: StringFilter<"VideoMetadata"> | string
-    thumbnailUrl?: StringFilter<"VideoMetadata"> | string
-    secondaryImage?: StringNullableFilter<"VideoMetadata"> | string | null
     releaseDate?: DateTimeFilter<"VideoMetadata"> | Date | string
     platformDate?: DateTimeFilter<"VideoMetadata"> | Date | string
     ageRating?: StringFilter<"VideoMetadata"> | string
@@ -53575,8 +55576,6 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
-    thumbnailUrl: string
-    secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
@@ -53590,7 +55589,7 @@ export namespace Prisma {
     category: VideoCategoryCreateNestedOneWithoutVideosInput
     gender: VideoGenreCreateNestedOneWithoutVideosInput
     movie?: MovieCreateNestedOneWithoutMetadataInput
-    series?: SeriesCreateNestedOneWithoutMetadataInput
+    series?: SerieCreateNestedOneWithoutMetadataInput
     subtitles?: SubtitleCreateNestedManyWithoutVideoMetadataInput
     languages?: VideoLanguageCreateNestedManyWithoutVideosInput
   }
@@ -53599,8 +55598,6 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
-    thumbnailUrl: string
-    secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
@@ -53614,7 +55611,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     movie?: MovieUncheckedCreateNestedOneWithoutMetadataInput
-    series?: SeriesUncheckedCreateNestedOneWithoutMetadataInput
+    series?: SerieUncheckedCreateNestedOneWithoutMetadataInput
     subtitles?: SubtitleUncheckedCreateNestedManyWithoutVideoMetadataInput
     languages?: VideoLanguageUncheckedCreateNestedManyWithoutVideosInput
   }
@@ -53658,8 +55655,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    thumbnailUrl?: StringFieldUpdateOperationsInput | string
-    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -53673,7 +55668,7 @@ export namespace Prisma {
     category?: VideoCategoryUpdateOneRequiredWithoutVideosNestedInput
     gender?: VideoGenreUpdateOneRequiredWithoutVideosNestedInput
     movie?: MovieUpdateOneWithoutMetadataNestedInput
-    series?: SeriesUpdateOneWithoutMetadataNestedInput
+    series?: SerieUpdateOneWithoutMetadataNestedInput
     subtitles?: SubtitleUpdateManyWithoutVideoMetadataNestedInput
     languages?: VideoLanguageUpdateManyWithoutVideosNestedInput
   }
@@ -53682,8 +55677,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    thumbnailUrl?: StringFieldUpdateOperationsInput | string
-    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -53697,7 +55690,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     movie?: MovieUncheckedUpdateOneWithoutMetadataNestedInput
-    series?: SeriesUncheckedUpdateOneWithoutMetadataNestedInput
+    series?: SerieUncheckedUpdateOneWithoutMetadataNestedInput
     subtitles?: SubtitleUncheckedUpdateManyWithoutVideoMetadataNestedInput
     languages?: VideoLanguageUncheckedUpdateManyWithoutVideosNestedInput
   }
@@ -53731,8 +55724,6 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
-    thumbnailUrl: string
-    secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
@@ -53746,7 +55737,7 @@ export namespace Prisma {
     category: VideoCategoryCreateNestedOneWithoutVideosInput
     gender: VideoGenreCreateNestedOneWithoutVideosInput
     movie?: MovieCreateNestedOneWithoutMetadataInput
-    series?: SeriesCreateNestedOneWithoutMetadataInput
+    series?: SerieCreateNestedOneWithoutMetadataInput
     actors?: VideoActorCreateNestedManyWithoutVideoInput
     subtitles?: SubtitleCreateNestedManyWithoutVideoMetadataInput
   }
@@ -53755,8 +55746,6 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
-    thumbnailUrl: string
-    secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
@@ -53770,7 +55759,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     movie?: MovieUncheckedCreateNestedOneWithoutMetadataInput
-    series?: SeriesUncheckedCreateNestedOneWithoutMetadataInput
+    series?: SerieUncheckedCreateNestedOneWithoutMetadataInput
     actors?: VideoActorUncheckedCreateNestedManyWithoutVideoInput
     subtitles?: SubtitleUncheckedCreateNestedManyWithoutVideoMetadataInput
   }
@@ -53800,8 +55789,6 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
-    thumbnailUrl: string
-    secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
@@ -53814,7 +55801,7 @@ export namespace Prisma {
     category: VideoCategoryCreateNestedOneWithoutVideosInput
     gender: VideoGenreCreateNestedOneWithoutVideosInput
     movie?: MovieCreateNestedOneWithoutMetadataInput
-    series?: SeriesCreateNestedOneWithoutMetadataInput
+    series?: SerieCreateNestedOneWithoutMetadataInput
     actors?: VideoActorCreateNestedManyWithoutVideoInput
     subtitles?: SubtitleCreateNestedManyWithoutVideoMetadataInput
     languages?: VideoLanguageCreateNestedManyWithoutVideosInput
@@ -53824,8 +55811,6 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
-    thumbnailUrl: string
-    secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
@@ -53838,7 +55823,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     movie?: MovieUncheckedCreateNestedOneWithoutMetadataInput
-    series?: SeriesUncheckedCreateNestedOneWithoutMetadataInput
+    series?: SerieUncheckedCreateNestedOneWithoutMetadataInput
     actors?: VideoActorUncheckedCreateNestedManyWithoutVideoInput
     subtitles?: SubtitleUncheckedCreateNestedManyWithoutVideoMetadataInput
     languages?: VideoLanguageUncheckedCreateNestedManyWithoutVideosInput
@@ -53874,8 +55859,6 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
-    thumbnailUrl: string
-    secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
@@ -53888,7 +55871,7 @@ export namespace Prisma {
     format?: VideoFormatCreateNestedOneWithoutVideosInput
     gender: VideoGenreCreateNestedOneWithoutVideosInput
     movie?: MovieCreateNestedOneWithoutMetadataInput
-    series?: SeriesCreateNestedOneWithoutMetadataInput
+    series?: SerieCreateNestedOneWithoutMetadataInput
     actors?: VideoActorCreateNestedManyWithoutVideoInput
     subtitles?: SubtitleCreateNestedManyWithoutVideoMetadataInput
     languages?: VideoLanguageCreateNestedManyWithoutVideosInput
@@ -53898,8 +55881,6 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
-    thumbnailUrl: string
-    secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
@@ -53912,7 +55893,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     movie?: MovieUncheckedCreateNestedOneWithoutMetadataInput
-    series?: SeriesUncheckedCreateNestedOneWithoutMetadataInput
+    series?: SerieUncheckedCreateNestedOneWithoutMetadataInput
     actors?: VideoActorUncheckedCreateNestedManyWithoutVideoInput
     subtitles?: SubtitleUncheckedCreateNestedManyWithoutVideoMetadataInput
     languages?: VideoLanguageUncheckedCreateNestedManyWithoutVideosInput
@@ -53948,8 +55929,6 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
-    thumbnailUrl: string
-    secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
@@ -53962,7 +55941,7 @@ export namespace Prisma {
     format?: VideoFormatCreateNestedOneWithoutVideosInput
     category: VideoCategoryCreateNestedOneWithoutVideosInput
     gender: VideoGenreCreateNestedOneWithoutVideosInput
-    series?: SeriesCreateNestedOneWithoutMetadataInput
+    series?: SerieCreateNestedOneWithoutMetadataInput
     actors?: VideoActorCreateNestedManyWithoutVideoInput
     subtitles?: SubtitleCreateNestedManyWithoutVideoMetadataInput
     languages?: VideoLanguageCreateNestedManyWithoutVideosInput
@@ -53972,8 +55951,6 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
-    thumbnailUrl: string
-    secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
@@ -53986,7 +55963,7 @@ export namespace Prisma {
     status?: $Enums.ContentStatus
     createdAt?: Date | string
     updatedAt?: Date | string
-    series?: SeriesUncheckedCreateNestedOneWithoutMetadataInput
+    series?: SerieUncheckedCreateNestedOneWithoutMetadataInput
     actors?: VideoActorUncheckedCreateNestedManyWithoutVideoInput
     subtitles?: SubtitleUncheckedCreateNestedManyWithoutVideoMetadataInput
     languages?: VideoLanguageUncheckedCreateNestedManyWithoutVideosInput
@@ -53995,45 +55972,6 @@ export namespace Prisma {
   export type VideoMetadataCreateOrConnectWithoutMovieInput = {
     where: VideoMetadataWhereUniqueInput
     create: XOR<VideoMetadataCreateWithoutMovieInput, VideoMetadataUncheckedCreateWithoutMovieInput>
-  }
-
-  export type VideoFileCreateWithoutMovieInput = {
-    id?: string
-    filePath: string
-    trailerPath?: string | null
-    duration: number
-    width?: number | null
-    height?: number | null
-    status?: $Enums.VideoFileStatus
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    episode?: EpisodeCreateNestedOneWithoutVideoFileInput
-    subtitles?: SubtitleCreateNestedManyWithoutVideoInput
-    purchases?: PurchaseCreateNestedManyWithoutVideoInput
-    comments?: CommentCreateNestedManyWithoutVideoInput
-    UserVideoProgress?: UserVideoViewCreateNestedManyWithoutVideoInput
-  }
-
-  export type VideoFileUncheckedCreateWithoutMovieInput = {
-    id?: string
-    filePath: string
-    trailerPath?: string | null
-    duration: number
-    width?: number | null
-    height?: number | null
-    status?: $Enums.VideoFileStatus
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    episode?: EpisodeUncheckedCreateNestedOneWithoutVideoFileInput
-    subtitles?: SubtitleUncheckedCreateNestedManyWithoutVideoInput
-    purchases?: PurchaseUncheckedCreateNestedManyWithoutVideoInput
-    comments?: CommentUncheckedCreateNestedManyWithoutVideoInput
-    UserVideoProgress?: UserVideoViewUncheckedCreateNestedManyWithoutVideoInput
-  }
-
-  export type VideoFileCreateOrConnectWithoutMovieInput = {
-    where: VideoFileWhereUniqueInput
-    create: XOR<VideoFileCreateWithoutMovieInput, VideoFileUncheckedCreateWithoutMovieInput>
   }
 
   export type MovieTagCreateWithoutMovieInput = {
@@ -54054,6 +55992,90 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type MediaAttachmentCreateWithoutMovieInput = {
+    id?: string
+    type: $Enums.MediaAttachmentType
+    mediaFile: MediaFileCreateNestedOneWithoutAttachmentsInput
+    episode?: EpisodeCreateNestedOneWithoutVideoAttachmentInput
+    ad?: AdCreateNestedOneWithoutVideoAttachmentInput
+  }
+
+  export type MediaAttachmentUncheckedCreateWithoutMovieInput = {
+    id?: string
+    mediaFileId: string
+    episodeId?: string | null
+    adId?: string | null
+    type: $Enums.MediaAttachmentType
+  }
+
+  export type MediaAttachmentCreateOrConnectWithoutMovieInput = {
+    where: MediaAttachmentWhereUniqueInput
+    create: XOR<MediaAttachmentCreateWithoutMovieInput, MediaAttachmentUncheckedCreateWithoutMovieInput>
+  }
+
+  export type MediaAttachmentCreateManyMovieInputEnvelope = {
+    data: MediaAttachmentCreateManyMovieInput | MediaAttachmentCreateManyMovieInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CommentCreateWithoutMovieInput = {
+    id?: string
+    text: string
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutCommentsInput
+    parent?: CommentCreateNestedOneWithoutRepliesInput
+    replies?: CommentCreateNestedManyWithoutParentInput
+    episode?: EpisodeCreateNestedOneWithoutCommentInput
+  }
+
+  export type CommentUncheckedCreateWithoutMovieInput = {
+    id?: string
+    userId: string
+    epiisodeId?: string | null
+    text: string
+    createdAt?: Date | string
+    parentCommentId?: string | null
+    replies?: CommentUncheckedCreateNestedManyWithoutParentInput
+  }
+
+  export type CommentCreateOrConnectWithoutMovieInput = {
+    where: CommentWhereUniqueInput
+    create: XOR<CommentCreateWithoutMovieInput, CommentUncheckedCreateWithoutMovieInput>
+  }
+
+  export type CommentCreateManyMovieInputEnvelope = {
+    data: CommentCreateManyMovieInput | CommentCreateManyMovieInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type PurchaseCreateWithoutMovieInput = {
+    id?: string
+    purchaseDate?: Date | string
+    expirationDate?: Date | string | null
+    country: string
+    user: UserCreateNestedOneWithoutPurchasesInput
+    serie?: SerieCreateNestedOneWithoutPurchaseInput
+  }
+
+  export type PurchaseUncheckedCreateWithoutMovieInput = {
+    id?: string
+    userId: string
+    serieId?: string | null
+    purchaseDate?: Date | string
+    expirationDate?: Date | string | null
+    country: string
+  }
+
+  export type PurchaseCreateOrConnectWithoutMovieInput = {
+    where: PurchaseWhereUniqueInput
+    create: XOR<PurchaseCreateWithoutMovieInput, PurchaseUncheckedCreateWithoutMovieInput>
+  }
+
+  export type PurchaseCreateManyMovieInputEnvelope = {
+    data: PurchaseCreateManyMovieInput | PurchaseCreateManyMovieInput[]
+    skipDuplicates?: boolean
+  }
+
   export type VideoMetadataUpsertWithoutMovieInput = {
     update: XOR<VideoMetadataUpdateWithoutMovieInput, VideoMetadataUncheckedUpdateWithoutMovieInput>
     create: XOR<VideoMetadataCreateWithoutMovieInput, VideoMetadataUncheckedCreateWithoutMovieInput>
@@ -54069,8 +56091,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    thumbnailUrl?: StringFieldUpdateOperationsInput | string
-    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -54083,7 +56103,7 @@ export namespace Prisma {
     format?: VideoFormatUpdateOneWithoutVideosNestedInput
     category?: VideoCategoryUpdateOneRequiredWithoutVideosNestedInput
     gender?: VideoGenreUpdateOneRequiredWithoutVideosNestedInput
-    series?: SeriesUpdateOneWithoutMetadataNestedInput
+    series?: SerieUpdateOneWithoutMetadataNestedInput
     actors?: VideoActorUpdateManyWithoutVideoNestedInput
     subtitles?: SubtitleUpdateManyWithoutVideoMetadataNestedInput
     languages?: VideoLanguageUpdateManyWithoutVideosNestedInput
@@ -54093,8 +56113,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    thumbnailUrl?: StringFieldUpdateOperationsInput | string
-    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -54107,55 +56125,10 @@ export namespace Prisma {
     status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    series?: SeriesUncheckedUpdateOneWithoutMetadataNestedInput
+    series?: SerieUncheckedUpdateOneWithoutMetadataNestedInput
     actors?: VideoActorUncheckedUpdateManyWithoutVideoNestedInput
     subtitles?: SubtitleUncheckedUpdateManyWithoutVideoMetadataNestedInput
     languages?: VideoLanguageUncheckedUpdateManyWithoutVideosNestedInput
-  }
-
-  export type VideoFileUpsertWithoutMovieInput = {
-    update: XOR<VideoFileUpdateWithoutMovieInput, VideoFileUncheckedUpdateWithoutMovieInput>
-    create: XOR<VideoFileCreateWithoutMovieInput, VideoFileUncheckedCreateWithoutMovieInput>
-    where?: VideoFileWhereInput
-  }
-
-  export type VideoFileUpdateToOneWithWhereWithoutMovieInput = {
-    where?: VideoFileWhereInput
-    data: XOR<VideoFileUpdateWithoutMovieInput, VideoFileUncheckedUpdateWithoutMovieInput>
-  }
-
-  export type VideoFileUpdateWithoutMovieInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    filePath?: StringFieldUpdateOperationsInput | string
-    trailerPath?: NullableStringFieldUpdateOperationsInput | string | null
-    duration?: IntFieldUpdateOperationsInput | number
-    width?: NullableIntFieldUpdateOperationsInput | number | null
-    height?: NullableIntFieldUpdateOperationsInput | number | null
-    status?: EnumVideoFileStatusFieldUpdateOperationsInput | $Enums.VideoFileStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    episode?: EpisodeUpdateOneWithoutVideoFileNestedInput
-    subtitles?: SubtitleUpdateManyWithoutVideoNestedInput
-    purchases?: PurchaseUpdateManyWithoutVideoNestedInput
-    comments?: CommentUpdateManyWithoutVideoNestedInput
-    UserVideoProgress?: UserVideoViewUpdateManyWithoutVideoNestedInput
-  }
-
-  export type VideoFileUncheckedUpdateWithoutMovieInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    filePath?: StringFieldUpdateOperationsInput | string
-    trailerPath?: NullableStringFieldUpdateOperationsInput | string | null
-    duration?: IntFieldUpdateOperationsInput | number
-    width?: NullableIntFieldUpdateOperationsInput | number | null
-    height?: NullableIntFieldUpdateOperationsInput | number | null
-    status?: EnumVideoFileStatusFieldUpdateOperationsInput | $Enums.VideoFileStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    episode?: EpisodeUncheckedUpdateOneWithoutVideoFileNestedInput
-    subtitles?: SubtitleUncheckedUpdateManyWithoutVideoNestedInput
-    purchases?: PurchaseUncheckedUpdateManyWithoutVideoNestedInput
-    comments?: CommentUncheckedUpdateManyWithoutVideoNestedInput
-    UserVideoProgress?: UserVideoViewUncheckedUpdateManyWithoutVideoNestedInput
   }
 
   export type MovieTagUpsertWithWhereUniqueWithoutMovieInput = {
@@ -54182,12 +56155,58 @@ export namespace Prisma {
     tagId?: StringFilter<"MovieTag"> | string
   }
 
+  export type MediaAttachmentUpsertWithWhereUniqueWithoutMovieInput = {
+    where: MediaAttachmentWhereUniqueInput
+    update: XOR<MediaAttachmentUpdateWithoutMovieInput, MediaAttachmentUncheckedUpdateWithoutMovieInput>
+    create: XOR<MediaAttachmentCreateWithoutMovieInput, MediaAttachmentUncheckedCreateWithoutMovieInput>
+  }
+
+  export type MediaAttachmentUpdateWithWhereUniqueWithoutMovieInput = {
+    where: MediaAttachmentWhereUniqueInput
+    data: XOR<MediaAttachmentUpdateWithoutMovieInput, MediaAttachmentUncheckedUpdateWithoutMovieInput>
+  }
+
+  export type MediaAttachmentUpdateManyWithWhereWithoutMovieInput = {
+    where: MediaAttachmentScalarWhereInput
+    data: XOR<MediaAttachmentUpdateManyMutationInput, MediaAttachmentUncheckedUpdateManyWithoutMovieInput>
+  }
+
+  export type CommentUpsertWithWhereUniqueWithoutMovieInput = {
+    where: CommentWhereUniqueInput
+    update: XOR<CommentUpdateWithoutMovieInput, CommentUncheckedUpdateWithoutMovieInput>
+    create: XOR<CommentCreateWithoutMovieInput, CommentUncheckedCreateWithoutMovieInput>
+  }
+
+  export type CommentUpdateWithWhereUniqueWithoutMovieInput = {
+    where: CommentWhereUniqueInput
+    data: XOR<CommentUpdateWithoutMovieInput, CommentUncheckedUpdateWithoutMovieInput>
+  }
+
+  export type CommentUpdateManyWithWhereWithoutMovieInput = {
+    where: CommentScalarWhereInput
+    data: XOR<CommentUpdateManyMutationInput, CommentUncheckedUpdateManyWithoutMovieInput>
+  }
+
+  export type PurchaseUpsertWithWhereUniqueWithoutMovieInput = {
+    where: PurchaseWhereUniqueInput
+    update: XOR<PurchaseUpdateWithoutMovieInput, PurchaseUncheckedUpdateWithoutMovieInput>
+    create: XOR<PurchaseCreateWithoutMovieInput, PurchaseUncheckedCreateWithoutMovieInput>
+  }
+
+  export type PurchaseUpdateWithWhereUniqueWithoutMovieInput = {
+    where: PurchaseWhereUniqueInput
+    data: XOR<PurchaseUpdateWithoutMovieInput, PurchaseUncheckedUpdateWithoutMovieInput>
+  }
+
+  export type PurchaseUpdateManyWithWhereWithoutMovieInput = {
+    where: PurchaseScalarWhereInput
+    data: XOR<PurchaseUpdateManyMutationInput, PurchaseUncheckedUpdateManyWithoutMovieInput>
+  }
+
   export type VideoMetadataCreateWithoutSeriesInput = {
     id?: string
     title: string
     description: string
-    thumbnailUrl: string
-    secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
@@ -54210,8 +56229,6 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
-    thumbnailUrl: string
-    secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
@@ -54235,7 +56252,7 @@ export namespace Prisma {
     create: XOR<VideoMetadataCreateWithoutSeriesInput, VideoMetadataUncheckedCreateWithoutSeriesInput>
   }
 
-  export type SeasonCreateWithoutSeriesInput = {
+  export type SeasonCreateWithoutSerieInput = {
     id?: string
     number: number
     createdAt?: Date | string
@@ -54244,7 +56261,7 @@ export namespace Prisma {
     SeasonView?: SeasonViewCreateNestedManyWithoutSeasonInput
   }
 
-  export type SeasonUncheckedCreateWithoutSeriesInput = {
+  export type SeasonUncheckedCreateWithoutSerieInput = {
     id?: string
     number: number
     createdAt?: Date | string
@@ -54253,13 +56270,13 @@ export namespace Prisma {
     SeasonView?: SeasonViewUncheckedCreateNestedManyWithoutSeasonInput
   }
 
-  export type SeasonCreateOrConnectWithoutSeriesInput = {
+  export type SeasonCreateOrConnectWithoutSerieInput = {
     where: SeasonWhereUniqueInput
-    create: XOR<SeasonCreateWithoutSeriesInput, SeasonUncheckedCreateWithoutSeriesInput>
+    create: XOR<SeasonCreateWithoutSerieInput, SeasonUncheckedCreateWithoutSerieInput>
   }
 
-  export type SeasonCreateManySeriesInputEnvelope = {
-    data: SeasonCreateManySeriesInput | SeasonCreateManySeriesInput[]
+  export type SeasonCreateManySerieInputEnvelope = {
+    data: SeasonCreateManySerieInput | SeasonCreateManySerieInput[]
     skipDuplicates?: boolean
   }
 
@@ -54281,7 +56298,7 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type SeriesViewCreateWithoutSeriesInput = {
+  export type SerieViewCreateWithoutSeriesInput = {
     id?: string
     userId: string
     viewedAt?: Date | string
@@ -54293,7 +56310,7 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type SeriesViewUncheckedCreateWithoutSeriesInput = {
+  export type SerieViewUncheckedCreateWithoutSeriesInput = {
     id?: string
     userId: string
     viewedAt?: Date | string
@@ -54305,13 +56322,41 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type SeriesViewCreateOrConnectWithoutSeriesInput = {
-    where: SeriesViewWhereUniqueInput
-    create: XOR<SeriesViewCreateWithoutSeriesInput, SeriesViewUncheckedCreateWithoutSeriesInput>
+  export type SerieViewCreateOrConnectWithoutSeriesInput = {
+    where: SerieViewWhereUniqueInput
+    create: XOR<SerieViewCreateWithoutSeriesInput, SerieViewUncheckedCreateWithoutSeriesInput>
   }
 
-  export type SeriesViewCreateManySeriesInputEnvelope = {
-    data: SeriesViewCreateManySeriesInput | SeriesViewCreateManySeriesInput[]
+  export type SerieViewCreateManySeriesInputEnvelope = {
+    data: SerieViewCreateManySeriesInput | SerieViewCreateManySeriesInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type PurchaseCreateWithoutSerieInput = {
+    id?: string
+    purchaseDate?: Date | string
+    expirationDate?: Date | string | null
+    country: string
+    user: UserCreateNestedOneWithoutPurchasesInput
+    movie?: MovieCreateNestedOneWithoutPurchaseInput
+  }
+
+  export type PurchaseUncheckedCreateWithoutSerieInput = {
+    id?: string
+    userId: string
+    movieId?: string | null
+    purchaseDate?: Date | string
+    expirationDate?: Date | string | null
+    country: string
+  }
+
+  export type PurchaseCreateOrConnectWithoutSerieInput = {
+    where: PurchaseWhereUniqueInput
+    create: XOR<PurchaseCreateWithoutSerieInput, PurchaseUncheckedCreateWithoutSerieInput>
+  }
+
+  export type PurchaseCreateManySerieInputEnvelope = {
+    data: PurchaseCreateManySerieInput | PurchaseCreateManySerieInput[]
     skipDuplicates?: boolean
   }
 
@@ -54330,8 +56375,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    thumbnailUrl?: StringFieldUpdateOperationsInput | string
-    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -54354,8 +56397,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    thumbnailUrl?: StringFieldUpdateOperationsInput | string
-    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -54374,20 +56415,20 @@ export namespace Prisma {
     languages?: VideoLanguageUncheckedUpdateManyWithoutVideosNestedInput
   }
 
-  export type SeasonUpsertWithWhereUniqueWithoutSeriesInput = {
+  export type SeasonUpsertWithWhereUniqueWithoutSerieInput = {
     where: SeasonWhereUniqueInput
-    update: XOR<SeasonUpdateWithoutSeriesInput, SeasonUncheckedUpdateWithoutSeriesInput>
-    create: XOR<SeasonCreateWithoutSeriesInput, SeasonUncheckedCreateWithoutSeriesInput>
+    update: XOR<SeasonUpdateWithoutSerieInput, SeasonUncheckedUpdateWithoutSerieInput>
+    create: XOR<SeasonCreateWithoutSerieInput, SeasonUncheckedCreateWithoutSerieInput>
   }
 
-  export type SeasonUpdateWithWhereUniqueWithoutSeriesInput = {
+  export type SeasonUpdateWithWhereUniqueWithoutSerieInput = {
     where: SeasonWhereUniqueInput
-    data: XOR<SeasonUpdateWithoutSeriesInput, SeasonUncheckedUpdateWithoutSeriesInput>
+    data: XOR<SeasonUpdateWithoutSerieInput, SeasonUncheckedUpdateWithoutSerieInput>
   }
 
-  export type SeasonUpdateManyWithWhereWithoutSeriesInput = {
+  export type SeasonUpdateManyWithWhereWithoutSerieInput = {
     where: SeasonScalarWhereInput
-    data: XOR<SeasonUpdateManyMutationInput, SeasonUncheckedUpdateManyWithoutSeriesInput>
+    data: XOR<SeasonUpdateManyMutationInput, SeasonUncheckedUpdateManyWithoutSerieInput>
   }
 
   export type SeasonScalarWhereInput = {
@@ -54395,7 +56436,7 @@ export namespace Prisma {
     OR?: SeasonScalarWhereInput[]
     NOT?: SeasonScalarWhereInput | SeasonScalarWhereInput[]
     id?: StringFilter<"Season"> | string
-    seriesId?: StringFilter<"Season"> | string
+    serieId?: StringFilter<"Season"> | string
     number?: IntFilter<"Season"> | number
     createdAt?: DateTimeFilter<"Season"> | Date | string
     updatedAt?: DateTimeFilter<"Season"> | Date | string
@@ -54425,39 +56466,55 @@ export namespace Prisma {
     tagId?: StringFilter<"SeriesTag"> | string
   }
 
-  export type SeriesViewUpsertWithWhereUniqueWithoutSeriesInput = {
-    where: SeriesViewWhereUniqueInput
-    update: XOR<SeriesViewUpdateWithoutSeriesInput, SeriesViewUncheckedUpdateWithoutSeriesInput>
-    create: XOR<SeriesViewCreateWithoutSeriesInput, SeriesViewUncheckedCreateWithoutSeriesInput>
+  export type SerieViewUpsertWithWhereUniqueWithoutSeriesInput = {
+    where: SerieViewWhereUniqueInput
+    update: XOR<SerieViewUpdateWithoutSeriesInput, SerieViewUncheckedUpdateWithoutSeriesInput>
+    create: XOR<SerieViewCreateWithoutSeriesInput, SerieViewUncheckedCreateWithoutSeriesInput>
   }
 
-  export type SeriesViewUpdateWithWhereUniqueWithoutSeriesInput = {
-    where: SeriesViewWhereUniqueInput
-    data: XOR<SeriesViewUpdateWithoutSeriesInput, SeriesViewUncheckedUpdateWithoutSeriesInput>
+  export type SerieViewUpdateWithWhereUniqueWithoutSeriesInput = {
+    where: SerieViewWhereUniqueInput
+    data: XOR<SerieViewUpdateWithoutSeriesInput, SerieViewUncheckedUpdateWithoutSeriesInput>
   }
 
-  export type SeriesViewUpdateManyWithWhereWithoutSeriesInput = {
-    where: SeriesViewScalarWhereInput
-    data: XOR<SeriesViewUpdateManyMutationInput, SeriesViewUncheckedUpdateManyWithoutSeriesInput>
+  export type SerieViewUpdateManyWithWhereWithoutSeriesInput = {
+    where: SerieViewScalarWhereInput
+    data: XOR<SerieViewUpdateManyMutationInput, SerieViewUncheckedUpdateManyWithoutSeriesInput>
   }
 
-  export type SeriesViewScalarWhereInput = {
-    AND?: SeriesViewScalarWhereInput | SeriesViewScalarWhereInput[]
-    OR?: SeriesViewScalarWhereInput[]
-    NOT?: SeriesViewScalarWhereInput | SeriesViewScalarWhereInput[]
-    id?: StringFilter<"SeriesView"> | string
-    seriesId?: StringFilter<"SeriesView"> | string
-    userId?: StringFilter<"SeriesView"> | string
-    viewedAt?: DateTimeFilter<"SeriesView"> | Date | string
-    seasonsWatched?: IntNullableFilter<"SeriesView"> | number | null
-    episodesWatched?: IntNullableFilter<"SeriesView"> | number | null
-    totalTimeSpent?: IntNullableFilter<"SeriesView"> | number | null
-    rating?: FloatNullableFilter<"SeriesView"> | number | null
-    createdAt?: DateTimeFilter<"SeriesView"> | Date | string
-    updatedAt?: DateTimeFilter<"SeriesView"> | Date | string
+  export type SerieViewScalarWhereInput = {
+    AND?: SerieViewScalarWhereInput | SerieViewScalarWhereInput[]
+    OR?: SerieViewScalarWhereInput[]
+    NOT?: SerieViewScalarWhereInput | SerieViewScalarWhereInput[]
+    id?: StringFilter<"SerieView"> | string
+    seriesId?: StringFilter<"SerieView"> | string
+    userId?: StringFilter<"SerieView"> | string
+    viewedAt?: DateTimeFilter<"SerieView"> | Date | string
+    seasonsWatched?: IntNullableFilter<"SerieView"> | number | null
+    episodesWatched?: IntNullableFilter<"SerieView"> | number | null
+    totalTimeSpent?: IntNullableFilter<"SerieView"> | number | null
+    rating?: FloatNullableFilter<"SerieView"> | number | null
+    createdAt?: DateTimeFilter<"SerieView"> | Date | string
+    updatedAt?: DateTimeFilter<"SerieView"> | Date | string
   }
 
-  export type SeriesCreateWithoutSeasonsInput = {
+  export type PurchaseUpsertWithWhereUniqueWithoutSerieInput = {
+    where: PurchaseWhereUniqueInput
+    update: XOR<PurchaseUpdateWithoutSerieInput, PurchaseUncheckedUpdateWithoutSerieInput>
+    create: XOR<PurchaseCreateWithoutSerieInput, PurchaseUncheckedCreateWithoutSerieInput>
+  }
+
+  export type PurchaseUpdateWithWhereUniqueWithoutSerieInput = {
+    where: PurchaseWhereUniqueInput
+    data: XOR<PurchaseUpdateWithoutSerieInput, PurchaseUncheckedUpdateWithoutSerieInput>
+  }
+
+  export type PurchaseUpdateManyWithWhereWithoutSerieInput = {
+    where: PurchaseScalarWhereInput
+    data: XOR<PurchaseUpdateManyMutationInput, PurchaseUncheckedUpdateManyWithoutSerieInput>
+  }
+
+  export type SerieCreateWithoutSeasonsInput = {
     id?: string
     status?: string
     type?: string
@@ -54467,10 +56524,11 @@ export namespace Prisma {
     updatedAt?: Date | string
     metadata: VideoMetadataCreateNestedOneWithoutSeriesInput
     tags?: SeriesTagCreateNestedManyWithoutSeriesInput
-    SeriesView?: SeriesViewCreateNestedManyWithoutSeriesInput
+    SerieView?: SerieViewCreateNestedManyWithoutSeriesInput
+    Purchase?: PurchaseCreateNestedManyWithoutSerieInput
   }
 
-  export type SeriesUncheckedCreateWithoutSeasonsInput = {
+  export type SerieUncheckedCreateWithoutSeasonsInput = {
     id?: string
     metadataId: string
     status?: string
@@ -54480,12 +56538,13 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     tags?: SeriesTagUncheckedCreateNestedManyWithoutSeriesInput
-    SeriesView?: SeriesViewUncheckedCreateNestedManyWithoutSeriesInput
+    SerieView?: SerieViewUncheckedCreateNestedManyWithoutSeriesInput
+    Purchase?: PurchaseUncheckedCreateNestedManyWithoutSerieInput
   }
 
-  export type SeriesCreateOrConnectWithoutSeasonsInput = {
-    where: SeriesWhereUniqueInput
-    create: XOR<SeriesCreateWithoutSeasonsInput, SeriesUncheckedCreateWithoutSeasonsInput>
+  export type SerieCreateOrConnectWithoutSeasonsInput = {
+    where: SerieWhereUniqueInput
+    create: XOR<SerieCreateWithoutSeasonsInput, SerieUncheckedCreateWithoutSeasonsInput>
   }
 
   export type EpisodeCreateWithoutSeasonInput = {
@@ -54499,13 +56558,13 @@ export namespace Prisma {
     isSaFliixProd: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    videoFile: VideoFileCreateNestedOneWithoutEpisodeInput
+    videoAttachment?: MediaAttachmentCreateNestedManyWithoutEpisodeInput
+    Comment?: CommentCreateNestedManyWithoutEpisodeInput
   }
 
   export type EpisodeUncheckedCreateWithoutSeasonInput = {
     id?: string
     number: number
-    videoFileId: string
     title?: string | null
     releaseDate: Date | string
     plateformeDAte: Date | string
@@ -54514,6 +56573,8 @@ export namespace Prisma {
     isSaFliixProd: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    videoAttachment?: MediaAttachmentUncheckedCreateNestedManyWithoutEpisodeInput
+    Comment?: CommentUncheckedCreateNestedManyWithoutEpisodeInput
   }
 
   export type EpisodeCreateOrConnectWithoutSeasonInput = {
@@ -54558,18 +56619,18 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type SeriesUpsertWithoutSeasonsInput = {
-    update: XOR<SeriesUpdateWithoutSeasonsInput, SeriesUncheckedUpdateWithoutSeasonsInput>
-    create: XOR<SeriesCreateWithoutSeasonsInput, SeriesUncheckedCreateWithoutSeasonsInput>
-    where?: SeriesWhereInput
+  export type SerieUpsertWithoutSeasonsInput = {
+    update: XOR<SerieUpdateWithoutSeasonsInput, SerieUncheckedUpdateWithoutSeasonsInput>
+    create: XOR<SerieCreateWithoutSeasonsInput, SerieUncheckedCreateWithoutSeasonsInput>
+    where?: SerieWhereInput
   }
 
-  export type SeriesUpdateToOneWithWhereWithoutSeasonsInput = {
-    where?: SeriesWhereInput
-    data: XOR<SeriesUpdateWithoutSeasonsInput, SeriesUncheckedUpdateWithoutSeasonsInput>
+  export type SerieUpdateToOneWithWhereWithoutSeasonsInput = {
+    where?: SerieWhereInput
+    data: XOR<SerieUpdateWithoutSeasonsInput, SerieUncheckedUpdateWithoutSeasonsInput>
   }
 
-  export type SeriesUpdateWithoutSeasonsInput = {
+  export type SerieUpdateWithoutSeasonsInput = {
     id?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
@@ -54579,10 +56640,11 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     metadata?: VideoMetadataUpdateOneRequiredWithoutSeriesNestedInput
     tags?: SeriesTagUpdateManyWithoutSeriesNestedInput
-    SeriesView?: SeriesViewUpdateManyWithoutSeriesNestedInput
+    SerieView?: SerieViewUpdateManyWithoutSeriesNestedInput
+    Purchase?: PurchaseUpdateManyWithoutSerieNestedInput
   }
 
-  export type SeriesUncheckedUpdateWithoutSeasonsInput = {
+  export type SerieUncheckedUpdateWithoutSeasonsInput = {
     id?: StringFieldUpdateOperationsInput | string
     metadataId?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
@@ -54592,7 +56654,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tags?: SeriesTagUncheckedUpdateManyWithoutSeriesNestedInput
-    SeriesView?: SeriesViewUncheckedUpdateManyWithoutSeriesNestedInput
+    SerieView?: SerieViewUncheckedUpdateManyWithoutSeriesNestedInput
+    Purchase?: PurchaseUncheckedUpdateManyWithoutSerieNestedInput
   }
 
   export type EpisodeUpsertWithWhereUniqueWithoutSeasonInput = {
@@ -54618,7 +56681,6 @@ export namespace Prisma {
     id?: StringFilter<"Episode"> | string
     seasonId?: StringFilter<"Episode"> | string
     number?: IntFilter<"Episode"> | number
-    videoFileId?: StringFilter<"Episode"> | string
     title?: StringNullableFilter<"Episode"> | string | null
     releaseDate?: DateTimeFilter<"Episode"> | Date | string
     plateformeDAte?: DateTimeFilter<"Episode"> | Date | string
@@ -54650,13 +56712,13 @@ export namespace Prisma {
     number: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    series: SeriesCreateNestedOneWithoutSeasonsInput
+    serie: SerieCreateNestedOneWithoutSeasonsInput
     SeasonView?: SeasonViewCreateNestedManyWithoutSeasonInput
   }
 
   export type SeasonUncheckedCreateWithoutEpisodesInput = {
     id?: string
-    seriesId: string
+    serieId: string
     number: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -54668,43 +56730,60 @@ export namespace Prisma {
     create: XOR<SeasonCreateWithoutEpisodesInput, SeasonUncheckedCreateWithoutEpisodesInput>
   }
 
-  export type VideoFileCreateWithoutEpisodeInput = {
+  export type MediaAttachmentCreateWithoutEpisodeInput = {
     id?: string
-    filePath: string
-    trailerPath?: string | null
-    duration: number
-    width?: number | null
-    height?: number | null
-    status?: $Enums.VideoFileStatus
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    movie?: MovieCreateNestedOneWithoutVideoFileInput
-    subtitles?: SubtitleCreateNestedManyWithoutVideoInput
-    purchases?: PurchaseCreateNestedManyWithoutVideoInput
-    comments?: CommentCreateNestedManyWithoutVideoInput
-    UserVideoProgress?: UserVideoViewCreateNestedManyWithoutVideoInput
+    type: $Enums.MediaAttachmentType
+    mediaFile: MediaFileCreateNestedOneWithoutAttachmentsInput
+    movie?: MovieCreateNestedOneWithoutAttachmentInput
+    ad?: AdCreateNestedOneWithoutVideoAttachmentInput
   }
 
-  export type VideoFileUncheckedCreateWithoutEpisodeInput = {
+  export type MediaAttachmentUncheckedCreateWithoutEpisodeInput = {
     id?: string
-    filePath: string
-    trailerPath?: string | null
-    duration: number
-    width?: number | null
-    height?: number | null
-    status?: $Enums.VideoFileStatus
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    movie?: MovieUncheckedCreateNestedOneWithoutVideoFileInput
-    subtitles?: SubtitleUncheckedCreateNestedManyWithoutVideoInput
-    purchases?: PurchaseUncheckedCreateNestedManyWithoutVideoInput
-    comments?: CommentUncheckedCreateNestedManyWithoutVideoInput
-    UserVideoProgress?: UserVideoViewUncheckedCreateNestedManyWithoutVideoInput
+    mediaFileId: string
+    movieId?: string | null
+    adId?: string | null
+    type: $Enums.MediaAttachmentType
   }
 
-  export type VideoFileCreateOrConnectWithoutEpisodeInput = {
-    where: VideoFileWhereUniqueInput
-    create: XOR<VideoFileCreateWithoutEpisodeInput, VideoFileUncheckedCreateWithoutEpisodeInput>
+  export type MediaAttachmentCreateOrConnectWithoutEpisodeInput = {
+    where: MediaAttachmentWhereUniqueInput
+    create: XOR<MediaAttachmentCreateWithoutEpisodeInput, MediaAttachmentUncheckedCreateWithoutEpisodeInput>
+  }
+
+  export type MediaAttachmentCreateManyEpisodeInputEnvelope = {
+    data: MediaAttachmentCreateManyEpisodeInput | MediaAttachmentCreateManyEpisodeInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CommentCreateWithoutEpisodeInput = {
+    id?: string
+    text: string
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutCommentsInput
+    parent?: CommentCreateNestedOneWithoutRepliesInput
+    replies?: CommentCreateNestedManyWithoutParentInput
+    movie?: MovieCreateNestedOneWithoutCommentInput
+  }
+
+  export type CommentUncheckedCreateWithoutEpisodeInput = {
+    id?: string
+    userId: string
+    movieId?: string | null
+    text: string
+    createdAt?: Date | string
+    parentCommentId?: string | null
+    replies?: CommentUncheckedCreateNestedManyWithoutParentInput
+  }
+
+  export type CommentCreateOrConnectWithoutEpisodeInput = {
+    where: CommentWhereUniqueInput
+    create: XOR<CommentCreateWithoutEpisodeInput, CommentUncheckedCreateWithoutEpisodeInput>
+  }
+
+  export type CommentCreateManyEpisodeInputEnvelope = {
+    data: CommentCreateManyEpisodeInput | CommentCreateManyEpisodeInput[]
+    skipDuplicates?: boolean
   }
 
   export type SeasonUpsertWithoutEpisodesInput = {
@@ -54723,62 +56802,49 @@ export namespace Prisma {
     number?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    series?: SeriesUpdateOneRequiredWithoutSeasonsNestedInput
+    serie?: SerieUpdateOneRequiredWithoutSeasonsNestedInput
     SeasonView?: SeasonViewUpdateManyWithoutSeasonNestedInput
   }
 
   export type SeasonUncheckedUpdateWithoutEpisodesInput = {
     id?: StringFieldUpdateOperationsInput | string
-    seriesId?: StringFieldUpdateOperationsInput | string
+    serieId?: StringFieldUpdateOperationsInput | string
     number?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     SeasonView?: SeasonViewUncheckedUpdateManyWithoutSeasonNestedInput
   }
 
-  export type VideoFileUpsertWithoutEpisodeInput = {
-    update: XOR<VideoFileUpdateWithoutEpisodeInput, VideoFileUncheckedUpdateWithoutEpisodeInput>
-    create: XOR<VideoFileCreateWithoutEpisodeInput, VideoFileUncheckedCreateWithoutEpisodeInput>
-    where?: VideoFileWhereInput
+  export type MediaAttachmentUpsertWithWhereUniqueWithoutEpisodeInput = {
+    where: MediaAttachmentWhereUniqueInput
+    update: XOR<MediaAttachmentUpdateWithoutEpisodeInput, MediaAttachmentUncheckedUpdateWithoutEpisodeInput>
+    create: XOR<MediaAttachmentCreateWithoutEpisodeInput, MediaAttachmentUncheckedCreateWithoutEpisodeInput>
   }
 
-  export type VideoFileUpdateToOneWithWhereWithoutEpisodeInput = {
-    where?: VideoFileWhereInput
-    data: XOR<VideoFileUpdateWithoutEpisodeInput, VideoFileUncheckedUpdateWithoutEpisodeInput>
+  export type MediaAttachmentUpdateWithWhereUniqueWithoutEpisodeInput = {
+    where: MediaAttachmentWhereUniqueInput
+    data: XOR<MediaAttachmentUpdateWithoutEpisodeInput, MediaAttachmentUncheckedUpdateWithoutEpisodeInput>
   }
 
-  export type VideoFileUpdateWithoutEpisodeInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    filePath?: StringFieldUpdateOperationsInput | string
-    trailerPath?: NullableStringFieldUpdateOperationsInput | string | null
-    duration?: IntFieldUpdateOperationsInput | number
-    width?: NullableIntFieldUpdateOperationsInput | number | null
-    height?: NullableIntFieldUpdateOperationsInput | number | null
-    status?: EnumVideoFileStatusFieldUpdateOperationsInput | $Enums.VideoFileStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    movie?: MovieUpdateOneWithoutVideoFileNestedInput
-    subtitles?: SubtitleUpdateManyWithoutVideoNestedInput
-    purchases?: PurchaseUpdateManyWithoutVideoNestedInput
-    comments?: CommentUpdateManyWithoutVideoNestedInput
-    UserVideoProgress?: UserVideoViewUpdateManyWithoutVideoNestedInput
+  export type MediaAttachmentUpdateManyWithWhereWithoutEpisodeInput = {
+    where: MediaAttachmentScalarWhereInput
+    data: XOR<MediaAttachmentUpdateManyMutationInput, MediaAttachmentUncheckedUpdateManyWithoutEpisodeInput>
   }
 
-  export type VideoFileUncheckedUpdateWithoutEpisodeInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    filePath?: StringFieldUpdateOperationsInput | string
-    trailerPath?: NullableStringFieldUpdateOperationsInput | string | null
-    duration?: IntFieldUpdateOperationsInput | number
-    width?: NullableIntFieldUpdateOperationsInput | number | null
-    height?: NullableIntFieldUpdateOperationsInput | number | null
-    status?: EnumVideoFileStatusFieldUpdateOperationsInput | $Enums.VideoFileStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    movie?: MovieUncheckedUpdateOneWithoutVideoFileNestedInput
-    subtitles?: SubtitleUncheckedUpdateManyWithoutVideoNestedInput
-    purchases?: PurchaseUncheckedUpdateManyWithoutVideoNestedInput
-    comments?: CommentUncheckedUpdateManyWithoutVideoNestedInput
-    UserVideoProgress?: UserVideoViewUncheckedUpdateManyWithoutVideoNestedInput
+  export type CommentUpsertWithWhereUniqueWithoutEpisodeInput = {
+    where: CommentWhereUniqueInput
+    update: XOR<CommentUpdateWithoutEpisodeInput, CommentUncheckedUpdateWithoutEpisodeInput>
+    create: XOR<CommentCreateWithoutEpisodeInput, CommentUncheckedCreateWithoutEpisodeInput>
+  }
+
+  export type CommentUpdateWithWhereUniqueWithoutEpisodeInput = {
+    where: CommentWhereUniqueInput
+    data: XOR<CommentUpdateWithoutEpisodeInput, CommentUncheckedUpdateWithoutEpisodeInput>
+  }
+
+  export type CommentUpdateManyWithWhereWithoutEpisodeInput = {
+    where: CommentScalarWhereInput
+    data: XOR<CommentUpdateManyMutationInput, CommentUncheckedUpdateManyWithoutEpisodeInput>
   }
 
   export type UserCreateWithoutUserVideoViewInput = {
@@ -54826,45 +56892,6 @@ export namespace Prisma {
   export type UserCreateOrConnectWithoutUserVideoViewInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutUserVideoViewInput, UserUncheckedCreateWithoutUserVideoViewInput>
-  }
-
-  export type VideoFileCreateWithoutUserVideoProgressInput = {
-    id?: string
-    filePath: string
-    trailerPath?: string | null
-    duration: number
-    width?: number | null
-    height?: number | null
-    status?: $Enums.VideoFileStatus
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    movie?: MovieCreateNestedOneWithoutVideoFileInput
-    episode?: EpisodeCreateNestedOneWithoutVideoFileInput
-    subtitles?: SubtitleCreateNestedManyWithoutVideoInput
-    purchases?: PurchaseCreateNestedManyWithoutVideoInput
-    comments?: CommentCreateNestedManyWithoutVideoInput
-  }
-
-  export type VideoFileUncheckedCreateWithoutUserVideoProgressInput = {
-    id?: string
-    filePath: string
-    trailerPath?: string | null
-    duration: number
-    width?: number | null
-    height?: number | null
-    status?: $Enums.VideoFileStatus
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    movie?: MovieUncheckedCreateNestedOneWithoutVideoFileInput
-    episode?: EpisodeUncheckedCreateNestedOneWithoutVideoFileInput
-    subtitles?: SubtitleUncheckedCreateNestedManyWithoutVideoInput
-    purchases?: PurchaseUncheckedCreateNestedManyWithoutVideoInput
-    comments?: CommentUncheckedCreateNestedManyWithoutVideoInput
-  }
-
-  export type VideoFileCreateOrConnectWithoutUserVideoProgressInput = {
-    where: VideoFileWhereUniqueInput
-    create: XOR<VideoFileCreateWithoutUserVideoProgressInput, VideoFileUncheckedCreateWithoutUserVideoProgressInput>
   }
 
   export type UserUpsertWithoutUserVideoViewInput = {
@@ -54920,63 +56947,18 @@ export namespace Prisma {
     emailValidation?: EmailValidationUncheckedUpdateManyWithoutUserNestedInput
   }
 
-  export type VideoFileUpsertWithoutUserVideoProgressInput = {
-    update: XOR<VideoFileUpdateWithoutUserVideoProgressInput, VideoFileUncheckedUpdateWithoutUserVideoProgressInput>
-    create: XOR<VideoFileCreateWithoutUserVideoProgressInput, VideoFileUncheckedCreateWithoutUserVideoProgressInput>
-    where?: VideoFileWhereInput
-  }
-
-  export type VideoFileUpdateToOneWithWhereWithoutUserVideoProgressInput = {
-    where?: VideoFileWhereInput
-    data: XOR<VideoFileUpdateWithoutUserVideoProgressInput, VideoFileUncheckedUpdateWithoutUserVideoProgressInput>
-  }
-
-  export type VideoFileUpdateWithoutUserVideoProgressInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    filePath?: StringFieldUpdateOperationsInput | string
-    trailerPath?: NullableStringFieldUpdateOperationsInput | string | null
-    duration?: IntFieldUpdateOperationsInput | number
-    width?: NullableIntFieldUpdateOperationsInput | number | null
-    height?: NullableIntFieldUpdateOperationsInput | number | null
-    status?: EnumVideoFileStatusFieldUpdateOperationsInput | $Enums.VideoFileStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    movie?: MovieUpdateOneWithoutVideoFileNestedInput
-    episode?: EpisodeUpdateOneWithoutVideoFileNestedInput
-    subtitles?: SubtitleUpdateManyWithoutVideoNestedInput
-    purchases?: PurchaseUpdateManyWithoutVideoNestedInput
-    comments?: CommentUpdateManyWithoutVideoNestedInput
-  }
-
-  export type VideoFileUncheckedUpdateWithoutUserVideoProgressInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    filePath?: StringFieldUpdateOperationsInput | string
-    trailerPath?: NullableStringFieldUpdateOperationsInput | string | null
-    duration?: IntFieldUpdateOperationsInput | number
-    width?: NullableIntFieldUpdateOperationsInput | number | null
-    height?: NullableIntFieldUpdateOperationsInput | number | null
-    status?: EnumVideoFileStatusFieldUpdateOperationsInput | $Enums.VideoFileStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    movie?: MovieUncheckedUpdateOneWithoutVideoFileNestedInput
-    episode?: EpisodeUncheckedUpdateOneWithoutVideoFileNestedInput
-    subtitles?: SubtitleUncheckedUpdateManyWithoutVideoNestedInput
-    purchases?: PurchaseUncheckedUpdateManyWithoutVideoNestedInput
-    comments?: CommentUncheckedUpdateManyWithoutVideoNestedInput
-  }
-
   export type SeasonCreateWithoutSeasonViewInput = {
     id?: string
     number: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    series: SeriesCreateNestedOneWithoutSeasonsInput
+    serie: SerieCreateNestedOneWithoutSeasonsInput
     episodes?: EpisodeCreateNestedManyWithoutSeasonInput
   }
 
   export type SeasonUncheckedCreateWithoutSeasonViewInput = {
     id?: string
-    seriesId: string
+    serieId: string
     number: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -55051,13 +57033,13 @@ export namespace Prisma {
     number?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    series?: SeriesUpdateOneRequiredWithoutSeasonsNestedInput
+    serie?: SerieUpdateOneRequiredWithoutSeasonsNestedInput
     episodes?: EpisodeUpdateManyWithoutSeasonNestedInput
   }
 
   export type SeasonUncheckedUpdateWithoutSeasonViewInput = {
     id?: StringFieldUpdateOperationsInput | string
-    seriesId?: StringFieldUpdateOperationsInput | string
+    serieId?: StringFieldUpdateOperationsInput | string
     number?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -55117,7 +57099,7 @@ export namespace Prisma {
     emailValidation?: EmailValidationUncheckedUpdateManyWithoutUserNestedInput
   }
 
-  export type SeriesCreateWithoutSeriesViewInput = {
+  export type SerieCreateWithoutSerieViewInput = {
     id?: string
     status?: string
     type?: string
@@ -55126,11 +57108,12 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     metadata: VideoMetadataCreateNestedOneWithoutSeriesInput
-    seasons?: SeasonCreateNestedManyWithoutSeriesInput
+    seasons?: SeasonCreateNestedManyWithoutSerieInput
     tags?: SeriesTagCreateNestedManyWithoutSeriesInput
+    Purchase?: PurchaseCreateNestedManyWithoutSerieInput
   }
 
-  export type SeriesUncheckedCreateWithoutSeriesViewInput = {
+  export type SerieUncheckedCreateWithoutSerieViewInput = {
     id?: string
     metadataId: string
     status?: string
@@ -55139,27 +57122,28 @@ export namespace Prisma {
     rentalPrice?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    seasons?: SeasonUncheckedCreateNestedManyWithoutSeriesInput
+    seasons?: SeasonUncheckedCreateNestedManyWithoutSerieInput
     tags?: SeriesTagUncheckedCreateNestedManyWithoutSeriesInput
+    Purchase?: PurchaseUncheckedCreateNestedManyWithoutSerieInput
   }
 
-  export type SeriesCreateOrConnectWithoutSeriesViewInput = {
-    where: SeriesWhereUniqueInput
-    create: XOR<SeriesCreateWithoutSeriesViewInput, SeriesUncheckedCreateWithoutSeriesViewInput>
+  export type SerieCreateOrConnectWithoutSerieViewInput = {
+    where: SerieWhereUniqueInput
+    create: XOR<SerieCreateWithoutSerieViewInput, SerieUncheckedCreateWithoutSerieViewInput>
   }
 
-  export type SeriesUpsertWithoutSeriesViewInput = {
-    update: XOR<SeriesUpdateWithoutSeriesViewInput, SeriesUncheckedUpdateWithoutSeriesViewInput>
-    create: XOR<SeriesCreateWithoutSeriesViewInput, SeriesUncheckedCreateWithoutSeriesViewInput>
-    where?: SeriesWhereInput
+  export type SerieUpsertWithoutSerieViewInput = {
+    update: XOR<SerieUpdateWithoutSerieViewInput, SerieUncheckedUpdateWithoutSerieViewInput>
+    create: XOR<SerieCreateWithoutSerieViewInput, SerieUncheckedCreateWithoutSerieViewInput>
+    where?: SerieWhereInput
   }
 
-  export type SeriesUpdateToOneWithWhereWithoutSeriesViewInput = {
-    where?: SeriesWhereInput
-    data: XOR<SeriesUpdateWithoutSeriesViewInput, SeriesUncheckedUpdateWithoutSeriesViewInput>
+  export type SerieUpdateToOneWithWhereWithoutSerieViewInput = {
+    where?: SerieWhereInput
+    data: XOR<SerieUpdateWithoutSerieViewInput, SerieUncheckedUpdateWithoutSerieViewInput>
   }
 
-  export type SeriesUpdateWithoutSeriesViewInput = {
+  export type SerieUpdateWithoutSerieViewInput = {
     id?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
@@ -55168,11 +57152,12 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     metadata?: VideoMetadataUpdateOneRequiredWithoutSeriesNestedInput
-    seasons?: SeasonUpdateManyWithoutSeriesNestedInput
+    seasons?: SeasonUpdateManyWithoutSerieNestedInput
     tags?: SeriesTagUpdateManyWithoutSeriesNestedInput
+    Purchase?: PurchaseUpdateManyWithoutSerieNestedInput
   }
 
-  export type SeriesUncheckedUpdateWithoutSeriesViewInput = {
+  export type SerieUncheckedUpdateWithoutSerieViewInput = {
     id?: StringFieldUpdateOperationsInput | string
     metadataId?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
@@ -55181,8 +57166,9 @@ export namespace Prisma {
     rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    seasons?: SeasonUncheckedUpdateManyWithoutSeriesNestedInput
+    seasons?: SeasonUncheckedUpdateManyWithoutSerieNestedInput
     tags?: SeriesTagUncheckedUpdateManyWithoutSeriesNestedInput
+    Purchase?: PurchaseUncheckedUpdateManyWithoutSerieNestedInput
   }
 
   export type MovieTagCreateWithoutTagInput = {
@@ -55204,7 +57190,7 @@ export namespace Prisma {
   }
 
   export type SeriesTagCreateWithoutTagInput = {
-    series: SeriesCreateNestedOneWithoutTagsInput
+    series: SerieCreateNestedOneWithoutTagsInput
   }
 
   export type SeriesTagUncheckedCreateWithoutTagInput = {
@@ -55255,26 +57241,30 @@ export namespace Prisma {
 
   export type MovieCreateWithoutTagsInput = {
     id?: string
-    status?: string
+    status?: $Enums.ContentStatus
     type?: string
     seasonCount?: number
     rentalPrice?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     metadata: VideoMetadataCreateNestedOneWithoutMovieInput
-    videoFile: VideoFileCreateNestedOneWithoutMovieInput
+    attachment?: MediaAttachmentCreateNestedManyWithoutMovieInput
+    Comment?: CommentCreateNestedManyWithoutMovieInput
+    Purchase?: PurchaseCreateNestedManyWithoutMovieInput
   }
 
   export type MovieUncheckedCreateWithoutTagsInput = {
     id?: string
     metadataId: string
-    videoFileId: string
-    status?: string
+    status?: $Enums.ContentStatus
     type?: string
     seasonCount?: number
     rentalPrice?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    attachment?: MediaAttachmentUncheckedCreateNestedManyWithoutMovieInput
+    Comment?: CommentUncheckedCreateNestedManyWithoutMovieInput
+    Purchase?: PurchaseUncheckedCreateNestedManyWithoutMovieInput
   }
 
   export type MovieCreateOrConnectWithoutTagsInput = {
@@ -55312,26 +57302,30 @@ export namespace Prisma {
 
   export type MovieUpdateWithoutTagsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
     type?: StringFieldUpdateOperationsInput | string
     seasonCount?: IntFieldUpdateOperationsInput | number
     rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     metadata?: VideoMetadataUpdateOneRequiredWithoutMovieNestedInput
-    videoFile?: VideoFileUpdateOneRequiredWithoutMovieNestedInput
+    attachment?: MediaAttachmentUpdateManyWithoutMovieNestedInput
+    Comment?: CommentUpdateManyWithoutMovieNestedInput
+    Purchase?: PurchaseUpdateManyWithoutMovieNestedInput
   }
 
   export type MovieUncheckedUpdateWithoutTagsInput = {
     id?: StringFieldUpdateOperationsInput | string
     metadataId?: StringFieldUpdateOperationsInput | string
-    videoFileId?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
     type?: StringFieldUpdateOperationsInput | string
     seasonCount?: IntFieldUpdateOperationsInput | number
     rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    attachment?: MediaAttachmentUncheckedUpdateManyWithoutMovieNestedInput
+    Comment?: CommentUncheckedUpdateManyWithoutMovieNestedInput
+    Purchase?: PurchaseUncheckedUpdateManyWithoutMovieNestedInput
   }
 
   export type TagUpsertWithoutMovieTagsInput = {
@@ -55357,7 +57351,7 @@ export namespace Prisma {
     seriesTags?: SeriesTagUncheckedUpdateManyWithoutTagNestedInput
   }
 
-  export type SeriesCreateWithoutTagsInput = {
+  export type SerieCreateWithoutTagsInput = {
     id?: string
     status?: string
     type?: string
@@ -55366,11 +57360,12 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     metadata: VideoMetadataCreateNestedOneWithoutSeriesInput
-    seasons?: SeasonCreateNestedManyWithoutSeriesInput
-    SeriesView?: SeriesViewCreateNestedManyWithoutSeriesInput
+    seasons?: SeasonCreateNestedManyWithoutSerieInput
+    SerieView?: SerieViewCreateNestedManyWithoutSeriesInput
+    Purchase?: PurchaseCreateNestedManyWithoutSerieInput
   }
 
-  export type SeriesUncheckedCreateWithoutTagsInput = {
+  export type SerieUncheckedCreateWithoutTagsInput = {
     id?: string
     metadataId: string
     status?: string
@@ -55379,13 +57374,14 @@ export namespace Prisma {
     rentalPrice?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    seasons?: SeasonUncheckedCreateNestedManyWithoutSeriesInput
-    SeriesView?: SeriesViewUncheckedCreateNestedManyWithoutSeriesInput
+    seasons?: SeasonUncheckedCreateNestedManyWithoutSerieInput
+    SerieView?: SerieViewUncheckedCreateNestedManyWithoutSeriesInput
+    Purchase?: PurchaseUncheckedCreateNestedManyWithoutSerieInput
   }
 
-  export type SeriesCreateOrConnectWithoutTagsInput = {
-    where: SeriesWhereUniqueInput
-    create: XOR<SeriesCreateWithoutTagsInput, SeriesUncheckedCreateWithoutTagsInput>
+  export type SerieCreateOrConnectWithoutTagsInput = {
+    where: SerieWhereUniqueInput
+    create: XOR<SerieCreateWithoutTagsInput, SerieUncheckedCreateWithoutTagsInput>
   }
 
   export type TagCreateWithoutSeriesTagsInput = {
@@ -55405,18 +57401,18 @@ export namespace Prisma {
     create: XOR<TagCreateWithoutSeriesTagsInput, TagUncheckedCreateWithoutSeriesTagsInput>
   }
 
-  export type SeriesUpsertWithoutTagsInput = {
-    update: XOR<SeriesUpdateWithoutTagsInput, SeriesUncheckedUpdateWithoutTagsInput>
-    create: XOR<SeriesCreateWithoutTagsInput, SeriesUncheckedCreateWithoutTagsInput>
-    where?: SeriesWhereInput
+  export type SerieUpsertWithoutTagsInput = {
+    update: XOR<SerieUpdateWithoutTagsInput, SerieUncheckedUpdateWithoutTagsInput>
+    create: XOR<SerieCreateWithoutTagsInput, SerieUncheckedCreateWithoutTagsInput>
+    where?: SerieWhereInput
   }
 
-  export type SeriesUpdateToOneWithWhereWithoutTagsInput = {
-    where?: SeriesWhereInput
-    data: XOR<SeriesUpdateWithoutTagsInput, SeriesUncheckedUpdateWithoutTagsInput>
+  export type SerieUpdateToOneWithWhereWithoutTagsInput = {
+    where?: SerieWhereInput
+    data: XOR<SerieUpdateWithoutTagsInput, SerieUncheckedUpdateWithoutTagsInput>
   }
 
-  export type SeriesUpdateWithoutTagsInput = {
+  export type SerieUpdateWithoutTagsInput = {
     id?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
@@ -55425,11 +57421,12 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     metadata?: VideoMetadataUpdateOneRequiredWithoutSeriesNestedInput
-    seasons?: SeasonUpdateManyWithoutSeriesNestedInput
-    SeriesView?: SeriesViewUpdateManyWithoutSeriesNestedInput
+    seasons?: SeasonUpdateManyWithoutSerieNestedInput
+    SerieView?: SerieViewUpdateManyWithoutSeriesNestedInput
+    Purchase?: PurchaseUpdateManyWithoutSerieNestedInput
   }
 
-  export type SeriesUncheckedUpdateWithoutTagsInput = {
+  export type SerieUncheckedUpdateWithoutTagsInput = {
     id?: StringFieldUpdateOperationsInput | string
     metadataId?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
@@ -55438,8 +57435,9 @@ export namespace Prisma {
     rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    seasons?: SeasonUncheckedUpdateManyWithoutSeriesNestedInput
-    SeriesView?: SeriesViewUncheckedUpdateManyWithoutSeriesNestedInput
+    seasons?: SeasonUncheckedUpdateManyWithoutSerieNestedInput
+    SerieView?: SerieViewUncheckedUpdateManyWithoutSeriesNestedInput
+    Purchase?: PurchaseUncheckedUpdateManyWithoutSerieNestedInput
   }
 
   export type TagUpsertWithoutSeriesTagsInput = {
@@ -55465,51 +57463,41 @@ export namespace Prisma {
     movieTags?: MovieTagUncheckedUpdateManyWithoutTagNestedInput
   }
 
-  export type VideoFileCreateWithoutSubtitlesInput = {
+  export type MediaFileCreateWithoutSubtitleInput = {
     id?: string
-    filePath: string
-    trailerPath?: string | null
-    duration: number
+    s3Key: string
+    duration?: number | null
     width?: number | null
     height?: number | null
-    status?: $Enums.VideoFileStatus
+    status: $Enums.MediaFileStatus
+    mediaType: $Enums.MediaType
     createdAt?: Date | string
     updatedAt?: Date | string
-    movie?: MovieCreateNestedOneWithoutVideoFileInput
-    episode?: EpisodeCreateNestedOneWithoutVideoFileInput
-    purchases?: PurchaseCreateNestedManyWithoutVideoInput
-    comments?: CommentCreateNestedManyWithoutVideoInput
-    UserVideoProgress?: UserVideoViewCreateNestedManyWithoutVideoInput
+    attachments?: MediaAttachmentCreateNestedManyWithoutMediaFileInput
   }
 
-  export type VideoFileUncheckedCreateWithoutSubtitlesInput = {
+  export type MediaFileUncheckedCreateWithoutSubtitleInput = {
     id?: string
-    filePath: string
-    trailerPath?: string | null
-    duration: number
+    s3Key: string
+    duration?: number | null
     width?: number | null
     height?: number | null
-    status?: $Enums.VideoFileStatus
+    status: $Enums.MediaFileStatus
+    mediaType: $Enums.MediaType
     createdAt?: Date | string
     updatedAt?: Date | string
-    movie?: MovieUncheckedCreateNestedOneWithoutVideoFileInput
-    episode?: EpisodeUncheckedCreateNestedOneWithoutVideoFileInput
-    purchases?: PurchaseUncheckedCreateNestedManyWithoutVideoInput
-    comments?: CommentUncheckedCreateNestedManyWithoutVideoInput
-    UserVideoProgress?: UserVideoViewUncheckedCreateNestedManyWithoutVideoInput
+    attachments?: MediaAttachmentUncheckedCreateNestedManyWithoutMediaFileInput
   }
 
-  export type VideoFileCreateOrConnectWithoutSubtitlesInput = {
-    where: VideoFileWhereUniqueInput
-    create: XOR<VideoFileCreateWithoutSubtitlesInput, VideoFileUncheckedCreateWithoutSubtitlesInput>
+  export type MediaFileCreateOrConnectWithoutSubtitleInput = {
+    where: MediaFileWhereUniqueInput
+    create: XOR<MediaFileCreateWithoutSubtitleInput, MediaFileUncheckedCreateWithoutSubtitleInput>
   }
 
   export type VideoMetadataCreateWithoutSubtitlesInput = {
     id?: string
     title: string
     description: string
-    thumbnailUrl: string
-    secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
@@ -55523,7 +57511,7 @@ export namespace Prisma {
     category: VideoCategoryCreateNestedOneWithoutVideosInput
     gender: VideoGenreCreateNestedOneWithoutVideosInput
     movie?: MovieCreateNestedOneWithoutMetadataInput
-    series?: SeriesCreateNestedOneWithoutMetadataInput
+    series?: SerieCreateNestedOneWithoutMetadataInput
     actors?: VideoActorCreateNestedManyWithoutVideoInput
     languages?: VideoLanguageCreateNestedManyWithoutVideosInput
   }
@@ -55532,8 +57520,6 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
-    thumbnailUrl: string
-    secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
@@ -55547,7 +57533,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     movie?: MovieUncheckedCreateNestedOneWithoutMetadataInput
-    series?: SeriesUncheckedCreateNestedOneWithoutMetadataInput
+    series?: SerieUncheckedCreateNestedOneWithoutMetadataInput
     actors?: VideoActorUncheckedCreateNestedManyWithoutVideoInput
     languages?: VideoLanguageUncheckedCreateNestedManyWithoutVideosInput
   }
@@ -55557,49 +57543,41 @@ export namespace Prisma {
     create: XOR<VideoMetadataCreateWithoutSubtitlesInput, VideoMetadataUncheckedCreateWithoutSubtitlesInput>
   }
 
-  export type VideoFileUpsertWithoutSubtitlesInput = {
-    update: XOR<VideoFileUpdateWithoutSubtitlesInput, VideoFileUncheckedUpdateWithoutSubtitlesInput>
-    create: XOR<VideoFileCreateWithoutSubtitlesInput, VideoFileUncheckedCreateWithoutSubtitlesInput>
-    where?: VideoFileWhereInput
+  export type MediaFileUpsertWithoutSubtitleInput = {
+    update: XOR<MediaFileUpdateWithoutSubtitleInput, MediaFileUncheckedUpdateWithoutSubtitleInput>
+    create: XOR<MediaFileCreateWithoutSubtitleInput, MediaFileUncheckedCreateWithoutSubtitleInput>
+    where?: MediaFileWhereInput
   }
 
-  export type VideoFileUpdateToOneWithWhereWithoutSubtitlesInput = {
-    where?: VideoFileWhereInput
-    data: XOR<VideoFileUpdateWithoutSubtitlesInput, VideoFileUncheckedUpdateWithoutSubtitlesInput>
+  export type MediaFileUpdateToOneWithWhereWithoutSubtitleInput = {
+    where?: MediaFileWhereInput
+    data: XOR<MediaFileUpdateWithoutSubtitleInput, MediaFileUncheckedUpdateWithoutSubtitleInput>
   }
 
-  export type VideoFileUpdateWithoutSubtitlesInput = {
+  export type MediaFileUpdateWithoutSubtitleInput = {
     id?: StringFieldUpdateOperationsInput | string
-    filePath?: StringFieldUpdateOperationsInput | string
-    trailerPath?: NullableStringFieldUpdateOperationsInput | string | null
-    duration?: IntFieldUpdateOperationsInput | number
+    s3Key?: StringFieldUpdateOperationsInput | string
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
     width?: NullableIntFieldUpdateOperationsInput | number | null
     height?: NullableIntFieldUpdateOperationsInput | number | null
-    status?: EnumVideoFileStatusFieldUpdateOperationsInput | $Enums.VideoFileStatus
+    status?: EnumMediaFileStatusFieldUpdateOperationsInput | $Enums.MediaFileStatus
+    mediaType?: EnumMediaTypeFieldUpdateOperationsInput | $Enums.MediaType
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    movie?: MovieUpdateOneWithoutVideoFileNestedInput
-    episode?: EpisodeUpdateOneWithoutVideoFileNestedInput
-    purchases?: PurchaseUpdateManyWithoutVideoNestedInput
-    comments?: CommentUpdateManyWithoutVideoNestedInput
-    UserVideoProgress?: UserVideoViewUpdateManyWithoutVideoNestedInput
+    attachments?: MediaAttachmentUpdateManyWithoutMediaFileNestedInput
   }
 
-  export type VideoFileUncheckedUpdateWithoutSubtitlesInput = {
+  export type MediaFileUncheckedUpdateWithoutSubtitleInput = {
     id?: StringFieldUpdateOperationsInput | string
-    filePath?: StringFieldUpdateOperationsInput | string
-    trailerPath?: NullableStringFieldUpdateOperationsInput | string | null
-    duration?: IntFieldUpdateOperationsInput | number
+    s3Key?: StringFieldUpdateOperationsInput | string
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
     width?: NullableIntFieldUpdateOperationsInput | number | null
     height?: NullableIntFieldUpdateOperationsInput | number | null
-    status?: EnumVideoFileStatusFieldUpdateOperationsInput | $Enums.VideoFileStatus
+    status?: EnumMediaFileStatusFieldUpdateOperationsInput | $Enums.MediaFileStatus
+    mediaType?: EnumMediaTypeFieldUpdateOperationsInput | $Enums.MediaType
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    movie?: MovieUncheckedUpdateOneWithoutVideoFileNestedInput
-    episode?: EpisodeUncheckedUpdateOneWithoutVideoFileNestedInput
-    purchases?: PurchaseUncheckedUpdateManyWithoutVideoNestedInput
-    comments?: CommentUncheckedUpdateManyWithoutVideoNestedInput
-    UserVideoProgress?: UserVideoViewUncheckedUpdateManyWithoutVideoNestedInput
+    attachments?: MediaAttachmentUncheckedUpdateManyWithoutMediaFileNestedInput
   }
 
   export type VideoMetadataUpsertWithoutSubtitlesInput = {
@@ -55617,8 +57595,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    thumbnailUrl?: StringFieldUpdateOperationsInput | string
-    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -55632,7 +57608,7 @@ export namespace Prisma {
     category?: VideoCategoryUpdateOneRequiredWithoutVideosNestedInput
     gender?: VideoGenreUpdateOneRequiredWithoutVideosNestedInput
     movie?: MovieUpdateOneWithoutMetadataNestedInput
-    series?: SeriesUpdateOneWithoutMetadataNestedInput
+    series?: SerieUpdateOneWithoutMetadataNestedInput
     actors?: VideoActorUpdateManyWithoutVideoNestedInput
     languages?: VideoLanguageUpdateManyWithoutVideosNestedInput
   }
@@ -55641,8 +57617,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    thumbnailUrl?: StringFieldUpdateOperationsInput | string
-    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -55656,7 +57630,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     movie?: MovieUncheckedUpdateOneWithoutMetadataNestedInput
-    series?: SeriesUncheckedUpdateOneWithoutMetadataNestedInput
+    series?: SerieUncheckedUpdateOneWithoutMetadataNestedInput
     actors?: VideoActorUncheckedUpdateManyWithoutVideoNestedInput
     languages?: VideoLanguageUncheckedUpdateManyWithoutVideosNestedInput
   }
@@ -55708,43 +57682,70 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutPurchasesInput, UserUncheckedCreateWithoutPurchasesInput>
   }
 
-  export type VideoFileCreateWithoutPurchasesInput = {
+  export type MovieCreateWithoutPurchaseInput = {
     id?: string
-    filePath: string
-    trailerPath?: string | null
-    duration: number
-    width?: number | null
-    height?: number | null
-    status?: $Enums.VideoFileStatus
+    status?: $Enums.ContentStatus
+    type?: string
+    seasonCount?: number
+    rentalPrice?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    movie?: MovieCreateNestedOneWithoutVideoFileInput
-    episode?: EpisodeCreateNestedOneWithoutVideoFileInput
-    subtitles?: SubtitleCreateNestedManyWithoutVideoInput
-    comments?: CommentCreateNestedManyWithoutVideoInput
-    UserVideoProgress?: UserVideoViewCreateNestedManyWithoutVideoInput
+    metadata: VideoMetadataCreateNestedOneWithoutMovieInput
+    tags?: MovieTagCreateNestedManyWithoutMovieInput
+    attachment?: MediaAttachmentCreateNestedManyWithoutMovieInput
+    Comment?: CommentCreateNestedManyWithoutMovieInput
   }
 
-  export type VideoFileUncheckedCreateWithoutPurchasesInput = {
+  export type MovieUncheckedCreateWithoutPurchaseInput = {
     id?: string
-    filePath: string
-    trailerPath?: string | null
-    duration: number
-    width?: number | null
-    height?: number | null
-    status?: $Enums.VideoFileStatus
+    metadataId: string
+    status?: $Enums.ContentStatus
+    type?: string
+    seasonCount?: number
+    rentalPrice?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    movie?: MovieUncheckedCreateNestedOneWithoutVideoFileInput
-    episode?: EpisodeUncheckedCreateNestedOneWithoutVideoFileInput
-    subtitles?: SubtitleUncheckedCreateNestedManyWithoutVideoInput
-    comments?: CommentUncheckedCreateNestedManyWithoutVideoInput
-    UserVideoProgress?: UserVideoViewUncheckedCreateNestedManyWithoutVideoInput
+    tags?: MovieTagUncheckedCreateNestedManyWithoutMovieInput
+    attachment?: MediaAttachmentUncheckedCreateNestedManyWithoutMovieInput
+    Comment?: CommentUncheckedCreateNestedManyWithoutMovieInput
   }
 
-  export type VideoFileCreateOrConnectWithoutPurchasesInput = {
-    where: VideoFileWhereUniqueInput
-    create: XOR<VideoFileCreateWithoutPurchasesInput, VideoFileUncheckedCreateWithoutPurchasesInput>
+  export type MovieCreateOrConnectWithoutPurchaseInput = {
+    where: MovieWhereUniqueInput
+    create: XOR<MovieCreateWithoutPurchaseInput, MovieUncheckedCreateWithoutPurchaseInput>
+  }
+
+  export type SerieCreateWithoutPurchaseInput = {
+    id?: string
+    status?: string
+    type?: string
+    seasonCount?: number
+    rentalPrice?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    metadata: VideoMetadataCreateNestedOneWithoutSeriesInput
+    seasons?: SeasonCreateNestedManyWithoutSerieInput
+    tags?: SeriesTagCreateNestedManyWithoutSeriesInput
+    SerieView?: SerieViewCreateNestedManyWithoutSeriesInput
+  }
+
+  export type SerieUncheckedCreateWithoutPurchaseInput = {
+    id?: string
+    metadataId: string
+    status?: string
+    type?: string
+    seasonCount?: number
+    rentalPrice?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    seasons?: SeasonUncheckedCreateNestedManyWithoutSerieInput
+    tags?: SeriesTagUncheckedCreateNestedManyWithoutSeriesInput
+    SerieView?: SerieViewUncheckedCreateNestedManyWithoutSeriesInput
+  }
+
+  export type SerieCreateOrConnectWithoutPurchaseInput = {
+    where: SerieWhereUniqueInput
+    create: XOR<SerieCreateWithoutPurchaseInput, SerieUncheckedCreateWithoutPurchaseInput>
   }
 
   export type UserUpsertWithoutPurchasesInput = {
@@ -55800,49 +57801,82 @@ export namespace Prisma {
     emailValidation?: EmailValidationUncheckedUpdateManyWithoutUserNestedInput
   }
 
-  export type VideoFileUpsertWithoutPurchasesInput = {
-    update: XOR<VideoFileUpdateWithoutPurchasesInput, VideoFileUncheckedUpdateWithoutPurchasesInput>
-    create: XOR<VideoFileCreateWithoutPurchasesInput, VideoFileUncheckedCreateWithoutPurchasesInput>
-    where?: VideoFileWhereInput
+  export type MovieUpsertWithoutPurchaseInput = {
+    update: XOR<MovieUpdateWithoutPurchaseInput, MovieUncheckedUpdateWithoutPurchaseInput>
+    create: XOR<MovieCreateWithoutPurchaseInput, MovieUncheckedCreateWithoutPurchaseInput>
+    where?: MovieWhereInput
   }
 
-  export type VideoFileUpdateToOneWithWhereWithoutPurchasesInput = {
-    where?: VideoFileWhereInput
-    data: XOR<VideoFileUpdateWithoutPurchasesInput, VideoFileUncheckedUpdateWithoutPurchasesInput>
+  export type MovieUpdateToOneWithWhereWithoutPurchaseInput = {
+    where?: MovieWhereInput
+    data: XOR<MovieUpdateWithoutPurchaseInput, MovieUncheckedUpdateWithoutPurchaseInput>
   }
 
-  export type VideoFileUpdateWithoutPurchasesInput = {
+  export type MovieUpdateWithoutPurchaseInput = {
     id?: StringFieldUpdateOperationsInput | string
-    filePath?: StringFieldUpdateOperationsInput | string
-    trailerPath?: NullableStringFieldUpdateOperationsInput | string | null
-    duration?: IntFieldUpdateOperationsInput | number
-    width?: NullableIntFieldUpdateOperationsInput | number | null
-    height?: NullableIntFieldUpdateOperationsInput | number | null
-    status?: EnumVideoFileStatusFieldUpdateOperationsInput | $Enums.VideoFileStatus
+    status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+    type?: StringFieldUpdateOperationsInput | string
+    seasonCount?: IntFieldUpdateOperationsInput | number
+    rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    movie?: MovieUpdateOneWithoutVideoFileNestedInput
-    episode?: EpisodeUpdateOneWithoutVideoFileNestedInput
-    subtitles?: SubtitleUpdateManyWithoutVideoNestedInput
-    comments?: CommentUpdateManyWithoutVideoNestedInput
-    UserVideoProgress?: UserVideoViewUpdateManyWithoutVideoNestedInput
+    metadata?: VideoMetadataUpdateOneRequiredWithoutMovieNestedInput
+    tags?: MovieTagUpdateManyWithoutMovieNestedInput
+    attachment?: MediaAttachmentUpdateManyWithoutMovieNestedInput
+    Comment?: CommentUpdateManyWithoutMovieNestedInput
   }
 
-  export type VideoFileUncheckedUpdateWithoutPurchasesInput = {
+  export type MovieUncheckedUpdateWithoutPurchaseInput = {
     id?: StringFieldUpdateOperationsInput | string
-    filePath?: StringFieldUpdateOperationsInput | string
-    trailerPath?: NullableStringFieldUpdateOperationsInput | string | null
-    duration?: IntFieldUpdateOperationsInput | number
-    width?: NullableIntFieldUpdateOperationsInput | number | null
-    height?: NullableIntFieldUpdateOperationsInput | number | null
-    status?: EnumVideoFileStatusFieldUpdateOperationsInput | $Enums.VideoFileStatus
+    metadataId?: StringFieldUpdateOperationsInput | string
+    status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+    type?: StringFieldUpdateOperationsInput | string
+    seasonCount?: IntFieldUpdateOperationsInput | number
+    rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    movie?: MovieUncheckedUpdateOneWithoutVideoFileNestedInput
-    episode?: EpisodeUncheckedUpdateOneWithoutVideoFileNestedInput
-    subtitles?: SubtitleUncheckedUpdateManyWithoutVideoNestedInput
-    comments?: CommentUncheckedUpdateManyWithoutVideoNestedInput
-    UserVideoProgress?: UserVideoViewUncheckedUpdateManyWithoutVideoNestedInput
+    tags?: MovieTagUncheckedUpdateManyWithoutMovieNestedInput
+    attachment?: MediaAttachmentUncheckedUpdateManyWithoutMovieNestedInput
+    Comment?: CommentUncheckedUpdateManyWithoutMovieNestedInput
+  }
+
+  export type SerieUpsertWithoutPurchaseInput = {
+    update: XOR<SerieUpdateWithoutPurchaseInput, SerieUncheckedUpdateWithoutPurchaseInput>
+    create: XOR<SerieCreateWithoutPurchaseInput, SerieUncheckedCreateWithoutPurchaseInput>
+    where?: SerieWhereInput
+  }
+
+  export type SerieUpdateToOneWithWhereWithoutPurchaseInput = {
+    where?: SerieWhereInput
+    data: XOR<SerieUpdateWithoutPurchaseInput, SerieUncheckedUpdateWithoutPurchaseInput>
+  }
+
+  export type SerieUpdateWithoutPurchaseInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    seasonCount?: IntFieldUpdateOperationsInput | number
+    rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    metadata?: VideoMetadataUpdateOneRequiredWithoutSeriesNestedInput
+    seasons?: SeasonUpdateManyWithoutSerieNestedInput
+    tags?: SeriesTagUpdateManyWithoutSeriesNestedInput
+    SerieView?: SerieViewUpdateManyWithoutSeriesNestedInput
+  }
+
+  export type SerieUncheckedUpdateWithoutPurchaseInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    metadataId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    seasonCount?: IntFieldUpdateOperationsInput | number
+    rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    seasons?: SeasonUncheckedUpdateManyWithoutSerieNestedInput
+    tags?: SeriesTagUncheckedUpdateManyWithoutSeriesNestedInput
+    SerieView?: SerieViewUncheckedUpdateManyWithoutSeriesNestedInput
   }
 
   export type UserCreateWithoutCommentsInput = {
@@ -55892,58 +57926,21 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutCommentsInput, UserUncheckedCreateWithoutCommentsInput>
   }
 
-  export type VideoFileCreateWithoutCommentsInput = {
-    id?: string
-    filePath: string
-    trailerPath?: string | null
-    duration: number
-    width?: number | null
-    height?: number | null
-    status?: $Enums.VideoFileStatus
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    movie?: MovieCreateNestedOneWithoutVideoFileInput
-    episode?: EpisodeCreateNestedOneWithoutVideoFileInput
-    subtitles?: SubtitleCreateNestedManyWithoutVideoInput
-    purchases?: PurchaseCreateNestedManyWithoutVideoInput
-    UserVideoProgress?: UserVideoViewCreateNestedManyWithoutVideoInput
-  }
-
-  export type VideoFileUncheckedCreateWithoutCommentsInput = {
-    id?: string
-    filePath: string
-    trailerPath?: string | null
-    duration: number
-    width?: number | null
-    height?: number | null
-    status?: $Enums.VideoFileStatus
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    movie?: MovieUncheckedCreateNestedOneWithoutVideoFileInput
-    episode?: EpisodeUncheckedCreateNestedOneWithoutVideoFileInput
-    subtitles?: SubtitleUncheckedCreateNestedManyWithoutVideoInput
-    purchases?: PurchaseUncheckedCreateNestedManyWithoutVideoInput
-    UserVideoProgress?: UserVideoViewUncheckedCreateNestedManyWithoutVideoInput
-  }
-
-  export type VideoFileCreateOrConnectWithoutCommentsInput = {
-    where: VideoFileWhereUniqueInput
-    create: XOR<VideoFileCreateWithoutCommentsInput, VideoFileUncheckedCreateWithoutCommentsInput>
-  }
-
   export type CommentCreateWithoutRepliesInput = {
     id?: string
     text: string
     createdAt?: Date | string
     user: UserCreateNestedOneWithoutCommentsInput
-    video: VideoFileCreateNestedOneWithoutCommentsInput
     parent?: CommentCreateNestedOneWithoutRepliesInput
+    movie?: MovieCreateNestedOneWithoutCommentInput
+    episode?: EpisodeCreateNestedOneWithoutCommentInput
   }
 
   export type CommentUncheckedCreateWithoutRepliesInput = {
     id?: string
     userId: string
-    videoId: string
+    movieId?: string | null
+    epiisodeId?: string | null
     text: string
     createdAt?: Date | string
     parentCommentId?: string | null
@@ -55959,14 +57956,16 @@ export namespace Prisma {
     text: string
     createdAt?: Date | string
     user: UserCreateNestedOneWithoutCommentsInput
-    video: VideoFileCreateNestedOneWithoutCommentsInput
     replies?: CommentCreateNestedManyWithoutParentInput
+    movie?: MovieCreateNestedOneWithoutCommentInput
+    episode?: EpisodeCreateNestedOneWithoutCommentInput
   }
 
   export type CommentUncheckedCreateWithoutParentInput = {
     id?: string
     userId: string
-    videoId: string
+    movieId?: string | null
+    epiisodeId?: string | null
     text: string
     createdAt?: Date | string
     replies?: CommentUncheckedCreateNestedManyWithoutParentInput
@@ -55980,6 +57979,74 @@ export namespace Prisma {
   export type CommentCreateManyParentInputEnvelope = {
     data: CommentCreateManyParentInput | CommentCreateManyParentInput[]
     skipDuplicates?: boolean
+  }
+
+  export type MovieCreateWithoutCommentInput = {
+    id?: string
+    status?: $Enums.ContentStatus
+    type?: string
+    seasonCount?: number
+    rentalPrice?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    metadata: VideoMetadataCreateNestedOneWithoutMovieInput
+    tags?: MovieTagCreateNestedManyWithoutMovieInput
+    attachment?: MediaAttachmentCreateNestedManyWithoutMovieInput
+    Purchase?: PurchaseCreateNestedManyWithoutMovieInput
+  }
+
+  export type MovieUncheckedCreateWithoutCommentInput = {
+    id?: string
+    metadataId: string
+    status?: $Enums.ContentStatus
+    type?: string
+    seasonCount?: number
+    rentalPrice?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tags?: MovieTagUncheckedCreateNestedManyWithoutMovieInput
+    attachment?: MediaAttachmentUncheckedCreateNestedManyWithoutMovieInput
+    Purchase?: PurchaseUncheckedCreateNestedManyWithoutMovieInput
+  }
+
+  export type MovieCreateOrConnectWithoutCommentInput = {
+    where: MovieWhereUniqueInput
+    create: XOR<MovieCreateWithoutCommentInput, MovieUncheckedCreateWithoutCommentInput>
+  }
+
+  export type EpisodeCreateWithoutCommentInput = {
+    id?: string
+    number: number
+    title?: string | null
+    releaseDate: Date | string
+    plateformeDAte: Date | string
+    director: string
+    description?: string | null
+    isSaFliixProd: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    season: SeasonCreateNestedOneWithoutEpisodesInput
+    videoAttachment?: MediaAttachmentCreateNestedManyWithoutEpisodeInput
+  }
+
+  export type EpisodeUncheckedCreateWithoutCommentInput = {
+    id?: string
+    seasonId: string
+    number: number
+    title?: string | null
+    releaseDate: Date | string
+    plateformeDAte: Date | string
+    director: string
+    description?: string | null
+    isSaFliixProd: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    videoAttachment?: MediaAttachmentUncheckedCreateNestedManyWithoutEpisodeInput
+  }
+
+  export type EpisodeCreateOrConnectWithoutCommentInput = {
+    where: EpisodeWhereUniqueInput
+    create: XOR<EpisodeCreateWithoutCommentInput, EpisodeUncheckedCreateWithoutCommentInput>
   }
 
   export type UserUpsertWithoutCommentsInput = {
@@ -56035,51 +58102,6 @@ export namespace Prisma {
     emailValidation?: EmailValidationUncheckedUpdateManyWithoutUserNestedInput
   }
 
-  export type VideoFileUpsertWithoutCommentsInput = {
-    update: XOR<VideoFileUpdateWithoutCommentsInput, VideoFileUncheckedUpdateWithoutCommentsInput>
-    create: XOR<VideoFileCreateWithoutCommentsInput, VideoFileUncheckedCreateWithoutCommentsInput>
-    where?: VideoFileWhereInput
-  }
-
-  export type VideoFileUpdateToOneWithWhereWithoutCommentsInput = {
-    where?: VideoFileWhereInput
-    data: XOR<VideoFileUpdateWithoutCommentsInput, VideoFileUncheckedUpdateWithoutCommentsInput>
-  }
-
-  export type VideoFileUpdateWithoutCommentsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    filePath?: StringFieldUpdateOperationsInput | string
-    trailerPath?: NullableStringFieldUpdateOperationsInput | string | null
-    duration?: IntFieldUpdateOperationsInput | number
-    width?: NullableIntFieldUpdateOperationsInput | number | null
-    height?: NullableIntFieldUpdateOperationsInput | number | null
-    status?: EnumVideoFileStatusFieldUpdateOperationsInput | $Enums.VideoFileStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    movie?: MovieUpdateOneWithoutVideoFileNestedInput
-    episode?: EpisodeUpdateOneWithoutVideoFileNestedInput
-    subtitles?: SubtitleUpdateManyWithoutVideoNestedInput
-    purchases?: PurchaseUpdateManyWithoutVideoNestedInput
-    UserVideoProgress?: UserVideoViewUpdateManyWithoutVideoNestedInput
-  }
-
-  export type VideoFileUncheckedUpdateWithoutCommentsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    filePath?: StringFieldUpdateOperationsInput | string
-    trailerPath?: NullableStringFieldUpdateOperationsInput | string | null
-    duration?: IntFieldUpdateOperationsInput | number
-    width?: NullableIntFieldUpdateOperationsInput | number | null
-    height?: NullableIntFieldUpdateOperationsInput | number | null
-    status?: EnumVideoFileStatusFieldUpdateOperationsInput | $Enums.VideoFileStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    movie?: MovieUncheckedUpdateOneWithoutVideoFileNestedInput
-    episode?: EpisodeUncheckedUpdateOneWithoutVideoFileNestedInput
-    subtitles?: SubtitleUncheckedUpdateManyWithoutVideoNestedInput
-    purchases?: PurchaseUncheckedUpdateManyWithoutVideoNestedInput
-    UserVideoProgress?: UserVideoViewUncheckedUpdateManyWithoutVideoNestedInput
-  }
-
   export type CommentUpsertWithoutRepliesInput = {
     update: XOR<CommentUpdateWithoutRepliesInput, CommentUncheckedUpdateWithoutRepliesInput>
     create: XOR<CommentCreateWithoutRepliesInput, CommentUncheckedCreateWithoutRepliesInput>
@@ -56096,14 +58118,16 @@ export namespace Prisma {
     text?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutCommentsNestedInput
-    video?: VideoFileUpdateOneRequiredWithoutCommentsNestedInput
     parent?: CommentUpdateOneWithoutRepliesNestedInput
+    movie?: MovieUpdateOneWithoutCommentNestedInput
+    episode?: EpisodeUpdateOneWithoutCommentNestedInput
   }
 
   export type CommentUncheckedUpdateWithoutRepliesInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    videoId?: StringFieldUpdateOperationsInput | string
+    movieId?: NullableStringFieldUpdateOperationsInput | string | null
+    epiisodeId?: NullableStringFieldUpdateOperationsInput | string | null
     text?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     parentCommentId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -56123,6 +58147,112 @@ export namespace Prisma {
   export type CommentUpdateManyWithWhereWithoutParentInput = {
     where: CommentScalarWhereInput
     data: XOR<CommentUpdateManyMutationInput, CommentUncheckedUpdateManyWithoutParentInput>
+  }
+
+  export type MovieUpsertWithoutCommentInput = {
+    update: XOR<MovieUpdateWithoutCommentInput, MovieUncheckedUpdateWithoutCommentInput>
+    create: XOR<MovieCreateWithoutCommentInput, MovieUncheckedCreateWithoutCommentInput>
+    where?: MovieWhereInput
+  }
+
+  export type MovieUpdateToOneWithWhereWithoutCommentInput = {
+    where?: MovieWhereInput
+    data: XOR<MovieUpdateWithoutCommentInput, MovieUncheckedUpdateWithoutCommentInput>
+  }
+
+  export type MovieUpdateWithoutCommentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+    type?: StringFieldUpdateOperationsInput | string
+    seasonCount?: IntFieldUpdateOperationsInput | number
+    rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    metadata?: VideoMetadataUpdateOneRequiredWithoutMovieNestedInput
+    tags?: MovieTagUpdateManyWithoutMovieNestedInput
+    attachment?: MediaAttachmentUpdateManyWithoutMovieNestedInput
+    Purchase?: PurchaseUpdateManyWithoutMovieNestedInput
+  }
+
+  export type MovieUncheckedUpdateWithoutCommentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    metadataId?: StringFieldUpdateOperationsInput | string
+    status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+    type?: StringFieldUpdateOperationsInput | string
+    seasonCount?: IntFieldUpdateOperationsInput | number
+    rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tags?: MovieTagUncheckedUpdateManyWithoutMovieNestedInput
+    attachment?: MediaAttachmentUncheckedUpdateManyWithoutMovieNestedInput
+    Purchase?: PurchaseUncheckedUpdateManyWithoutMovieNestedInput
+  }
+
+  export type EpisodeUpsertWithoutCommentInput = {
+    update: XOR<EpisodeUpdateWithoutCommentInput, EpisodeUncheckedUpdateWithoutCommentInput>
+    create: XOR<EpisodeCreateWithoutCommentInput, EpisodeUncheckedCreateWithoutCommentInput>
+    where?: EpisodeWhereInput
+  }
+
+  export type EpisodeUpdateToOneWithWhereWithoutCommentInput = {
+    where?: EpisodeWhereInput
+    data: XOR<EpisodeUpdateWithoutCommentInput, EpisodeUncheckedUpdateWithoutCommentInput>
+  }
+
+  export type EpisodeUpdateWithoutCommentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    number?: IntFieldUpdateOperationsInput | number
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    plateformeDAte?: DateTimeFieldUpdateOperationsInput | Date | string
+    director?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isSaFliixProd?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    season?: SeasonUpdateOneRequiredWithoutEpisodesNestedInput
+    videoAttachment?: MediaAttachmentUpdateManyWithoutEpisodeNestedInput
+  }
+
+  export type EpisodeUncheckedUpdateWithoutCommentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    seasonId?: StringFieldUpdateOperationsInput | string
+    number?: IntFieldUpdateOperationsInput | number
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    plateformeDAte?: DateTimeFieldUpdateOperationsInput | Date | string
+    director?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isSaFliixProd?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    videoAttachment?: MediaAttachmentUncheckedUpdateManyWithoutEpisodeNestedInput
+  }
+
+  export type MediaAttachmentCreateWithoutAdInput = {
+    id?: string
+    type: $Enums.MediaAttachmentType
+    mediaFile: MediaFileCreateNestedOneWithoutAttachmentsInput
+    movie?: MovieCreateNestedOneWithoutAttachmentInput
+    episode?: EpisodeCreateNestedOneWithoutVideoAttachmentInput
+  }
+
+  export type MediaAttachmentUncheckedCreateWithoutAdInput = {
+    id?: string
+    mediaFileId: string
+    movieId?: string | null
+    episodeId?: string | null
+    type: $Enums.MediaAttachmentType
+  }
+
+  export type MediaAttachmentCreateOrConnectWithoutAdInput = {
+    where: MediaAttachmentWhereUniqueInput
+    create: XOR<MediaAttachmentCreateWithoutAdInput, MediaAttachmentUncheckedCreateWithoutAdInput>
+  }
+
+  export type MediaAttachmentCreateManyAdInputEnvelope = {
+    data: MediaAttachmentCreateManyAdInput | MediaAttachmentCreateManyAdInput[]
+    skipDuplicates?: boolean
   }
 
   export type AdViewCreateWithoutAdInput = {
@@ -56149,6 +58279,22 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type MediaAttachmentUpsertWithWhereUniqueWithoutAdInput = {
+    where: MediaAttachmentWhereUniqueInput
+    update: XOR<MediaAttachmentUpdateWithoutAdInput, MediaAttachmentUncheckedUpdateWithoutAdInput>
+    create: XOR<MediaAttachmentCreateWithoutAdInput, MediaAttachmentUncheckedCreateWithoutAdInput>
+  }
+
+  export type MediaAttachmentUpdateWithWhereUniqueWithoutAdInput = {
+    where: MediaAttachmentWhereUniqueInput
+    data: XOR<MediaAttachmentUpdateWithoutAdInput, MediaAttachmentUncheckedUpdateWithoutAdInput>
+  }
+
+  export type MediaAttachmentUpdateManyWithWhereWithoutAdInput = {
+    where: MediaAttachmentScalarWhereInput
+    data: XOR<MediaAttachmentUpdateManyMutationInput, MediaAttachmentUncheckedUpdateManyWithoutAdInput>
+  }
+
   export type AdViewUpsertWithWhereUniqueWithoutAdInput = {
     where: AdViewWhereUniqueInput
     update: XOR<AdViewUpdateWithoutAdInput, AdViewUncheckedUpdateWithoutAdInput>
@@ -56168,21 +58314,21 @@ export namespace Prisma {
   export type AdCreateWithoutViewsInput = {
     id?: string
     title: string
-    image_url: string
-    video_url?: string | null
-    start_date: Date | string
-    end_date: Date | string
-    is_active?: boolean
+    imageUrl: string
+    startDate: Date | string
+    endDate: Date | string
+    isActive?: boolean
+    videoAttachment?: MediaAttachmentCreateNestedManyWithoutAdInput
   }
 
   export type AdUncheckedCreateWithoutViewsInput = {
     id?: string
     title: string
-    image_url: string
-    video_url?: string | null
-    start_date: Date | string
-    end_date: Date | string
-    is_active?: boolean
+    imageUrl: string
+    startDate: Date | string
+    endDate: Date | string
+    isActive?: boolean
+    videoAttachment?: MediaAttachmentUncheckedCreateNestedManyWithoutAdInput
   }
 
   export type AdCreateOrConnectWithoutViewsInput = {
@@ -56280,21 +58426,21 @@ export namespace Prisma {
   export type AdUpdateWithoutViewsInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    image_url?: StringFieldUpdateOperationsInput | string
-    video_url?: NullableStringFieldUpdateOperationsInput | string | null
-    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    is_active?: BoolFieldUpdateOperationsInput | boolean
+    imageUrl?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    videoAttachment?: MediaAttachmentUpdateManyWithoutAdNestedInput
   }
 
   export type AdUncheckedUpdateWithoutViewsInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    image_url?: StringFieldUpdateOperationsInput | string
-    video_url?: NullableStringFieldUpdateOperationsInput | string | null
-    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    is_active?: BoolFieldUpdateOperationsInput | boolean
+    imageUrl?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    videoAttachment?: MediaAttachmentUncheckedUpdateManyWithoutAdNestedInput
   }
 
   export type UserUpsertWithoutAdViewsInput = {
@@ -56481,7 +58627,8 @@ export namespace Prisma {
 
   export type PurchaseCreateManyUserInput = {
     id?: string
-    videoId: string
+    movieId?: string | null
+    serieId?: string | null
     purchaseDate?: Date | string
     expirationDate?: Date | string | null
     country: string
@@ -56489,7 +58636,8 @@ export namespace Prisma {
 
   export type CommentCreateManyUserInput = {
     id?: string
-    videoId: string
+    movieId?: string | null
+    epiisodeId?: string | null
     text: string
     createdAt?: Date | string
     parentCommentId?: string | null
@@ -56637,12 +58785,14 @@ export namespace Prisma {
     purchaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     expirationDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     country?: StringFieldUpdateOperationsInput | string
-    video?: VideoFileUpdateOneRequiredWithoutPurchasesNestedInput
+    movie?: MovieUpdateOneWithoutPurchaseNestedInput
+    serie?: SerieUpdateOneWithoutPurchaseNestedInput
   }
 
   export type PurchaseUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    videoId?: StringFieldUpdateOperationsInput | string
+    movieId?: NullableStringFieldUpdateOperationsInput | string | null
+    serieId?: NullableStringFieldUpdateOperationsInput | string | null
     purchaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     expirationDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     country?: StringFieldUpdateOperationsInput | string
@@ -56650,7 +58800,8 @@ export namespace Prisma {
 
   export type PurchaseUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    videoId?: StringFieldUpdateOperationsInput | string
+    movieId?: NullableStringFieldUpdateOperationsInput | string | null
+    serieId?: NullableStringFieldUpdateOperationsInput | string | null
     purchaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     expirationDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     country?: StringFieldUpdateOperationsInput | string
@@ -56660,14 +58811,16 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     text?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    video?: VideoFileUpdateOneRequiredWithoutCommentsNestedInput
     parent?: CommentUpdateOneWithoutRepliesNestedInput
     replies?: CommentUpdateManyWithoutParentNestedInput
+    movie?: MovieUpdateOneWithoutCommentNestedInput
+    episode?: EpisodeUpdateOneWithoutCommentNestedInput
   }
 
   export type CommentUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    videoId?: StringFieldUpdateOperationsInput | string
+    movieId?: NullableStringFieldUpdateOperationsInput | string | null
+    epiisodeId?: NullableStringFieldUpdateOperationsInput | string | null
     text?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     parentCommentId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -56676,7 +58829,8 @@ export namespace Prisma {
 
   export type CommentUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    videoId?: StringFieldUpdateOperationsInput | string
+    movieId?: NullableStringFieldUpdateOperationsInput | string | null
+    epiisodeId?: NullableStringFieldUpdateOperationsInput | string | null
     text?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     parentCommentId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -56706,6 +58860,7 @@ export namespace Prisma {
   export type UserVideoViewUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     profileId?: NullableStringFieldUpdateOperationsInput | string | null
+    videoId?: StringFieldUpdateOperationsInput | string
     progress?: IntFieldUpdateOperationsInput | number
     completed?: BoolFieldUpdateOperationsInput | boolean
     country?: NullableStringFieldUpdateOperationsInput | string | null
@@ -56715,7 +58870,6 @@ export namespace Prisma {
     endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    video?: VideoFileUpdateOneRequiredWithoutUserVideoProgressNestedInput
   }
 
   export type UserVideoViewUncheckedUpdateWithoutUserInput = {
@@ -57112,7 +59266,7 @@ export namespace Prisma {
   export type SubtitleUpdateWithoutVideoMetadataInput = {
     language?: StringFieldUpdateOperationsInput | string
     subtitleUrl?: StringFieldUpdateOperationsInput | string
-    video?: VideoFileUpdateOneRequiredWithoutSubtitlesNestedInput
+    video?: MediaFileUpdateOneRequiredWithoutSubtitleNestedInput
   }
 
   export type SubtitleUncheckedUpdateWithoutVideoMetadataInput = {
@@ -57151,41 +59305,42 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type MediaAttachmentCreateManyMediaFileInput = {
+    id?: string
+    movieId?: string | null
+    episodeId?: string | null
+    adId?: string | null
+    type: $Enums.MediaAttachmentType
+  }
+
   export type SubtitleCreateManyVideoInput = {
     language: string
     subtitleUrl: string
     videoMetadataId?: string | null
   }
 
-  export type PurchaseCreateManyVideoInput = {
-    id?: string
-    userId: string
-    purchaseDate?: Date | string
-    expirationDate?: Date | string | null
-    country: string
+  export type MediaAttachmentUpdateWithoutMediaFileInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumMediaAttachmentTypeFieldUpdateOperationsInput | $Enums.MediaAttachmentType
+    movie?: MovieUpdateOneWithoutAttachmentNestedInput
+    episode?: EpisodeUpdateOneWithoutVideoAttachmentNestedInput
+    ad?: AdUpdateOneWithoutVideoAttachmentNestedInput
   }
 
-  export type CommentCreateManyVideoInput = {
-    id?: string
-    userId: string
-    text: string
-    createdAt?: Date | string
-    parentCommentId?: string | null
+  export type MediaAttachmentUncheckedUpdateWithoutMediaFileInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    movieId?: NullableStringFieldUpdateOperationsInput | string | null
+    episodeId?: NullableStringFieldUpdateOperationsInput | string | null
+    adId?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumMediaAttachmentTypeFieldUpdateOperationsInput | $Enums.MediaAttachmentType
   }
 
-  export type UserVideoViewCreateManyVideoInput = {
-    id?: string
-    userId: string
-    profileId?: string | null
-    progress?: number
-    completed?: boolean
-    country?: string | null
-    device?: string | null
-    rating?: number | null
-    startedAt?: Date | string | null
-    endedAt?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+  export type MediaAttachmentUncheckedUpdateManyWithoutMediaFileInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    movieId?: NullableStringFieldUpdateOperationsInput | string | null
+    episodeId?: NullableStringFieldUpdateOperationsInput | string | null
+    adId?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumMediaAttachmentTypeFieldUpdateOperationsInput | $Enums.MediaAttachmentType
   }
 
   export type SubtitleUpdateWithoutVideoInput = {
@@ -57206,107 +59361,10 @@ export namespace Prisma {
     videoMetadataId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type PurchaseUpdateWithoutVideoInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    purchaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    expirationDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    country?: StringFieldUpdateOperationsInput | string
-    user?: UserUpdateOneRequiredWithoutPurchasesNestedInput
-  }
-
-  export type PurchaseUncheckedUpdateWithoutVideoInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-    purchaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    expirationDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    country?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type PurchaseUncheckedUpdateManyWithoutVideoInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-    purchaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    expirationDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    country?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type CommentUpdateWithoutVideoInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    text?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutCommentsNestedInput
-    parent?: CommentUpdateOneWithoutRepliesNestedInput
-    replies?: CommentUpdateManyWithoutParentNestedInput
-  }
-
-  export type CommentUncheckedUpdateWithoutVideoInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-    text?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    parentCommentId?: NullableStringFieldUpdateOperationsInput | string | null
-    replies?: CommentUncheckedUpdateManyWithoutParentNestedInput
-  }
-
-  export type CommentUncheckedUpdateManyWithoutVideoInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-    text?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    parentCommentId?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type UserVideoViewUpdateWithoutVideoInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    profileId?: NullableStringFieldUpdateOperationsInput | string | null
-    progress?: IntFieldUpdateOperationsInput | number
-    completed?: BoolFieldUpdateOperationsInput | boolean
-    country?: NullableStringFieldUpdateOperationsInput | string | null
-    device?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
-    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutUserVideoViewNestedInput
-  }
-
-  export type UserVideoViewUncheckedUpdateWithoutVideoInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-    profileId?: NullableStringFieldUpdateOperationsInput | string | null
-    progress?: IntFieldUpdateOperationsInput | number
-    completed?: BoolFieldUpdateOperationsInput | boolean
-    country?: NullableStringFieldUpdateOperationsInput | string | null
-    device?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
-    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type UserVideoViewUncheckedUpdateManyWithoutVideoInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-    profileId?: NullableStringFieldUpdateOperationsInput | string | null
-    progress?: IntFieldUpdateOperationsInput | number
-    completed?: BoolFieldUpdateOperationsInput | boolean
-    country?: NullableStringFieldUpdateOperationsInput | string | null
-    device?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
-    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
   export type VideoMetadataCreateManyGenderInput = {
     id?: string
     title: string
     description: string
-    thumbnailUrl: string
-    secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
@@ -57324,8 +59382,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    thumbnailUrl?: StringFieldUpdateOperationsInput | string
-    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -57338,7 +59394,7 @@ export namespace Prisma {
     format?: VideoFormatUpdateOneWithoutVideosNestedInput
     category?: VideoCategoryUpdateOneRequiredWithoutVideosNestedInput
     movie?: MovieUpdateOneWithoutMetadataNestedInput
-    series?: SeriesUpdateOneWithoutMetadataNestedInput
+    series?: SerieUpdateOneWithoutMetadataNestedInput
     actors?: VideoActorUpdateManyWithoutVideoNestedInput
     subtitles?: SubtitleUpdateManyWithoutVideoMetadataNestedInput
     languages?: VideoLanguageUpdateManyWithoutVideosNestedInput
@@ -57348,8 +59404,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    thumbnailUrl?: StringFieldUpdateOperationsInput | string
-    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -57362,7 +59416,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     movie?: MovieUncheckedUpdateOneWithoutMetadataNestedInput
-    series?: SeriesUncheckedUpdateOneWithoutMetadataNestedInput
+    series?: SerieUncheckedUpdateOneWithoutMetadataNestedInput
     actors?: VideoActorUncheckedUpdateManyWithoutVideoNestedInput
     subtitles?: SubtitleUncheckedUpdateManyWithoutVideoMetadataNestedInput
     languages?: VideoLanguageUncheckedUpdateManyWithoutVideosNestedInput
@@ -57372,8 +59426,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    thumbnailUrl?: StringFieldUpdateOperationsInput | string
-    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -57419,8 +59471,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    thumbnailUrl?: StringFieldUpdateOperationsInput | string
-    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -57434,7 +59484,7 @@ export namespace Prisma {
     category?: VideoCategoryUpdateOneRequiredWithoutVideosNestedInput
     gender?: VideoGenreUpdateOneRequiredWithoutVideosNestedInput
     movie?: MovieUpdateOneWithoutMetadataNestedInput
-    series?: SeriesUpdateOneWithoutMetadataNestedInput
+    series?: SerieUpdateOneWithoutMetadataNestedInput
     actors?: VideoActorUpdateManyWithoutVideoNestedInput
     subtitles?: SubtitleUpdateManyWithoutVideoMetadataNestedInput
   }
@@ -57443,8 +59493,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    thumbnailUrl?: StringFieldUpdateOperationsInput | string
-    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -57458,7 +59506,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     movie?: MovieUncheckedUpdateOneWithoutMetadataNestedInput
-    series?: SeriesUncheckedUpdateOneWithoutMetadataNestedInput
+    series?: SerieUncheckedUpdateOneWithoutMetadataNestedInput
     actors?: VideoActorUncheckedUpdateManyWithoutVideoNestedInput
     subtitles?: SubtitleUncheckedUpdateManyWithoutVideoMetadataNestedInput
   }
@@ -57467,8 +59515,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    thumbnailUrl?: StringFieldUpdateOperationsInput | string
-    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -57487,8 +59533,6 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
-    thumbnailUrl: string
-    secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
@@ -57506,8 +59550,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    thumbnailUrl?: StringFieldUpdateOperationsInput | string
-    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -57520,7 +59562,7 @@ export namespace Prisma {
     category?: VideoCategoryUpdateOneRequiredWithoutVideosNestedInput
     gender?: VideoGenreUpdateOneRequiredWithoutVideosNestedInput
     movie?: MovieUpdateOneWithoutMetadataNestedInput
-    series?: SeriesUpdateOneWithoutMetadataNestedInput
+    series?: SerieUpdateOneWithoutMetadataNestedInput
     actors?: VideoActorUpdateManyWithoutVideoNestedInput
     subtitles?: SubtitleUpdateManyWithoutVideoMetadataNestedInput
     languages?: VideoLanguageUpdateManyWithoutVideosNestedInput
@@ -57530,8 +59572,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    thumbnailUrl?: StringFieldUpdateOperationsInput | string
-    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -57544,7 +59584,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     movie?: MovieUncheckedUpdateOneWithoutMetadataNestedInput
-    series?: SeriesUncheckedUpdateOneWithoutMetadataNestedInput
+    series?: SerieUncheckedUpdateOneWithoutMetadataNestedInput
     actors?: VideoActorUncheckedUpdateManyWithoutVideoNestedInput
     subtitles?: SubtitleUncheckedUpdateManyWithoutVideoMetadataNestedInput
     languages?: VideoLanguageUncheckedUpdateManyWithoutVideosNestedInput
@@ -57554,8 +59594,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    thumbnailUrl?: StringFieldUpdateOperationsInput | string
-    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -57573,8 +59611,6 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
-    thumbnailUrl: string
-    secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
@@ -57592,8 +59628,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    thumbnailUrl?: StringFieldUpdateOperationsInput | string
-    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -57606,7 +59640,7 @@ export namespace Prisma {
     format?: VideoFormatUpdateOneWithoutVideosNestedInput
     gender?: VideoGenreUpdateOneRequiredWithoutVideosNestedInput
     movie?: MovieUpdateOneWithoutMetadataNestedInput
-    series?: SeriesUpdateOneWithoutMetadataNestedInput
+    series?: SerieUpdateOneWithoutMetadataNestedInput
     actors?: VideoActorUpdateManyWithoutVideoNestedInput
     subtitles?: SubtitleUpdateManyWithoutVideoMetadataNestedInput
     languages?: VideoLanguageUpdateManyWithoutVideosNestedInput
@@ -57616,8 +59650,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    thumbnailUrl?: StringFieldUpdateOperationsInput | string
-    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -57630,7 +59662,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     movie?: MovieUncheckedUpdateOneWithoutMetadataNestedInput
-    series?: SeriesUncheckedUpdateOneWithoutMetadataNestedInput
+    series?: SerieUncheckedUpdateOneWithoutMetadataNestedInput
     actors?: VideoActorUncheckedUpdateManyWithoutVideoNestedInput
     subtitles?: SubtitleUncheckedUpdateManyWithoutVideoMetadataNestedInput
     languages?: VideoLanguageUncheckedUpdateManyWithoutVideosNestedInput
@@ -57640,8 +59672,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    thumbnailUrl?: StringFieldUpdateOperationsInput | string
-    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -57659,6 +59689,32 @@ export namespace Prisma {
     tagId: string
   }
 
+  export type MediaAttachmentCreateManyMovieInput = {
+    id?: string
+    mediaFileId: string
+    episodeId?: string | null
+    adId?: string | null
+    type: $Enums.MediaAttachmentType
+  }
+
+  export type CommentCreateManyMovieInput = {
+    id?: string
+    userId: string
+    epiisodeId?: string | null
+    text: string
+    createdAt?: Date | string
+    parentCommentId?: string | null
+  }
+
+  export type PurchaseCreateManyMovieInput = {
+    id?: string
+    userId: string
+    serieId?: string | null
+    purchaseDate?: Date | string
+    expirationDate?: Date | string | null
+    country: string
+  }
+
   export type MovieTagUpdateWithoutMovieInput = {
     tag?: TagUpdateOneRequiredWithoutMovieTagsNestedInput
   }
@@ -57671,7 +59727,87 @@ export namespace Prisma {
     tagId?: StringFieldUpdateOperationsInput | string
   }
 
-  export type SeasonCreateManySeriesInput = {
+  export type MediaAttachmentUpdateWithoutMovieInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumMediaAttachmentTypeFieldUpdateOperationsInput | $Enums.MediaAttachmentType
+    mediaFile?: MediaFileUpdateOneRequiredWithoutAttachmentsNestedInput
+    episode?: EpisodeUpdateOneWithoutVideoAttachmentNestedInput
+    ad?: AdUpdateOneWithoutVideoAttachmentNestedInput
+  }
+
+  export type MediaAttachmentUncheckedUpdateWithoutMovieInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    mediaFileId?: StringFieldUpdateOperationsInput | string
+    episodeId?: NullableStringFieldUpdateOperationsInput | string | null
+    adId?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumMediaAttachmentTypeFieldUpdateOperationsInput | $Enums.MediaAttachmentType
+  }
+
+  export type MediaAttachmentUncheckedUpdateManyWithoutMovieInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    mediaFileId?: StringFieldUpdateOperationsInput | string
+    episodeId?: NullableStringFieldUpdateOperationsInput | string | null
+    adId?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumMediaAttachmentTypeFieldUpdateOperationsInput | $Enums.MediaAttachmentType
+  }
+
+  export type CommentUpdateWithoutMovieInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    text?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutCommentsNestedInput
+    parent?: CommentUpdateOneWithoutRepliesNestedInput
+    replies?: CommentUpdateManyWithoutParentNestedInput
+    episode?: EpisodeUpdateOneWithoutCommentNestedInput
+  }
+
+  export type CommentUncheckedUpdateWithoutMovieInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    epiisodeId?: NullableStringFieldUpdateOperationsInput | string | null
+    text?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    parentCommentId?: NullableStringFieldUpdateOperationsInput | string | null
+    replies?: CommentUncheckedUpdateManyWithoutParentNestedInput
+  }
+
+  export type CommentUncheckedUpdateManyWithoutMovieInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    epiisodeId?: NullableStringFieldUpdateOperationsInput | string | null
+    text?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    parentCommentId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type PurchaseUpdateWithoutMovieInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    purchaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    expirationDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    country?: StringFieldUpdateOperationsInput | string
+    user?: UserUpdateOneRequiredWithoutPurchasesNestedInput
+    serie?: SerieUpdateOneWithoutPurchaseNestedInput
+  }
+
+  export type PurchaseUncheckedUpdateWithoutMovieInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    serieId?: NullableStringFieldUpdateOperationsInput | string | null
+    purchaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    expirationDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    country?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type PurchaseUncheckedUpdateManyWithoutMovieInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    serieId?: NullableStringFieldUpdateOperationsInput | string | null
+    purchaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    expirationDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    country?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SeasonCreateManySerieInput = {
     id?: string
     number: number
     createdAt?: Date | string
@@ -57682,7 +59818,7 @@ export namespace Prisma {
     tagId: string
   }
 
-  export type SeriesViewCreateManySeriesInput = {
+  export type SerieViewCreateManySeriesInput = {
     id?: string
     userId: string
     viewedAt?: Date | string
@@ -57694,7 +59830,16 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type SeasonUpdateWithoutSeriesInput = {
+  export type PurchaseCreateManySerieInput = {
+    id?: string
+    userId: string
+    movieId?: string | null
+    purchaseDate?: Date | string
+    expirationDate?: Date | string | null
+    country: string
+  }
+
+  export type SeasonUpdateWithoutSerieInput = {
     id?: StringFieldUpdateOperationsInput | string
     number?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57703,7 +59848,7 @@ export namespace Prisma {
     SeasonView?: SeasonViewUpdateManyWithoutSeasonNestedInput
   }
 
-  export type SeasonUncheckedUpdateWithoutSeriesInput = {
+  export type SeasonUncheckedUpdateWithoutSerieInput = {
     id?: StringFieldUpdateOperationsInput | string
     number?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57712,7 +59857,7 @@ export namespace Prisma {
     SeasonView?: SeasonViewUncheckedUpdateManyWithoutSeasonNestedInput
   }
 
-  export type SeasonUncheckedUpdateManyWithoutSeriesInput = {
+  export type SeasonUncheckedUpdateManyWithoutSerieInput = {
     id?: StringFieldUpdateOperationsInput | string
     number?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57731,7 +59876,7 @@ export namespace Prisma {
     tagId?: StringFieldUpdateOperationsInput | string
   }
 
-  export type SeriesViewUpdateWithoutSeriesInput = {
+  export type SerieViewUpdateWithoutSeriesInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     viewedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57743,7 +59888,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type SeriesViewUncheckedUpdateWithoutSeriesInput = {
+  export type SerieViewUncheckedUpdateWithoutSeriesInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     viewedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57755,7 +59900,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type SeriesViewUncheckedUpdateManyWithoutSeriesInput = {
+  export type SerieViewUncheckedUpdateManyWithoutSeriesInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     viewedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57765,12 +59910,38 @@ export namespace Prisma {
     rating?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PurchaseUpdateWithoutSerieInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    purchaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    expirationDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    country?: StringFieldUpdateOperationsInput | string
+    user?: UserUpdateOneRequiredWithoutPurchasesNestedInput
+    movie?: MovieUpdateOneWithoutPurchaseNestedInput
+  }
+
+  export type PurchaseUncheckedUpdateWithoutSerieInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    movieId?: NullableStringFieldUpdateOperationsInput | string | null
+    purchaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    expirationDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    country?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type PurchaseUncheckedUpdateManyWithoutSerieInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    movieId?: NullableStringFieldUpdateOperationsInput | string | null
+    purchaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    expirationDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    country?: StringFieldUpdateOperationsInput | string
   }
 
   export type EpisodeCreateManySeasonInput = {
     id?: string
     number: number
-    videoFileId: string
     title?: string | null
     releaseDate: Date | string
     plateformeDAte: Date | string
@@ -57803,13 +59974,13 @@ export namespace Prisma {
     isSaFliixProd?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    videoFile?: VideoFileUpdateOneRequiredWithoutEpisodeNestedInput
+    videoAttachment?: MediaAttachmentUpdateManyWithoutEpisodeNestedInput
+    Comment?: CommentUpdateManyWithoutEpisodeNestedInput
   }
 
   export type EpisodeUncheckedUpdateWithoutSeasonInput = {
     id?: StringFieldUpdateOperationsInput | string
     number?: IntFieldUpdateOperationsInput | number
-    videoFileId?: StringFieldUpdateOperationsInput | string
     title?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     plateformeDAte?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57818,12 +59989,13 @@ export namespace Prisma {
     isSaFliixProd?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    videoAttachment?: MediaAttachmentUncheckedUpdateManyWithoutEpisodeNestedInput
+    Comment?: CommentUncheckedUpdateManyWithoutEpisodeNestedInput
   }
 
   export type EpisodeUncheckedUpdateManyWithoutSeasonInput = {
     id?: StringFieldUpdateOperationsInput | string
     number?: IntFieldUpdateOperationsInput | number
-    videoFileId?: StringFieldUpdateOperationsInput | string
     title?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     plateformeDAte?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57867,6 +60039,76 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type MediaAttachmentCreateManyEpisodeInput = {
+    id?: string
+    mediaFileId: string
+    movieId?: string | null
+    adId?: string | null
+    type: $Enums.MediaAttachmentType
+  }
+
+  export type CommentCreateManyEpisodeInput = {
+    id?: string
+    userId: string
+    movieId?: string | null
+    text: string
+    createdAt?: Date | string
+    parentCommentId?: string | null
+  }
+
+  export type MediaAttachmentUpdateWithoutEpisodeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumMediaAttachmentTypeFieldUpdateOperationsInput | $Enums.MediaAttachmentType
+    mediaFile?: MediaFileUpdateOneRequiredWithoutAttachmentsNestedInput
+    movie?: MovieUpdateOneWithoutAttachmentNestedInput
+    ad?: AdUpdateOneWithoutVideoAttachmentNestedInput
+  }
+
+  export type MediaAttachmentUncheckedUpdateWithoutEpisodeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    mediaFileId?: StringFieldUpdateOperationsInput | string
+    movieId?: NullableStringFieldUpdateOperationsInput | string | null
+    adId?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumMediaAttachmentTypeFieldUpdateOperationsInput | $Enums.MediaAttachmentType
+  }
+
+  export type MediaAttachmentUncheckedUpdateManyWithoutEpisodeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    mediaFileId?: StringFieldUpdateOperationsInput | string
+    movieId?: NullableStringFieldUpdateOperationsInput | string | null
+    adId?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumMediaAttachmentTypeFieldUpdateOperationsInput | $Enums.MediaAttachmentType
+  }
+
+  export type CommentUpdateWithoutEpisodeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    text?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutCommentsNestedInput
+    parent?: CommentUpdateOneWithoutRepliesNestedInput
+    replies?: CommentUpdateManyWithoutParentNestedInput
+    movie?: MovieUpdateOneWithoutCommentNestedInput
+  }
+
+  export type CommentUncheckedUpdateWithoutEpisodeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    movieId?: NullableStringFieldUpdateOperationsInput | string | null
+    text?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    parentCommentId?: NullableStringFieldUpdateOperationsInput | string | null
+    replies?: CommentUncheckedUpdateManyWithoutParentNestedInput
+  }
+
+  export type CommentUncheckedUpdateManyWithoutEpisodeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    movieId?: NullableStringFieldUpdateOperationsInput | string | null
+    text?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    parentCommentId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
   export type MovieTagCreateManyTagInput = {
     movieId: string
   }
@@ -57888,7 +60130,7 @@ export namespace Prisma {
   }
 
   export type SeriesTagUpdateWithoutTagInput = {
-    series?: SeriesUpdateOneRequiredWithoutTagsNestedInput
+    series?: SerieUpdateOneRequiredWithoutTagsNestedInput
   }
 
   export type SeriesTagUncheckedUpdateWithoutTagInput = {
@@ -57902,7 +60144,8 @@ export namespace Prisma {
   export type CommentCreateManyParentInput = {
     id?: string
     userId: string
-    videoId: string
+    movieId?: string | null
+    epiisodeId?: string | null
     text: string
     createdAt?: Date | string
   }
@@ -57912,14 +60155,16 @@ export namespace Prisma {
     text?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutCommentsNestedInput
-    video?: VideoFileUpdateOneRequiredWithoutCommentsNestedInput
     replies?: CommentUpdateManyWithoutParentNestedInput
+    movie?: MovieUpdateOneWithoutCommentNestedInput
+    episode?: EpisodeUpdateOneWithoutCommentNestedInput
   }
 
   export type CommentUncheckedUpdateWithoutParentInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    videoId?: StringFieldUpdateOperationsInput | string
+    movieId?: NullableStringFieldUpdateOperationsInput | string | null
+    epiisodeId?: NullableStringFieldUpdateOperationsInput | string | null
     text?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     replies?: CommentUncheckedUpdateManyWithoutParentNestedInput
@@ -57928,9 +60173,18 @@ export namespace Prisma {
   export type CommentUncheckedUpdateManyWithoutParentInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    videoId?: StringFieldUpdateOperationsInput | string
+    movieId?: NullableStringFieldUpdateOperationsInput | string | null
+    epiisodeId?: NullableStringFieldUpdateOperationsInput | string | null
     text?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MediaAttachmentCreateManyAdInput = {
+    id?: string
+    mediaFileId: string
+    movieId?: string | null
+    episodeId?: string | null
+    type: $Enums.MediaAttachmentType
   }
 
   export type AdViewCreateManyAdInput = {
@@ -57938,6 +60192,30 @@ export namespace Prisma {
     userId?: string | null
     profileId?: string | null
     viewed_at?: Date | string
+  }
+
+  export type MediaAttachmentUpdateWithoutAdInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumMediaAttachmentTypeFieldUpdateOperationsInput | $Enums.MediaAttachmentType
+    mediaFile?: MediaFileUpdateOneRequiredWithoutAttachmentsNestedInput
+    movie?: MovieUpdateOneWithoutAttachmentNestedInput
+    episode?: EpisodeUpdateOneWithoutVideoAttachmentNestedInput
+  }
+
+  export type MediaAttachmentUncheckedUpdateWithoutAdInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    mediaFileId?: StringFieldUpdateOperationsInput | string
+    movieId?: NullableStringFieldUpdateOperationsInput | string | null
+    episodeId?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumMediaAttachmentTypeFieldUpdateOperationsInput | $Enums.MediaAttachmentType
+  }
+
+  export type MediaAttachmentUncheckedUpdateManyWithoutAdInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    mediaFileId?: StringFieldUpdateOperationsInput | string
+    movieId?: NullableStringFieldUpdateOperationsInput | string | null
+    episodeId?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumMediaAttachmentTypeFieldUpdateOperationsInput | $Enums.MediaAttachmentType
   }
 
   export type AdViewUpdateWithoutAdInput = {

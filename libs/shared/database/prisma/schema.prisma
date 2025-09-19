@@ -200,8 +200,6 @@ model VideoMetadata {
   id                String        @id @default(uuid())
   title             String
   description       String
-  thumbnailUrl      String        @map("main_image")
-  secondaryImage    String?
   releaseDate       DateTime      @map("theater_release")
   platformDate      DateTime      @map("platform_publish")
   ageRating         String
@@ -219,7 +217,7 @@ model VideoMetadata {
   // Relations
   movie Movie?
 
-  series    Series?
+  series    Serie?
   actors    VideoActor[]
   subtitles Subtitle[]      @relation("VideoMetadataToSubtitle")
   languages VideoLanguage[]
@@ -230,26 +228,65 @@ model VideoMetadata {
   @@map("video_metadata")
 }
 
-model VideoFile {
-  id                String          @id @default(uuid())
-  filePath          String
-  trailerPath       String?
-  duration          Int             @map("duration_seconds")
-  width             Int?
-  height            Int?
-  status            VideoFileStatus @default(PENDING)
-  // Relations
-  movie             Movie?
-  episode           Episode?
-  subtitles         Subtitle[] // Opposite relation for Subtitle
-  purchases         Purchase[] // Opposite relation for Purchase
-  comments          Comment[] // Opposite relation for Comment
-  UserVideoProgress UserVideoView[]
+model MediaFile {
+  id        String          @id @default(uuid())
+  s3Key     String
+  duration  Int? // valable uniquement si mediaType = VIDEO
+  width     Int?
+  height    Int?
+  status    MediaFileStatus
+  mediaType MediaType // VIDEO | IMAGE
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@map("video_files")
+  attachments MediaAttachment[]
+
+  Subtitle Subtitle[]
+}
+
+model MediaAttachment {
+  id          String              @id @default(uuid())
+  mediaFileId String
+  movieId     String?
+  episodeId   String?
+  adId        String?
+  type        MediaAttachmentType
+
+  mediaFile MediaFile @relation(fields: [mediaFileId], references: [id])
+  movie     Movie?    @relation(fields: [movieId], references: [id])
+  episode   Episode?  @relation(fields: [episodeId], references: [id])
+  ad        Ad?       @relation(fields: [adId], references: [id])
+}
+
+enum MediaType {
+  VIDEO
+  IMAGE
+}
+
+enum MediaFileStatus {
+  PENDING // En attente de traitement
+  UPLOADED // Uploadé mais pas encore traité
+  PROCESSING // En cours de traitement
+  PROCESSED // Traitement terminé avec succès
+  FAILED // Échec du traitement
+  CANCELLED // Traitement annulé
+  QUEUED
+}
+
+enum MediaAttachmentType {
+  // vidéos
+  MAIN
+  TRAILER
+  BONUS
+  MAKING_OF
+  CLIP
+  PREVIEW
+  ADVERTISEMENT
+  // images
+  THUMBNAIL
+  POSTER
+  BANNER
 }
 
 model VideoGenre {
@@ -346,26 +383,27 @@ enum VideoFileStatus {
 
 // ===== AGGREGATE ROOT 1 =====
 model Movie {
-  id          String        @id @default(uuid())
-  metadata    VideoMetadata @relation(fields: [metadataId], references: [id])
-  metadataId  String        @unique
-  videoFile   VideoFile     @relation(fields: [videoFileId], references: [id])
-  videoFileId String        @unique
-  tags        MovieTag[]
-  status      String        @default("draft")
-  type        String        @default("location")
-  seasonCount Int           @default(0)
-  rentalPrice Float?        @default(0)
+  id         String        @id @default(uuid())
+  metadata   VideoMetadata @relation(fields: [metadataId], references: [id])
+  metadataId String        @unique
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  tags        MovieTag[]
+  status      ContentStatus     @default(DRAFT)
+  type        String            @default("location")
+  seasonCount Int               @default(0)
+  rentalPrice Float?            @default(0)
+  attachment  MediaAttachment[]
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  Comment     Comment[]
+  Purchase    Purchase[]
 
   // Règles métier (ex: durée max)
   @@map("movies")
 }
 
 // ===== AGGREGATE ROOT 2 =====
-model Series {
+model Serie {
   id          String        @id @default(uuid())
   metadata    VideoMetadata @relation(fields: [metadataId], references: [id])
   metadataId  String        @unique
@@ -375,18 +413,19 @@ model Series {
   type        String        @default("location")
   seasonCount Int           @default(0)
   rentalPrice Float?        @default(0)
-  SeriesView  SeriesView[]
+  SerieView   SerieView[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  Purchase  Purchase[]
 
   @@map("series")
 }
 
 model Season {
   id         String       @id @default(uuid())
-  series     Series       @relation(fields: [seriesId], references: [id])
-  seriesId   String
+  serie      Serie        @relation(fields: [serieId], references: [id])
+  serieId    String
   number     Int
   episodes   Episode[]
   SeasonView SeasonView[]
@@ -394,16 +433,14 @@ model Season {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@unique([seriesId, number])
+  @@unique([serieId, number])
 }
 
 model Episode {
-  id             String    @id @default(uuid())
-  season         Season    @relation(fields: [seasonId], references: [id])
+  id             String   @id @default(uuid())
+  season         Season   @relation(fields: [seasonId], references: [id])
   seasonId       String
   number         Int
-  videoFile      VideoFile @relation(fields: [videoFileId], references: [id])
-  videoFileId    String    @unique
   title          String?
   releaseDate    DateTime
   plateformeDAte DateTime
@@ -411,8 +448,10 @@ model Episode {
   description    String?
   isSaFliixProd  Boolean
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  videoAttachment MediaAttachment[]
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  Comment         Comment[]
 
   @@unique([seasonId, number])
   @@map("episodes")
@@ -440,8 +479,7 @@ model UserVideoView {
   updatedAt DateTime @updatedAt
 
   // Relations
-  user  User      @relation(fields: [userId], references: [id])
-  video VideoFile @relation(fields: [videoId], references: [id])
+  user User @relation(fields: [userId], references: [id])
 
   @@map("user_video_view")
 }
@@ -464,10 +502,10 @@ model SeasonView {
   @@unique([seasonId, userId])
 }
 
-model SeriesView {
+model SerieView {
   id       String   @id @default(uuid())
   seriesId String
-  series   Series   @relation(fields: [seriesId], references: [id])
+  series   Serie    @relation(fields: [seriesId], references: [id])
   userId   String
   viewedAt DateTime @default(now())
 
@@ -505,7 +543,7 @@ model MovieTag {
 }
 
 model SeriesTag {
-  series   Series @relation(fields: [seriesId], references: [id])
+  series   Serie  @relation(fields: [seriesId], references: [id])
   seriesId String
   tag      Tag    @relation(fields: [tagId], references: [id])
   tagId    String
@@ -514,7 +552,7 @@ model SeriesTag {
 }
 
 model Subtitle {
-  video       VideoFile @relation(fields: [videoId], references: [id])
+  video       MediaFile @relation(fields: [videoId], references: [id])
   videoId     String
   language    String
   subtitleUrl String
@@ -530,27 +568,36 @@ model Subtitle {
 // =============================================
 
 model Purchase {
-  id             String    @id @default(uuid())
-  user           User      @relation(fields: [userId], references: [id])
-  userId         String
-  video          VideoFile @relation(fields: [videoId], references: [id])
-  videoId        String
+  id     String @id @default(uuid())
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  movieId String?
+  serieId String?
+
+  movie          Movie?    @relation(fields: [movieId], references: [id])
+  serie          Serie?    @relation(fields: [serieId], references: [id])
   purchaseDate   DateTime  @default(now())
   expirationDate DateTime?
   country        String
 }
 
 model Comment {
-  id              String    @id @default(uuid())
-  user            User      @relation(fields: [userId], references: [id])
-  userId          String
-  video           VideoFile @relation(fields: [videoId], references: [id])
-  videoId         String
-  text            String
-  createdAt       DateTime  @default(now())
+  id     String @id @default(uuid())
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  movieId    String?
+  epiisodeId String?
+  text       String
+  createdAt  DateTime @default(now())
+
   parent          Comment?  @relation("CommentReplies", fields: [parentCommentId], references: [id])
   parentCommentId String?
   replies         Comment[] @relation("CommentReplies")
+
+  movie   Movie?   @relation(fields: [movieId], references: [id])
+  episode Episode? @relation(fields: [epiisodeId], references: [id])
 }
 
 // =============================================
@@ -558,16 +605,15 @@ model Comment {
 // =============================================
 
 model Ad {
-  id         String   @id @default(uuid())
-  title      String
-  image_url  String
-  video_url  String?
-  start_date DateTime
-  end_date   DateTime
-  is_active  Boolean  @default(true)
-
+  id              String            @id @default(uuid())
+  title           String
+  imageUrl        String
+  startDate       DateTime
+  endDate         DateTime
+  isActive        Boolean           @default(true)
+  videoAttachment MediaAttachment[]
   // Relations
-  views AdView[]
+  views           AdView[]
 }
 
 model AdView {

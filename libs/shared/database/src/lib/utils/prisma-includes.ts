@@ -1,5 +1,12 @@
 // libs/database/src/lib/prisma-includes.ts
 
+export const attachmentInclude = {
+  mediaFile:true,
+  movie:true,
+  episode:true,
+  ad:true
+} as const;
+
 export const metadataInclude = {
   format: true,
   category: true,
@@ -12,7 +19,9 @@ export const metadataInclude = {
 } as const;
 
 export const episodeInclude = {
-  videoFile: true,
+  videoAttachment: {
+    include: attachmentInclude
+  },
   metadata: {
     include: metadataInclude,
   },
@@ -37,7 +46,9 @@ export const movieInclude = {
   metadata: {
     include: metadataInclude,
   },
-  videoFile: true,
+  videoAttachment: {
+    include: attachmentInclude
+  }
 } as const;
 
 export const serieWithMetadataAndSeasonCountInclude = {
@@ -104,3 +115,4 @@ export const adminInclude = {
   sessions: true,
   emailValidation: true
 } as const;
+

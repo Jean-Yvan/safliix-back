@@ -4,8 +4,9 @@ import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Result, Err, Ok } from 'oxide.ts';
 import type { IMovieRepository } from '../../domain/ports/movie.repository';
 import { MovieAggregate } from '../../domain/entities/movie.aggregate';
-import { CreateMovieCommand } from '../commands/create-movie.command';
+import { CreateMovieCommand } from '../cqrs/commands/create-movie.command';
 import { MOVIE_REPOSITORY } from '../../utils/types';
+import { MovieCreatedEvent } from '../cqrs/events/movie-created.event';
 import { 
   MovieCreationError,
   MovieValidationError,
@@ -20,9 +21,9 @@ export class CreateMovieHandler extends BaseHandler<CreateMovieCommand, Result<M
   constructor(
     @Inject(MOVIE_REPOSITORY)
     private readonly repository: IMovieRepository,
-    eventBus: EventBus
+    private readonly eventBus: EventBus
   ) {
-    super(eventBus);
+    super();
    // this.logger = new Logger(CreateMovieHandler.name);
   }
 
@@ -45,7 +46,10 @@ export class CreateMovieHandler extends BaseHandler<CreateMovieCommand, Result<M
  //     this.logger.error(`Failed to save movie ${command.payload.title}: ${saveResult.unwrapErr().message}`);
       return Err(new MovieSaveError(saveResult.unwrapErr().message));
     }
-
+    this.eventBus.publish(new MovieCreatedEvent(saveResult.unwrap().id!, movie.metadata.title));
+    // 3. Retourner le résultat
+    return Ok(movie);
+    
     return Ok(movie);
   }
 }

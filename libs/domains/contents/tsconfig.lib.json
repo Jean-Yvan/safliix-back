@@ -14,7 +14,7 @@
     "strictBindCallApply": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "../video/src/lib/domain/enums/media-attachment.enum.ts"],
   "references": [
     {
       "path": "../common/tsconfig.lib.json"

@@ -1,7 +1,7 @@
 
 import { QueryHandler } from "@nestjs/cqrs";
 import { BaseQueryHandler } from "@safliix-back/cqrs";
-import { ListMovieByIdQuery } from "../queries/list-movie-by-Id.query";
+import { ListMovieByIdQuery } from "../cqrs/queries/list-movie-by-Id.query";
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Result, Err, Ok } from 'oxide.ts';
 import type { IMovieRepository } from '../../domain/ports/movie.repository';

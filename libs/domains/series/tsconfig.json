@@ -7,10 +7,13 @@
       "path": "../common"
     },
     {
-      "path": "../../shared/database"
+      "path": "../contents"
     },
     {
-      "path": "../contents"
+      "path": "../video"
+    },
+    {
+      "path": "../../shared/database"
     },
     {
       "path": "../../shared/cqrs"

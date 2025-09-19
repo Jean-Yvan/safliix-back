@@ -67,10 +67,10 @@
       "path": "./libs/shared/bullmq"
     },
     {
-      "path": "./libs/shared/video-file"
+      "path": "./libs/shared/s3"
     },
     {
-      "path": "./libs/shared/s3"
+      "path": "./libs/domains/video"
     }
   ]
 }

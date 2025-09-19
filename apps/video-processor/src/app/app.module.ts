@@ -1,10 +1,13 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { VideoProcessor } from './video-processor.service';
+import { SafliixBackBullmqModule } from '@safliix-back/bullmq';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    SafliixBackBullmqModule.forRoot(),
+        
+  ],
+  
+  providers: [VideoProcessor],
 })
 export class AppModule {}

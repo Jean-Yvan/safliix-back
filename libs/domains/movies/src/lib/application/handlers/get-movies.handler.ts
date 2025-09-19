@@ -5,7 +5,7 @@ import type { IMovieRepository } from '../../domain/ports/movie.repository';
 import { MovieAggregate } from '../../domain/entities/movie.aggregate';
 import { MOVIE_REPOSITORY, MovieFilter } from '../../utils/types';
 import { Inject } from '@nestjs/common';
-import { GetMoviesQuery } from '../queries/get-movies.query';
+import { GetMoviesQuery } from '../cqrs/queries/get-movies.query';
 
 
 

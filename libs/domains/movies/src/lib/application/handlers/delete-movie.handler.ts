@@ -1,7 +1,7 @@
 import { CommandHandler } from '@nestjs/cqrs';
 import { Inject,Injectable } from '@nestjs/common';
 import type { IMovieRepository } from '../../domain/ports/movie.repository';
-import { DeleteMovieCommand } from '../commands/delete-movie.command';
+import { DeleteMovieCommand } from '../cqrs/commands/delete-movie.command';
 import { MOVIE_REPOSITORY } from '../../utils/types';
 import { BaseHandler } from '@safliix-back/cqrs';
 import { Result,Err,Ok } from 'oxide.ts';

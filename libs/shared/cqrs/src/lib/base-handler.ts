@@ -1,11 +1,11 @@
 // libs/shared/cqrs/src/base.handler.ts
-import { Logger } from '@nestjs/common';
-import { EventBus, ICommand } from '@nestjs/cqrs';
+
+import { ICommand } from '@nestjs/cqrs';
 
 export abstract class BaseHandler<Command extends ICommand, Response = void> {
   //protected abstract logger: Logger;
 
-  constructor(protected readonly eventBus?: EventBus) {}
+  
 
   async execute(command: Command): Promise<Response> {
     try {

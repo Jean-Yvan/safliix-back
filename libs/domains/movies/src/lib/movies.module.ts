@@ -7,8 +7,15 @@ import { UpdateMovieHandler } from './application/handlers/update-movie.handler'
 import { DeleteMovieHandler } from './application/handlers/delete-movie.handler';
 import { GetMoviesHandler } from './application/handlers/get-movies.handler';
 import { ListMovieByIdHandler } from './application/handlers/list-movie-by-id.handler';
+
+import { MovieCreatedHandler } from './application/cqrs/event-handlers/movie-created-event.handler';
+import { SafliixBackBullmqModule } from '@safliix-back/bullmq';
+
 @Module({
-  imports: [SafliixBackDatabaseModule],
+  imports: [
+    SafliixBackDatabaseModule,
+    SafliixBackBullmqModule.forRoot()
+  ],
   providers: [
     {
       provide: MOVIE_REPOSITORY,
@@ -18,7 +25,9 @@ import { ListMovieByIdHandler } from './application/handlers/list-movie-by-id.ha
     UpdateMovieHandler,
     DeleteMovieHandler,
     GetMoviesHandler,
-    ListMovieByIdHandler
+    ListMovieByIdHandler,
+    MovieCreatedHandler
+
   ],
   exports: [
     CreateMovieHandler,

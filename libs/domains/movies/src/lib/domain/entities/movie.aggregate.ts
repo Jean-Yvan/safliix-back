@@ -1,9 +1,11 @@
 import { AggregateRoot } from '@nestjs/cqrs';
-import { VideoMetadata,VideoFile,VideoCategory,VideoFormat,VideoGender } from '@safliix-back/contents';
+import { VideoMetadata,VideoCategory,VideoFormat,VideoGender } from '@safliix-back/contents';
 import { Result,Ok,Err } from 'oxide.ts';
 import { CreateMovieDto } from '../../interface/rest/dto/create-movie.dto';
 import { UpdateMovieDto } from '../../interface/rest/dto/update-movie.dto';
 import { ContentStatus } from '@safliix-back/common';
+import { VideoAttachment } from '@safliix-back/video';
+import { MovieWithRelations } from '@safliix-back/database';
 
 //import { MoviePublishedEvent } from '../events/movie-published.event';
 
@@ -27,7 +29,7 @@ export class MovieAggregate extends AggregateRoot {
   private constructor(
     public readonly id: string | undefined,
     public readonly metadata: VideoMetadata,
-    public readonly  videoFile: VideoFile,
+    public readonly  attachments: VideoAttachment[],
     public status: ContentStatus = ContentStatus.DRAFT,
     public rentalPrice: number,
     public type: string
@@ -108,28 +110,18 @@ export class MovieAggregate extends AggregateRoot {
       genderResult.unwrap(),
       data.actors
     );
-    const videoFileResult = VideoFile.create(
-      undefined,
-      data.movieUrl,
-      data.duration,
-      data.thumbnailUrl,
-      0,
-      0
-      
-    );
+    
     if (metadataResult.isErr()) {
       return Err(metadataResult.unwrapErr());
     }
 
-    if (videoFileResult.isErr()) {
-      return Err(videoFileResult.unwrapErr());
-    }
+    
 
    
     const movie = new MovieAggregate(
       undefined,
       metadataResult.unwrap(),
-      videoFileResult.unwrap(),
+      [],
       data.status,
       data.rentalPrice || 0,
       data.type
@@ -142,23 +134,16 @@ export class MovieAggregate extends AggregateRoot {
     return Ok(movie);
   }
   
-  static restore(props: {
-    id: string;
-    metadata: VideoMetadata;
-    videoFile: VideoFile;
-    rentalPrice: number;
-    status : string;
-    type : string;
-  }): MovieAggregate {
+  static restore(data: MovieWithRelations): MovieAggregate {
 
-    const s = props.status == "DRAFT" ? 'DRAFT' : 'PUBLISHED'
+    const s = data.status == "DRAFT" ? ContentStatus.DRAFT : ContentStatus.PUBLISHED;
     const movie = new MovieAggregate(
-      props.id,
-      props.metadata,
-      props.videoFile,
+      data.id,
+      VideoMetadata.restore(data.metadata),
+      data.videoAttachment.map(va => VideoAttachment.restore(va)),
       s,
-      props.rentalPrice,
-      props.type
+      data.rentalPrice ?? 0,
+      data.type
     );
     
     return movie;
@@ -203,24 +188,7 @@ export class MovieAggregate extends AggregateRoot {
   }
 
   // Mise à jour fichier vidéo
-  if (payload.movieUrl) {
-    const fileResult = this.videoFile.setFilePath(payload.movieUrl);
-    if (fileResult.isErr()) {
-      return Err(fileResult.unwrapErr());
-    }
-  }
-
-  if (payload.duration !== undefined) {
-    if (payload.duration <= 0) {
-      return Err(new InvalidDurationError());
-    }
-    (this.videoFile as any)._duration = payload.duration; // tu peux ajouter un setter plus propre dans VideoFile
-  }
-
-  if (payload.thrailerPath !== undefined) {
-    (this.videoFile as any)._trailerPath = payload.thrailerPath;
-  }
-
+  
 
 
   // Mise à jour du prix

@@ -7,6 +7,9 @@
       "path": "../../shared/database"
     },
     {
+      "path": "../video"
+    },
+    {
       "path": "../common"
     },
     {
@@ -14,6 +17,9 @@
     },
     {
       "path": "../../shared/cqrs"
+    },
+    {
+      "path": "../../shared/bullmq"
     },
     {
       "path": "./tsconfig.lib.json"

@@ -1,8 +1,9 @@
-import { VideoFile, VideoFileMapper } from "@safliix-back/contents";
+
 import { Err,Ok, Result } from "oxide.ts";
 import { AddEpisodeDto } from "../../interfaces/add-episode.dto";
 import { EpisodeWithRelations } from "@safliix-back/database";
 import { UpdateEpisodeDto } from "src/lib/interfaces/update-episode.dto";
+import { VideoAttachment } from "@safliix-back/video";
 
 export class Episode{
 	constructor(
@@ -15,7 +16,7 @@ export class Episode{
     public isSaFliixProd: boolean,
     public seasonId: string,
     public number: number,
-    public readonly videoFile: VideoFile,
+    public attachment: VideoAttachment[],
     
     
   ) {}
@@ -29,17 +30,7 @@ export class Episode{
 
   static create(data : AddEpisodeDto): Result<Episode, Error> {
     
-    const videoFile = VideoFile.create(
-      undefined,
-      data.videoFileUrl,
-      data.duration,
-      data.thrailerPath,
-      0,
-      0
-    );
-    if (videoFile.isErr()) {
-      return Err(videoFile.unwrapErr());
-    }
+    
 
     const episode = new Episode(
       undefined,  
@@ -51,11 +42,15 @@ export class Episode{
       data.isCustomProduction,
       data.seasonId,
       data.episodeNumber,
-      videoFile.unwrap(),
+      []
       
     );
-
-    episode.validate();
+    try{
+      episode.validate();
+    }catch(e){
+      return Err(e as Error);
+    }  
+      
     return Ok(episode);
     
   }
@@ -71,7 +66,7 @@ export class Episode{
       data.isSaFliixProd,
       data.seasonId,
       data.number,
-      VideoFileMapper.toDomain( data.videoFile)
+      data.videoAttachment.map(va => VideoAttachment.restore(va))
     )
   }
 

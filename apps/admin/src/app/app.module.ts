@@ -8,6 +8,7 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { SubscriptionModule } from './subscription/subscription.module';
 import { AdminConnectModule } from './adminConnect/admin-connect.module';
 import { SerieModule } from './serie/serie.module';
+import { VideosModule } from './videos/videos.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { SerieModule } from './serie/serie.module';
     SubscriptionModule,
     AdminConnectModule,
     SerieModule,
+    VideosModule,
   ],
 
   providers: [

@@ -22,6 +22,9 @@
   ],
   "references": [
     {
+      "path": "../../libs/domains/video/tsconfig.lib.json"
+    },
+    {
       "path": "../../libs/domains/users/tsconfig.lib.json"
     },
     {
@@ -32,6 +35,9 @@
     },
     {
       "path": "../../libs/domains/movies/tsconfig.lib.json"
+    },
+    {
+      "path": "../../libs/shared/bullmq/tsconfig.lib.json"
     },
     {
       "path": "../../libs/shared/api/tsconfig.lib.json"

@@ -16,5 +16,10 @@
     "jest.config.ts",
     "src/**/*.spec.ts",
     "src/**/*.test.ts"
+  ],
+  "references": [
+    {
+      "path": "../../libs/shared/bullmq/tsconfig.lib.json"
+    }
   ]
 }
