@@ -1,6 +1,5 @@
 import { MovieWithRelations, CreateToPrisma, UpdateToPrisma } from '@safliix-back/database';
 import { VideoMetadataMapper } from '@safliix-back/contents';
-
 import { MovieAggregate } from '../domain/entities/movie.aggregate';
 
 

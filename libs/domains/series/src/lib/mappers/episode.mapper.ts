@@ -1,6 +1,6 @@
 import { Episode } from "../domain/entities/episode.entity";
 import { EpisodeWithRelations, CreateToPrisma, UpdateToPrisma } from "@safliix-back/database";
-import { VideoFileMapper } from "@safliix-back/contents"
+import { MediaFileMapper } from "@safliix-back/video"
 import { mapConnect } from "@safliix-back/common";
 
 export class EpisodeMapper {
@@ -14,10 +14,7 @@ export class EpisodeMapper {
     return {
       number: episode.number,
       season: mapConnect(episode.seasonId),
-      videoFile: {
-        create: VideoFileMapper.toPrismaCreate(episode.videoFile),
-        
-      },
+    
       title: episode.title ?? null,
       isSaFliixProd: episode.isSaFliixProd,
       plateformeDAte: episode.plateformDate,

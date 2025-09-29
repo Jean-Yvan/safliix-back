@@ -251,11 +251,13 @@ model MediaAttachment {
   movieId     String?
   episodeId   String?
   adId        String?
+  serieId     String?
   type        MediaAttachmentType
 
   mediaFile MediaFile @relation(fields: [mediaFileId], references: [id])
   movie     Movie?    @relation(fields: [movieId], references: [id])
   episode   Episode?  @relation(fields: [episodeId], references: [id])
+  serie     Serie?    @relation(fields: [serieId], references: [id])
   ad        Ad?       @relation(fields: [adId], references: [id])
 }
 
@@ -265,11 +267,13 @@ enum MediaType {
 }
 
 enum MediaFileStatus {
-  PENDING
-  UPLOADED
-  PROCESSING
-  READY
-  FAILED
+  PENDING // En attente de traitement
+  UPLOADED // Uploadé mais pas encore traité
+  PROCESSING // En cours de traitement
+  PROCESSED // Traitement terminé avec succès
+  FAILED // Échec du traitement
+  CANCELLED // Traitement annulé
+  QUEUED
 }
 
 enum MediaAttachmentType {
@@ -413,6 +417,9 @@ model Serie {
   rentalPrice Float?        @default(0)
   SerieView   SerieView[]
 
+  // Opposite relation for MediaAttachment
+  attachment MediaAttachment[]
+
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   Purchase  Purchase[]
@@ -446,10 +453,10 @@ model Episode {
   description    String?
   isSaFliixProd  Boolean
 
-  videoAttachment MediaAttachment[]
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
-  Comment         Comment[]
+  attachment MediaAttachment[]
+  createdAt  DateTime          @default(now())
+  updatedAt  DateTime          @updatedAt
+  Comment    Comment[]
 
   @@unique([seasonId, number])
   @@map("episodes")
@@ -603,15 +610,15 @@ model Comment {
 // =============================================
 
 model Ad {
-  id              String            @id @default(uuid())
-  title           String
-  imageUrl        String
-  startDate       DateTime
-  endDate         DateTime
-  isActive        Boolean           @default(true)
-  videoAttachment MediaAttachment[]
+  id         String            @id @default(uuid())
+  title      String
+  imageUrl   String
+  startDate  DateTime
+  endDate    DateTime
+  isActive   Boolean           @default(true)
+  attachment MediaAttachment[]
   // Relations
-  views           AdView[]
+  views      AdView[]
 }
 
 model AdView {

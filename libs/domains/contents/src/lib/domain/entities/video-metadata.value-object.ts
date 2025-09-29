@@ -22,8 +22,6 @@ export class VideoMetadata {
     public readonly id: string | undefined,
     public title: string,
     public description: string,
-    public thumbnailUrl: string,
-    public secondaryImage: string | null,
     public releaseDate: Date,
     public platformDate: Date,
     public productionHouse: string,
@@ -41,12 +39,10 @@ export class VideoMetadata {
     id: string | undefined,
     title: string,
     description: string,
-    thumbnailUrl: string,
     productionHouse: string,
     productionCountry: string,
     status = ContentStatus.DRAFT,
     director: string,
-    secondaryImage: string | null,
     releaseDate: Date,
     platformDate: Date,
     category: VideoCategory,
@@ -62,8 +58,6 @@ export class VideoMetadata {
       id,
       title,
       description,
-      thumbnailUrl,
-      secondaryImage,
       releaseDate,
       platformDate,
       productionHouse,
@@ -92,8 +86,6 @@ export class VideoMetadata {
       data.id,
       data.title,
       data.description,
-      data.thumbnailUrl,
-      data.secondaryImage,
       data.releaseDate,
       data.platformDate,
       data.productionHouse,
@@ -118,8 +110,6 @@ export class VideoMetadata {
   updateWith(data: {
     title?: string;
     description?: string;
-    thumbnailUrl?: string;
-    secondaryImage?: string | null;
     releaseDate?: Date;
     platformDate?: Date;
     productionHouse?: string;
@@ -142,13 +132,7 @@ export class VideoMetadata {
       this.description = data.description;
     }
 
-    if (data.thumbnailUrl !== undefined) {
-      this.thumbnailUrl = data.thumbnailUrl;
-    }
-
-    if (data.secondaryImage !== undefined) {
-      this.secondaryImage = data.secondaryImage;
-    }
+    
 
     if (data.releaseDate !== undefined) {
       this.releaseDate = data.releaseDate;

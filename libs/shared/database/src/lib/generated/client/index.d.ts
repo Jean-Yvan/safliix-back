@@ -230,8 +230,10 @@ export const MediaFileStatus: {
   PENDING: 'PENDING',
   UPLOADED: 'UPLOADED',
   PROCESSING: 'PROCESSING',
-  READY: 'READY',
-  FAILED: 'FAILED'
+  PROCESSED: 'PROCESSED',
+  FAILED: 'FAILED',
+  CANCELLED: 'CANCELLED',
+  QUEUED: 'QUEUED'
 };
 
 export type MediaFileStatus = (typeof MediaFileStatus)[keyof typeof MediaFileStatus]
@@ -4523,6 +4525,7 @@ export namespace Prisma {
     seasons: number
     tags: number
     SerieView: number
+    attachment: number
     Purchase: number
   }
 
@@ -4530,6 +4533,7 @@ export namespace Prisma {
     seasons?: boolean | SerieCountOutputTypeCountSeasonsArgs
     tags?: boolean | SerieCountOutputTypeCountTagsArgs
     SerieView?: boolean | SerieCountOutputTypeCountSerieViewArgs
+    attachment?: boolean | SerieCountOutputTypeCountAttachmentArgs
     Purchase?: boolean | SerieCountOutputTypeCountPurchaseArgs
   }
 
@@ -4563,6 +4567,13 @@ export namespace Prisma {
    */
   export type SerieCountOutputTypeCountSerieViewArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: SerieViewWhereInput
+  }
+
+  /**
+   * SerieCountOutputType without action
+   */
+  export type SerieCountOutputTypeCountAttachmentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MediaAttachmentWhereInput
   }
 
   /**
@@ -4618,12 +4629,12 @@ export namespace Prisma {
    */
 
   export type EpisodeCountOutputType = {
-    videoAttachment: number
+    attachment: number
     Comment: number
   }
 
   export type EpisodeCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    videoAttachment?: boolean | EpisodeCountOutputTypeCountVideoAttachmentArgs
+    attachment?: boolean | EpisodeCountOutputTypeCountAttachmentArgs
     Comment?: boolean | EpisodeCountOutputTypeCountCommentArgs
   }
 
@@ -4641,7 +4652,7 @@ export namespace Prisma {
   /**
    * EpisodeCountOutputType without action
    */
-  export type EpisodeCountOutputTypeCountVideoAttachmentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type EpisodeCountOutputTypeCountAttachmentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: MediaAttachmentWhereInput
   }
 
@@ -4729,12 +4740,12 @@ export namespace Prisma {
    */
 
   export type AdCountOutputType = {
-    videoAttachment: number
+    attachment: number
     views: number
   }
 
   export type AdCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    videoAttachment?: boolean | AdCountOutputTypeCountVideoAttachmentArgs
+    attachment?: boolean | AdCountOutputTypeCountAttachmentArgs
     views?: boolean | AdCountOutputTypeCountViewsArgs
   }
 
@@ -4752,7 +4763,7 @@ export namespace Prisma {
   /**
    * AdCountOutputType without action
    */
-  export type AdCountOutputTypeCountVideoAttachmentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AdCountOutputTypeCountAttachmentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: MediaAttachmentWhereInput
   }
 
@@ -16810,6 +16821,7 @@ export namespace Prisma {
     movieId: string | null
     episodeId: string | null
     adId: string | null
+    serieId: string | null
     type: $Enums.MediaAttachmentType | null
   }
 
@@ -16819,6 +16831,7 @@ export namespace Prisma {
     movieId: string | null
     episodeId: string | null
     adId: string | null
+    serieId: string | null
     type: $Enums.MediaAttachmentType | null
   }
 
@@ -16828,6 +16841,7 @@ export namespace Prisma {
     movieId: number
     episodeId: number
     adId: number
+    serieId: number
     type: number
     _all: number
   }
@@ -16839,6 +16853,7 @@ export namespace Prisma {
     movieId?: true
     episodeId?: true
     adId?: true
+    serieId?: true
     type?: true
   }
 
@@ -16848,6 +16863,7 @@ export namespace Prisma {
     movieId?: true
     episodeId?: true
     adId?: true
+    serieId?: true
     type?: true
   }
 
@@ -16857,6 +16873,7 @@ export namespace Prisma {
     movieId?: true
     episodeId?: true
     adId?: true
+    serieId?: true
     type?: true
     _all?: true
   }
@@ -16939,6 +16956,7 @@ export namespace Prisma {
     movieId: string | null
     episodeId: string | null
     adId: string | null
+    serieId: string | null
     type: $Enums.MediaAttachmentType
     _count: MediaAttachmentCountAggregateOutputType | null
     _min: MediaAttachmentMinAggregateOutputType | null
@@ -16965,10 +16983,12 @@ export namespace Prisma {
     movieId?: boolean
     episodeId?: boolean
     adId?: boolean
+    serieId?: boolean
     type?: boolean
     mediaFile?: boolean | MediaFileDefaultArgs<ExtArgs>
     movie?: boolean | MediaAttachment$movieArgs<ExtArgs>
     episode?: boolean | MediaAttachment$episodeArgs<ExtArgs>
+    serie?: boolean | MediaAttachment$serieArgs<ExtArgs>
     ad?: boolean | MediaAttachment$adArgs<ExtArgs>
   }, ExtArgs["result"]["mediaAttachment"]>
 
@@ -16978,10 +16998,12 @@ export namespace Prisma {
     movieId?: boolean
     episodeId?: boolean
     adId?: boolean
+    serieId?: boolean
     type?: boolean
     mediaFile?: boolean | MediaFileDefaultArgs<ExtArgs>
     movie?: boolean | MediaAttachment$movieArgs<ExtArgs>
     episode?: boolean | MediaAttachment$episodeArgs<ExtArgs>
+    serie?: boolean | MediaAttachment$serieArgs<ExtArgs>
     ad?: boolean | MediaAttachment$adArgs<ExtArgs>
   }, ExtArgs["result"]["mediaAttachment"]>
 
@@ -16991,10 +17013,12 @@ export namespace Prisma {
     movieId?: boolean
     episodeId?: boolean
     adId?: boolean
+    serieId?: boolean
     type?: boolean
     mediaFile?: boolean | MediaFileDefaultArgs<ExtArgs>
     movie?: boolean | MediaAttachment$movieArgs<ExtArgs>
     episode?: boolean | MediaAttachment$episodeArgs<ExtArgs>
+    serie?: boolean | MediaAttachment$serieArgs<ExtArgs>
     ad?: boolean | MediaAttachment$adArgs<ExtArgs>
   }, ExtArgs["result"]["mediaAttachment"]>
 
@@ -17004,26 +17028,30 @@ export namespace Prisma {
     movieId?: boolean
     episodeId?: boolean
     adId?: boolean
+    serieId?: boolean
     type?: boolean
   }
 
-  export type MediaAttachmentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "mediaFileId" | "movieId" | "episodeId" | "adId" | "type", ExtArgs["result"]["mediaAttachment"]>
+  export type MediaAttachmentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "mediaFileId" | "movieId" | "episodeId" | "adId" | "serieId" | "type", ExtArgs["result"]["mediaAttachment"]>
   export type MediaAttachmentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     mediaFile?: boolean | MediaFileDefaultArgs<ExtArgs>
     movie?: boolean | MediaAttachment$movieArgs<ExtArgs>
     episode?: boolean | MediaAttachment$episodeArgs<ExtArgs>
+    serie?: boolean | MediaAttachment$serieArgs<ExtArgs>
     ad?: boolean | MediaAttachment$adArgs<ExtArgs>
   }
   export type MediaAttachmentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     mediaFile?: boolean | MediaFileDefaultArgs<ExtArgs>
     movie?: boolean | MediaAttachment$movieArgs<ExtArgs>
     episode?: boolean | MediaAttachment$episodeArgs<ExtArgs>
+    serie?: boolean | MediaAttachment$serieArgs<ExtArgs>
     ad?: boolean | MediaAttachment$adArgs<ExtArgs>
   }
   export type MediaAttachmentIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     mediaFile?: boolean | MediaFileDefaultArgs<ExtArgs>
     movie?: boolean | MediaAttachment$movieArgs<ExtArgs>
     episode?: boolean | MediaAttachment$episodeArgs<ExtArgs>
+    serie?: boolean | MediaAttachment$serieArgs<ExtArgs>
     ad?: boolean | MediaAttachment$adArgs<ExtArgs>
   }
 
@@ -17033,6 +17061,7 @@ export namespace Prisma {
       mediaFile: Prisma.$MediaFilePayload<ExtArgs>
       movie: Prisma.$MoviePayload<ExtArgs> | null
       episode: Prisma.$EpisodePayload<ExtArgs> | null
+      serie: Prisma.$SeriePayload<ExtArgs> | null
       ad: Prisma.$AdPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -17041,6 +17070,7 @@ export namespace Prisma {
       movieId: string | null
       episodeId: string | null
       adId: string | null
+      serieId: string | null
       type: $Enums.MediaAttachmentType
     }, ExtArgs["result"]["mediaAttachment"]>
     composites: {}
@@ -17439,6 +17469,7 @@ export namespace Prisma {
     mediaFile<T extends MediaFileDefaultArgs<ExtArgs> = {}>(args?: Subset<T, MediaFileDefaultArgs<ExtArgs>>): Prisma__MediaFileClient<$Result.GetResult<Prisma.$MediaFilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     movie<T extends MediaAttachment$movieArgs<ExtArgs> = {}>(args?: Subset<T, MediaAttachment$movieArgs<ExtArgs>>): Prisma__MovieClient<$Result.GetResult<Prisma.$MoviePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     episode<T extends MediaAttachment$episodeArgs<ExtArgs> = {}>(args?: Subset<T, MediaAttachment$episodeArgs<ExtArgs>>): Prisma__EpisodeClient<$Result.GetResult<Prisma.$EpisodePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    serie<T extends MediaAttachment$serieArgs<ExtArgs> = {}>(args?: Subset<T, MediaAttachment$serieArgs<ExtArgs>>): Prisma__SerieClient<$Result.GetResult<Prisma.$SeriePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     ad<T extends MediaAttachment$adArgs<ExtArgs> = {}>(args?: Subset<T, MediaAttachment$adArgs<ExtArgs>>): Prisma__AdClient<$Result.GetResult<Prisma.$AdPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -17474,6 +17505,7 @@ export namespace Prisma {
     readonly movieId: FieldRef<"MediaAttachment", 'String'>
     readonly episodeId: FieldRef<"MediaAttachment", 'String'>
     readonly adId: FieldRef<"MediaAttachment", 'String'>
+    readonly serieId: FieldRef<"MediaAttachment", 'String'>
     readonly type: FieldRef<"MediaAttachment", 'MediaAttachmentType'>
   }
     
@@ -17906,6 +17938,25 @@ export namespace Prisma {
      */
     include?: EpisodeInclude<ExtArgs> | null
     where?: EpisodeWhereInput
+  }
+
+  /**
+   * MediaAttachment.serie
+   */
+  export type MediaAttachment$serieArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Serie
+     */
+    select?: SerieSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Serie
+     */
+    omit?: SerieOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SerieInclude<ExtArgs> | null
+    where?: SerieWhereInput
   }
 
   /**
@@ -25815,6 +25866,7 @@ export namespace Prisma {
     seasons?: boolean | Serie$seasonsArgs<ExtArgs>
     tags?: boolean | Serie$tagsArgs<ExtArgs>
     SerieView?: boolean | Serie$SerieViewArgs<ExtArgs>
+    attachment?: boolean | Serie$attachmentArgs<ExtArgs>
     Purchase?: boolean | Serie$PurchaseArgs<ExtArgs>
     _count?: boolean | SerieCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["serie"]>
@@ -25860,6 +25912,7 @@ export namespace Prisma {
     seasons?: boolean | Serie$seasonsArgs<ExtArgs>
     tags?: boolean | Serie$tagsArgs<ExtArgs>
     SerieView?: boolean | Serie$SerieViewArgs<ExtArgs>
+    attachment?: boolean | Serie$attachmentArgs<ExtArgs>
     Purchase?: boolean | Serie$PurchaseArgs<ExtArgs>
     _count?: boolean | SerieCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -25877,6 +25930,7 @@ export namespace Prisma {
       seasons: Prisma.$SeasonPayload<ExtArgs>[]
       tags: Prisma.$SeriesTagPayload<ExtArgs>[]
       SerieView: Prisma.$SerieViewPayload<ExtArgs>[]
+      attachment: Prisma.$MediaAttachmentPayload<ExtArgs>[]
       Purchase: Prisma.$PurchasePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -26286,6 +26340,7 @@ export namespace Prisma {
     seasons<T extends Serie$seasonsArgs<ExtArgs> = {}>(args?: Subset<T, Serie$seasonsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SeasonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     tags<T extends Serie$tagsArgs<ExtArgs> = {}>(args?: Subset<T, Serie$tagsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SeriesTagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     SerieView<T extends Serie$SerieViewArgs<ExtArgs> = {}>(args?: Subset<T, Serie$SerieViewArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SerieViewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    attachment<T extends Serie$attachmentArgs<ExtArgs> = {}>(args?: Subset<T, Serie$attachmentArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaAttachmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Purchase<T extends Serie$PurchaseArgs<ExtArgs> = {}>(args?: Subset<T, Serie$PurchaseArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PurchasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -26789,6 +26844,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: SerieViewScalarFieldEnum | SerieViewScalarFieldEnum[]
+  }
+
+  /**
+   * Serie.attachment
+   */
+  export type Serie$attachmentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaAttachment
+     */
+    select?: MediaAttachmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaAttachment
+     */
+    omit?: MediaAttachmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaAttachmentInclude<ExtArgs> | null
+    where?: MediaAttachmentWhereInput
+    orderBy?: MediaAttachmentOrderByWithRelationInput | MediaAttachmentOrderByWithRelationInput[]
+    cursor?: MediaAttachmentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MediaAttachmentScalarFieldEnum | MediaAttachmentScalarFieldEnum[]
   }
 
   /**
@@ -28231,7 +28310,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     season?: boolean | SeasonDefaultArgs<ExtArgs>
-    videoAttachment?: boolean | Episode$videoAttachmentArgs<ExtArgs>
+    attachment?: boolean | Episode$attachmentArgs<ExtArgs>
     Comment?: boolean | Episode$CommentArgs<ExtArgs>
     _count?: boolean | EpisodeCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["episode"]>
@@ -28283,7 +28362,7 @@ export namespace Prisma {
   export type EpisodeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "seasonId" | "number" | "title" | "releaseDate" | "plateformeDAte" | "director" | "description" | "isSaFliixProd" | "createdAt" | "updatedAt", ExtArgs["result"]["episode"]>
   export type EpisodeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     season?: boolean | SeasonDefaultArgs<ExtArgs>
-    videoAttachment?: boolean | Episode$videoAttachmentArgs<ExtArgs>
+    attachment?: boolean | Episode$attachmentArgs<ExtArgs>
     Comment?: boolean | Episode$CommentArgs<ExtArgs>
     _count?: boolean | EpisodeCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -28298,7 +28377,7 @@ export namespace Prisma {
     name: "Episode"
     objects: {
       season: Prisma.$SeasonPayload<ExtArgs>
-      videoAttachment: Prisma.$MediaAttachmentPayload<ExtArgs>[]
+      attachment: Prisma.$MediaAttachmentPayload<ExtArgs>[]
       Comment: Prisma.$CommentPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -28708,7 +28787,7 @@ export namespace Prisma {
   export interface Prisma__EpisodeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     season<T extends SeasonDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SeasonDefaultArgs<ExtArgs>>): Prisma__SeasonClient<$Result.GetResult<Prisma.$SeasonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    videoAttachment<T extends Episode$videoAttachmentArgs<ExtArgs> = {}>(args?: Subset<T, Episode$videoAttachmentArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaAttachmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    attachment<T extends Episode$attachmentArgs<ExtArgs> = {}>(args?: Subset<T, Episode$attachmentArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaAttachmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Comment<T extends Episode$CommentArgs<ExtArgs> = {}>(args?: Subset<T, Episode$CommentArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -29146,9 +29225,9 @@ export namespace Prisma {
   }
 
   /**
-   * Episode.videoAttachment
+   * Episode.attachment
    */
-  export type Episode$videoAttachmentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Episode$attachmentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the MediaAttachment
      */
@@ -39431,7 +39510,7 @@ export namespace Prisma {
     startDate?: boolean
     endDate?: boolean
     isActive?: boolean
-    videoAttachment?: boolean | Ad$videoAttachmentArgs<ExtArgs>
+    attachment?: boolean | Ad$attachmentArgs<ExtArgs>
     views?: boolean | Ad$viewsArgs<ExtArgs>
     _count?: boolean | AdCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["ad"]>
@@ -39465,7 +39544,7 @@ export namespace Prisma {
 
   export type AdOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "imageUrl" | "startDate" | "endDate" | "isActive", ExtArgs["result"]["ad"]>
   export type AdInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    videoAttachment?: boolean | Ad$videoAttachmentArgs<ExtArgs>
+    attachment?: boolean | Ad$attachmentArgs<ExtArgs>
     views?: boolean | Ad$viewsArgs<ExtArgs>
     _count?: boolean | AdCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -39475,7 +39554,7 @@ export namespace Prisma {
   export type $AdPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Ad"
     objects: {
-      videoAttachment: Prisma.$MediaAttachmentPayload<ExtArgs>[]
+      attachment: Prisma.$MediaAttachmentPayload<ExtArgs>[]
       views: Prisma.$AdViewPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -39879,7 +39958,7 @@ export namespace Prisma {
    */
   export interface Prisma__AdClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    videoAttachment<T extends Ad$videoAttachmentArgs<ExtArgs> = {}>(args?: Subset<T, Ad$videoAttachmentArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaAttachmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    attachment<T extends Ad$attachmentArgs<ExtArgs> = {}>(args?: Subset<T, Ad$attachmentArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaAttachmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     views<T extends Ad$viewsArgs<ExtArgs> = {}>(args?: Subset<T, Ad$viewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdViewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -40304,9 +40383,9 @@ export namespace Prisma {
   }
 
   /**
-   * Ad.videoAttachment
+   * Ad.attachment
    */
-  export type Ad$videoAttachmentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Ad$attachmentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the MediaAttachment
      */
@@ -42713,6 +42792,7 @@ export namespace Prisma {
     movieId: 'movieId',
     episodeId: 'episodeId',
     adId: 'adId',
+    serieId: 'serieId',
     type: 'type'
   };
 
@@ -44111,10 +44191,12 @@ export namespace Prisma {
     movieId?: StringNullableFilter<"MediaAttachment"> | string | null
     episodeId?: StringNullableFilter<"MediaAttachment"> | string | null
     adId?: StringNullableFilter<"MediaAttachment"> | string | null
+    serieId?: StringNullableFilter<"MediaAttachment"> | string | null
     type?: EnumMediaAttachmentTypeFilter<"MediaAttachment"> | $Enums.MediaAttachmentType
     mediaFile?: XOR<MediaFileScalarRelationFilter, MediaFileWhereInput>
     movie?: XOR<MovieNullableScalarRelationFilter, MovieWhereInput> | null
     episode?: XOR<EpisodeNullableScalarRelationFilter, EpisodeWhereInput> | null
+    serie?: XOR<SerieNullableScalarRelationFilter, SerieWhereInput> | null
     ad?: XOR<AdNullableScalarRelationFilter, AdWhereInput> | null
   }
 
@@ -44124,10 +44206,12 @@ export namespace Prisma {
     movieId?: SortOrderInput | SortOrder
     episodeId?: SortOrderInput | SortOrder
     adId?: SortOrderInput | SortOrder
+    serieId?: SortOrderInput | SortOrder
     type?: SortOrder
     mediaFile?: MediaFileOrderByWithRelationInput
     movie?: MovieOrderByWithRelationInput
     episode?: EpisodeOrderByWithRelationInput
+    serie?: SerieOrderByWithRelationInput
     ad?: AdOrderByWithRelationInput
   }
 
@@ -44140,10 +44224,12 @@ export namespace Prisma {
     movieId?: StringNullableFilter<"MediaAttachment"> | string | null
     episodeId?: StringNullableFilter<"MediaAttachment"> | string | null
     adId?: StringNullableFilter<"MediaAttachment"> | string | null
+    serieId?: StringNullableFilter<"MediaAttachment"> | string | null
     type?: EnumMediaAttachmentTypeFilter<"MediaAttachment"> | $Enums.MediaAttachmentType
     mediaFile?: XOR<MediaFileScalarRelationFilter, MediaFileWhereInput>
     movie?: XOR<MovieNullableScalarRelationFilter, MovieWhereInput> | null
     episode?: XOR<EpisodeNullableScalarRelationFilter, EpisodeWhereInput> | null
+    serie?: XOR<SerieNullableScalarRelationFilter, SerieWhereInput> | null
     ad?: XOR<AdNullableScalarRelationFilter, AdWhereInput> | null
   }, "id">
 
@@ -44153,6 +44239,7 @@ export namespace Prisma {
     movieId?: SortOrderInput | SortOrder
     episodeId?: SortOrderInput | SortOrder
     adId?: SortOrderInput | SortOrder
+    serieId?: SortOrderInput | SortOrder
     type?: SortOrder
     _count?: MediaAttachmentCountOrderByAggregateInput
     _max?: MediaAttachmentMaxOrderByAggregateInput
@@ -44168,6 +44255,7 @@ export namespace Prisma {
     movieId?: StringNullableWithAggregatesFilter<"MediaAttachment"> | string | null
     episodeId?: StringNullableWithAggregatesFilter<"MediaAttachment"> | string | null
     adId?: StringNullableWithAggregatesFilter<"MediaAttachment"> | string | null
+    serieId?: StringNullableWithAggregatesFilter<"MediaAttachment"> | string | null
     type?: EnumMediaAttachmentTypeWithAggregatesFilter<"MediaAttachment"> | $Enums.MediaAttachmentType
   }
 
@@ -44595,6 +44683,7 @@ export namespace Prisma {
     seasons?: SeasonListRelationFilter
     tags?: SeriesTagListRelationFilter
     SerieView?: SerieViewListRelationFilter
+    attachment?: MediaAttachmentListRelationFilter
     Purchase?: PurchaseListRelationFilter
   }
 
@@ -44611,6 +44700,7 @@ export namespace Prisma {
     seasons?: SeasonOrderByRelationAggregateInput
     tags?: SeriesTagOrderByRelationAggregateInput
     SerieView?: SerieViewOrderByRelationAggregateInput
+    attachment?: MediaAttachmentOrderByRelationAggregateInput
     Purchase?: PurchaseOrderByRelationAggregateInput
   }
 
@@ -44630,6 +44720,7 @@ export namespace Prisma {
     seasons?: SeasonListRelationFilter
     tags?: SeriesTagListRelationFilter
     SerieView?: SerieViewListRelationFilter
+    attachment?: MediaAttachmentListRelationFilter
     Purchase?: PurchaseListRelationFilter
   }, "id" | "metadataId">
 
@@ -44743,7 +44834,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Episode"> | Date | string
     updatedAt?: DateTimeFilter<"Episode"> | Date | string
     season?: XOR<SeasonScalarRelationFilter, SeasonWhereInput>
-    videoAttachment?: MediaAttachmentListRelationFilter
+    attachment?: MediaAttachmentListRelationFilter
     Comment?: CommentListRelationFilter
   }
 
@@ -44760,7 +44851,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     season?: SeasonOrderByWithRelationInput
-    videoAttachment?: MediaAttachmentOrderByRelationAggregateInput
+    attachment?: MediaAttachmentOrderByRelationAggregateInput
     Comment?: CommentOrderByRelationAggregateInput
   }
 
@@ -44781,7 +44872,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Episode"> | Date | string
     updatedAt?: DateTimeFilter<"Episode"> | Date | string
     season?: XOR<SeasonScalarRelationFilter, SeasonWhereInput>
-    videoAttachment?: MediaAttachmentListRelationFilter
+    attachment?: MediaAttachmentListRelationFilter
     Comment?: CommentListRelationFilter
   }, "id" | "seasonId_number">
 
@@ -45425,7 +45516,7 @@ export namespace Prisma {
     startDate?: DateTimeFilter<"Ad"> | Date | string
     endDate?: DateTimeFilter<"Ad"> | Date | string
     isActive?: BoolFilter<"Ad"> | boolean
-    videoAttachment?: MediaAttachmentListRelationFilter
+    attachment?: MediaAttachmentListRelationFilter
     views?: AdViewListRelationFilter
   }
 
@@ -45436,7 +45527,7 @@ export namespace Prisma {
     startDate?: SortOrder
     endDate?: SortOrder
     isActive?: SortOrder
-    videoAttachment?: MediaAttachmentOrderByRelationAggregateInput
+    attachment?: MediaAttachmentOrderByRelationAggregateInput
     views?: AdViewOrderByRelationAggregateInput
   }
 
@@ -45450,7 +45541,7 @@ export namespace Prisma {
     startDate?: DateTimeFilter<"Ad"> | Date | string
     endDate?: DateTimeFilter<"Ad"> | Date | string
     isActive?: BoolFilter<"Ad"> | boolean
-    videoAttachment?: MediaAttachmentListRelationFilter
+    attachment?: MediaAttachmentListRelationFilter
     views?: AdViewListRelationFilter
   }, "id">
 
@@ -46568,8 +46659,9 @@ export namespace Prisma {
     type: $Enums.MediaAttachmentType
     mediaFile: MediaFileCreateNestedOneWithoutAttachmentsInput
     movie?: MovieCreateNestedOneWithoutAttachmentInput
-    episode?: EpisodeCreateNestedOneWithoutVideoAttachmentInput
-    ad?: AdCreateNestedOneWithoutVideoAttachmentInput
+    episode?: EpisodeCreateNestedOneWithoutAttachmentInput
+    serie?: SerieCreateNestedOneWithoutAttachmentInput
+    ad?: AdCreateNestedOneWithoutAttachmentInput
   }
 
   export type MediaAttachmentUncheckedCreateInput = {
@@ -46578,6 +46670,7 @@ export namespace Prisma {
     movieId?: string | null
     episodeId?: string | null
     adId?: string | null
+    serieId?: string | null
     type: $Enums.MediaAttachmentType
   }
 
@@ -46586,8 +46679,9 @@ export namespace Prisma {
     type?: EnumMediaAttachmentTypeFieldUpdateOperationsInput | $Enums.MediaAttachmentType
     mediaFile?: MediaFileUpdateOneRequiredWithoutAttachmentsNestedInput
     movie?: MovieUpdateOneWithoutAttachmentNestedInput
-    episode?: EpisodeUpdateOneWithoutVideoAttachmentNestedInput
-    ad?: AdUpdateOneWithoutVideoAttachmentNestedInput
+    episode?: EpisodeUpdateOneWithoutAttachmentNestedInput
+    serie?: SerieUpdateOneWithoutAttachmentNestedInput
+    ad?: AdUpdateOneWithoutAttachmentNestedInput
   }
 
   export type MediaAttachmentUncheckedUpdateInput = {
@@ -46596,6 +46690,7 @@ export namespace Prisma {
     movieId?: NullableStringFieldUpdateOperationsInput | string | null
     episodeId?: NullableStringFieldUpdateOperationsInput | string | null
     adId?: NullableStringFieldUpdateOperationsInput | string | null
+    serieId?: NullableStringFieldUpdateOperationsInput | string | null
     type?: EnumMediaAttachmentTypeFieldUpdateOperationsInput | $Enums.MediaAttachmentType
   }
 
@@ -46605,6 +46700,7 @@ export namespace Prisma {
     movieId?: string | null
     episodeId?: string | null
     adId?: string | null
+    serieId?: string | null
     type: $Enums.MediaAttachmentType
   }
 
@@ -46619,6 +46715,7 @@ export namespace Prisma {
     movieId?: NullableStringFieldUpdateOperationsInput | string | null
     episodeId?: NullableStringFieldUpdateOperationsInput | string | null
     adId?: NullableStringFieldUpdateOperationsInput | string | null
+    serieId?: NullableStringFieldUpdateOperationsInput | string | null
     type?: EnumMediaAttachmentTypeFieldUpdateOperationsInput | $Enums.MediaAttachmentType
   }
 
@@ -47066,6 +47163,7 @@ export namespace Prisma {
     seasons?: SeasonCreateNestedManyWithoutSerieInput
     tags?: SeriesTagCreateNestedManyWithoutSeriesInput
     SerieView?: SerieViewCreateNestedManyWithoutSeriesInput
+    attachment?: MediaAttachmentCreateNestedManyWithoutSerieInput
     Purchase?: PurchaseCreateNestedManyWithoutSerieInput
   }
 
@@ -47081,6 +47179,7 @@ export namespace Prisma {
     seasons?: SeasonUncheckedCreateNestedManyWithoutSerieInput
     tags?: SeriesTagUncheckedCreateNestedManyWithoutSeriesInput
     SerieView?: SerieViewUncheckedCreateNestedManyWithoutSeriesInput
+    attachment?: MediaAttachmentUncheckedCreateNestedManyWithoutSerieInput
     Purchase?: PurchaseUncheckedCreateNestedManyWithoutSerieInput
   }
 
@@ -47096,6 +47195,7 @@ export namespace Prisma {
     seasons?: SeasonUpdateManyWithoutSerieNestedInput
     tags?: SeriesTagUpdateManyWithoutSeriesNestedInput
     SerieView?: SerieViewUpdateManyWithoutSeriesNestedInput
+    attachment?: MediaAttachmentUpdateManyWithoutSerieNestedInput
     Purchase?: PurchaseUpdateManyWithoutSerieNestedInput
   }
 
@@ -47111,6 +47211,7 @@ export namespace Prisma {
     seasons?: SeasonUncheckedUpdateManyWithoutSerieNestedInput
     tags?: SeriesTagUncheckedUpdateManyWithoutSeriesNestedInput
     SerieView?: SerieViewUncheckedUpdateManyWithoutSeriesNestedInput
+    attachment?: MediaAttachmentUncheckedUpdateManyWithoutSerieNestedInput
     Purchase?: PurchaseUncheckedUpdateManyWithoutSerieNestedInput
   }
 
@@ -47221,7 +47322,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     season: SeasonCreateNestedOneWithoutEpisodesInput
-    videoAttachment?: MediaAttachmentCreateNestedManyWithoutEpisodeInput
+    attachment?: MediaAttachmentCreateNestedManyWithoutEpisodeInput
     Comment?: CommentCreateNestedManyWithoutEpisodeInput
   }
 
@@ -47237,7 +47338,7 @@ export namespace Prisma {
     isSaFliixProd: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    videoAttachment?: MediaAttachmentUncheckedCreateNestedManyWithoutEpisodeInput
+    attachment?: MediaAttachmentUncheckedCreateNestedManyWithoutEpisodeInput
     Comment?: CommentUncheckedCreateNestedManyWithoutEpisodeInput
   }
 
@@ -47253,7 +47354,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     season?: SeasonUpdateOneRequiredWithoutEpisodesNestedInput
-    videoAttachment?: MediaAttachmentUpdateManyWithoutEpisodeNestedInput
+    attachment?: MediaAttachmentUpdateManyWithoutEpisodeNestedInput
     Comment?: CommentUpdateManyWithoutEpisodeNestedInput
   }
 
@@ -47269,7 +47370,7 @@ export namespace Prisma {
     isSaFliixProd?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    videoAttachment?: MediaAttachmentUncheckedUpdateManyWithoutEpisodeNestedInput
+    attachment?: MediaAttachmentUncheckedUpdateManyWithoutEpisodeNestedInput
     Comment?: CommentUncheckedUpdateManyWithoutEpisodeNestedInput
   }
 
@@ -47899,7 +48000,7 @@ export namespace Prisma {
     startDate: Date | string
     endDate: Date | string
     isActive?: boolean
-    videoAttachment?: MediaAttachmentCreateNestedManyWithoutAdInput
+    attachment?: MediaAttachmentCreateNestedManyWithoutAdInput
     views?: AdViewCreateNestedManyWithoutAdInput
   }
 
@@ -47910,7 +48011,7 @@ export namespace Prisma {
     startDate: Date | string
     endDate: Date | string
     isActive?: boolean
-    videoAttachment?: MediaAttachmentUncheckedCreateNestedManyWithoutAdInput
+    attachment?: MediaAttachmentUncheckedCreateNestedManyWithoutAdInput
     views?: AdViewUncheckedCreateNestedManyWithoutAdInput
   }
 
@@ -47921,7 +48022,7 @@ export namespace Prisma {
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
-    videoAttachment?: MediaAttachmentUpdateManyWithoutAdNestedInput
+    attachment?: MediaAttachmentUpdateManyWithoutAdNestedInput
     views?: AdViewUpdateManyWithoutAdNestedInput
   }
 
@@ -47932,7 +48033,7 @@ export namespace Prisma {
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
-    videoAttachment?: MediaAttachmentUncheckedUpdateManyWithoutAdNestedInput
+    attachment?: MediaAttachmentUncheckedUpdateManyWithoutAdNestedInput
     views?: AdViewUncheckedUpdateManyWithoutAdNestedInput
   }
 
@@ -49054,6 +49155,7 @@ export namespace Prisma {
     movieId?: SortOrder
     episodeId?: SortOrder
     adId?: SortOrder
+    serieId?: SortOrder
     type?: SortOrder
   }
 
@@ -49063,6 +49165,7 @@ export namespace Prisma {
     movieId?: SortOrder
     episodeId?: SortOrder
     adId?: SortOrder
+    serieId?: SortOrder
     type?: SortOrder
   }
 
@@ -49072,6 +49175,7 @@ export namespace Prisma {
     movieId?: SortOrder
     episodeId?: SortOrder
     adId?: SortOrder
+    serieId?: SortOrder
     type?: SortOrder
   }
 
@@ -51201,15 +51305,21 @@ export namespace Prisma {
     connect?: MovieWhereUniqueInput
   }
 
-  export type EpisodeCreateNestedOneWithoutVideoAttachmentInput = {
-    create?: XOR<EpisodeCreateWithoutVideoAttachmentInput, EpisodeUncheckedCreateWithoutVideoAttachmentInput>
-    connectOrCreate?: EpisodeCreateOrConnectWithoutVideoAttachmentInput
+  export type EpisodeCreateNestedOneWithoutAttachmentInput = {
+    create?: XOR<EpisodeCreateWithoutAttachmentInput, EpisodeUncheckedCreateWithoutAttachmentInput>
+    connectOrCreate?: EpisodeCreateOrConnectWithoutAttachmentInput
     connect?: EpisodeWhereUniqueInput
   }
 
-  export type AdCreateNestedOneWithoutVideoAttachmentInput = {
-    create?: XOR<AdCreateWithoutVideoAttachmentInput, AdUncheckedCreateWithoutVideoAttachmentInput>
-    connectOrCreate?: AdCreateOrConnectWithoutVideoAttachmentInput
+  export type SerieCreateNestedOneWithoutAttachmentInput = {
+    create?: XOR<SerieCreateWithoutAttachmentInput, SerieUncheckedCreateWithoutAttachmentInput>
+    connectOrCreate?: SerieCreateOrConnectWithoutAttachmentInput
+    connect?: SerieWhereUniqueInput
+  }
+
+  export type AdCreateNestedOneWithoutAttachmentInput = {
+    create?: XOR<AdCreateWithoutAttachmentInput, AdUncheckedCreateWithoutAttachmentInput>
+    connectOrCreate?: AdCreateOrConnectWithoutAttachmentInput
     connect?: AdWhereUniqueInput
   }
 
@@ -51235,24 +51345,34 @@ export namespace Prisma {
     update?: XOR<XOR<MovieUpdateToOneWithWhereWithoutAttachmentInput, MovieUpdateWithoutAttachmentInput>, MovieUncheckedUpdateWithoutAttachmentInput>
   }
 
-  export type EpisodeUpdateOneWithoutVideoAttachmentNestedInput = {
-    create?: XOR<EpisodeCreateWithoutVideoAttachmentInput, EpisodeUncheckedCreateWithoutVideoAttachmentInput>
-    connectOrCreate?: EpisodeCreateOrConnectWithoutVideoAttachmentInput
-    upsert?: EpisodeUpsertWithoutVideoAttachmentInput
+  export type EpisodeUpdateOneWithoutAttachmentNestedInput = {
+    create?: XOR<EpisodeCreateWithoutAttachmentInput, EpisodeUncheckedCreateWithoutAttachmentInput>
+    connectOrCreate?: EpisodeCreateOrConnectWithoutAttachmentInput
+    upsert?: EpisodeUpsertWithoutAttachmentInput
     disconnect?: EpisodeWhereInput | boolean
     delete?: EpisodeWhereInput | boolean
     connect?: EpisodeWhereUniqueInput
-    update?: XOR<XOR<EpisodeUpdateToOneWithWhereWithoutVideoAttachmentInput, EpisodeUpdateWithoutVideoAttachmentInput>, EpisodeUncheckedUpdateWithoutVideoAttachmentInput>
+    update?: XOR<XOR<EpisodeUpdateToOneWithWhereWithoutAttachmentInput, EpisodeUpdateWithoutAttachmentInput>, EpisodeUncheckedUpdateWithoutAttachmentInput>
   }
 
-  export type AdUpdateOneWithoutVideoAttachmentNestedInput = {
-    create?: XOR<AdCreateWithoutVideoAttachmentInput, AdUncheckedCreateWithoutVideoAttachmentInput>
-    connectOrCreate?: AdCreateOrConnectWithoutVideoAttachmentInput
-    upsert?: AdUpsertWithoutVideoAttachmentInput
+  export type SerieUpdateOneWithoutAttachmentNestedInput = {
+    create?: XOR<SerieCreateWithoutAttachmentInput, SerieUncheckedCreateWithoutAttachmentInput>
+    connectOrCreate?: SerieCreateOrConnectWithoutAttachmentInput
+    upsert?: SerieUpsertWithoutAttachmentInput
+    disconnect?: SerieWhereInput | boolean
+    delete?: SerieWhereInput | boolean
+    connect?: SerieWhereUniqueInput
+    update?: XOR<XOR<SerieUpdateToOneWithWhereWithoutAttachmentInput, SerieUpdateWithoutAttachmentInput>, SerieUncheckedUpdateWithoutAttachmentInput>
+  }
+
+  export type AdUpdateOneWithoutAttachmentNestedInput = {
+    create?: XOR<AdCreateWithoutAttachmentInput, AdUncheckedCreateWithoutAttachmentInput>
+    connectOrCreate?: AdCreateOrConnectWithoutAttachmentInput
+    upsert?: AdUpsertWithoutAttachmentInput
     disconnect?: AdWhereInput | boolean
     delete?: AdWhereInput | boolean
     connect?: AdWhereUniqueInput
-    update?: XOR<XOR<AdUpdateToOneWithWhereWithoutVideoAttachmentInput, AdUpdateWithoutVideoAttachmentInput>, AdUncheckedUpdateWithoutVideoAttachmentInput>
+    update?: XOR<XOR<AdUpdateToOneWithWhereWithoutAttachmentInput, AdUpdateWithoutAttachmentInput>, AdUncheckedUpdateWithoutAttachmentInput>
   }
 
   export type VideoMetadataCreateNestedManyWithoutGenderInput = {
@@ -51706,6 +51826,13 @@ export namespace Prisma {
     connect?: SerieViewWhereUniqueInput | SerieViewWhereUniqueInput[]
   }
 
+  export type MediaAttachmentCreateNestedManyWithoutSerieInput = {
+    create?: XOR<MediaAttachmentCreateWithoutSerieInput, MediaAttachmentUncheckedCreateWithoutSerieInput> | MediaAttachmentCreateWithoutSerieInput[] | MediaAttachmentUncheckedCreateWithoutSerieInput[]
+    connectOrCreate?: MediaAttachmentCreateOrConnectWithoutSerieInput | MediaAttachmentCreateOrConnectWithoutSerieInput[]
+    createMany?: MediaAttachmentCreateManySerieInputEnvelope
+    connect?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+  }
+
   export type PurchaseCreateNestedManyWithoutSerieInput = {
     create?: XOR<PurchaseCreateWithoutSerieInput, PurchaseUncheckedCreateWithoutSerieInput> | PurchaseCreateWithoutSerieInput[] | PurchaseUncheckedCreateWithoutSerieInput[]
     connectOrCreate?: PurchaseCreateOrConnectWithoutSerieInput | PurchaseCreateOrConnectWithoutSerieInput[]
@@ -51732,6 +51859,13 @@ export namespace Prisma {
     connectOrCreate?: SerieViewCreateOrConnectWithoutSeriesInput | SerieViewCreateOrConnectWithoutSeriesInput[]
     createMany?: SerieViewCreateManySeriesInputEnvelope
     connect?: SerieViewWhereUniqueInput | SerieViewWhereUniqueInput[]
+  }
+
+  export type MediaAttachmentUncheckedCreateNestedManyWithoutSerieInput = {
+    create?: XOR<MediaAttachmentCreateWithoutSerieInput, MediaAttachmentUncheckedCreateWithoutSerieInput> | MediaAttachmentCreateWithoutSerieInput[] | MediaAttachmentUncheckedCreateWithoutSerieInput[]
+    connectOrCreate?: MediaAttachmentCreateOrConnectWithoutSerieInput | MediaAttachmentCreateOrConnectWithoutSerieInput[]
+    createMany?: MediaAttachmentCreateManySerieInputEnvelope
+    connect?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
   }
 
   export type PurchaseUncheckedCreateNestedManyWithoutSerieInput = {
@@ -51791,6 +51925,20 @@ export namespace Prisma {
     deleteMany?: SerieViewScalarWhereInput | SerieViewScalarWhereInput[]
   }
 
+  export type MediaAttachmentUpdateManyWithoutSerieNestedInput = {
+    create?: XOR<MediaAttachmentCreateWithoutSerieInput, MediaAttachmentUncheckedCreateWithoutSerieInput> | MediaAttachmentCreateWithoutSerieInput[] | MediaAttachmentUncheckedCreateWithoutSerieInput[]
+    connectOrCreate?: MediaAttachmentCreateOrConnectWithoutSerieInput | MediaAttachmentCreateOrConnectWithoutSerieInput[]
+    upsert?: MediaAttachmentUpsertWithWhereUniqueWithoutSerieInput | MediaAttachmentUpsertWithWhereUniqueWithoutSerieInput[]
+    createMany?: MediaAttachmentCreateManySerieInputEnvelope
+    set?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+    disconnect?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+    delete?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+    connect?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+    update?: MediaAttachmentUpdateWithWhereUniqueWithoutSerieInput | MediaAttachmentUpdateWithWhereUniqueWithoutSerieInput[]
+    updateMany?: MediaAttachmentUpdateManyWithWhereWithoutSerieInput | MediaAttachmentUpdateManyWithWhereWithoutSerieInput[]
+    deleteMany?: MediaAttachmentScalarWhereInput | MediaAttachmentScalarWhereInput[]
+  }
+
   export type PurchaseUpdateManyWithoutSerieNestedInput = {
     create?: XOR<PurchaseCreateWithoutSerieInput, PurchaseUncheckedCreateWithoutSerieInput> | PurchaseCreateWithoutSerieInput[] | PurchaseUncheckedCreateWithoutSerieInput[]
     connectOrCreate?: PurchaseCreateOrConnectWithoutSerieInput | PurchaseCreateOrConnectWithoutSerieInput[]
@@ -51845,6 +51993,20 @@ export namespace Prisma {
     update?: SerieViewUpdateWithWhereUniqueWithoutSeriesInput | SerieViewUpdateWithWhereUniqueWithoutSeriesInput[]
     updateMany?: SerieViewUpdateManyWithWhereWithoutSeriesInput | SerieViewUpdateManyWithWhereWithoutSeriesInput[]
     deleteMany?: SerieViewScalarWhereInput | SerieViewScalarWhereInput[]
+  }
+
+  export type MediaAttachmentUncheckedUpdateManyWithoutSerieNestedInput = {
+    create?: XOR<MediaAttachmentCreateWithoutSerieInput, MediaAttachmentUncheckedCreateWithoutSerieInput> | MediaAttachmentCreateWithoutSerieInput[] | MediaAttachmentUncheckedCreateWithoutSerieInput[]
+    connectOrCreate?: MediaAttachmentCreateOrConnectWithoutSerieInput | MediaAttachmentCreateOrConnectWithoutSerieInput[]
+    upsert?: MediaAttachmentUpsertWithWhereUniqueWithoutSerieInput | MediaAttachmentUpsertWithWhereUniqueWithoutSerieInput[]
+    createMany?: MediaAttachmentCreateManySerieInputEnvelope
+    set?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+    disconnect?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+    delete?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+    connect?: MediaAttachmentWhereUniqueInput | MediaAttachmentWhereUniqueInput[]
+    update?: MediaAttachmentUpdateWithWhereUniqueWithoutSerieInput | MediaAttachmentUpdateWithWhereUniqueWithoutSerieInput[]
+    updateMany?: MediaAttachmentUpdateManyWithWhereWithoutSerieInput | MediaAttachmentUpdateManyWithWhereWithoutSerieInput[]
+    deleteMany?: MediaAttachmentScalarWhereInput | MediaAttachmentScalarWhereInput[]
   }
 
   export type PurchaseUncheckedUpdateManyWithoutSerieNestedInput = {
@@ -54751,6 +54913,7 @@ export namespace Prisma {
     seasons?: SeasonCreateNestedManyWithoutSerieInput
     tags?: SeriesTagCreateNestedManyWithoutSeriesInput
     SerieView?: SerieViewCreateNestedManyWithoutSeriesInput
+    attachment?: MediaAttachmentCreateNestedManyWithoutSerieInput
     Purchase?: PurchaseCreateNestedManyWithoutSerieInput
   }
 
@@ -54765,6 +54928,7 @@ export namespace Prisma {
     seasons?: SeasonUncheckedCreateNestedManyWithoutSerieInput
     tags?: SeriesTagUncheckedCreateNestedManyWithoutSeriesInput
     SerieView?: SerieViewUncheckedCreateNestedManyWithoutSeriesInput
+    attachment?: MediaAttachmentUncheckedCreateNestedManyWithoutSerieInput
     Purchase?: PurchaseUncheckedCreateNestedManyWithoutSerieInput
   }
 
@@ -54980,6 +55144,7 @@ export namespace Prisma {
     seasons?: SeasonUpdateManyWithoutSerieNestedInput
     tags?: SeriesTagUpdateManyWithoutSeriesNestedInput
     SerieView?: SerieViewUpdateManyWithoutSeriesNestedInput
+    attachment?: MediaAttachmentUpdateManyWithoutSerieNestedInput
     Purchase?: PurchaseUpdateManyWithoutSerieNestedInput
   }
 
@@ -54994,6 +55159,7 @@ export namespace Prisma {
     seasons?: SeasonUncheckedUpdateManyWithoutSerieNestedInput
     tags?: SeriesTagUncheckedUpdateManyWithoutSeriesNestedInput
     SerieView?: SerieViewUncheckedUpdateManyWithoutSeriesNestedInput
+    attachment?: MediaAttachmentUncheckedUpdateManyWithoutSerieNestedInput
     Purchase?: PurchaseUncheckedUpdateManyWithoutSerieNestedInput
   }
 
@@ -55081,8 +55247,9 @@ export namespace Prisma {
     id?: string
     type: $Enums.MediaAttachmentType
     movie?: MovieCreateNestedOneWithoutAttachmentInput
-    episode?: EpisodeCreateNestedOneWithoutVideoAttachmentInput
-    ad?: AdCreateNestedOneWithoutVideoAttachmentInput
+    episode?: EpisodeCreateNestedOneWithoutAttachmentInput
+    serie?: SerieCreateNestedOneWithoutAttachmentInput
+    ad?: AdCreateNestedOneWithoutAttachmentInput
   }
 
   export type MediaAttachmentUncheckedCreateWithoutMediaFileInput = {
@@ -55090,6 +55257,7 @@ export namespace Prisma {
     movieId?: string | null
     episodeId?: string | null
     adId?: string | null
+    serieId?: string | null
     type: $Enums.MediaAttachmentType
   }
 
@@ -55150,6 +55318,7 @@ export namespace Prisma {
     movieId?: StringNullableFilter<"MediaAttachment"> | string | null
     episodeId?: StringNullableFilter<"MediaAttachment"> | string | null
     adId?: StringNullableFilter<"MediaAttachment"> | string | null
+    serieId?: StringNullableFilter<"MediaAttachment"> | string | null
     type?: EnumMediaAttachmentTypeFilter<"MediaAttachment"> | $Enums.MediaAttachmentType
   }
 
@@ -55233,7 +55402,7 @@ export namespace Prisma {
     create: XOR<MovieCreateWithoutAttachmentInput, MovieUncheckedCreateWithoutAttachmentInput>
   }
 
-  export type EpisodeCreateWithoutVideoAttachmentInput = {
+  export type EpisodeCreateWithoutAttachmentInput = {
     id?: string
     number: number
     title?: string | null
@@ -55248,7 +55417,7 @@ export namespace Prisma {
     Comment?: CommentCreateNestedManyWithoutEpisodeInput
   }
 
-  export type EpisodeUncheckedCreateWithoutVideoAttachmentInput = {
+  export type EpisodeUncheckedCreateWithoutAttachmentInput = {
     id?: string
     seasonId: string
     number: number
@@ -55263,12 +55432,47 @@ export namespace Prisma {
     Comment?: CommentUncheckedCreateNestedManyWithoutEpisodeInput
   }
 
-  export type EpisodeCreateOrConnectWithoutVideoAttachmentInput = {
+  export type EpisodeCreateOrConnectWithoutAttachmentInput = {
     where: EpisodeWhereUniqueInput
-    create: XOR<EpisodeCreateWithoutVideoAttachmentInput, EpisodeUncheckedCreateWithoutVideoAttachmentInput>
+    create: XOR<EpisodeCreateWithoutAttachmentInput, EpisodeUncheckedCreateWithoutAttachmentInput>
   }
 
-  export type AdCreateWithoutVideoAttachmentInput = {
+  export type SerieCreateWithoutAttachmentInput = {
+    id?: string
+    status?: string
+    type?: string
+    seasonCount?: number
+    rentalPrice?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    metadata: VideoMetadataCreateNestedOneWithoutSeriesInput
+    seasons?: SeasonCreateNestedManyWithoutSerieInput
+    tags?: SeriesTagCreateNestedManyWithoutSeriesInput
+    SerieView?: SerieViewCreateNestedManyWithoutSeriesInput
+    Purchase?: PurchaseCreateNestedManyWithoutSerieInput
+  }
+
+  export type SerieUncheckedCreateWithoutAttachmentInput = {
+    id?: string
+    metadataId: string
+    status?: string
+    type?: string
+    seasonCount?: number
+    rentalPrice?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    seasons?: SeasonUncheckedCreateNestedManyWithoutSerieInput
+    tags?: SeriesTagUncheckedCreateNestedManyWithoutSeriesInput
+    SerieView?: SerieViewUncheckedCreateNestedManyWithoutSeriesInput
+    Purchase?: PurchaseUncheckedCreateNestedManyWithoutSerieInput
+  }
+
+  export type SerieCreateOrConnectWithoutAttachmentInput = {
+    where: SerieWhereUniqueInput
+    create: XOR<SerieCreateWithoutAttachmentInput, SerieUncheckedCreateWithoutAttachmentInput>
+  }
+
+  export type AdCreateWithoutAttachmentInput = {
     id?: string
     title: string
     imageUrl: string
@@ -55278,7 +55482,7 @@ export namespace Prisma {
     views?: AdViewCreateNestedManyWithoutAdInput
   }
 
-  export type AdUncheckedCreateWithoutVideoAttachmentInput = {
+  export type AdUncheckedCreateWithoutAttachmentInput = {
     id?: string
     title: string
     imageUrl: string
@@ -55288,9 +55492,9 @@ export namespace Prisma {
     views?: AdViewUncheckedCreateNestedManyWithoutAdInput
   }
 
-  export type AdCreateOrConnectWithoutVideoAttachmentInput = {
+  export type AdCreateOrConnectWithoutAttachmentInput = {
     where: AdWhereUniqueInput
-    create: XOR<AdCreateWithoutVideoAttachmentInput, AdUncheckedCreateWithoutVideoAttachmentInput>
+    create: XOR<AdCreateWithoutAttachmentInput, AdUncheckedCreateWithoutAttachmentInput>
   }
 
   export type MediaFileUpsertWithoutAttachmentsInput = {
@@ -55369,18 +55573,18 @@ export namespace Prisma {
     Purchase?: PurchaseUncheckedUpdateManyWithoutMovieNestedInput
   }
 
-  export type EpisodeUpsertWithoutVideoAttachmentInput = {
-    update: XOR<EpisodeUpdateWithoutVideoAttachmentInput, EpisodeUncheckedUpdateWithoutVideoAttachmentInput>
-    create: XOR<EpisodeCreateWithoutVideoAttachmentInput, EpisodeUncheckedCreateWithoutVideoAttachmentInput>
+  export type EpisodeUpsertWithoutAttachmentInput = {
+    update: XOR<EpisodeUpdateWithoutAttachmentInput, EpisodeUncheckedUpdateWithoutAttachmentInput>
+    create: XOR<EpisodeCreateWithoutAttachmentInput, EpisodeUncheckedCreateWithoutAttachmentInput>
     where?: EpisodeWhereInput
   }
 
-  export type EpisodeUpdateToOneWithWhereWithoutVideoAttachmentInput = {
+  export type EpisodeUpdateToOneWithWhereWithoutAttachmentInput = {
     where?: EpisodeWhereInput
-    data: XOR<EpisodeUpdateWithoutVideoAttachmentInput, EpisodeUncheckedUpdateWithoutVideoAttachmentInput>
+    data: XOR<EpisodeUpdateWithoutAttachmentInput, EpisodeUncheckedUpdateWithoutAttachmentInput>
   }
 
-  export type EpisodeUpdateWithoutVideoAttachmentInput = {
+  export type EpisodeUpdateWithoutAttachmentInput = {
     id?: StringFieldUpdateOperationsInput | string
     number?: IntFieldUpdateOperationsInput | number
     title?: NullableStringFieldUpdateOperationsInput | string | null
@@ -55395,7 +55599,7 @@ export namespace Prisma {
     Comment?: CommentUpdateManyWithoutEpisodeNestedInput
   }
 
-  export type EpisodeUncheckedUpdateWithoutVideoAttachmentInput = {
+  export type EpisodeUncheckedUpdateWithoutAttachmentInput = {
     id?: StringFieldUpdateOperationsInput | string
     seasonId?: StringFieldUpdateOperationsInput | string
     number?: IntFieldUpdateOperationsInput | number
@@ -55410,18 +55614,59 @@ export namespace Prisma {
     Comment?: CommentUncheckedUpdateManyWithoutEpisodeNestedInput
   }
 
-  export type AdUpsertWithoutVideoAttachmentInput = {
-    update: XOR<AdUpdateWithoutVideoAttachmentInput, AdUncheckedUpdateWithoutVideoAttachmentInput>
-    create: XOR<AdCreateWithoutVideoAttachmentInput, AdUncheckedCreateWithoutVideoAttachmentInput>
+  export type SerieUpsertWithoutAttachmentInput = {
+    update: XOR<SerieUpdateWithoutAttachmentInput, SerieUncheckedUpdateWithoutAttachmentInput>
+    create: XOR<SerieCreateWithoutAttachmentInput, SerieUncheckedCreateWithoutAttachmentInput>
+    where?: SerieWhereInput
+  }
+
+  export type SerieUpdateToOneWithWhereWithoutAttachmentInput = {
+    where?: SerieWhereInput
+    data: XOR<SerieUpdateWithoutAttachmentInput, SerieUncheckedUpdateWithoutAttachmentInput>
+  }
+
+  export type SerieUpdateWithoutAttachmentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    seasonCount?: IntFieldUpdateOperationsInput | number
+    rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    metadata?: VideoMetadataUpdateOneRequiredWithoutSeriesNestedInput
+    seasons?: SeasonUpdateManyWithoutSerieNestedInput
+    tags?: SeriesTagUpdateManyWithoutSeriesNestedInput
+    SerieView?: SerieViewUpdateManyWithoutSeriesNestedInput
+    Purchase?: PurchaseUpdateManyWithoutSerieNestedInput
+  }
+
+  export type SerieUncheckedUpdateWithoutAttachmentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    metadataId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    seasonCount?: IntFieldUpdateOperationsInput | number
+    rentalPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    seasons?: SeasonUncheckedUpdateManyWithoutSerieNestedInput
+    tags?: SeriesTagUncheckedUpdateManyWithoutSeriesNestedInput
+    SerieView?: SerieViewUncheckedUpdateManyWithoutSeriesNestedInput
+    Purchase?: PurchaseUncheckedUpdateManyWithoutSerieNestedInput
+  }
+
+  export type AdUpsertWithoutAttachmentInput = {
+    update: XOR<AdUpdateWithoutAttachmentInput, AdUncheckedUpdateWithoutAttachmentInput>
+    create: XOR<AdCreateWithoutAttachmentInput, AdUncheckedCreateWithoutAttachmentInput>
     where?: AdWhereInput
   }
 
-  export type AdUpdateToOneWithWhereWithoutVideoAttachmentInput = {
+  export type AdUpdateToOneWithWhereWithoutAttachmentInput = {
     where?: AdWhereInput
-    data: XOR<AdUpdateWithoutVideoAttachmentInput, AdUncheckedUpdateWithoutVideoAttachmentInput>
+    data: XOR<AdUpdateWithoutAttachmentInput, AdUncheckedUpdateWithoutAttachmentInput>
   }
 
-  export type AdUpdateWithoutVideoAttachmentInput = {
+  export type AdUpdateWithoutAttachmentInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     imageUrl?: StringFieldUpdateOperationsInput | string
@@ -55431,7 +55676,7 @@ export namespace Prisma {
     views?: AdViewUpdateManyWithoutAdNestedInput
   }
 
-  export type AdUncheckedUpdateWithoutVideoAttachmentInput = {
+  export type AdUncheckedUpdateWithoutAttachmentInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     imageUrl?: StringFieldUpdateOperationsInput | string
@@ -55996,8 +56241,9 @@ export namespace Prisma {
     id?: string
     type: $Enums.MediaAttachmentType
     mediaFile: MediaFileCreateNestedOneWithoutAttachmentsInput
-    episode?: EpisodeCreateNestedOneWithoutVideoAttachmentInput
-    ad?: AdCreateNestedOneWithoutVideoAttachmentInput
+    episode?: EpisodeCreateNestedOneWithoutAttachmentInput
+    serie?: SerieCreateNestedOneWithoutAttachmentInput
+    ad?: AdCreateNestedOneWithoutAttachmentInput
   }
 
   export type MediaAttachmentUncheckedCreateWithoutMovieInput = {
@@ -56005,6 +56251,7 @@ export namespace Prisma {
     mediaFileId: string
     episodeId?: string | null
     adId?: string | null
+    serieId?: string | null
     type: $Enums.MediaAttachmentType
   }
 
@@ -56332,6 +56579,34 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type MediaAttachmentCreateWithoutSerieInput = {
+    id?: string
+    type: $Enums.MediaAttachmentType
+    mediaFile: MediaFileCreateNestedOneWithoutAttachmentsInput
+    movie?: MovieCreateNestedOneWithoutAttachmentInput
+    episode?: EpisodeCreateNestedOneWithoutAttachmentInput
+    ad?: AdCreateNestedOneWithoutAttachmentInput
+  }
+
+  export type MediaAttachmentUncheckedCreateWithoutSerieInput = {
+    id?: string
+    mediaFileId: string
+    movieId?: string | null
+    episodeId?: string | null
+    adId?: string | null
+    type: $Enums.MediaAttachmentType
+  }
+
+  export type MediaAttachmentCreateOrConnectWithoutSerieInput = {
+    where: MediaAttachmentWhereUniqueInput
+    create: XOR<MediaAttachmentCreateWithoutSerieInput, MediaAttachmentUncheckedCreateWithoutSerieInput>
+  }
+
+  export type MediaAttachmentCreateManySerieInputEnvelope = {
+    data: MediaAttachmentCreateManySerieInput | MediaAttachmentCreateManySerieInput[]
+    skipDuplicates?: boolean
+  }
+
   export type PurchaseCreateWithoutSerieInput = {
     id?: string
     purchaseDate?: Date | string
@@ -56498,6 +56773,22 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"SerieView"> | Date | string
   }
 
+  export type MediaAttachmentUpsertWithWhereUniqueWithoutSerieInput = {
+    where: MediaAttachmentWhereUniqueInput
+    update: XOR<MediaAttachmentUpdateWithoutSerieInput, MediaAttachmentUncheckedUpdateWithoutSerieInput>
+    create: XOR<MediaAttachmentCreateWithoutSerieInput, MediaAttachmentUncheckedCreateWithoutSerieInput>
+  }
+
+  export type MediaAttachmentUpdateWithWhereUniqueWithoutSerieInput = {
+    where: MediaAttachmentWhereUniqueInput
+    data: XOR<MediaAttachmentUpdateWithoutSerieInput, MediaAttachmentUncheckedUpdateWithoutSerieInput>
+  }
+
+  export type MediaAttachmentUpdateManyWithWhereWithoutSerieInput = {
+    where: MediaAttachmentScalarWhereInput
+    data: XOR<MediaAttachmentUpdateManyMutationInput, MediaAttachmentUncheckedUpdateManyWithoutSerieInput>
+  }
+
   export type PurchaseUpsertWithWhereUniqueWithoutSerieInput = {
     where: PurchaseWhereUniqueInput
     update: XOR<PurchaseUpdateWithoutSerieInput, PurchaseUncheckedUpdateWithoutSerieInput>
@@ -56525,6 +56816,7 @@ export namespace Prisma {
     metadata: VideoMetadataCreateNestedOneWithoutSeriesInput
     tags?: SeriesTagCreateNestedManyWithoutSeriesInput
     SerieView?: SerieViewCreateNestedManyWithoutSeriesInput
+    attachment?: MediaAttachmentCreateNestedManyWithoutSerieInput
     Purchase?: PurchaseCreateNestedManyWithoutSerieInput
   }
 
@@ -56539,6 +56831,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     tags?: SeriesTagUncheckedCreateNestedManyWithoutSeriesInput
     SerieView?: SerieViewUncheckedCreateNestedManyWithoutSeriesInput
+    attachment?: MediaAttachmentUncheckedCreateNestedManyWithoutSerieInput
     Purchase?: PurchaseUncheckedCreateNestedManyWithoutSerieInput
   }
 
@@ -56558,7 +56851,7 @@ export namespace Prisma {
     isSaFliixProd: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    videoAttachment?: MediaAttachmentCreateNestedManyWithoutEpisodeInput
+    attachment?: MediaAttachmentCreateNestedManyWithoutEpisodeInput
     Comment?: CommentCreateNestedManyWithoutEpisodeInput
   }
 
@@ -56573,7 +56866,7 @@ export namespace Prisma {
     isSaFliixProd: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    videoAttachment?: MediaAttachmentUncheckedCreateNestedManyWithoutEpisodeInput
+    attachment?: MediaAttachmentUncheckedCreateNestedManyWithoutEpisodeInput
     Comment?: CommentUncheckedCreateNestedManyWithoutEpisodeInput
   }
 
@@ -56641,6 +56934,7 @@ export namespace Prisma {
     metadata?: VideoMetadataUpdateOneRequiredWithoutSeriesNestedInput
     tags?: SeriesTagUpdateManyWithoutSeriesNestedInput
     SerieView?: SerieViewUpdateManyWithoutSeriesNestedInput
+    attachment?: MediaAttachmentUpdateManyWithoutSerieNestedInput
     Purchase?: PurchaseUpdateManyWithoutSerieNestedInput
   }
 
@@ -56655,6 +56949,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tags?: SeriesTagUncheckedUpdateManyWithoutSeriesNestedInput
     SerieView?: SerieViewUncheckedUpdateManyWithoutSeriesNestedInput
+    attachment?: MediaAttachmentUncheckedUpdateManyWithoutSerieNestedInput
     Purchase?: PurchaseUncheckedUpdateManyWithoutSerieNestedInput
   }
 
@@ -56735,7 +57030,8 @@ export namespace Prisma {
     type: $Enums.MediaAttachmentType
     mediaFile: MediaFileCreateNestedOneWithoutAttachmentsInput
     movie?: MovieCreateNestedOneWithoutAttachmentInput
-    ad?: AdCreateNestedOneWithoutVideoAttachmentInput
+    serie?: SerieCreateNestedOneWithoutAttachmentInput
+    ad?: AdCreateNestedOneWithoutAttachmentInput
   }
 
   export type MediaAttachmentUncheckedCreateWithoutEpisodeInput = {
@@ -56743,6 +57039,7 @@ export namespace Prisma {
     mediaFileId: string
     movieId?: string | null
     adId?: string | null
+    serieId?: string | null
     type: $Enums.MediaAttachmentType
   }
 
@@ -57110,6 +57407,7 @@ export namespace Prisma {
     metadata: VideoMetadataCreateNestedOneWithoutSeriesInput
     seasons?: SeasonCreateNestedManyWithoutSerieInput
     tags?: SeriesTagCreateNestedManyWithoutSeriesInput
+    attachment?: MediaAttachmentCreateNestedManyWithoutSerieInput
     Purchase?: PurchaseCreateNestedManyWithoutSerieInput
   }
 
@@ -57124,6 +57422,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     seasons?: SeasonUncheckedCreateNestedManyWithoutSerieInput
     tags?: SeriesTagUncheckedCreateNestedManyWithoutSeriesInput
+    attachment?: MediaAttachmentUncheckedCreateNestedManyWithoutSerieInput
     Purchase?: PurchaseUncheckedCreateNestedManyWithoutSerieInput
   }
 
@@ -57154,6 +57453,7 @@ export namespace Prisma {
     metadata?: VideoMetadataUpdateOneRequiredWithoutSeriesNestedInput
     seasons?: SeasonUpdateManyWithoutSerieNestedInput
     tags?: SeriesTagUpdateManyWithoutSeriesNestedInput
+    attachment?: MediaAttachmentUpdateManyWithoutSerieNestedInput
     Purchase?: PurchaseUpdateManyWithoutSerieNestedInput
   }
 
@@ -57168,6 +57468,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     seasons?: SeasonUncheckedUpdateManyWithoutSerieNestedInput
     tags?: SeriesTagUncheckedUpdateManyWithoutSeriesNestedInput
+    attachment?: MediaAttachmentUncheckedUpdateManyWithoutSerieNestedInput
     Purchase?: PurchaseUncheckedUpdateManyWithoutSerieNestedInput
   }
 
@@ -57362,6 +57663,7 @@ export namespace Prisma {
     metadata: VideoMetadataCreateNestedOneWithoutSeriesInput
     seasons?: SeasonCreateNestedManyWithoutSerieInput
     SerieView?: SerieViewCreateNestedManyWithoutSeriesInput
+    attachment?: MediaAttachmentCreateNestedManyWithoutSerieInput
     Purchase?: PurchaseCreateNestedManyWithoutSerieInput
   }
 
@@ -57376,6 +57678,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     seasons?: SeasonUncheckedCreateNestedManyWithoutSerieInput
     SerieView?: SerieViewUncheckedCreateNestedManyWithoutSeriesInput
+    attachment?: MediaAttachmentUncheckedCreateNestedManyWithoutSerieInput
     Purchase?: PurchaseUncheckedCreateNestedManyWithoutSerieInput
   }
 
@@ -57423,6 +57726,7 @@ export namespace Prisma {
     metadata?: VideoMetadataUpdateOneRequiredWithoutSeriesNestedInput
     seasons?: SeasonUpdateManyWithoutSerieNestedInput
     SerieView?: SerieViewUpdateManyWithoutSeriesNestedInput
+    attachment?: MediaAttachmentUpdateManyWithoutSerieNestedInput
     Purchase?: PurchaseUpdateManyWithoutSerieNestedInput
   }
 
@@ -57437,6 +57741,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     seasons?: SeasonUncheckedUpdateManyWithoutSerieNestedInput
     SerieView?: SerieViewUncheckedUpdateManyWithoutSeriesNestedInput
+    attachment?: MediaAttachmentUncheckedUpdateManyWithoutSerieNestedInput
     Purchase?: PurchaseUncheckedUpdateManyWithoutSerieNestedInput
   }
 
@@ -57727,6 +58032,7 @@ export namespace Prisma {
     seasons?: SeasonCreateNestedManyWithoutSerieInput
     tags?: SeriesTagCreateNestedManyWithoutSeriesInput
     SerieView?: SerieViewCreateNestedManyWithoutSeriesInput
+    attachment?: MediaAttachmentCreateNestedManyWithoutSerieInput
   }
 
   export type SerieUncheckedCreateWithoutPurchaseInput = {
@@ -57741,6 +58047,7 @@ export namespace Prisma {
     seasons?: SeasonUncheckedCreateNestedManyWithoutSerieInput
     tags?: SeriesTagUncheckedCreateNestedManyWithoutSeriesInput
     SerieView?: SerieViewUncheckedCreateNestedManyWithoutSeriesInput
+    attachment?: MediaAttachmentUncheckedCreateNestedManyWithoutSerieInput
   }
 
   export type SerieCreateOrConnectWithoutPurchaseInput = {
@@ -57863,6 +58170,7 @@ export namespace Prisma {
     seasons?: SeasonUpdateManyWithoutSerieNestedInput
     tags?: SeriesTagUpdateManyWithoutSeriesNestedInput
     SerieView?: SerieViewUpdateManyWithoutSeriesNestedInput
+    attachment?: MediaAttachmentUpdateManyWithoutSerieNestedInput
   }
 
   export type SerieUncheckedUpdateWithoutPurchaseInput = {
@@ -57877,6 +58185,7 @@ export namespace Prisma {
     seasons?: SeasonUncheckedUpdateManyWithoutSerieNestedInput
     tags?: SeriesTagUncheckedUpdateManyWithoutSeriesNestedInput
     SerieView?: SerieViewUncheckedUpdateManyWithoutSeriesNestedInput
+    attachment?: MediaAttachmentUncheckedUpdateManyWithoutSerieNestedInput
   }
 
   export type UserCreateWithoutCommentsInput = {
@@ -58026,7 +58335,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     season: SeasonCreateNestedOneWithoutEpisodesInput
-    videoAttachment?: MediaAttachmentCreateNestedManyWithoutEpisodeInput
+    attachment?: MediaAttachmentCreateNestedManyWithoutEpisodeInput
   }
 
   export type EpisodeUncheckedCreateWithoutCommentInput = {
@@ -58041,7 +58350,7 @@ export namespace Prisma {
     isSaFliixProd: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    videoAttachment?: MediaAttachmentUncheckedCreateNestedManyWithoutEpisodeInput
+    attachment?: MediaAttachmentUncheckedCreateNestedManyWithoutEpisodeInput
   }
 
   export type EpisodeCreateOrConnectWithoutCommentInput = {
@@ -58211,7 +58520,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     season?: SeasonUpdateOneRequiredWithoutEpisodesNestedInput
-    videoAttachment?: MediaAttachmentUpdateManyWithoutEpisodeNestedInput
+    attachment?: MediaAttachmentUpdateManyWithoutEpisodeNestedInput
   }
 
   export type EpisodeUncheckedUpdateWithoutCommentInput = {
@@ -58226,7 +58535,7 @@ export namespace Prisma {
     isSaFliixProd?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    videoAttachment?: MediaAttachmentUncheckedUpdateManyWithoutEpisodeNestedInput
+    attachment?: MediaAttachmentUncheckedUpdateManyWithoutEpisodeNestedInput
   }
 
   export type MediaAttachmentCreateWithoutAdInput = {
@@ -58234,7 +58543,8 @@ export namespace Prisma {
     type: $Enums.MediaAttachmentType
     mediaFile: MediaFileCreateNestedOneWithoutAttachmentsInput
     movie?: MovieCreateNestedOneWithoutAttachmentInput
-    episode?: EpisodeCreateNestedOneWithoutVideoAttachmentInput
+    episode?: EpisodeCreateNestedOneWithoutAttachmentInput
+    serie?: SerieCreateNestedOneWithoutAttachmentInput
   }
 
   export type MediaAttachmentUncheckedCreateWithoutAdInput = {
@@ -58242,6 +58552,7 @@ export namespace Prisma {
     mediaFileId: string
     movieId?: string | null
     episodeId?: string | null
+    serieId?: string | null
     type: $Enums.MediaAttachmentType
   }
 
@@ -58318,7 +58629,7 @@ export namespace Prisma {
     startDate: Date | string
     endDate: Date | string
     isActive?: boolean
-    videoAttachment?: MediaAttachmentCreateNestedManyWithoutAdInput
+    attachment?: MediaAttachmentCreateNestedManyWithoutAdInput
   }
 
   export type AdUncheckedCreateWithoutViewsInput = {
@@ -58328,7 +58639,7 @@ export namespace Prisma {
     startDate: Date | string
     endDate: Date | string
     isActive?: boolean
-    videoAttachment?: MediaAttachmentUncheckedCreateNestedManyWithoutAdInput
+    attachment?: MediaAttachmentUncheckedCreateNestedManyWithoutAdInput
   }
 
   export type AdCreateOrConnectWithoutViewsInput = {
@@ -58430,7 +58741,7 @@ export namespace Prisma {
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
-    videoAttachment?: MediaAttachmentUpdateManyWithoutAdNestedInput
+    attachment?: MediaAttachmentUpdateManyWithoutAdNestedInput
   }
 
   export type AdUncheckedUpdateWithoutViewsInput = {
@@ -58440,7 +58751,7 @@ export namespace Prisma {
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
-    videoAttachment?: MediaAttachmentUncheckedUpdateManyWithoutAdNestedInput
+    attachment?: MediaAttachmentUncheckedUpdateManyWithoutAdNestedInput
   }
 
   export type UserUpsertWithoutAdViewsInput = {
@@ -59310,6 +59621,7 @@ export namespace Prisma {
     movieId?: string | null
     episodeId?: string | null
     adId?: string | null
+    serieId?: string | null
     type: $Enums.MediaAttachmentType
   }
 
@@ -59323,8 +59635,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     type?: EnumMediaAttachmentTypeFieldUpdateOperationsInput | $Enums.MediaAttachmentType
     movie?: MovieUpdateOneWithoutAttachmentNestedInput
-    episode?: EpisodeUpdateOneWithoutVideoAttachmentNestedInput
-    ad?: AdUpdateOneWithoutVideoAttachmentNestedInput
+    episode?: EpisodeUpdateOneWithoutAttachmentNestedInput
+    serie?: SerieUpdateOneWithoutAttachmentNestedInput
+    ad?: AdUpdateOneWithoutAttachmentNestedInput
   }
 
   export type MediaAttachmentUncheckedUpdateWithoutMediaFileInput = {
@@ -59332,6 +59645,7 @@ export namespace Prisma {
     movieId?: NullableStringFieldUpdateOperationsInput | string | null
     episodeId?: NullableStringFieldUpdateOperationsInput | string | null
     adId?: NullableStringFieldUpdateOperationsInput | string | null
+    serieId?: NullableStringFieldUpdateOperationsInput | string | null
     type?: EnumMediaAttachmentTypeFieldUpdateOperationsInput | $Enums.MediaAttachmentType
   }
 
@@ -59340,6 +59654,7 @@ export namespace Prisma {
     movieId?: NullableStringFieldUpdateOperationsInput | string | null
     episodeId?: NullableStringFieldUpdateOperationsInput | string | null
     adId?: NullableStringFieldUpdateOperationsInput | string | null
+    serieId?: NullableStringFieldUpdateOperationsInput | string | null
     type?: EnumMediaAttachmentTypeFieldUpdateOperationsInput | $Enums.MediaAttachmentType
   }
 
@@ -59694,6 +60009,7 @@ export namespace Prisma {
     mediaFileId: string
     episodeId?: string | null
     adId?: string | null
+    serieId?: string | null
     type: $Enums.MediaAttachmentType
   }
 
@@ -59731,8 +60047,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     type?: EnumMediaAttachmentTypeFieldUpdateOperationsInput | $Enums.MediaAttachmentType
     mediaFile?: MediaFileUpdateOneRequiredWithoutAttachmentsNestedInput
-    episode?: EpisodeUpdateOneWithoutVideoAttachmentNestedInput
-    ad?: AdUpdateOneWithoutVideoAttachmentNestedInput
+    episode?: EpisodeUpdateOneWithoutAttachmentNestedInput
+    serie?: SerieUpdateOneWithoutAttachmentNestedInput
+    ad?: AdUpdateOneWithoutAttachmentNestedInput
   }
 
   export type MediaAttachmentUncheckedUpdateWithoutMovieInput = {
@@ -59740,6 +60057,7 @@ export namespace Prisma {
     mediaFileId?: StringFieldUpdateOperationsInput | string
     episodeId?: NullableStringFieldUpdateOperationsInput | string | null
     adId?: NullableStringFieldUpdateOperationsInput | string | null
+    serieId?: NullableStringFieldUpdateOperationsInput | string | null
     type?: EnumMediaAttachmentTypeFieldUpdateOperationsInput | $Enums.MediaAttachmentType
   }
 
@@ -59748,6 +60066,7 @@ export namespace Prisma {
     mediaFileId?: StringFieldUpdateOperationsInput | string
     episodeId?: NullableStringFieldUpdateOperationsInput | string | null
     adId?: NullableStringFieldUpdateOperationsInput | string | null
+    serieId?: NullableStringFieldUpdateOperationsInput | string | null
     type?: EnumMediaAttachmentTypeFieldUpdateOperationsInput | $Enums.MediaAttachmentType
   }
 
@@ -59828,6 +60147,15 @@ export namespace Prisma {
     rating?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
+  }
+
+  export type MediaAttachmentCreateManySerieInput = {
+    id?: string
+    mediaFileId: string
+    movieId?: string | null
+    episodeId?: string | null
+    adId?: string | null
+    type: $Enums.MediaAttachmentType
   }
 
   export type PurchaseCreateManySerieInput = {
@@ -59912,6 +60240,33 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type MediaAttachmentUpdateWithoutSerieInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumMediaAttachmentTypeFieldUpdateOperationsInput | $Enums.MediaAttachmentType
+    mediaFile?: MediaFileUpdateOneRequiredWithoutAttachmentsNestedInput
+    movie?: MovieUpdateOneWithoutAttachmentNestedInput
+    episode?: EpisodeUpdateOneWithoutAttachmentNestedInput
+    ad?: AdUpdateOneWithoutAttachmentNestedInput
+  }
+
+  export type MediaAttachmentUncheckedUpdateWithoutSerieInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    mediaFileId?: StringFieldUpdateOperationsInput | string
+    movieId?: NullableStringFieldUpdateOperationsInput | string | null
+    episodeId?: NullableStringFieldUpdateOperationsInput | string | null
+    adId?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumMediaAttachmentTypeFieldUpdateOperationsInput | $Enums.MediaAttachmentType
+  }
+
+  export type MediaAttachmentUncheckedUpdateManyWithoutSerieInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    mediaFileId?: StringFieldUpdateOperationsInput | string
+    movieId?: NullableStringFieldUpdateOperationsInput | string | null
+    episodeId?: NullableStringFieldUpdateOperationsInput | string | null
+    adId?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumMediaAttachmentTypeFieldUpdateOperationsInput | $Enums.MediaAttachmentType
+  }
+
   export type PurchaseUpdateWithoutSerieInput = {
     id?: StringFieldUpdateOperationsInput | string
     purchaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -59974,7 +60329,7 @@ export namespace Prisma {
     isSaFliixProd?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    videoAttachment?: MediaAttachmentUpdateManyWithoutEpisodeNestedInput
+    attachment?: MediaAttachmentUpdateManyWithoutEpisodeNestedInput
     Comment?: CommentUpdateManyWithoutEpisodeNestedInput
   }
 
@@ -59989,7 +60344,7 @@ export namespace Prisma {
     isSaFliixProd?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    videoAttachment?: MediaAttachmentUncheckedUpdateManyWithoutEpisodeNestedInput
+    attachment?: MediaAttachmentUncheckedUpdateManyWithoutEpisodeNestedInput
     Comment?: CommentUncheckedUpdateManyWithoutEpisodeNestedInput
   }
 
@@ -60044,6 +60399,7 @@ export namespace Prisma {
     mediaFileId: string
     movieId?: string | null
     adId?: string | null
+    serieId?: string | null
     type: $Enums.MediaAttachmentType
   }
 
@@ -60061,7 +60417,8 @@ export namespace Prisma {
     type?: EnumMediaAttachmentTypeFieldUpdateOperationsInput | $Enums.MediaAttachmentType
     mediaFile?: MediaFileUpdateOneRequiredWithoutAttachmentsNestedInput
     movie?: MovieUpdateOneWithoutAttachmentNestedInput
-    ad?: AdUpdateOneWithoutVideoAttachmentNestedInput
+    serie?: SerieUpdateOneWithoutAttachmentNestedInput
+    ad?: AdUpdateOneWithoutAttachmentNestedInput
   }
 
   export type MediaAttachmentUncheckedUpdateWithoutEpisodeInput = {
@@ -60069,6 +60426,7 @@ export namespace Prisma {
     mediaFileId?: StringFieldUpdateOperationsInput | string
     movieId?: NullableStringFieldUpdateOperationsInput | string | null
     adId?: NullableStringFieldUpdateOperationsInput | string | null
+    serieId?: NullableStringFieldUpdateOperationsInput | string | null
     type?: EnumMediaAttachmentTypeFieldUpdateOperationsInput | $Enums.MediaAttachmentType
   }
 
@@ -60077,6 +60435,7 @@ export namespace Prisma {
     mediaFileId?: StringFieldUpdateOperationsInput | string
     movieId?: NullableStringFieldUpdateOperationsInput | string | null
     adId?: NullableStringFieldUpdateOperationsInput | string | null
+    serieId?: NullableStringFieldUpdateOperationsInput | string | null
     type?: EnumMediaAttachmentTypeFieldUpdateOperationsInput | $Enums.MediaAttachmentType
   }
 
@@ -60184,6 +60543,7 @@ export namespace Prisma {
     mediaFileId: string
     movieId?: string | null
     episodeId?: string | null
+    serieId?: string | null
     type: $Enums.MediaAttachmentType
   }
 
@@ -60199,7 +60559,8 @@ export namespace Prisma {
     type?: EnumMediaAttachmentTypeFieldUpdateOperationsInput | $Enums.MediaAttachmentType
     mediaFile?: MediaFileUpdateOneRequiredWithoutAttachmentsNestedInput
     movie?: MovieUpdateOneWithoutAttachmentNestedInput
-    episode?: EpisodeUpdateOneWithoutVideoAttachmentNestedInput
+    episode?: EpisodeUpdateOneWithoutAttachmentNestedInput
+    serie?: SerieUpdateOneWithoutAttachmentNestedInput
   }
 
   export type MediaAttachmentUncheckedUpdateWithoutAdInput = {
@@ -60207,6 +60568,7 @@ export namespace Prisma {
     mediaFileId?: StringFieldUpdateOperationsInput | string
     movieId?: NullableStringFieldUpdateOperationsInput | string | null
     episodeId?: NullableStringFieldUpdateOperationsInput | string | null
+    serieId?: NullableStringFieldUpdateOperationsInput | string | null
     type?: EnumMediaAttachmentTypeFieldUpdateOperationsInput | $Enums.MediaAttachmentType
   }
 
@@ -60215,6 +60577,7 @@ export namespace Prisma {
     mediaFileId?: StringFieldUpdateOperationsInput | string
     movieId?: NullableStringFieldUpdateOperationsInput | string | null
     episodeId?: NullableStringFieldUpdateOperationsInput | string | null
+    serieId?: NullableStringFieldUpdateOperationsInput | string | null
     type?: EnumMediaAttachmentTypeFieldUpdateOperationsInput | $Enums.MediaAttachmentType
   }
 

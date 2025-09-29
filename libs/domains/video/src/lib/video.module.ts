@@ -1,39 +1,39 @@
 import { Module } from '@nestjs/common';
 import { SafliixBackDatabaseModule } from '@safliix-back/database';
 import { 
-  CreateVideoHandler,
+  CreateMediaHandler,
   RequestUploadHandler,
   ConfirmUploadHandler,
-  AttachVideoToElmtHandler,
-  UpdateVideoHandler,
+  AttachMediaToElmtHandler,
+  UpdateMediaHandler,
   
 
   
 } from './application';
 
-import { VIDEO_REPOSITORY } from './utils/types';
-import { PrismaVideoFileRepository } from './infrastructure/prisma-video-file.repository';
+import { MEDIA_REPOSITORY } from './utils/types';
+import { PrismaMediaFileRepository } from './infrastructure/prisma-media-file.repository';
 @Module({
   imports: [
     SafliixBackDatabaseModule
   ],
   providers: [
     {
-      provide: VIDEO_REPOSITORY,
-      useClass: PrismaVideoFileRepository
+      provide: MEDIA_REPOSITORY,
+      useClass: PrismaMediaFileRepository
     },
-    CreateVideoHandler,
+    CreateMediaHandler,
     RequestUploadHandler,
     ConfirmUploadHandler,
-    AttachVideoToElmtHandler,
-    UpdateVideoHandler,
+    AttachMediaToElmtHandler,
+    UpdateMediaHandler,
   ],
   exports: [
-    CreateVideoHandler,
+    CreateMediaHandler,
     RequestUploadHandler,
     ConfirmUploadHandler,
-    AttachVideoToElmtHandler,
-    UpdateVideoHandler,
+    AttachMediaToElmtHandler,
+    UpdateMediaHandler,
   ],
 })
-export class SafliixBackVideoModule {}
+export class SafliixBackMediaModule {}

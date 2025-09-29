@@ -19,7 +19,7 @@ export const metadataInclude = {
 } as const;
 
 export const episodeInclude = {
-  videoAttachment: {
+  attachment: {
     include: attachmentInclude
   },
   metadata: {
@@ -40,13 +40,16 @@ export const serieInclude = {
   seasons: {
     include: seasonInclude,
   },
+  attachment: {
+    include: attachmentInclude
+  }
 } as const;
 
 export const movieInclude = {
   metadata: {
     include: metadataInclude,
   },
-  videoAttachment: {
+  attachment: {
     include: attachmentInclude
   }
 } as const;
@@ -54,6 +57,9 @@ export const movieInclude = {
 export const serieWithMetadataAndSeasonCountInclude = {
   metadata: {
     include: metadataInclude,
+  },
+  attachment:{
+    include: attachmentInclude
   },
   _count: {
     select: { seasons: true },

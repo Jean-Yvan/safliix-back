@@ -4,6 +4,7 @@ import { CreateSerieDto } from "../../interfaces/create-serie.dto";
 import { UpdateSerieDto } from "../../interfaces/update-serie.dto";
 import { Result,Err,Ok } from "oxide.ts";
 import { SerieWithMetadataAndSeasonCount, SerieWithRelations } from "@safliix-back/database";
+import { MediaAttachment } from "@safliix-back/video";
 
 export class Serie {
   private seasons: Season[] = [];
@@ -14,6 +15,7 @@ export class Serie {
     public rentalPrice: number | null,
     public seasonCount: number,
     public type: string,
+    public attachment: MediaAttachment[]
   ) {}
 
   addSeason(season: Season) {
@@ -43,12 +45,10 @@ export class Serie {
       undefined,
       data.title,
       data.description ?? '',
-      data.thumbnailUrl,
       data.productionHouse,
       data.productionCountry,
       data.status,
       data.director,
-      data.secondaryImageUrl ?? null,
       new Date(data.releaseDate),
       new Date(data.plateformDate),
       category.unwrap(),
@@ -67,7 +67,8 @@ export class Serie {
       metadata.unwrap(),
       data.rentalPrice ?? null,
       data.seasonCount,
-      data.type
+      data.type,
+      []
     );
 
     return Ok(serie);
@@ -80,7 +81,8 @@ export class Serie {
       VideoMetadataMapper.toDomain(data.metadata),
       data.rentalPrice,
       data.seasonCount,
-      data.type
+      data.type,
+      data.attachment.map(va => MediaAttachment.restore(va))
     )
   }
 
@@ -114,8 +116,6 @@ export class Serie {
     this.metadata.updateWith({
       title: data.title ?? this.metadata.title,
       description: data.description ?? this.metadata.description,
-      thumbnailUrl: data.thumbnailUrl ?? this.metadata.thumbnailUrl,
-      secondaryImage: data.secondaryImageUrl ?? this.metadata.secondaryImage,
       productionHouse: data.productionHouse ?? this.metadata.productionHouse,
       productionCountry: data.productionCountry ?? this.metadata.productionCountry,
       director: data.director ?? this.metadata.director,

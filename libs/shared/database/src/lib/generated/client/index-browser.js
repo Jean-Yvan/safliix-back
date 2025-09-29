@@ -253,6 +253,7 @@ exports.Prisma.MediaAttachmentScalarFieldEnum = {
   movieId: 'movieId',
   episodeId: 'episodeId',
   adId: 'adId',
+  serieId: 'serieId',
   type: 'type'
 };
 
@@ -512,8 +513,10 @@ exports.MediaFileStatus = exports.$Enums.MediaFileStatus = {
   PENDING: 'PENDING',
   UPLOADED: 'UPLOADED',
   PROCESSING: 'PROCESSING',
-  READY: 'READY',
-  FAILED: 'FAILED'
+  PROCESSED: 'PROCESSED',
+  FAILED: 'FAILED',
+  CANCELLED: 'CANCELLED',
+  QUEUED: 'QUEUED'
 };
 
 exports.MediaType = exports.$Enums.MediaType = {

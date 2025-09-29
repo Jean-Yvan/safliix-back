@@ -4,7 +4,7 @@ import { Result,Ok,Err } from 'oxide.ts';
 import { CreateMovieDto } from '../../interface/rest/dto/create-movie.dto';
 import { UpdateMovieDto } from '../../interface/rest/dto/update-movie.dto';
 import { ContentStatus } from '@safliix-back/common';
-import { VideoAttachment } from '@safliix-back/video';
+import { MediaAttachment } from '@safliix-back/video';
 import { MovieWithRelations } from '@safliix-back/database';
 
 //import { MoviePublishedEvent } from '../events/movie-published.event';
@@ -29,7 +29,7 @@ export class MovieAggregate extends AggregateRoot {
   private constructor(
     public readonly id: string | undefined,
     public readonly metadata: VideoMetadata,
-    public readonly  attachments: VideoAttachment[],
+    public readonly  attachments: MediaAttachment[],
     public status: ContentStatus = ContentStatus.DRAFT,
     public rentalPrice: number,
     public type: string
@@ -140,7 +140,7 @@ export class MovieAggregate extends AggregateRoot {
     const movie = new MovieAggregate(
       data.id,
       VideoMetadata.restore(data.metadata),
-      data.videoAttachment.map(va => VideoAttachment.restore(va)),
+      data.attachment.map(va => MediaAttachment.restore(va)),
       s,
       data.rentalPrice ?? 0,
       data.type
@@ -171,8 +171,6 @@ export class MovieAggregate extends AggregateRoot {
   const metadataUpdateResult = this.metadata.updateWith({
     title: payload.title ?? this.metadata.title,
     description: payload.description ?? this.metadata.description,
-    thumbnailUrl: payload.thumbnailUrl ?? this.metadata.thumbnailUrl,
-    secondaryImage: payload.secondaryImageUrl ?? this.metadata.secondaryImage,
     releaseDate: payload.releaseDate ? new Date(payload.releaseDate) : this.metadata.releaseDate,
     platformDate: payload.plateformDate ? new Date(payload.plateformDate) : this.metadata.platformDate,
     productionHouse: payload.productionHouse ?? this.metadata.productionHouse,

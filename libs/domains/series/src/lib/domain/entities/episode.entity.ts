@@ -3,7 +3,7 @@ import { Err,Ok, Result } from "oxide.ts";
 import { AddEpisodeDto } from "../../interfaces/add-episode.dto";
 import { EpisodeWithRelations } from "@safliix-back/database";
 import { UpdateEpisodeDto } from "src/lib/interfaces/update-episode.dto";
-import { VideoAttachment } from "@safliix-back/video";
+import { MediaAttachment } from "@safliix-back/video";
 
 export class Episode{
 	constructor(
@@ -16,7 +16,7 @@ export class Episode{
     public isSaFliixProd: boolean,
     public seasonId: string,
     public number: number,
-    public attachment: VideoAttachment[],
+    public attachment: MediaAttachment[],
     
     
   ) {}
@@ -66,7 +66,7 @@ export class Episode{
       data.isSaFliixProd,
       data.seasonId,
       data.number,
-      data.videoAttachment.map(va => VideoAttachment.restore(va))
+      data.attachment.map(va => MediaAttachment.restore(va))
     )
   }
 
