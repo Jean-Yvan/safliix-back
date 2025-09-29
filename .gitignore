@@ -48,3 +48,12 @@ test-output
 /generated/prisma
 
 /generated/prisma
+
+*.mp4
+*.mov
+*.wmv
+*.avi
+*.mkv
+*.flv
+*.webm
+*.mp3
