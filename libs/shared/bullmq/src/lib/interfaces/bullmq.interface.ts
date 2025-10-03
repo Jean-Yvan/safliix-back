@@ -31,7 +31,7 @@ export interface BullMQConfig {
   password?: string;
   db: number;
   prefix: string;
-  maxRetriesPerRequest: number;
+  maxRetriesPerRequest: number | null;
   retryDelay: number;
 }
 

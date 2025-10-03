@@ -1,0 +1,20 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 30
+    },
+    "auditLog": "/home/marc/Bureau/projets/safliix-back/apps/logs/.5cff5da743ae4ce232ae619e9bbc64c55421a41d-audit.json",
+    "files": [
+        {
+            "date": 1759330853812,
+            "name": "/home/marc/Bureau/projets/safliix-back/apps/logs/errors-2025-10-01.log",
+            "hash": "6010a1738defa89228ff5067eb10ac9f669bd637680e1430ba6d5940c50c2625"
+        },
+        {
+            "date": 1759450699169,
+            "name": "/home/marc/Bureau/projets/safliix-back/apps/logs/errors-2025-10-03.log",
+            "hash": "9a21548ac63ce1fb31b607e1e9ca38c22b7b70d4823556fa4047b685f8edf1e6"
+        }
+    ],
+    "hashType": "sha256"
+}

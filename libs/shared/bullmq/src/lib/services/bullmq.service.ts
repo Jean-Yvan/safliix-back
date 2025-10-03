@@ -53,7 +53,7 @@ export class BullMQService implements OnModuleInit, OnModuleDestroy {
       password: this.configService.get<string>('REDIS_PASSWORD'),
       db: this.configService.get<number>('REDIS_DB') || 0,
       prefix: this.configService.get<string>('REDIS_PREFIX') || 'bullmq',
-      maxRetriesPerRequest: this.configService.get<number>('REDIS_MAX_RETRIES') || 3,
+      maxRetriesPerRequest: null,
       retryDelay: this.configService.get<number>('REDIS_RETRY_DELAY') || 1000
     };
   }
@@ -395,6 +395,29 @@ export class BullMQService implements OnModuleInit, OnModuleDestroy {
       throw error;
     }
   }
+
+  async isQueuePaused(queueName: string): Promise<boolean> {
+    const queue = this.getQueue(queueName);
+    return queue.isPaused();
+  }
+
+  async pauseQueue(queueName: string): Promise<void> {
+    const queue = this.getQueue(queueName);
+    await queue.pause();
+    this.logger.log(`Queue "${queueName}" paused`);
+  }
+  
+  async resumeQueue(queueName: string): Promise<void> { 
+    const queue = this.getQueue(queueName);
+    await queue.resume();
+    this.logger.log(`Queue "${queueName}" resumed`);
+  }
+
+  async getQueueSize(queueName: string): Promise<number> {
+    const metrics = await this.getQueueMetrics(queueName);
+    return metrics.waiting + metrics.active + metrics.delayed;
+  }
+
 
   /**
    * Ferme toutes les connexions
