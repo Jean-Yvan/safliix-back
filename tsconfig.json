@@ -71,6 +71,9 @@
     },
     {
       "path": "./libs/domains/video"
+    },
+    {
+      "path": "./libs/shared/video-process-type"
     }
   ]
 }

@@ -1,380 +1,149 @@
-// workers/video-encoding.processor.ts
-import { Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
-import { Worker, Job } from 'bullmq';
+// workers/video-encoding.worker.ts
+import { Injectable } from '@nestjs/common';
+import { WorkerBase } from './base.worker';
+import { Job } from 'bullmq';
 import { Redis } from 'ioredis';
-import { ConfigService } from '@nestjs/config';
+
 import { VideoEncodingService } from '../services/video-encoding.service';
-import { EncodingJobData, EncodingResult } from '../interfaces/video-process.interface';
-import { Queue } from '../interfaces/video-process.interface';
-import { FileLogger } from '../utils/logger';
+import { RedisManager } from '../services/redis-manager';
+import { ConfigService } from '@nestjs/config';
+import { PartEncodedInfo, PartProcessPayload, VideoEvents, VideoQueues } from '@safliix-back/video-process-type';
+import { VideoSegmentCoordinator } from '../services/video-segment-coordinator.service';
+import { VideoEventDispatcher } from '../services/video-event-dispatcher.service';
+import { PermanentProcessingError } from '../utils/errors';
 
 @Injectable()
-export class VideoEncodingProcessor implements OnModuleInit, OnModuleDestroy {
-  
-  private readonly logger = new FileLogger(VideoEncodingProcessor.name);
-  private readonly worker: Worker<EncodingJobData, EncodingResult>;
-  private readonly redisConnection: Redis;
+export class VideoEncodingWorker extends WorkerBase<PartProcessPayload, PartEncodedInfo>  {
+
+  //protected override readonly  redisConnection = this.redisManager.createConnectionForWorker();
+  private readonly dedicatedRedisConnection: Redis; 
 
   constructor(
-    private readonly configService: ConfigService,
-    private readonly videoEncodingService: VideoEncodingService
+    private readonly videoEncodingService: VideoEncodingService,
+    redisManager: RedisManager,
+    configService: ConfigService,
+    private readonly coordinator: VideoSegmentCoordinator,
+    private readonly dispatcher: VideoEventDispatcher
   ) {
-    // 1. Création de la connexion Redis
-    this.redisConnection = this.createRedisConnection();
-
-    // 2. Création du Worker avec composition
-    this.worker = new Worker<EncodingJobData, EncodingResult>(
-      Queue.VIDEO_ENCODING,
-      (job: Job<EncodingJobData, EncodingResult, string>) => this.processJob(job),
-      {
-        connection: this.redisConnection,
-        prefix: this.configService.get('REDIS_PREFIX', 'bullmq'),
-        concurrency: this.configService.get('VIDEO_ENCODING_CONCURRENCY', 2),
-        limiter: {
-          max: this.configService.get('VIDEO_ENCODING_MAX_JOBS_PER_SECOND', 5),
-          duration: 1000,
-        },
-        lockDuration: this.configService.get('VIDEO_ENCODING_LOCK_DURATION', 300000),
-        stalledInterval: this.configService.get('VIDEO_ENCODING_STALLED_INTERVAL', 30000),
-        removeOnComplete: {
-          count: this.configService.get('VIDEO_ENCODING_REMOVE_ON_COMPLETE', 100),
-        },
-        removeOnFail: {
-          count: this.configService.get('VIDEO_ENCODING_REMOVE_ON_FAIL', 1000),
-        },
-        
-      }
-    );
-
-    // 3. Configuration des événements
-    this.setupEventHandlers();
     
-    this.logger.log('🎯 Video Encoding Processor constructed successfully');
+    // Préparer les options BullMQ personnalisées
+    const connection = redisManager.createConnectionForWorker();
+    const workerOptions = {
+      connection: connection,
+      concurrency: configService.get('VIDEO_ENCODING_CONCURRENCY', 2),
+      limiter: {
+        max: configService.get('VIDEO_ENCODING_MAX_JOBS_PER_SECOND', 5),
+        duration: 1000,
+      },
+      lockDuration: configService.get('VIDEO_ENCODING_LOCK_DURATION', 900_000),
+      stalledInterval: configService.get('VIDEO_ENCODING_STALLED_INTERVAL', 30_000),
+      removeOnComplete: {
+        count: configService.get('VIDEO_ENCODING_REMOVE_ON_COMPLETE', 100),
+      },
+      removeOnFail: {
+        count: configService.get('VIDEO_ENCODING_REMOVE_ON_FAIL', 1000),
+      },
+    };
+
+    super(
+      VideoQueues.VIDEO_PART_READY_QUEUE, 
+      workerOptions.connection, 'VideoEncodingWorker', workerOptions.concurrency, workerOptions);
+    this.dedicatedRedisConnection = connection;
+    this.setupFailureHandler();
+    this.logger.log(`🚀 VideoEncodingWorker prêt — écoute ${VideoEvents.VIDEO_PART_READY}`);
   }
 
-  async onModuleInit() {
-    this.logger.log('🚀 Video Encoding Processor initialized');
-  }
+  
 
-  async onModuleDestroy() {
-    this.logger.log('🛑 Shutting down Video Encoding Processor...');
-    await this.gracefulShutdown();
-  }
-
-  /**
-   * Configure les gestionnaires d'événements du worker
-   */
-  private setupEventHandlers(): void {
-    // Job complété avec succès
-    this.worker.on('completed', (job: Job<EncodingJobData, EncodingResult, string>, result: EncodingResult) => {
-      this.logger.log(`✅ Encoding job ${job?.id} completed successfully`);
-      if (job && result) {
-        this.logger.debug(`📊 Job ${job.id} encoded part ${result.partIndex} with ${result.outputFiles.length} resolutions`);
-      }
-    });
-
-    // Job échoué
-    this.worker.on('failed', (job: Job<EncodingJobData, EncodingResult, string> | undefined, error: Error) => {
-      const jobId = job?.id || 'unknown';
-      const partInfo = job?.data?.part ? 
-        `part ${job.data.part.index + 1}/${job.data.part.totalParts}` : 
-        'unknown part';
-      
-      this.logger.error(`💥 Encoding job ${jobId} failed (${partInfo}):`, error);
-      
-      if (job) {
-        this.logFailedJobDetails(job, error);
-      }
-    });
-
-    // Job en progression
-    this.worker.on('progress', (job: Job<EncodingJobData, EncodingResult, string>, progress: any) => {
-      this.logger.debug(`📈 Job ${job.id} progress:`, progress);
-    });
-
-    // Job bloqué
-    this.worker.on('stalled', (jobId: string) => {
-      this.logger.warn(`⚠️ Encoding job ${jobId} stalled`);
-    });
-
-    // Erreur du worker
-    this.worker.on('error', (error: Error) => {
-      this.logger.error('🔥 Video Encoding Processor error:', error);
-    });
-
-    // Worker en cours d'exécution
-    this.worker.on('active', (job: Job<EncodingJobData, EncodingResult, string>) => {
-      const { index, totalParts } = job.data.part;
-      this.logger.log(`🎬 Starting encoding job ${job.id}: Part ${index + 1}/${totalParts}`);
-    });
-
-    // Worker en pause
-    this.worker.on('paused', () => {
-      this.logger.log('⏸️ Video Encoding Processor paused');
-    });
-
-    // Worker repris
-    this.worker.on('resumed', () => {
-      this.logger.log('▶️ Video Encoding Processor resumed');
-    });
-
-    // Worker fermé
-    this.worker.on('closed', () => {
-      this.logger.log('🔒 Video Encoding Processor closed');
-    });
-
-    // Worker prêt
-    this.worker.on('ready', () => {
-      this.logger.log('👂 Video Encoding Processor ready and listening for jobs');
-    });
-  }
-
-  /**
-   * Traite un job d'encodage de partie vidéo
-   */
-  private async processJob(job: Job<EncodingJobData, EncodingResult, string>): Promise<EncodingResult> {
-    const { part, userId } = job.data;
+  protected async processJob(job: Job<PartProcessPayload, PartEncodedInfo>): Promise<PartEncodedInfo> {
     
-    this.logger.log(`🎯 Processing encoding job ${job.id} for part ${part.index + 1}/${part.totalParts} (user: ${userId})`);
+
+    this.logger.log(`🎯 Processing job ${job.id} for part ${job.data.part.index + 1}/${job.data.part.totalParts}`);
 
     try {
-      // Validation préliminaire du job
+      // Validation des données du job
       this.validateJobData(job.data);
-      this.logger.log(`✅ Job data validated for job ${job.id}`);
 
-      // Traitement principal délégué au service
-      const result = await this.videoEncodingService.processPartEncodingJob(job);
-      
-      this.logger.log(`🎉 Encoding job ${job.id} completed successfully in ${result.totalEncodingTime}ms`);
-      
+      // Traitement principal
+      const result = await this.videoEncodingService.processPartEncodingJob(job.data);
+
+      this.logger.log(`🎉 Job ${job.id} encoded successfully in ${result.totalEncodingTime}ms`);
+      await this.coordinator.registerEncodedPart(
+        job.data.part.s3Key,
+        result.partIndex,
+        job.data.part.totalParts,
+        result,
+        result.profiles
+      );
+
+      await this.dispatcher.emit(VideoQueues.VIDEO_QUEUE, VideoEvents.VIDEO_PART_READY, {
+        s3Key: job.data.part.s3Key,
+        partIndex: result.partIndex,
+        totalParts: job.data.part.totalParts,
+      });
+
       return result;
 
-    } catch (error) {
-      this.logger.error(`💥 Encoding job ${job.id} failed during processing:`, error);
-      
-      // Journalisation détaillée pour le débogage
-      if (error instanceof Error) {
-        this.logErrorDetails(job, error);
-      } else {
-        this.logErrorDetails(job, new Error('Unknown error type'));
+    } catch (err) {
+      const isPermanent = err instanceof PermanentProcessingError;
+      if(isPermanent) {
+        this.logger.error(`💥 Job ${job.id} failed with permanent error: ${(err as Error).message}`);
+        await this.dispatcher.emit(
+          VideoQueues.VIDEO_QUEUE,
+          VideoEvents.VIDEO_PROCESSING_FAILED,
+          { s3Key:job.data.part.s3Key, error: err.message, stage: VideoEncodingWorker.name }
+        );
+        throw err; // Propager l'erreur pour marquer le job comme échoué définitivement
       }
+      this.logger.error(`💥 Job ${job.id} failed`, err);
+      throw err;
+    }
+  }
+
+
+  private setupFailureHandler() {
+    this.worker.on('failed', async (job, error) => {
+      const s3Key = (job?.data as PartProcessPayload)?.part?.s3Key;
+      const partIndex = (job?.data as PartProcessPayload)?.part?.index;
       
-      // Relancer l'erreur pour que BullMQ la gère (retry, etc.)
-      throw error;
-    }
-  }
+      this.logger.error(`❌ Job ${job?.id} (Encoding Part ${partIndex}) failed permanently after retries. Reason: ${error.message}`);
+      
+      if (!s3Key) {
+          this.logger.error('Could not get s3Key for failed job.');
+          return;
+      }
 
-  /**
-   * Valide les données du job avant traitement
-   */
-  private validateJobData(jobData: EncodingJobData): void {
-    const { part, originalFile, resolutions, userId, hlsOutputDir } = jobData;
-
-    if (!part || !part.path) {
-      throw new Error('Part data is missing or invalid');
-    }
-
-    if (!originalFile) {
-      throw new Error('Original file path is required');
-    }
-
-    if (!resolutions || resolutions.length === 0) {
-      throw new Error('At least one resolution is required');
-    }
-
-    if (!userId) {
-      throw new Error('User ID is required');
-    }
-
-    if (!hlsOutputDir) {
-      throw new Error('HLS output directory is required');
-    }
-
-    // Validation des résolutions supportées
-    const supportedResolutions = this.videoEncodingService['ffmpegService'].getSupportedResolutions();
-    const invalidResolutions = resolutions.filter((res: string) => !supportedResolutions.includes(res));
-
-    if (invalidResolutions.length > 0) {
-      throw new Error(`Unsupported resolutions: ${invalidResolutions.join(', ')}`);
-    }
-
-    this.logger.debug(`✅ Job data validation passed for part ${part.index}`);
-  }
-
-  /**
-   * Journalise les détails d'une erreur
-   */
-  private logErrorDetails(job: Job<EncodingJobData, EncodingResult, string>, error: Error): void {
-    const errorInfo = {
-      jobId: job.id,
-      jobData: {
-        partIndex: job.data.part.index,
-        originalFile: job.data.originalFile,
-        resolutions: job.data.resolutions,
-        userId: job.data.userId,
-        hlsOutputDir: job.data.hlsOutputDir
-      },
-      error: {
-        message: error.message,
-        stack: error.stack,
-        name: error.name
-      },
-      timestamp: new Date().toISOString(),
-      attempts: job.attemptsMade,
-      maxAttempts: job.opts?.attempts
-    };
-
-    this.logger.error(`🔍 Error details for encoding job ${job.id}:`, errorInfo);
-  }
-
-  /**
-   * Journalise les détails d'un job échoué
-   */
-  private logFailedJobDetails(job: Job<EncodingJobData, EncodingResult, string>, error: Error): void {
-    const failureInfo = {
-      jobId: job.id,
-      part: job.data.part.index,
-      totalParts: job.data.part.totalParts,
-      originalFile: job.data.originalFile,
-      hlsOutputDir: job.data.hlsOutputDir,
-      error: error.message,
-      failedAt: new Date().toISOString(),
-      attempts: job.attemptsMade
-    };
-
-    this.logger.error('📉 Job failure analytics:', failureInfo);
-  }
-
-  /**
-   * Crée la connexion Redis
-   */
-  private createRedisConnection(): Redis {
-    return new Redis({
-      host: this.configService.get('REDIS_HOST', 'localhost'),
-      port: this.configService.get('REDIS_PORT', 6379),
-      db: this.configService.get('REDIS_DB', 0),
-      maxRetriesPerRequest: null,
-      enableReadyCheck: true,
-      lazyConnect: true,
-      connectTimeout: 30000,
-      commandTimeout: 10000,
-      keepAlive: 30000,
+      // Émettre l'événement d'échec définitif au coordinateur
+      await this.dispatcher.emit(
+          VideoQueues.VIDEO_QUEUE,
+          VideoEvents.VIDEO_PROCESSING_FAILED, 
+          {
+              s3Key: s3Key,
+              error: `Encoding of part ${partIndex} failed after retries: ${error.message}`,
+              stage: VideoEncodingWorker.name,
+          }
+      );
     });
   }
 
-  /**
-   * Fermeture gracieuse du processor
-   */
-  private async gracefulShutdown(): Promise<void> {
-    try {
-      // Fermer le worker d'abord (attendre les jobs actifs)
-      await this.worker.close(true);
-      this.logger.log('✅ Worker closed gracefully');
-
-      // Fermer la connexion Redis
-      await this.redisConnection.quit();
-      this.logger.log('✅ Redis connection closed');
-
-      this.logger.log('🎯 Video Encoding Processor shutdown completed successfully');
-
-    } catch (error) {
-      this.logger.error('❌ Error during graceful shutdown:', error);
-      
-      // Fallback: fermeture forcée en cas d'erreur
-      try {
-        await this.worker.close(false);
-        await this.redisConnection.disconnect();
-        this.logger.log('⚠️ Forced shutdown completed');
-      } catch (forceError) {
-        this.logger.error('💥 Failed to force shutdown:', forceError);
-      }
-    }
+  private validateJobData(jobData: PartProcessPayload): void {
+    const { part, resolutions } = jobData;
+    
+  
+    if (!part || !part.path) throw new PermanentProcessingError('Part data missing');
+    if (!resolutions?.length) throw new PermanentProcessingError('At least one resolution required');
+    
+    const supported = this.videoEncodingService['ffmpegService'].getSupportedResolutions();
+    const invalid = resolutions.filter((r) => !supported.includes(r));
+    if (invalid.length) throw new PermanentProcessingError(`Unsupported resolutions: ${invalid.join(', ')}`);
   }
 
-  /**
-   * Méthodes utilitaires publiques pour contrôler le processor
-   */
+  override async onModuleDestroy() {
+    // 1. Fermer le Worker BullMQ (appel à la méthode WorkerBase)
+    await super.onModuleDestroy(); 
 
-  /**
-   * Met en pause le traitement des jobs
-   */
-  async pause(): Promise<void> {
-    if (this.worker) {
-      await this.worker.pause();
-      this.logger.log('⏸️ Video Encoding Processor paused');
-    }
-  }
-
-  /**
-   * Reprend le traitement des jobs
-   */
-  async resume(): Promise<void> {
-    if (this.worker) {
-      await this.worker.resume();
-      this.logger.log('▶️ Video Encoding Processor resumed');
-    }
-  }
-
-  /**
-   * Obtient l'état du processor
-   */
-  getState() {
-    if (!this.worker) {
-      return { 
-        isRunning: false, 
-        queue: Queue.VIDEO_ENCODING,
-        status: 'not_initialized'
-      };
-    }
-
-    return {
-      isRunning: this.worker.isRunning(),
-      queue: Queue.VIDEO_ENCODING,
-      concurrency: this.worker.opts?.concurrency,
-      status: this.worker.isRunning() ? 'running' : 'stopped'
-    };
-  }
-
-  /**
-   * Vérifie si le processor est en cours d'exécution
-   */
-  isRunning(): boolean {
-    return this.worker?.isRunning() || false;
-  }
-
-  /**
-   * Obtient des statistiques sur le processor
-   */
-  getProcessorStats() {
-    return {
-      processor: 'VideoEncodingProcessor',
-      queue: Queue.VIDEO_ENCODING,
-      concurrency: this.worker?.opts?.concurrency,
-      isRunning: this.worker?.isRunning() || false,
-      redisConnected: this.redisConnection?.status === 'ready'
-    };
-  }
-
-  /**
-   * Obtient des métriques détaillées sur le traitement
-   */
-  getDetailedMetrics() {
-    return {
-      processor: 'VideoEncodingProcessor',
-      nomenclature: 'part-based',
-      processingType: 'HLS adaptive streaming',
-      supportedOperations: [
-        'processPartEncodingJob',
-        'encodeFullVideoToHLS',
-        'encodeToMp4',
-        'generateThumbnails'
-      ],
-      features: [
-        'Multi-resolution HLS encoding',
-        'Adaptive bitrate streaming',
-        'Parallel part processing',
-        'Progress tracking'
-      ]
-    };
+    // 2. Fermer la connexion Redis dédiée (responsabilité du dérivé)
+    await this.dedicatedRedisConnection.quit(); 
+    this.logger.log('✅ Dedicated Redis connection closed');
   }
 }

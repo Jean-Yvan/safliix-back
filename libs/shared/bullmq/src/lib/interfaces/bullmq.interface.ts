@@ -1,19 +1,42 @@
 // src/interfaces/bullmq.interface.ts
 
 import { JobsOptions, WorkerOptions } from 'bullmq';
+// src/interfaces/job-type-map.ts
+import {
+  IngestJobPayload,
+  DownloadedPayload,
+  SplittedPayload,
+  PartEncodedInfo,
+  PartReadyPayload,
+  SegmentedPayload,
+  PartProcessPayload,
+  PlaylistResult,
+  VideoQueues,
+  GenericPayload
+} from '@safliix-back/video-process-type';
 
-// --- NOUVEAU: Typage strict des Jobs ---
-// Définissez ici une carte de tous les types de jobs de votre application.
-// Cela renforce la sécurité des types en garantissant que les données correspondent au nom du job.
+/**
+ * JobTypeMap — map strict des noms de jobs -> payload attendu.
+ * Ne pas ajouter d'index signature [key: string]: any afin de forcer le typage strict.
+ */
 export type JobTypeMap = {
-  'processImage': { file: string; format: string };
-  'sendEmail': { to: string; subject: string; body: string };
-  // ... ajoutez d'autres types de jobs ici ...
-  [key: string]: any; // Fallback générique pour les jobs non typés si nécessaire
+  // Pipeline vidéo / events
+  [VideoQueues.VIDEO_INGEST_QUEUE]: IngestJobPayload;          
+  [VideoQueues.VIDEO_DOWNLOADED_QUEUE]: DownloadedPayload;     
+  [VideoQueues.VIDEO_SPLITTED_QUEUE]: SplittedPayload;         
+  [VideoQueues.VIDEO_PART_READY_QUEUE]: PartProcessPayload;    
+  [VideoQueues.VIDEO_SEGMENTED_QUEUE]: SegmentedPayload;       
+  [VideoQueues.VIDEO_PLAYLIST_ASSEMBLED_QUEUE]: PlaylistResult;
+  [VideoQueues.VIDEO_PROCESSING_FAILED_QUEUE]: { s3Key: string; error: string };
+  [VideoQueues.VIDEO_PROGRESS_QUEUE]: { s3Key: string; stage: string; progress: number; message?: string };
+  [VideoQueues.VIDEO_QUEUE] : GenericPayload | PartReadyPayload;
+  // Jobs utilitaires / autres
+  processImage: { file: string; format: string };
+  sendEmail: { to: string; subject: string; body: string };
 };
 
 export interface QueueJob<T extends keyof JobTypeMap> {
-  name: T;
+  name: string;
   data: JobTypeMap[T];
   opts?: JobsOptions;
 }
@@ -30,9 +53,11 @@ export interface BullMQConfig {
   port: number;
   password?: string;
   db: number;
-  prefix: string;
+  prefix?: string;
   maxRetriesPerRequest: number | null;
   retryDelay: number;
+  commandTimeout: number;
+  connectTimeout: number;
 }
 
 export type JobState = 'waiting' | 'active' | 'completed' | 'failed' | 'delayed' | 'paused';

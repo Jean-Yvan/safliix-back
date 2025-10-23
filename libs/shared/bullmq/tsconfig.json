@@ -4,6 +4,9 @@
   "include": [],
   "references": [
     {
+      "path": "../video-process-type"
+    },
+    {
       "path": "./tsconfig.lib.json"
     }
   ]

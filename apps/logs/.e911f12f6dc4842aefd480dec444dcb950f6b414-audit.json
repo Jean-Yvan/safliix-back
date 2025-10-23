@@ -6,14 +6,39 @@
     "auditLog": "/home/marc/Bureau/projets/safliix-back/apps/logs/.e911f12f6dc4842aefd480dec444dcb950f6b414-audit.json",
     "files": [
         {
-            "date": 1759330853814,
-            "name": "/home/marc/Bureau/projets/safliix-back/apps/logs/debug-2025-10-01.log",
-            "hash": "ffdf5283914a9cc29c1a4c47ccfb5cf528341be82d7e71343eb74396bd7016dd"
+            "date": 1760546950038,
+            "name": "/home/marc/Bureau/projets/safliix-back/apps/logs/debug-2025-10-15.log",
+            "hash": "8ed2cf869e1a15a2c5bebedf861fc786284b28c1efd9a442a49d0d105262666c"
         },
         {
-            "date": 1759450699173,
-            "name": "/home/marc/Bureau/projets/safliix-back/apps/logs/debug-2025-10-03.log",
-            "hash": "73b18759ee3c805d86de2c8092cc8619164692abc0a3ca26459ece15c7127be0"
+            "date": 1760574503624,
+            "name": "/home/marc/Bureau/projets/safliix-back/apps/logs/debug-2025-10-16.log",
+            "hash": "c491a11a097fde0f481588447f202e06eb7a10c6ce5c71442eb4292abc21b984"
+        },
+        {
+            "date": 1760660697784,
+            "name": "/home/marc/Bureau/projets/safliix-back/apps/logs/debug-2025-10-17.log",
+            "hash": "9afd08a34111ed1fd5100da09d1d6c1b1221e27c5d745172840f8aad293a9f44"
+        },
+        {
+            "date": 1760750710349,
+            "name": "/home/marc/Bureau/projets/safliix-back/apps/logs/debug-2025-10-18.log",
+            "hash": "d7a168ec95de08624f3eb71ae9b47afee23f2d961a2269b56b15db19a1e07126"
+        },
+        {
+            "date": 1760981746963,
+            "name": "/home/marc/Bureau/projets/safliix-back/apps/logs/debug-2025-10-20.log",
+            "hash": "60a2ee1853aabcfbe2f80b52398722115afd3ecc2b95ac3f9bc540021d350ab8"
+        },
+        {
+            "date": 1761006742536,
+            "name": "/home/marc/Bureau/projets/safliix-back/apps/logs/debug-2025-10-21.log",
+            "hash": "90931a133a50717dcbaf6de5a4925581b35596c56f3226e1ed121553cd9f6460"
+        },
+        {
+            "date": 1761092365269,
+            "name": "/home/marc/Bureau/projets/safliix-back/apps/logs/debug-2025-10-22.log",
+            "hash": "5a7c34171874ab7c797fea49b2dad50183ebd4ad3407cf4b490f8cc3a4cd44f0"
         }
     ],
     "hashType": "sha256"

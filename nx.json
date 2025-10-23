@@ -47,7 +47,8 @@
         "shared/bullmq/*",
         "libs/shared/bullmq/*",
         "libs/shared/video-file/*",
-        "libs/shared/s3/*"
+        "libs/shared/s3/*",
+        "libs/shared/video-process-type/*"
       ]
     },
     {
@@ -99,7 +100,8 @@
         "shared/bullmq/*",
         "libs/shared/bullmq/*",
         "libs/shared/video-file/*",
-        "libs/shared/s3/*"
+        "libs/shared/s3/*",
+        "libs/shared/video-process-type/*"
       ],
       "options": {
         "typecheck": {

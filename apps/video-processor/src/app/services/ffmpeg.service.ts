@@ -1,51 +1,17 @@
 // services/ffmpeg.service.ts
 import { Injectable } from '@nestjs/common';
-import { spawn } from 'child_process';
+import { spawn,exec } from 'child_process';
 import * as fs from 'fs/promises';
 import * as path from 'path';
 import { FileLogger } from '../utils/logger';
-
-export interface VideoAnalysisResult {
-  duration: number;
-  resolution: string | null;
-  hasAudio: boolean;
-  codec: string | null;
-  width: number | null;
-  height: number | null;
-}
-
-export interface VideoSegment {
-  path: string;
-  index: number;
-  startTime: number;
-  duration: number;
-  playlistPath?: string;
-  totalSegments: number;
-}
-
-export interface EncodingOptions {
-  resolution: string;
-  width: number;
-  height: number;
-  bitrate: string;
-  preset: string;
-  crf: number;
-}
-
-export interface EncodingResult {
-  outputPath: string;
-  fileSize: number;
-  encodingTime: number;
-}
-
-export interface HLSStreamResult {
-  masterPlaylistPath: string;
-  outputDir: string;
-  resolutions: string[];
-  segmentCount: number;
-  totalTime: number;
-  totalSize?: number;
-}
+import { promisify } from 'util';
+import { 
+  VideoAnalysisResult,
+  HLSStreamResult,
+  EncodingOptions,
+  Profile  
+} 
+  from '@safliix-back/video-process-type';
 
 @Injectable()
 export class FfmpegService {
@@ -61,77 +27,87 @@ export class FfmpegService {
     '240p': { width: 426, height: 240, bitrate: '400k', preset: 'fast', crf: 28 }
   };
 
+  
+
   /**
    * Analyse une vidéo avec ffprobe
    */
   async analyzeVideo(filePath: string): Promise<VideoAnalysisResult> {
-    const startTime = Date.now();
-    this.logger.debug('Analyzing video with ffprobe', { filePath });
+  const startTime = Date.now();
+  this.logger.debug('Analyzing video with ffprobe', { filePath });
 
-    return new Promise((resolve, reject) => {
-      const args = [
-        '-v', 'error',
-        '-select_streams', 'v:0,a:0',
-        '-show_entries', 'stream=width,height,codec_name,codec_type',
-        '-show_entries', 'format=duration',
-        '-of', 'json',
-        filePath,
-      ];
+  return new Promise((resolve, reject) => {
+    const args = [
+      '-v', 'error',
+      '-show_entries', 'stream=width,height,codec_name,codec_type,avg_frame_rate,r_frame_rate:format=duration',
+      '-of', 'json',
+      filePath,
+    ];
 
-      const ffprobe = spawn('ffprobe', args);
-      let output = '';
-      let errorOutput = '';
+    const ffprobe = spawn('ffprobe', args);
+    let output = '';
+    let errorOutput = '';
 
-      ffprobe.stdout.on('data', (d) => (output += d.toString()));
-      ffprobe.stderr.on('data', (d) => (errorOutput += d.toString()));
+    ffprobe.stdout.on('data', (d) => (output += d.toString()));
+    ffprobe.stderr.on('data', (d) => (errorOutput += d.toString()));
 
-      ffprobe.on('close', (code) => {
-        const analysisTime = Date.now() - startTime;
+    ffprobe.on('close', (code) => {
+      const analysisTime = Date.now() - startTime;
 
-        if (code !== 0) {
-          const err = new Error(`ffprobe error (exit code ${code}): ${errorOutput}`);
-          this.logger.error('FFprobe analysis failed', err, {
-            filePath,
-            analysisTime,
-            exitCode: code
-          });
-          return reject(err);
-        }
+      if (code !== 0) {
+        const err = new Error(`ffprobe error (exit code ${code}): ${errorOutput}`);
+        this.logger.error('FFprobe analysis failed', err, {
+          filePath,
+          analysisTime,
+          exitCode: code,
+        });
+        return reject(err);
+      }
 
-        try {
-          const result = JSON.parse(output);
-          const duration = parseFloat(result.format.duration || '0');
-          const videoStream = (result.streams || []).find((s: any) => s.codec_type === 'video');
-          const audioStream = (result.streams || []).find((s: any) => s.codec_type === 'audio');
+      try {
+        const result = JSON.parse(output);
+        const duration = parseFloat(result.format?.duration || '0');
+        const videoStream = (result.streams || []).find((s: any) => s.codec_type === 'video');
+        const audioStream = (result.streams || []).find((s: any) => s.codec_type === 'audio');
 
-          const videoInfo: VideoAnalysisResult = {
-            duration: Math.floor(duration),
-            resolution: videoStream ? `${videoStream.width}x${videoStream.height}` : null,
-            hasAudio: !!audioStream,
-            codec: videoStream?.codec_name ?? null,
-            width: videoStream?.width ?? null,
-            height: videoStream?.height ?? null
-          };
+        // ✅ Framerate robuste
+        const parseFramerate = (stream: any): number | null => {
+          const rate = stream?.avg_frame_rate || stream?.r_frame_rate;
+          if (!rate || rate === '0/0') return null;
+          const [num, den] = rate.split('/').map(Number);
+          return den && den > 0 ? num / den : null;
+        };
 
-          this.logger.debug('Video analysis completed', {
-            filePath,
-            analysisTime,
-            ...videoInfo
-          });
+        const videoInfo: VideoAnalysisResult = {
+          duration: Math.floor(duration),
+          resolution: videoStream ? `${videoStream.width}x${videoStream.height}` : null,
+          hasAudio: !!audioStream,
+          codec: videoStream?.codec_name ?? null,
+          width: videoStream?.width ?? null,
+          height: videoStream?.height ?? null,
+          framerate: parseFramerate(videoStream),
+        };
 
-          resolve(videoInfo);
+        this.logger.debug('Video analysis completed', {
+          filePath,
+          analysisTime,
+          ...videoInfo,
+        });
 
-        } catch (err) {
-          this.logger.error('FFprobe parsing failed', err, {
-            filePath,
-            analysisTime,
-            output
-          });
-          reject(new Error(`Erreur parsing ffprobe: ${(err as Error).message}`));
-        }
-      });
+        resolve(videoInfo);
+      } catch (err) {
+        this.logger.error('FFprobe parsing failed', err, {
+          filePath,
+          analysisTime,
+          output,
+        });
+        reject(new Error(`Erreur parsing ffprobe: ${(err as Error).message}`));
+      }
     });
-  }
+  });
+}
+
+
 
   /**
    * Extrait un segment d'une vidéo
@@ -188,96 +164,7 @@ export class FfmpegService {
     }
   }
 
-  /**
-   * Crée un flux HLS adaptatif complet avec multiples résolutions
-   */
-  async createAdaptiveHLS(
-    inputPath: string,
-    outputDir: string,
-    resolutions: string[] = ['240p', '360p', '480p', '720p', '1080p'],
-    segmentDuration = 4
-  ): Promise<HLSStreamResult> {
-    const startTime = Date.now();
-    const hlsId = `hls-adaptive-${Date.now()}`;
-    
-    this.logger.log('Creating adaptive HLS stream', {
-      hlsId,
-      inputPath,
-      outputDir,
-      resolutions,
-      segmentDuration
-    });
-
-    // Validation des résolutions
-    const invalidResolutions = resolutions.filter(r => !this.isResolutionSupported(r));
-    if (invalidResolutions.length > 0) {
-      throw new Error(`Résolutions non supportées: ${invalidResolutions.join(', ')}`);
-    }
-
-    // Créer le dossier de sortie
-    await fs.mkdir(outputDir, { recursive: true });
-
-    // Analyser la vidéo pour vérifier l'audio
-    const videoAnalysis = await this.analyzeVideo(inputPath);
-    
-    // Récupérer les profils demandés
-    type Profile = Omit<EncodingOptions, 'resolution'> & { resolution: string };
-    const profiles: Profile[] = resolutions.map(resolution => {
-      const profile = this.ENCODING_PROFILES[resolution];
-      return { ...profile, resolution };
-    });
-
-    const args = this.buildAdaptiveHLSArgs(inputPath, outputDir, profiles, segmentDuration, videoAnalysis.hasAudio);
-
-    try {
-      await this.runFFmpeg(args, hlsId);
-      
-      // Vérifier que les fichiers ont été créés
-      const masterPlaylistPath = path.join(outputDir, 'master.m3u8');
-      await fs.stat(masterPlaylistPath);
-
-      // Compter les segments et calculer la taille totale
-      const segmentFiles = await this.countSegments(outputDir);
-      const totalSize = await this.calculateTotalSize(outputDir);
-      
-      const totalTime = Date.now() - startTime;
-
-      this.logger.log('Adaptive HLS stream created successfully', {
-        hlsId,
-        outputDir,
-        masterPlaylistPath,
-        resolutions: resolutions.join(', '),
-        segmentCount: segmentFiles.length,
-        totalSize,
-        totalTime
-      });
-
-      return {
-        masterPlaylistPath,
-        outputDir,
-        resolutions,
-        segmentCount: segmentFiles.length,
-        totalTime,
-        totalSize
-      };
-
-    } catch (error) {
-      this.logger.error('Adaptive HLS creation failed', error, {
-        hlsId,
-        inputPath,
-        outputDir
-      });
-      
-      // Nettoyer en cas d'erreur
-      try {
-        await fs.rm(outputDir, { recursive: true, force: true });
-      } catch (cleanupError) {
-        this.logger.warn('Failed to clean up output directory after HLS error', { outputDir, cleanupError });
-      }
-      
-      throw error;
-    }
-  }
+  
 
   /**
    * Crée un HLS simple (une seule résolution)
@@ -349,73 +236,204 @@ export class FfmpegService {
   /**
    * Build args pour HLS adaptatif multi-résolutions - CORRIGÉ
    */
-  private buildAdaptiveHLSArgs(
-    inputPath: string,
-    outputDir: string,
-    profiles: (Omit<EncodingOptions, 'resolution'> & { resolution: string })[],
-    segmentDuration: number,
-    hasAudio: boolean
-  ): string[] {
-    const args = [
-      '-i', inputPath,
-      '-y',
-      '-preset', 'medium',
-      '-g', (segmentDuration * 12).toString(),
-      '-keyint_min', (segmentDuration * 12).toString(),
-      '-sc_threshold', '0',
-    ];
+ 
 
-    // CORRECTION : Maps uniques pour chaque stream de sortie
-    profiles.forEach((profile, index) => {
-      const { width, height, bitrate } = profile;
-      
-      // Map vidéo
-      args.push('-map', '0:v:0');
-      
-      // Map audio seulement si disponible
-      if (hasAudio) {
-        args.push('-map', '0:a:0');
-      }
+ execAsync = promisify(exec);
 
-      // Options vidéo pour ce stream
-      args.push(
-        `-c:v:${index}`, 'libx264',
-        `-b:v:${index}`, bitrate,
-        `-maxrate:v:${index}`, `${Math.floor(parseInt(bitrate) * 1.2)}k`,
-        `-bufsize:v:${index}`, `${parseInt(bitrate) * 2}k`,
-        `-vf:v:${index}`, `scale=w=${width}:h=${height}:force_original_aspect_ratio=decrease:flags=lanczos`,
-        `-profile:v:${index}`, 'high',
-        `-level:v:${index}`, '4.0'
-      );
-      
-      // Options audio pour ce stream (seulement si audio disponible)
-      if (hasAudio) {
-        args.push(
-          `-c:a:${index}`, 'aac',
-          `-b:a:${index}`, '128k',
-          `-ac:${index}`, '2',
-          `-ar:${index}`, '48000'
-        );
-      } else {
-        // Si pas d'audio, désactiver l'audio pour ce stream
-        args.push(`-an:${index}`);
-      }
+
+  // Assurez-vous d'avoir cet import si runAdaptiveHLSEncoding est dans FfmpegService
+// ... autres imports ...
+
+async runAdaptiveHLSEncoding(
+  inputPath: string,
+  outputDir: string,
+  partId: number,
+  framerate: number,
+  profiles: (Omit<EncodingOptions, 'resolution'> & { resolution: string })[],
+  segmentDuration: number,
+  hasAudio: boolean,
+  startTime: number,
+  duration: number
+): Promise<HLSStreamResult> {
+  // 💡 Note: Le code ici suppose que buildAdaptiveHLSBashScript génère le master temporaire.
+
+  // Calcul nécessaire pour le script Bash et la validation
+  const formattedPartId = `part_${partId.toString().padStart(3, '0')}`;
+  const scriptPath = path.join(outputDir, `${formattedPartId}_encode_hls.sh`);
+
+  // 1️⃣ Génération du script Bash
+  const script = this.buildAdaptiveHLSBashScript(
+    inputPath,
+    outputDir,
+    partId,
+    profiles,
+    segmentDuration,
+    hasAudio,
+    framerate,
+    startTime,
+    duration
+  );
+  await fs.writeFile(scriptPath, script, { mode: 0o755 });
+
+  const start = Date.now();
+
+  try {
+    // 2️⃣ Exécution du script via spawn (inchangée)
+    await new Promise<void>((resolve, reject) => {
+      const process = spawn(scriptPath, [], { shell: true });
+
+      process.stdout.on('data', data => this.logger.log(`[FFmpeg stdout] ${data.toString()}`));
+      process.stderr.on('data', data => this.logger.warn(`[FFmpeg stderr] ${data.toString()}`));
+
+      process.on('close', code => {
+        if (code === 0) {
+          this.logger.log(`✅ FFmpeg script completed`);
+          resolve();
+        } else {
+          reject(new Error(`FFmpeg script failed with exit code ${code}`));
+        }
+      });
     });
-
-    // Paramètres HLS
-    args.push(
-      '-f', 'hls',
-      '-hls_time', segmentDuration.toString(),
-      '-hls_list_size', '0',
-      '-hls_segment_filename', path.join(outputDir, 'stream_%v/segment_%03d.ts'),
-      '-var_stream_map', this.buildStreamMap(profiles.length, hasAudio),
-      '-master_pl_name', 'master.m3u8',
-      '-hls_flags', 'independent_segments',
-      path.join(outputDir, 'master.m3u8')
-    );
-
-    return args;
+  } catch (error: any) {
+    this.logger.error(`❌ FFmpeg command failed`, error);
+    throw new Error(`FFmpeg failed: ${error.message}`);
+  } finally {
+    // 3️⃣ Suppression du script temporaire
+    await fs.unlink(scriptPath).catch(() => {
+      this.logger.warn('⚠️ Failed to delete temporary script');
+    });
   }
+
+  const totalTime = (Date.now() - start) / 1000;
+
+  // ❌ SECTION 4 SUPPRIMÉE : Nous ne vérifions plus 'master.m3u8'
+  // (La vérification de la playlist temporaire est faite dans VideoEncodingService)
+
+  // 5️⃣ Comptage des segments et taille totale (Ajusté pour les noms de dossiers)
+  
+  // Les dossiers de résolution sont nommés d'après les profils (ex: 240p, 720p)
+  const resolutionFolders = profiles.map(p => p.resolution);
+  
+  // Les segments sont nommés: part_00X_segment_00Y.ts
+  const segmentPrefix = `${formattedPartId}_segment_`; 
+
+  let segmentCount = 0;
+  let totalSize = 0;
+
+  for (const dirName of resolutionFolders) {
+    const fullDir = path.join(outputDir, dirName);
+    try {
+      const files = await fs.readdir(fullDir);
+      
+      // Filtrer les fichiers .ts correspondant à cette partie
+      const segments = files.filter(f => f.endsWith('.ts') && f.startsWith(segmentPrefix));
+      segmentCount += segments.length;
+
+      // Calculer la taille des segments trouvés
+      const sizes = await Promise.all(
+        segments.map(async seg => {
+          const s = await fs.stat(path.join(fullDir, seg));
+          return s.size;
+        })
+      );
+      totalSize += sizes.reduce((a, b) => a + b, 0);
+
+    } catch (e) {
+      // Ignorer si un dossier de résolution n'a pas été créé (peu probable si l'encodage a réussi)
+      this.logger.warn(`Dossier de résolution manquant pour le comptage: ${dirName}`);
+    }
+  }
+
+  const resolutions = profiles.map(p => p.resolution);
+
+  // 6️⃣ Résultat structuré
+  return {
+    // Le chemin Master Playlist final sera déterminé par le service d'assemblage
+    masterPlaylistPath: path.join(outputDir, 'master.m3u8'), // Le chemin final attendu (non encore créé)
+    outputDir,
+    resolutions,
+    segmentCount,
+    totalTime,
+    totalSize,
+  };
+}
+
+
+
+  
+  private buildAdaptiveHLSBashScript(
+    inputPath: string,
+    outputDir: string, // Chemin vers le dossier ASSEMBLED_PLAYLISTS/
+    partId: number,    // Index de la partie (ex: 0, 1, 2...)
+    profiles: Profile[],
+    segmentDuration: number,
+    hasAudio: boolean,
+    framerate: number,
+    startTime: number, // 💡 NOUVEAU: Pour -ss
+    duration: number   // 💡 NOUVEAU: Pour -t
+): string {
+    const gopSize = segmentDuration * 2 * framerate;
+    // Utiliser toFixed(2) pour startTime et duration si on veut une précision décimale pour FFmpeg
+    const formattedStartTime = startTime.toFixed(3);
+    const formattedDuration = duration.toFixed(3);
+
+    const formattedPartId = `part_${partId.toString().padStart(3, '0')}`;
+    const streamNames = profiles.map(profile => `${profile.height}p`);
+
+    // Fonction utilitaire pour extraire la valeur numérique d'un bitrate
+    const getNumericBitrate = (b: string): number => parseInt(b.replace(/k|K/, ''), 10);
+
+    const varStreamMap = profiles
+        .map((_, index) =>
+            hasAudio
+                ? `v:${index},a:${index},name:${streamNames[index]}`
+                : `v:${index},name:${streamNames[index]}`
+        )
+        .join(' ');
+
+    const videoMaps = profiles.map(() => `-map 0:v:0`).join(' ');
+    const audioMaps = hasAudio ? profiles.map(() => `-map 0:a:0`).join(' ') : '';
+
+    const encodingLines = profiles.map((profile, index) => {
+        const { width, height, bitrate, audioBitrate } = profile;
+        const finalAudioBitrate = audioBitrate || '128k';
+        const numericBitrate = getNumericBitrate(bitrate);
+        const maxrate = Math.floor(numericBitrate * 1.07);
+        const bufsize = Math.floor(numericBitrate * 1.5);
+
+        return `\\
+-c:v:${index} libx264 -b:v:${index} ${bitrate} -maxrate:v:${index} ${maxrate}k -bufsize:v:${index} ${bufsize}k \\
+-vf:v:${index} "scale=w=${width}:h=${height}:force_original_aspect_ratio=decrease:flags=lanczos" \\
+-profile:v:${index} high -level:v:${index} 4.0 \\
+-x264-params:v:${index} "nal-hrd=cbr" \\
+${
+    hasAudio
+        ? `-c:a:${index} aac -b:a:${index} ${finalAudioBitrate} -ac:${index} 2 -ar:${index} 48000 -strict:a:${index} -2`
+        : ''
+}`;
+    }).join(' ');
+
+    const safeOutputDir = path.resolve(outputDir);
+
+    return `#!/bin/bash
+set -e
+
+# Création des sous-dossiers par résolution
+mkdir -p "${safeOutputDir}"
+${profiles.map(profile => `mkdir -p "${safeOutputDir}/${profile.height}p"`).join('\n')}
+
+# 💡 ARGUMENTS DE SEEKING (-ss et -t) ajoutés avant l'input (-i) pour un seeking plus rapide.
+ffmpeg -y -ss ${formattedStartTime} -t ${formattedDuration} -i "${inputPath}" -r ${framerate} -preset medium -tune film -g ${gopSize} -keyint_min ${gopSize} -sc_threshold 0 \\
+  ${videoMaps} ${audioMaps} \\
+  ${encodingLines} \\
+  -f hls -hls_time ${segmentDuration} -hls_list_size 0 -hls_flags independent_segments+program_date_time+discont_start \\
+  -hls_segment_filename "${safeOutputDir}/%v/${formattedPartId}_segment_%03d.ts" \\
+  -var_stream_map "${varStreamMap}" \\
+  -master_pl_name master_temp_${formattedPartId}.m3u8 \\
+  "${safeOutputDir}/%v/${formattedPartId}_playlist.m3u8"
+`;
+}
+
 
   /**
    * Build args pour HLS simple (une résolution)

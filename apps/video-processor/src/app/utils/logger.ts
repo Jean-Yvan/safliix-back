@@ -23,7 +23,7 @@ export class FileLogger implements LoggerService {
         format.errors({ stack: true }),
         format.json()
       ),
-      defaultMeta: { service: 'video-encoding', context },
+      defaultMeta: { service: '', context },
       transports: [
         // Logs rotatifs généraux
         new DailyRotateFile({

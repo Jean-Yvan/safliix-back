@@ -19,6 +19,9 @@
   ],
   "references": [
     {
+      "path": "../../libs/shared/video-process-type/tsconfig.lib.json"
+    },
+    {
       "path": "../../libs/shared/bullmq/tsconfig.lib.json"
     }
   ]
