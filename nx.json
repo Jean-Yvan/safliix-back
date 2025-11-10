@@ -48,7 +48,9 @@
         "libs/shared/bullmq/*",
         "libs/shared/video-file/*",
         "libs/shared/s3/*",
-        "libs/shared/video-process-type/*"
+        "libs/shared/video-process-type/*",
+        "libs/shared/keycloack/*",
+        "libs/domains/profile/*"
       ]
     },
     {
@@ -101,7 +103,9 @@
         "libs/shared/bullmq/*",
         "libs/shared/video-file/*",
         "libs/shared/s3/*",
-        "libs/shared/video-process-type/*"
+        "libs/shared/video-process-type/*",
+        "libs/shared/keycloack/*",
+        "libs/domains/profile/*"
       ],
       "options": {
         "typecheck": {

@@ -12,7 +12,7 @@ export class SharedAccountUserMapper{
       sharedAccount:mapConnect(data.sharedAccountId),
       profileName: data.profileName,
       avatarUrl:data.avatarUrl,
-      pinCode:data.pinCode,
+      pinCode:data.pinCode.value,
     }
   }
 

@@ -2,6 +2,13 @@ import { Result } from "oxide.ts";
 import { SharedAccount } from "../entities/shared-account.entity";
 import { SharedAccountUser } from "../entities/shared-account-user.entity";
 
+export type SharedAccountLimitDetails = {
+  accountId: string;
+  ownerUserId: string;
+  currentActiveProfiles: number;
+  maxSharedAccountsLimit: number;
+};
+
 export abstract class ISharedAccountRepository {
   // Créer un compte partagé lié à un owner
   abstract createSharedAccount(data:SharedAccount): Promise<Result<SharedAccount, Error>>;
@@ -27,9 +34,9 @@ export abstract class ISharedAccountRepository {
   // Lister tous les profils d’un compte
   abstract listProfiles(accountId: string): Promise<Result<SharedAccountUser[], Error>>;
 
-  // Vérifier qu’un userId donné est bien le owner du SharedAccount
-  abstract verifyAccess(rofileId: string, pinCode: number): Promise<Result<boolean, Error>>;
-
+  // Obtenir les informations utiles pour contrôler la limite d'un compte partagé
+  abstract getAccountWithDetails(accountId: string): Promise<Result<SharedAccountLimitDetails, Error>>;
+  
   // Connexion par profil (nom + pinCode)
   abstract loginWithProfile(
     accountId: string,

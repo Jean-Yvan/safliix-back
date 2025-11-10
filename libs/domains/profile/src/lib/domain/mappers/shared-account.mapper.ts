@@ -15,7 +15,6 @@ export class SharedAccountMapper {
     return {
       id: entity.id,
       owner:mapConnect(entity.ownerUserId),
-      subscription:mapConnect(entity.subscriptionId),
       status: "ACCEPTED",
     };
   }

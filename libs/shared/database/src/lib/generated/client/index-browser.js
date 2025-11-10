@@ -123,7 +123,6 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
-  password_hash: 'password_hash',
   name: 'name',
   avatarUrl: 'avatarUrl',
   lastLoginAt: 'lastLoginAt',
@@ -136,7 +135,6 @@ exports.Prisma.UserScalarFieldEnum = {
 exports.Prisma.AdminScalarFieldEnum = {
   id: 'id',
   email: 'email',
-  password_hash: 'password_hash',
   firstName: 'firstName',
   lastName: 'lastName',
   country: 'country',
@@ -175,6 +173,15 @@ exports.Prisma.SessionScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.ActiveStreamScalarFieldEnum = {
+  id: 'id',
+  profileId: 'profileId',
+  accountId: 'accountId',
+  videoId: 'videoId',
+  startedAt: 'startedAt',
+  expiresAt: 'expiresAt'
+};
+
 exports.Prisma.SubscriptionPlanScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -200,7 +207,6 @@ exports.Prisma.SubscriptionScalarFieldEnum = {
 exports.Prisma.SharedAccountScalarFieldEnum = {
   id: 'id',
   ownerUserId: 'ownerUserId',
-  subscriptionId: 'subscriptionId',
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -548,6 +554,7 @@ exports.Prisma.ModelName = {
   Admin: 'Admin',
   EmailValidation: 'EmailValidation',
   Session: 'Session',
+  ActiveStream: 'ActiveStream',
   SubscriptionPlan: 'SubscriptionPlan',
   Subscription: 'Subscription',
   SharedAccount: 'SharedAccount',

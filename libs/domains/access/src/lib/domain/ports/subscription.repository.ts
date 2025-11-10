@@ -1,24 +1,20 @@
-
+import { Result } from "oxide.ts";
 import { Subscription } from "../entities/subscription.entity";
 
-
 export interface ISubscriptionRepository {
-  create(subscription: Subscription): Promise<Subscription>;
+  create(subscription: Subscription): Promise<Result<Subscription, Error>>;
 
-  update(id: string, subscription: Partial<Subscription>): Promise<Subscription>;
+  update(id: string, subscription: Partial<Subscription>): Promise<Result<Subscription, Error>>;
 
-  delete(id: string): Promise<void>;
+  delete(id: string): Promise<Result<boolean, Error>>;
 
-  findById(id: string): Promise<Subscription>;
+  findById(id: string): Promise<Result<Subscription, Error>>;
 
-  findActiveByUser(userId: string): Promise<Subscription>
+  findActiveByUser(userId: string): Promise<Result<Subscription, Error>>;
 
-  findExpired(): Promise<Subscription[]>
+  findExpired(): Promise<Result<Subscription[], Error>>;
 
-  //cancel(id: string): Promise<void>
+  isUserSubscribedToPlan(userId: string, planId: string): Promise<Result<boolean, Error>>;
 
-  //renew(id: string, newEndDate: Date): Promise<Subscription>
-
-  isUserSubscribedToPlan(userId: string, planId: string): Promise<boolean>
-
+  getMaxStreamsByAccountId(accountId: string): Promise<Result<number, Error>>
 }

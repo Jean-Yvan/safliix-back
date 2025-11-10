@@ -21,7 +21,6 @@ datasource db {
 model User {
   id            String    @id @default(uuid())
   email         String    @unique
-  password_hash String
   name          String?
   avatarUrl     String?
   lastLoginAt   DateTime?
@@ -45,25 +44,26 @@ model User {
   updatedAt DateTime @updatedAt
 
   emailValidation EmailValidation[]
+
+  activeStreams ActiveStream[]
 }
 
 model Admin {
-  id            String    @id @default(uuid())
-  email         String    @unique
-  password_hash String
-  firstName     String
-  lastName      String
-  country       String
-  city          String
-  state         String
-  phoneNumber   String
-  address       String
-  avatarUrl     String?
-  lastLoginAt   DateTime?
-  isVerified    Boolean   @default(false)
-  role          AdminRole @default(ADMIN)
+  id          String    @id @default(uuid())
+  email       String    @unique
+  firstName   String
+  lastName    String
+  country     String
+  city        String
+  state       String
+  phoneNumber String
+  address     String
+  avatarUrl   String?
+  lastLoginAt DateTime?
+  isVerified  Boolean   @default(false)
+  role        AdminRole @default(ADMIN)
   // Relations
-  sessions      Session[]
+  sessions    Session[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -109,6 +109,29 @@ enum AdminRole {
   SUPER_ADMIN
 }
 
+// Exemple de modèle Prisma pour la table ActiveStream
+
+model ActiveStream {
+  id String @id @default(uuid())
+
+  // Clé vers le spectateur (le profil)
+  profile   SharedAccountUser @relation(fields: [profileId], references: [id])
+  profileId String            @unique // Un profil ne peut avoir qu'un seul stream actif
+
+  // Clé vers le compte payant (pour la vérification de la limite)
+  account   User   @relation(fields: [accountId], references: [id])
+  accountId String
+
+  // Détails de la ressource
+  videoId String? // La vidéo regardée
+
+  // Durée de vie du stream (Critique)
+  startedAt DateTime @default(now())
+  expiresAt DateTime // Doit être mis à jour périodiquement (ping)
+
+  @@index([accountId]) // Index nécessaire pour compter rapidement les streams actifs par compte
+}
+
 // =============================================
 // ABONNEMENTS ET COMPTES PARTAGÉS
 // =============================================
@@ -132,19 +155,20 @@ enum VideoQuality {
 }
 
 model Subscription {
-  id             String           @id @default(uuid())
-  user           User             @relation(fields: [userId], references: [id])
-  userId         String
-  plan           SubscriptionPlan @relation(fields: [planId], references: [id])
-  planId         String
-  startDate      DateTime
-  endDate        DateTime
-  renewalStatus  RenewalStatus    @default(AUTO_RENEW)
-  sharedAccounts SharedAccount[]
-  country        String
+  id            String           @id @default(uuid())
+  user          User             @relation(fields: [userId], references: [id])
+  userId        String
+  plan          SubscriptionPlan @relation(fields: [planId], references: [id])
+  planId        String
+  startDate     DateTime
+  endDate       DateTime
+  renewalStatus RenewalStatus    @default(AUTO_RENEW)
+  country       String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([userId, endDate])
 }
 
 enum RenewalStatus {
@@ -154,13 +178,11 @@ enum RenewalStatus {
 }
 
 model SharedAccount {
-  id             String              @id @default(uuid())
-  owner          User                @relation("OwnerAccounts", fields: [ownerUserId], references: [id])
-  ownerUserId    String
-  subscription   Subscription        @relation(fields: [subscriptionId], references: [id])
-  subscriptionId String
-  status         SharedAccountStatus @default(PENDING)
-  profiles       SharedAccountUser[]
+  id          String              @id @default(uuid())
+  owner       User                @relation("OwnerAccounts", fields: [ownerUserId], references: [id])
+  ownerUserId String
+  status      SharedAccountStatus @default(PENDING)
+  profiles    SharedAccountUser[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -179,15 +201,16 @@ model SharedAccountUser {
   profileName     String
   iskidProfile    Boolean       @default(false)
   avatarUrl       String?
-  pinCode         Int
+  pinCode         String
 
   // Relations
 
   adViews    AdView[]
   activities SharedProfileActivity[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  activeStreams ActiveStream[]
 
   @@unique([sharedAccountId, profileName])
 }

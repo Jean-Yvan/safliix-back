@@ -74,6 +74,12 @@
     },
     {
       "path": "./libs/shared/video-process-type"
+    },
+    {
+      "path": "./libs/shared/keycloack"
+    },
+    {
+      "path": "./libs/domains/profile"
     }
   ]
 }

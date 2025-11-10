@@ -1,126 +1,162 @@
 
+import { Injectable } from "@nestjs/common";
+import { PrismaService } from "@safliix-back/database";
+import { Result, Ok, Err } from "oxide.ts";
+
 import { Subscription } from "../domain/entities/subscription.entity";
 import { ISubscriptionRepository } from "../domain/ports/subscription.repository";
-import { PrismaService } from "@safliix-back/database";
-import { Injectable } from "@nestjs/common";
 import { SubscriptionMapper } from "../domain/mappers/subscription.mapper";
-
 
 @Injectable()
 export class PrismaSubscriptionRepository implements ISubscriptionRepository {
+  constructor(private readonly prisma: PrismaService) {}
 
-  constructor(
-    private readonly prisma : PrismaService
-  ){}
-  
-  
 
-  async create(subscription: Subscription): Promise<Subscription> {
+  async getMaxStreamsByAccountId(accountId: string): Promise<Result<number, Error>> {
+    try {
+      const now = new Date();
+
+      // 1. Trouver l'abonnement ACTIF du User (le plus récent ou avec la endDate la plus lointaine)
+      const activeSubscription = await this.prisma.subscription.findFirst({
+        where: {
+          userId: accountId, // Lien direct : L'ID de l'abonnement appartient à l'ID du User
+          endDate: {
+            gt: now, // CRITÈRE D'ACTIVITÉ : L'abonnement doit être en cours
+          },
+        },
+        select: {
+          plan: {
+            select: {
+              maxSharedAccounts: true, // 🔑 La donnée cible
+            },
+          },
+        },
+        // Prend l'abonnement dont la fin est la plus éloignée (le plus "actif")
+        orderBy: {
+          endDate: 'desc', 
+        }
+      });
+
+      const maxStreams = activeSubscription?.plan?.maxSharedAccounts;
+
+      if (maxStreams === undefined || maxStreams === null) {
+        return Err(new Error(`No active subscription found or plan limit is missing for account ID: ${accountId}.`));
+      }
+
+      return Ok(maxStreams);
+      
+    } catch (e) {
+      return Err(e instanceof Error ? e : new Error(`Database error fetching active stream limit: ${String(e)}`));
+    }
+  }
+
+  async create(subscription: Subscription): Promise<Result<Subscription, Error>> {
     try {
       const prismaSub = SubscriptionMapper.toPrismaCreate(subscription);
       const created = await this.prisma.subscription.create({
         data: prismaSub,
-        include:{
-          user:true,
-          plan:true
-        }
+        include: {
+          user: true,
+          plan: true,
+        },
       });
-      return SubscriptionMapper.toDomain(created);
+      return Ok(SubscriptionMapper.toDomain(created));
     } catch (error) {
-      throw (error as Error);
+      return Err(error as Error);
     }
   }
 
-  async update(id: string, subscription: Subscription): Promise<Subscription> {
+  async update(id: string, subscription: Partial<Subscription>): Promise<Result<Subscription, Error>> {
     try {
-      const data = {
-        ...subscription,
-        id
-      };
+      const data = { ...subscription, id };
       const prismaSub = SubscriptionMapper.toPrismaUpdate(data);
-      if(prismaSub.isErr()){
-        throw(prismaSub.unwrapErr());
+      if (prismaSub.isErr()) {
+        return Err(prismaSub.unwrapErr());
       }
+
       const updated = await this.prisma.subscription.update({
         ...prismaSub.unwrap(),
-        include:{
-          user:true,
-          plan:true,
-        }
+        include: {
+          user: true,
+          plan: true,
+        },
       });
-      
-      return SubscriptionMapper.toDomain(updated);
+
+      return Ok(SubscriptionMapper.toDomain(updated));
     } catch (error) {
-      throw (error as Error);
+      return Err(error as Error);
     }
   }
 
-  async delete(id: string): Promise<void> {
+  async delete(id: string): Promise<Result<boolean, Error>> {
     try {
       await this.prisma.subscription.delete({
         where: { id },
       });
-      
+      return Ok(true);
     } catch (error) {
-      throw error as Error;
+      return Err(error as Error);
     }
   }
 
-  async findById(id: string): Promise<Subscription>{
+  async findById(id: string): Promise<Result<Subscription, Error>> {
     try {
       const found = await this.prisma.subscription.findUnique({
         where: { id },
-        include:{
-          user:true,
-          plan:true
-        }
+        include: {
+          user: true,
+          plan: true,
+        },
       });
-      if (!found) throw(new Error("Subscription not found"));
-      return SubscriptionMapper.toDomain(found);
+      if (!found) {
+        return Err(new Error("Subscription not found"));
+      }
+      return Ok(SubscriptionMapper.toDomain(found));
     } catch (error) {
-      throw(error as Error);
+      return Err(error as Error);
     }
   }
 
-  async findActiveByUser(userId: string): Promise<Subscription> {
+  async findActiveByUser(userId: string): Promise<Result<Subscription, Error>> {
     try {
       const found = await this.prisma.subscription.findFirst({
         where: {
           userId,
           createdAt: { gt: new Date() },
         },
-        include:{
-          user:true,plan:true
-        }
+        include: {
+          user: true,
+          plan: true,
+        },
       });
-      if (!found) throw (new Error("Active subscription not found"));
-      return SubscriptionMapper.toDomain(found);
+      if (!found) {
+        return Err(new Error("Active subscription not found"));
+      }
+      return Ok(SubscriptionMapper.toDomain(found));
     } catch (error) {
-      throw (error as Error);
+      return Err(error as Error);
     }
   }
 
-  async findExpired(): Promise<Subscription[]> {
+  async findExpired(): Promise<Result<Subscription[], Error>> {
     try {
       const expired = await this.prisma.subscription.findMany({
         where: {
           createdAt: { lt: new Date() },
         },
-        include:{
-          user:true,plan:true
-        }
+        include: {
+          user: true,
+          plan: true,
+        },
       });
-      return expired.map(SubscriptionMapper.toDomain);
+      const domain = expired.map((item) => SubscriptionMapper.toDomain(item));
+      return Ok(domain);
     } catch (error) {
-      throw (error as Error);
+      return Err(error as Error);
     }
   }
 
-  
-
-    
-
-  async isUserSubscribedToPlan(userId: string, planId: string): Promise<boolean> {
+  async isUserSubscribedToPlan(userId: string, planId: string): Promise<Result<boolean, Error>> {
     try {
       const found = await this.prisma.subscription.findFirst({
         where: {
@@ -129,10 +165,9 @@ export class PrismaSubscriptionRepository implements ISubscriptionRepository {
           createdAt: { gt: new Date() },
         },
       });
-      return !!found;
+      return Ok(!!found);
     } catch (error) {
-      throw error as Error;
+      return Err(error as Error);
     }
   }
 }
-  

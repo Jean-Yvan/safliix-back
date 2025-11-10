@@ -11,3 +11,7 @@ export { CreateUserCommand } from './lib/application/cqrs/commands/create-user.c
 export { UpdateUserCommand } from './lib/application/cqrs/commands/update-user.command';
 export { ListUserByIdQuery } from './lib/application/cqrs/queries/list-user-by-id.query';
 export { ListUserQuery } from './lib/application/cqrs/queries/list-user.query';
+
+
+export * from './lib/domain/ports/user.repository';
+export * from './lib/utils/types';
