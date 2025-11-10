@@ -83,7 +83,7 @@ export type SubscriptionWithRelation = Prisma.SubscriptionGetPayload<{
 export type PurchaseWithRelation = Prisma.PurchaseGetPayload<{
   include: {
     user:true,
-    video:true
+    movie:true
   }
 }>;
 
@@ -93,6 +93,12 @@ export type AdminWithRelation = Prisma.AdminGetPayload<{
 
 export type MediaAttachmentWithRelation = Prisma.MediaAttachmentGetPayload<{
   include: typeof attachmentInclude;
+}>;
+
+export type UserVideoViewWithRelation = Prisma.UserVideoViewGetPayload<{
+  include: {
+    user: true;
+  };
 }>;
 
 

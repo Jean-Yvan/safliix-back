@@ -119,10 +119,14 @@ export class PrismaSubscriptionRepository implements ISubscriptionRepository {
 
   async findActiveByUser(userId: string): Promise<Result<Subscription, Error>> {
     try {
+      const now = new Date();
       const found = await this.prisma.subscription.findFirst({
         where: {
           userId,
-          createdAt: { gt: new Date() },
+          endDate: { gt: now },
+        },
+        orderBy: {
+          endDate: "desc",
         },
         include: {
           user: true,
@@ -140,9 +144,10 @@ export class PrismaSubscriptionRepository implements ISubscriptionRepository {
 
   async findExpired(): Promise<Result<Subscription[], Error>> {
     try {
+      const now = new Date();
       const expired = await this.prisma.subscription.findMany({
         where: {
-          createdAt: { lt: new Date() },
+          endDate: { lte: now },
         },
         include: {
           user: true,
@@ -158,11 +163,12 @@ export class PrismaSubscriptionRepository implements ISubscriptionRepository {
 
   async isUserSubscribedToPlan(userId: string, planId: string): Promise<Result<boolean, Error>> {
     try {
+      const now = new Date();
       const found = await this.prisma.subscription.findFirst({
         where: {
           userId,
           planId,
-          createdAt: { gt: new Date() },
+          endDate: { gt: now },
         },
       });
       return Ok(!!found);

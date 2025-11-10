@@ -1,5 +1,5 @@
 import { BaseQueryHandler } from "@safliix-back/cqrs";
-import { Result, Ok, Err } from "oxide.ts";
+import { Result } from "oxide.ts";
 import { Inject, Injectable, Logger } from "@nestjs/common";
 import { QueryHandler } from "@nestjs/cqrs";
 import type { ISubscriptionRepository } from "../../domain/ports/subscription.repository";
@@ -23,7 +23,6 @@ export class ListSubscriptionByIdHandler extends BaseQueryHandler<ListSubscripti
   }
 
   protected override async handle(query: ListSubscriptionByIdQuery): Promise<Result<Subscription, Error>> {
-    const safeResult = await Result.safe(this.repository.findById(query.id));
-    return safeResult.isErr() ? Err(safeResult.unwrapErr()) : Ok(safeResult.unwrap());
+    return this.repository.findById(query.id);
   }
 }

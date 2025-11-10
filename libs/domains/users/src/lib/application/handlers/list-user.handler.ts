@@ -1,6 +1,6 @@
 import { BaseQueryHandler } from "@safliix-back/cqrs";
 import { ListUserQuery } from "../cqrs/queries/list-user.query";
-import { Result, Err, Ok } from "oxide.ts";
+import { Result } from "oxide.ts";
 import { User } from "../../domain/entities/user.entity";
 import { Inject, Injectable, Logger } from "@nestjs/common";
 import { QueryHandler } from "@nestjs/cqrs";
@@ -19,18 +19,9 @@ export class ListUserHandler extends BaseQueryHandler<ListUserQuery,Result<User[
     super();
   }
 
-  protected override  async handle(query: ListUserQuery): Promise<Result<User[], Error>> {
-    const saveResult = await Result.safe(this.repository.findAll());
-
-    if(saveResult.isErr()){
-      return Err(saveResult.unwrapErr());
-    }
-
-    return Ok(saveResult.unwrap());
-
+  protected override async handle(query: ListUserQuery): Promise<Result<User[], Error>> {
+    const filters = query.payload?.status ? [query.payload.status] : undefined;
+    return this.repository.findAll(filters);
   }
-  
-  
-  
 
 }

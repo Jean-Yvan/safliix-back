@@ -1,6 +1,8 @@
 import { ListUserDto } from "../../../interfaces/dto/list-user.dto";
 
-export class ListUserQuery{
+import { IQuery } from "@nestjs/cqrs";
+
+export class ListUserQuery implements IQuery{
   constructor(
     public readonly payload : ListUserDto
   ){}

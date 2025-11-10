@@ -18,10 +18,7 @@ export class DeleteSubscriptionHandler extends BaseHandler<DeleteSubscriptionCom
   }
 
   protected override async handle(command: DeleteSubscriptionCommand): Promise<Result<void, Error>> {
-    const safeResult = await Result.safe(
-      this.repository.delete(command.id)
-    );
-
-    return safeResult.isErr() ? Err(safeResult.unwrapErr()) : Ok(undefined);
+    const deleteResult = await this.repository.delete(command.id);
+    return deleteResult.isErr() ? Err(deleteResult.unwrapErr()) : Ok(undefined);
   }
 }

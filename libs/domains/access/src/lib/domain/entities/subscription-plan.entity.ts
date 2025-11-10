@@ -1,9 +1,13 @@
 import { SubscriptionPlanWithRelation } from "@safliix-back/database";
-import { CreateSubscriptionPlanDto } from "../../interfaces/dto/create-subscription-plan.dto";
 import { Result, Err, Ok } from "oxide.ts"; 
 
-// On peut aussi prévoir un DTO spécifique pour update
-export type UpdateSubscriptionPlanDto = Partial<CreateSubscriptionPlanDto>;
+export interface SubscriptionPlanProps {
+  name: string;
+  price: number;
+  maxSharedAccounts: number;
+}
+
+export type UpdateSubscriptionPlanProps = Partial<SubscriptionPlanProps>;
 
 export class SubscriptionPlan {
   private constructor(
@@ -15,7 +19,10 @@ export class SubscriptionPlan {
     public readonly updatedAt: Date | null
   ) {}
 
-  static create(data: CreateSubscriptionPlanDto): Result<SubscriptionPlan, Error> {
+  static create(data: SubscriptionPlanProps): Result<SubscriptionPlan, Error> {
+    if (!data.name?.trim()) {
+      return Err(new Error("Le nom du plan est requis"));
+    }
     if (data.price <= 0) {
       return Err(new Error("Le prix doit être un entier positif"));
     }
@@ -26,7 +33,7 @@ export class SubscriptionPlan {
     return Ok(
       new SubscriptionPlan(
         undefined,
-        data.name,
+        data.name.trim(),
         data.price,
         data.maxSharedAccounts,
         null,
@@ -46,7 +53,7 @@ export class SubscriptionPlan {
     );
   }
 
-  updateWith(dto: UpdateSubscriptionPlanDto): Result<SubscriptionPlan, Error> {
+  updateWith(dto: UpdateSubscriptionPlanProps): Result<SubscriptionPlan, Error> {
     const newPrice = dto.price ?? this.price;
     const newMaxSharedAccounts = dto.maxSharedAccounts ?? this.maxSharedAccounts;
 
@@ -60,7 +67,7 @@ export class SubscriptionPlan {
     return Ok(
       new SubscriptionPlan(
         this.id,
-        dto.name ?? this.name,
+        dto.name?.trim() ?? this.name,
         newPrice,
         newMaxSharedAccounts,
         this.createdAt,

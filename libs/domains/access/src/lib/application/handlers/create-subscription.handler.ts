@@ -1,5 +1,5 @@
 import { BaseHandler } from "@safliix-back/cqrs";
-import { Result, Ok, Err } from "oxide.ts";
+import { Result, Err } from "oxide.ts";
 import { Inject, Injectable } from "@nestjs/common";
 import { CommandHandler } from "@nestjs/cqrs";
 import type { ISubscriptionRepository } from "../../domain/ports/subscription.repository";
@@ -18,12 +18,16 @@ export class CreateSubscriptionHandler extends BaseHandler<CreateSubscriptionCom
   }
 
   protected override async handle(command: CreateSubscriptionCommand): Promise<Result<Subscription, Error>> {
-    const subResult = Subscription.create(command.payload); // en supposant que Subscription a une méthode create()
+    const subResult = Subscription.create({
+      userId: command.payload.userId,
+      planId: command.payload.planId,
+      country: command.payload.country ?? null,
+    });
+
     if (subResult.isErr()) {
       return Err(subResult.unwrapErr());
     }
 
-    const safeResult = await Result.safe(this.repository.create(subResult.unwrap()));
-    return safeResult.isErr() ? Err(safeResult.unwrapErr()) : Ok(safeResult.unwrap());
+    return this.repository.create(subResult.unwrap());
   }
 }

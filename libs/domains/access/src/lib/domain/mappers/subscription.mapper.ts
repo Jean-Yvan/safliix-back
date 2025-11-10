@@ -12,9 +12,10 @@ export class SubscriptionMapper{
     return {
       user: mapConnect(data.userId),
       plan:mapConnect(data.planId),
-      country:data.country,
-      startDate: data.startDate ?? '',
-      endDate: data.endDate ?? ''
+      country: data.country ?? undefined,
+      startDate: data.startDate ?? undefined,
+      endDate: data.endDate ?? undefined,
+      renewalStatus: data.renewalStatus
     }
   }
 
@@ -35,6 +36,7 @@ export class SubscriptionMapper{
         country: mapField(data.country),
         startDate: mapField(data.startDate),
         endDate: mapField(data.endDate),
+        renewalStatus: mapField(data.renewalStatus),
       }
       
     });

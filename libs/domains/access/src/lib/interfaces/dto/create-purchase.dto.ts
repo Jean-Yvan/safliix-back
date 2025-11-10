@@ -14,9 +14,8 @@ export class CreatePurchaseDto{
   videoId!:string;
 
   @ApiProperty({example:"Bénin",required:false})
-  @IsString({message:"Le pays est une chaine de charactère"})
-  @IsNotEmpty({message:"Le pays ne peut être vide"})
   @IsOptional()
+  @IsString({message:"Le pays est une chaine de charactère"})
   country?:string;
 
 

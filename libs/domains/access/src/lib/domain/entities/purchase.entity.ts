@@ -1,7 +1,20 @@
 import { Result, Err, Ok } from "oxide.ts";
 import { PurchaseWithRelation } from "@safliix-back/database";
-import { CreatePurchaseDto } from "../../interfaces/dto/create-purchase.dto";
-import { UpdatePurchaseDto } from "../../interfaces/dto/update-purchase.dto";
+
+export interface PurchaseCreateProps {
+  userId: string;
+  videoId: string;
+  country?: string | null;
+  expirationDate?: Date | null;
+  purchaseDate?: Date;
+}
+
+export interface PurchaseUpdateProps {
+  userId?: string;
+  videoId?: string;
+  expirationDate?: Date | null;
+  country?: string | null;
+}
 
 export class Purchase {
   private constructor(
@@ -14,11 +27,11 @@ export class Purchase {
   ) {}
 
   // Création
-  static create(dto: CreatePurchaseDto): Result<Purchase, Error> {
-    if (!dto.userId) {
+  static create(dto: PurchaseCreateProps): Result<Purchase, Error> {
+    if (!dto.userId?.trim()) {
       return Err(new Error("L'utilisateur est obligatoire"));
     }
-    if (!dto.videoId) {
+    if (!dto.videoId?.trim()) {
       return Err(new Error("La vidéo est obligatoire"));
     }
     
@@ -26,11 +39,11 @@ export class Purchase {
     return Ok(
       new Purchase(
         undefined,
-        dto.userId,
-        dto.videoId,
-        new Date(), // purchaseDate = maintenant
-        null,
-        dto.country ?? null
+        dto.userId.trim(),
+        dto.videoId.trim(),
+        dto.purchaseDate ?? new Date(), // purchaseDate = maintenant
+        dto.expirationDate ?? null,
+        dto.country?.trim() ?? null
       )
     );
   }
@@ -48,13 +61,12 @@ export class Purchase {
   }
 
   // Mise à jour
-  updateWith(dto: UpdatePurchaseDto): Result<Purchase, Error> {
-    const newUserId = dto.userId ?? this.userId;
-    const newVideoId = dto.videoId ?? this.videoId;
-    //const newPurchaseDate = dto.purchaseDate ?? this.purchaseDate;
+  updateWith(dto: PurchaseUpdateProps): Result<Purchase, Error> {
+    const newUserId = dto.userId?.trim() ?? this.userId;
+    const newVideoId = dto.videoId?.trim() ?? this.videoId;
     const newExpirationDate =
       dto.expirationDate !== undefined ? dto.expirationDate : this.expirationDate;
-    const newCountry = dto.country ?? this.country;
+    const newCountry = dto.country !== undefined ? dto.country?.trim() ?? null : this.country;
 
     if (!newUserId) {
       return Err(new Error("L'utilisateur est obligatoire"));
@@ -62,10 +74,7 @@ export class Purchase {
     if (!newVideoId) {
       return Err(new Error("La vidéo est obligatoire"));
     }
-    if (!newCountry) {
-      return Err(new Error("Le pays est obligatoire"));
-    }
-    if (newExpirationDate && newExpirationDate < newPurchaseDate) {
+    if (newExpirationDate && newExpirationDate < this.purchaseDate) {
       return Err(new Error("La date d'expiration ne peut pas être avant la date d'achat"));
     }
 
@@ -74,7 +83,7 @@ export class Purchase {
         this.id,
         newUserId,
         newVideoId,
-        newPurchaseDate,
+        this.purchaseDate,
         newExpirationDate,
         newCountry
       )

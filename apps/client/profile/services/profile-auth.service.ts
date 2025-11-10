@@ -1,52 +1,53 @@
-// apps/svod-api-client/src/auth/profile-auth.service.ts
+// apps/svod-api-client/src/auth/profile-auth.application.service.ts (VERSION CORRIGÉE)
 
-import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, Inject } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
-import { ProfileLoginQuery,ProfileTokenGenerationService as InternalTokenService } from '@safliix-back/profile';
-
-import { IUserRepository } from "@safliix-back/users";
+import { ProfileLoginQuery,ProfileTokenGenerationService  } from '@safliix-back/profile'; // Import corrigé du module Profile
+import { IUserRepository, USER_REPOSITORY } from '@safliix-back/users'; // Interface du User
 
 @Injectable()
-export class ProfileAuthApplicationService { // Service de "Facade" ou "Application"
+export class ProfileAuthApplicationService { 
   constructor(
     private readonly queryBus: QueryBus,
-    private readonly internalTokenService: InternalTokenService,
-
-    @Inject(USER_REPOSITORY)
-    private readonly iUserRepository : IUserRepository
+    private readonly internalTokenService: ProfileTokenGenerationService,
+    @Inject(USER_REPOSITORY) 
+    private readonly userRepository: IUserRepository, 
   ) {}
 
   /**
-   * Orchestre la vérification du PIN et l'émission du jeton de profil interne.
-   * @param accountId L'ID du SharedAccount (compte parent).
-   * @param profileName Le nom du profil à connecter.
-   * @param pinCode Le code PIN en clair.
-   * @returns Un JWT de profil interne.
+   * Authentifie un profil par PIN en utilisant l'email du propriétaire.
    */
-  async authenticateProfile(email: string, profileName: string, pinCode: number): Promise<string> {
-    const query = new ProfileLoginQuery(email, profileName, pinCode);
-
-    // 1. Envoyer la Query pour la vérification du PIN (le Handler gère le repository)
-    // Le QueryBus nous retourne le Result<SharedAccountUser, Error>
-    const result = await this.queryBus.execute(query);
-
-    if (result.isErr()) {
-      // Le handler a retourné une erreur (PIN invalide, profil non trouvé, etc.)
-      // Nous la mappons à une erreur HTTP appropriée
-      throw new UnauthorizedException(result.unwrapErr().message || 'Échec de l\'authentification du profil.');
+  async authenticateProfile(ownerEmail: string, profileName: string, pinCode: number): Promise<string> {
+    
+    // 1. NOUVELLE ÉTAPE : Traduire l'email en ID interne (dépendance au module USER)
+    const userResult = await this.userRepository.findByEmail(ownerEmail);
+    if (userResult.isErr()) {
+        throw new UnauthorizedException("Le compte principal n'existe pas ou l'email est invalide.");
     }
+    const accountId = userResult.unwrap().id; // 🔑 ID interne récupéré
 
-    const profile = result.unwrap();
+    // 2. Envoyer la Query avec l'ID interne résolu (dépendance au module PROFILE)
+    if( accountId ) {
+      const query = new ProfileLoginQuery(accountId, profileName, pinCode); 
+      const result = await this.queryBus.execute(query);
 
-    // 2. Émission du Jeton de Profil Interne
-    // Nous avons besoin de l'ID du User (l'abonné principal) à partir du SharedAccount
-    const accountIdFromProfile = profile.sharedAccountId; // L'ID du SharedAccount est l'ID du parent
+      if (result.isErr()) {
+        throw new UnauthorizedException(result.unwrapErr().message || 'Échec de l\'authentification du profil.');
+      }
 
-    const profileToken = this.internalTokenService.generateProfileToken(
-      profile.id as string, 
-      accountIdFromProfile
-    );
+      const profile = result.unwrap();
 
-    return profileToken;
+      // 3. Émission du Jeton de Profil Interne
+      const profileToken = this.internalTokenService.generateProfileToken(
+        profile.id as string, 
+        profile.sharedAccountId
+      );
+
+      return profileToken;
+    }else{
+      throw new UnauthorizedException('Échec de l\'authentification du profil.');
+
+    }
+    
   }
 }

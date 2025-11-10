@@ -13,17 +13,19 @@ export class PurchaseMapper{
       user: mapConnect(data.userId),
       video:mapConnect(data.videoId),
       purchaseDate:data.purchaseDate,
-      country:data.country ?? '',
+      country:data.country ?? undefined,
       expirationDate:data.expirationDate
     }
   }
 
-  static toUpdatePrisma(id:string,data:Purchase) : UpdateToPrisma<"Purchase">{
+  static toUpdatePrisma(id:string,data:Partial<Purchase>) : UpdateToPrisma<"Purchase">{
     return {
       where:{
         id
       },
       data:{
+        user: mapField(data.userId, mapConnect),
+        video: mapField(data.videoId, mapConnect),
         purchaseDate:mapField(data.purchaseDate),
         country:mapField(data.country),
         expirationDate:mapField(data.expirationDate)

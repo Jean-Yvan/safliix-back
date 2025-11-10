@@ -114,7 +114,7 @@ export const sharedAccountInclude = {
 
 export const purchaseInclude = {
   user:true,
-  video:true
+  movie:true
 } as const;
 
 export const adminInclude = {

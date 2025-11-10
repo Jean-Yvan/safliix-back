@@ -1,6 +1,8 @@
 import { UpdateSubscriptionDto } from "../../../interfaces/dto/update-subscription.dto";
 
-export class UpdateSubscriptionCommand {
+import { ICommand } from "@nestjs/cqrs";
+
+export class UpdateSubscriptionCommand implements ICommand{
   constructor(
     public readonly payload: UpdateSubscriptionDto
   ) {}

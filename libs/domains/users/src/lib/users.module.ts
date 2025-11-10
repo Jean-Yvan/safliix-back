@@ -6,6 +6,8 @@ import { ListUserHandler } from './application/handlers/list-user.handler';
 import { UpdateUserHandler } from './application/handlers/update-user.handler';
 import { USER_REPOSITORY } from './utils/types';
 import { PrismaUserRepository } from './infrastructure/prisma-user.repository';
+import { DeleteUserHandler } from './application/handlers/delete-user.handler';
+import { ListUserByEmailHandler } from './application/handlers/list-user-by-email.handler';
 
 @Module({
   imports:[
@@ -19,13 +21,17 @@ import { PrismaUserRepository } from './infrastructure/prisma-user.repository';
     CreateUserHandler,
     ListUserByIdHandler,
     ListUserHandler,
-    UpdateUserHandler
+    UpdateUserHandler,
+    DeleteUserHandler,
+    ListUserByEmailHandler
   ],
   exports: [
     CreateUserHandler,
     ListUserByIdHandler,
     ListUserHandler,
-    UpdateUserHandler
+    UpdateUserHandler,
+    DeleteUserHandler,
+    ListUserByEmailHandler
   ],
 })
 export class SafliixBackUsersModule {}

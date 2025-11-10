@@ -1,6 +1,6 @@
 import { BaseHandler } from "@safliix-back/cqrs";
 import { UpdateUserCommand } from "../cqrs/commands/update-user.command";
-import { Result, Err, Ok } from "oxide.ts";
+import { Err, Result } from "oxide.ts";
 import { User } from "../../domain/entities/user.entity";
 import { Inject, Injectable } from "@nestjs/common";
 import { CommandHandler } from "@nestjs/cqrs";
@@ -19,19 +19,16 @@ export class UpdateUserHandler extends BaseHandler<UpdateUserCommand,Result<User
   }
 
   protected override async handle(command: UpdateUserCommand): Promise<Result<User, Error>> {
-    const existing = await this.repository.findById(command.payload.id);
-    if(!existing){
-      return Err(new Error("Utilisateur inexistant"));
+    const existingResult = await this.repository.findById(command.payload.id);
+
+    if (existingResult.isErr()) {
+      return Err(existingResult.unwrapErr());
     }
 
+    const existing = existingResult.unwrap();
     await existing.updateWith(command.payload);
 
-    const userResult = await Result.safe(this.repository.save(existing));
-    if(userResult.isErr()){
-      return Err(userResult.unwrapErr());
-    }
-
-    return Ok(userResult.unwrap());
+    return this.repository.save(existing);
   }
   
 }

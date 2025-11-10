@@ -1,12 +1,27 @@
-import { CreateSubscriptionDto } from "src/lib/interfaces/dto/create-subscription.dto";
 import { Result, Err, Ok } from "oxide.ts";
 import { SubscriptionWithRelation } from "@safliix-back/database";
-import { UpdateSubscriptionDto } from "../../interfaces/dto/update-subscription.dto";
 
 // Valeurs possibles pour renewalStatus
 const VALID_RENEWAL_STATUSES = ["ACTIVE", "CANCELLED", "EXPIRED", "PENDING"] as const;
-type RenewalStatus = typeof VALID_RENEWAL_STATUSES[number];
+export type RenewalStatus = typeof VALID_RENEWAL_STATUSES[number];
 
+export interface SubscriptionCreateProps {
+  userId: string;
+  planId: string;
+  country?: string | null;
+  startDate?: Date | null;
+  endDate?: Date | null;
+  renewalStatus?: RenewalStatus;
+}
+
+export interface SubscriptionUpdateProps {
+  userId?: string;
+  planId?: string;
+  startDate?: Date | null;
+  endDate?: Date | null;
+  renewalStatus?: RenewalStatus;
+  country?: string | null;
+}
 
 export class Subscription {
   private constructor(
@@ -15,26 +30,29 @@ export class Subscription {
     public readonly planId: string,
     public readonly startDate: Date | null,
     public readonly endDate: Date | null,
-    public readonly renewalStatus: string,
-    public readonly country: string,
+    public readonly renewalStatus: RenewalStatus,
+    public readonly country: string | null,
     public readonly createdAt: Date | null,
     public readonly updatedAt: Date | null
   ) {}
 
-  static create(data: CreateSubscriptionDto): Result<Subscription, Error> {
-    if (!data.userId || !data.planId) {
+  static create(data: SubscriptionCreateProps): Result<Subscription, Error> {
+    const userId = data.userId?.trim();
+    const planId = data.planId?.trim();
+
+    if (!userId || !planId) {
       return Err(new Error("L'utilisateur et le plan doivent être renseignés"));
     }
 
     return Ok(
       new Subscription(
         undefined,
-        data.userId,
-        data.planId,
-        null,
-        null,
-        "PENDING", // par défaut
-        data.country ?? "",
+        userId,
+        planId,
+        data.startDate ?? null,
+        data.endDate ?? null,
+        (data.renewalStatus ?? "PENDING") as RenewalStatus,
+        data.country?.trim() ?? null,
         null,
         null
       )
@@ -55,24 +73,13 @@ export class Subscription {
     );
   }
 
-  updateWith(dto: UpdateSubscriptionDto): Result<Subscription, Error> {
-    const newUserId = dto.userId ?? this.userId;
-    const newPlanId = dto.planId ?? this.planId;
-    const newStartDate =
-  dto.startDate !== undefined
-    ? dto.startDate
-      ? new Date(dto.startDate) // conversion string -> Date
-      : null
-    : this.startDate;
-
-const newEndDate =
-  dto.endDate !== undefined
-    ? dto.endDate
-      ? new Date(dto.endDate)
-      : null
-    : this.endDate;
+  updateWith(dto: SubscriptionUpdateProps): Result<Subscription, Error> {
+    const newUserId = dto.userId?.trim() ?? this.userId;
+    const newPlanId = dto.planId?.trim() ?? this.planId;
+    const newStartDate = dto.startDate !== undefined ? dto.startDate : this.startDate;
+    const newEndDate = dto.endDate !== undefined ? dto.endDate : this.endDate;
     const newRenewalStatus = dto.renewalStatus ?? this.renewalStatus;
-    const newCountry = dto.country ?? this.country;
+    const newCountry = dto.country !== undefined ? dto.country : this.country;
 
     // Validation userId / planId
     if (!newUserId || !newPlanId) {
@@ -85,7 +92,7 @@ const newEndDate =
     }
 
     // Validation renewalStatus
-    if (newRenewalStatus && !VALID_RENEWAL_STATUSES.includes(newRenewalStatus as RenewalStatus)) {
+    if (newRenewalStatus && !VALID_RENEWAL_STATUSES.includes(newRenewalStatus)) {
       return Err(new Error(`Statut de renouvellement invalide: ${newRenewalStatus}`));
     }
 

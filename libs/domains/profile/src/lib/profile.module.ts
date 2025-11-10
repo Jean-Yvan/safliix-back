@@ -7,7 +7,7 @@ import { CreateSharedAccountHandler } from './application/handlers/create-shared
 import { DeleteSharedAccountHandler } from './application/handlers/delete-shared-account.handler';
 import { RemoveProfileHandler } from './application/handlers/remove-profile.handler';
 import { UpdateProfileHandler } from './application/handlers/update-profile.handler';
-import { AddProfileToAccountHandler } from './application/handlers/profile-command.handler';
+import { AddProfileToAccountHandler } from './application/handlers/add-profile.handler';
 import { GetSharedAccountByIdHandler } from './application/handlers/get-shared-account-by-id.handler';
 import { ListProfilesHandler } from './application/handlers/list-profiles.handler';
 import { ProfileLoginHandler } from './application/handlers/profile-login.handler';

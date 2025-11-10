@@ -5,7 +5,7 @@ import { Purchase } from "../domain/entities/purchase.entity";
 import { PurchaseMapper } from "../domain/mappers/purchase.mapper";
 
 @Injectable()
-export class PurchaseRepository implements IPurchaseRepository {
+export class PrismaPurchaseRepository implements IPurchaseRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(purchase: Purchase): Promise<Purchase> {
@@ -19,7 +19,7 @@ export class PurchaseRepository implements IPurchaseRepository {
     
   }
 
-  async update(id: string, purchase:Purchase): Promise<Purchase> {
+  async update(id: string, purchase: Partial<Purchase>): Promise<Purchase> {
 
 
     const updated = await this.prisma.purchase.update({
@@ -38,9 +38,9 @@ export class PurchaseRepository implements IPurchaseRepository {
     return data ? Purchase.restore(data as PurchaseWithRelation) : null;
   }
 
-  async findByUserAndVideo(userId: string, videoId: string): Promise<Purchase | null> {
+  async findByUserAndVideo(userId: string, movieId: string): Promise<Purchase | null> {
     const data = await this.prisma.purchase.findFirst({
-      where: { userId, videoId },
+      where: { userId, movieId },
     });
     return data ? Purchase.restore(data as PurchaseWithRelation) : null;
   }
@@ -66,7 +66,7 @@ export class PurchaseRepository implements IPurchaseRepository {
     const data = await this.prisma.purchase.findMany({
       include: {
         user: true,
-        video: true,
+        movie: true,
       },
     });
     return data.map((d) => Purchase.restore(d as PurchaseWithRelation));
