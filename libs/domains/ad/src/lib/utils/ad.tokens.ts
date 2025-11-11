@@ -1,0 +1,2 @@
+export const AD_REPOSITORY = 'AD_REPOSITORY';
+export const AD_VIEW_REPOSITORY = 'AD_VIEW_REPOSITORY';

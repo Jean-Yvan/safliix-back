@@ -450,7 +450,8 @@ exports.Prisma.AdViewScalarFieldEnum = {
   adId: 'adId',
   userId: 'userId',
   profileId: 'profileId',
-  viewed_at: 'viewed_at'
+  viewed_at: 'viewed_at',
+  country: 'country'
 };
 
 exports.Prisma.SharedProfileActivityScalarFieldEnum = {

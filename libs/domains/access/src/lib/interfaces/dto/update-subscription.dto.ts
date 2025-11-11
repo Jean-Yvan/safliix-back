@@ -21,10 +21,10 @@ export class UpdateSubscriptionDto extends PartialType(CreateSubscriptionDto){
   @IsDateString({},{message:"La date de fin n'est pas au bon format"})
   endDate?:string;
 
-  @ApiProperty({example:"ACTIVE",required:false})
+  @ApiProperty({example:"AUTO_RENEW",required:false})
   @IsOptional()
   @IsString({message:"Le statut de renouvellement doit être une chaine de caractères"})
-  @IsIn(["ACTIVE","CANCELLED","EXPIRED","PENDING"],{message:"Le statut de renouvellement est invalide"})
+  @IsIn(["AUTO_RENEW","MANUAL","CANCELLED"],{message:"Le statut de renouvellement est invalide"})
   renewalStatus?:string;
 
 

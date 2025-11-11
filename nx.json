@@ -51,7 +51,8 @@
         "libs/shared/video-process-type/*",
         "libs/shared/keycloack/*",
         "libs/domains/profile/*",
-        "libs/domains/videoTracking/*"
+        "libs/domains/videoTracking/*",
+        "libs/domains/ads/*"
       ]
     },
     {
@@ -107,7 +108,8 @@
         "libs/shared/video-process-type/*",
         "libs/shared/keycloack/*",
         "libs/domains/profile/*",
-        "libs/domains/videoTracking/*"
+        "libs/domains/videoTracking/*",
+        "libs/domains/ads/*"
       ],
       "options": {
         "typecheck": {

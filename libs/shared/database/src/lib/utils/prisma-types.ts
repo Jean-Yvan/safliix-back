@@ -14,6 +14,8 @@ import {
   sharedAccountInclude,
   adminInclude,
   attachmentInclude,
+  adInclude,
+  adViewInclude,
 } from "./prisma-includes";
 
 export type MetadataWithRelations = Prisma.VideoMetadataGetPayload<{
@@ -93,6 +95,14 @@ export type AdminWithRelation = Prisma.AdminGetPayload<{
 
 export type MediaAttachmentWithRelation = Prisma.MediaAttachmentGetPayload<{
   include: typeof attachmentInclude;
+}>;
+
+export type AdWithRelation = Prisma.AdGetPayload<{
+  include: typeof adInclude;
+}>;
+
+export type AdViewWithRelation = Prisma.AdViewGetPayload<{
+  include: typeof adViewInclude;
 }>;
 
 export type UserVideoViewWithRelation = Prisma.UserVideoViewGetPayload<{

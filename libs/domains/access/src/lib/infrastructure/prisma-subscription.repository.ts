@@ -6,6 +6,7 @@ import { Result, Ok, Err } from "oxide.ts";
 import { Subscription } from "../domain/entities/subscription.entity";
 import { ISubscriptionRepository } from "../domain/ports/subscription.repository";
 import { SubscriptionMapper } from "../domain/mappers/subscription.mapper";
+import { ActiveSubscriptionNotFoundError } from "../domain/errors/active-subscription-not-found.error";
 
 @Injectable()
 export class PrismaSubscriptionRepository implements ISubscriptionRepository {
@@ -134,7 +135,7 @@ export class PrismaSubscriptionRepository implements ISubscriptionRepository {
         },
       });
       if (!found) {
-        return Err(new Error("Active subscription not found"));
+        return Err(new ActiveSubscriptionNotFoundError(userId));
       }
       return Ok(SubscriptionMapper.toDomain(found));
     } catch (error) {

@@ -25,6 +25,9 @@ export abstract class BaseHandler<Command extends ICommand, Response = void> {
       timestamp: new Date().toISOString()
     };
 
+    void errorMessage;
+    void context;
+
     /* this.logger.error(`Handler failed: ${errorMessage}`, {
       context,
       stack: error instanceof Error ? error.stack : undefined

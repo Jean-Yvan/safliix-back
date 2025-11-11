@@ -1,9 +1,36 @@
 import { Result, Err, Ok } from "oxide.ts";
 import { SubscriptionWithRelation } from "@safliix-back/database";
 
-// Valeurs possibles pour renewalStatus
-const VALID_RENEWAL_STATUSES = ["ACTIVE", "CANCELLED", "EXPIRED", "PENDING"] as const;
-export type RenewalStatus = typeof VALID_RENEWAL_STATUSES[number];
+// Valeurs possibles pour renewalStatus — alignées sur Prisma
+const VALID_RENEWAL_STATUSES = ["AUTO_RENEW", "MANUAL", "CANCELLED"] as const;
+export type RenewalStatus = (typeof VALID_RENEWAL_STATUSES)[number];
+export const DEFAULT_SUBSCRIPTION_DURATION_DAYS = 30;
+
+const addDays = (date: Date, days: number): Date => {
+  const next = new Date(date);
+  next.setDate(next.getDate() + days);
+  return next;
+};
+
+export const extendSubscriptionEndDate = (
+  currentEndDate?: Date | null,
+  durationInDays = DEFAULT_SUBSCRIPTION_DURATION_DAYS
+): Date => {
+  const now = new Date();
+  const base = currentEndDate && currentEndDate.getTime() > now.getTime() ? currentEndDate : now;
+  return addDays(base, durationInDays);
+};
+
+const computeInitialEndDate = (
+  startDate: Date,
+  providedEndDate?: Date | null,
+  durationInDays = DEFAULT_SUBSCRIPTION_DURATION_DAYS
+): Date => {
+  if (providedEndDate) {
+    return providedEndDate;
+  }
+  return addDays(startDate, durationInDays);
+};
 
 export interface SubscriptionCreateProps {
   userId: string;
@@ -44,14 +71,18 @@ export class Subscription {
       return Err(new Error("L'utilisateur et le plan doivent être renseignés"));
     }
 
+    const startDate = data.startDate ?? new Date();
+    const endDate = computeInitialEndDate(startDate, data.endDate);
+    const renewalStatus = (data.renewalStatus ?? "AUTO_RENEW") as RenewalStatus;
+
     return Ok(
       new Subscription(
         undefined,
         userId,
         planId,
-        data.startDate ?? null,
-        data.endDate ?? null,
-        (data.renewalStatus ?? "PENDING") as RenewalStatus,
+        startDate,
+        endDate,
+        renewalStatus,
         data.country?.trim() ?? null,
         null,
         null

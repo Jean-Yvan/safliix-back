@@ -41567,6 +41567,7 @@ export namespace Prisma {
     userId: string | null
     profileId: string | null
     viewed_at: Date | null
+    country: string | null
   }
 
   export type AdViewMaxAggregateOutputType = {
@@ -41575,6 +41576,7 @@ export namespace Prisma {
     userId: string | null
     profileId: string | null
     viewed_at: Date | null
+    country: string | null
   }
 
   export type AdViewCountAggregateOutputType = {
@@ -41583,6 +41585,7 @@ export namespace Prisma {
     userId: number
     profileId: number
     viewed_at: number
+    country: number
     _all: number
   }
 
@@ -41593,6 +41596,7 @@ export namespace Prisma {
     userId?: true
     profileId?: true
     viewed_at?: true
+    country?: true
   }
 
   export type AdViewMaxAggregateInputType = {
@@ -41601,6 +41605,7 @@ export namespace Prisma {
     userId?: true
     profileId?: true
     viewed_at?: true
+    country?: true
   }
 
   export type AdViewCountAggregateInputType = {
@@ -41609,6 +41614,7 @@ export namespace Prisma {
     userId?: true
     profileId?: true
     viewed_at?: true
+    country?: true
     _all?: true
   }
 
@@ -41690,6 +41696,7 @@ export namespace Prisma {
     userId: string | null
     profileId: string | null
     viewed_at: Date
+    country: string | null
     _count: AdViewCountAggregateOutputType | null
     _min: AdViewMinAggregateOutputType | null
     _max: AdViewMaxAggregateOutputType | null
@@ -41715,6 +41722,7 @@ export namespace Prisma {
     userId?: boolean
     profileId?: boolean
     viewed_at?: boolean
+    country?: boolean
     ad?: boolean | AdDefaultArgs<ExtArgs>
     user?: boolean | AdView$userArgs<ExtArgs>
     profile?: boolean | AdView$profileArgs<ExtArgs>
@@ -41726,6 +41734,7 @@ export namespace Prisma {
     userId?: boolean
     profileId?: boolean
     viewed_at?: boolean
+    country?: boolean
     ad?: boolean | AdDefaultArgs<ExtArgs>
     user?: boolean | AdView$userArgs<ExtArgs>
     profile?: boolean | AdView$profileArgs<ExtArgs>
@@ -41737,6 +41746,7 @@ export namespace Prisma {
     userId?: boolean
     profileId?: boolean
     viewed_at?: boolean
+    country?: boolean
     ad?: boolean | AdDefaultArgs<ExtArgs>
     user?: boolean | AdView$userArgs<ExtArgs>
     profile?: boolean | AdView$profileArgs<ExtArgs>
@@ -41748,9 +41758,10 @@ export namespace Prisma {
     userId?: boolean
     profileId?: boolean
     viewed_at?: boolean
+    country?: boolean
   }
 
-  export type AdViewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "adId" | "userId" | "profileId" | "viewed_at", ExtArgs["result"]["adView"]>
+  export type AdViewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "adId" | "userId" | "profileId" | "viewed_at" | "country", ExtArgs["result"]["adView"]>
   export type AdViewInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     ad?: boolean | AdDefaultArgs<ExtArgs>
     user?: boolean | AdView$userArgs<ExtArgs>
@@ -41780,6 +41791,7 @@ export namespace Prisma {
       userId: string | null
       profileId: string | null
       viewed_at: Date
+      country: string | null
     }, ExtArgs["result"]["adView"]>
     composites: {}
   }
@@ -42211,6 +42223,7 @@ export namespace Prisma {
     readonly userId: FieldRef<"AdView", 'String'>
     readonly profileId: FieldRef<"AdView", 'String'>
     readonly viewed_at: FieldRef<"AdView", 'DateTime'>
+    readonly country: FieldRef<"AdView", 'String'>
   }
     
 
@@ -44157,7 +44170,8 @@ export namespace Prisma {
     adId: 'adId',
     userId: 'userId',
     profileId: 'profileId',
-    viewed_at: 'viewed_at'
+    viewed_at: 'viewed_at',
+    country: 'country'
   };
 
   export type AdViewScalarFieldEnum = (typeof AdViewScalarFieldEnum)[keyof typeof AdViewScalarFieldEnum]
@@ -46735,6 +46749,7 @@ export namespace Prisma {
     userId?: StringNullableFilter<"AdView"> | string | null
     profileId?: StringNullableFilter<"AdView"> | string | null
     viewed_at?: DateTimeFilter<"AdView"> | Date | string
+    country?: StringNullableFilter<"AdView"> | string | null
     ad?: XOR<AdScalarRelationFilter, AdWhereInput>
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     profile?: XOR<SharedAccountUserNullableScalarRelationFilter, SharedAccountUserWhereInput> | null
@@ -46746,6 +46761,7 @@ export namespace Prisma {
     userId?: SortOrderInput | SortOrder
     profileId?: SortOrderInput | SortOrder
     viewed_at?: SortOrder
+    country?: SortOrderInput | SortOrder
     ad?: AdOrderByWithRelationInput
     user?: UserOrderByWithRelationInput
     profile?: SharedAccountUserOrderByWithRelationInput
@@ -46760,6 +46776,7 @@ export namespace Prisma {
     userId?: StringNullableFilter<"AdView"> | string | null
     profileId?: StringNullableFilter<"AdView"> | string | null
     viewed_at?: DateTimeFilter<"AdView"> | Date | string
+    country?: StringNullableFilter<"AdView"> | string | null
     ad?: XOR<AdScalarRelationFilter, AdWhereInput>
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     profile?: XOR<SharedAccountUserNullableScalarRelationFilter, SharedAccountUserWhereInput> | null
@@ -46771,6 +46788,7 @@ export namespace Prisma {
     userId?: SortOrderInput | SortOrder
     profileId?: SortOrderInput | SortOrder
     viewed_at?: SortOrder
+    country?: SortOrderInput | SortOrder
     _count?: AdViewCountOrderByAggregateInput
     _max?: AdViewMaxOrderByAggregateInput
     _min?: AdViewMinOrderByAggregateInput
@@ -46785,6 +46803,7 @@ export namespace Prisma {
     userId?: StringNullableWithAggregatesFilter<"AdView"> | string | null
     profileId?: StringNullableWithAggregatesFilter<"AdView"> | string | null
     viewed_at?: DateTimeWithAggregatesFilter<"AdView"> | Date | string
+    country?: StringNullableWithAggregatesFilter<"AdView"> | string | null
   }
 
   export type SharedProfileActivityWhereInput = {
@@ -49269,6 +49288,7 @@ export namespace Prisma {
   export type AdViewCreateInput = {
     id?: string
     viewed_at?: Date | string
+    country?: string | null
     ad: AdCreateNestedOneWithoutViewsInput
     user?: UserCreateNestedOneWithoutAdViewsInput
     profile?: SharedAccountUserCreateNestedOneWithoutAdViewsInput
@@ -49280,11 +49300,13 @@ export namespace Prisma {
     userId?: string | null
     profileId?: string | null
     viewed_at?: Date | string
+    country?: string | null
   }
 
   export type AdViewUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     viewed_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    country?: NullableStringFieldUpdateOperationsInput | string | null
     ad?: AdUpdateOneRequiredWithoutViewsNestedInput
     user?: UserUpdateOneWithoutAdViewsNestedInput
     profile?: SharedAccountUserUpdateOneWithoutAdViewsNestedInput
@@ -49296,6 +49318,7 @@ export namespace Prisma {
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     profileId?: NullableStringFieldUpdateOperationsInput | string | null
     viewed_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    country?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AdViewCreateManyInput = {
@@ -49304,11 +49327,13 @@ export namespace Prisma {
     userId?: string | null
     profileId?: string | null
     viewed_at?: Date | string
+    country?: string | null
   }
 
   export type AdViewUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     viewed_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    country?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AdViewUncheckedUpdateManyInput = {
@@ -49317,6 +49342,7 @@ export namespace Prisma {
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     profileId?: NullableStringFieldUpdateOperationsInput | string | null
     viewed_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    country?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type SharedProfileActivityCreateInput = {
@@ -51212,6 +51238,7 @@ export namespace Prisma {
     userId?: SortOrder
     profileId?: SortOrder
     viewed_at?: SortOrder
+    country?: SortOrder
   }
 
   export type AdViewMaxOrderByAggregateInput = {
@@ -51220,6 +51247,7 @@ export namespace Prisma {
     userId?: SortOrder
     profileId?: SortOrder
     viewed_at?: SortOrder
+    country?: SortOrder
   }
 
   export type AdViewMinOrderByAggregateInput = {
@@ -51228,6 +51256,7 @@ export namespace Prisma {
     userId?: SortOrder
     profileId?: SortOrder
     viewed_at?: SortOrder
+    country?: SortOrder
   }
 
   export type EnumProfileActivityActionFilter<$PrismaModel = never> = {
@@ -54576,6 +54605,7 @@ export namespace Prisma {
   export type AdViewCreateWithoutUserInput = {
     id?: string
     viewed_at?: Date | string
+    country?: string | null
     ad: AdCreateNestedOneWithoutViewsInput
     profile?: SharedAccountUserCreateNestedOneWithoutAdViewsInput
   }
@@ -54585,6 +54615,7 @@ export namespace Prisma {
     adId: string
     profileId?: string | null
     viewed_at?: Date | string
+    country?: string | null
   }
 
   export type AdViewCreateOrConnectWithoutUserInput = {
@@ -54897,6 +54928,7 @@ export namespace Prisma {
     userId?: StringNullableFilter<"AdView"> | string | null
     profileId?: StringNullableFilter<"AdView"> | string | null
     viewed_at?: DateTimeFilter<"AdView"> | Date | string
+    country?: StringNullableFilter<"AdView"> | string | null
   }
 
   export type UserVideoViewUpsertWithWhereUniqueWithoutUserInput = {
@@ -56063,6 +56095,7 @@ export namespace Prisma {
   export type AdViewCreateWithoutProfileInput = {
     id?: string
     viewed_at?: Date | string
+    country?: string | null
     ad: AdCreateNestedOneWithoutViewsInput
     user?: UserCreateNestedOneWithoutAdViewsInput
   }
@@ -56072,6 +56105,7 @@ export namespace Prisma {
     adId: string
     userId?: string | null
     viewed_at?: Date | string
+    country?: string | null
   }
 
   export type AdViewCreateOrConnectWithoutProfileInput = {
@@ -59981,6 +60015,7 @@ export namespace Prisma {
   export type AdViewCreateWithoutAdInput = {
     id?: string
     viewed_at?: Date | string
+    country?: string | null
     user?: UserCreateNestedOneWithoutAdViewsInput
     profile?: SharedAccountUserCreateNestedOneWithoutAdViewsInput
   }
@@ -59990,6 +60025,7 @@ export namespace Prisma {
     userId?: string | null
     profileId?: string | null
     viewed_at?: Date | string
+    country?: string | null
   }
 
   export type AdViewCreateOrConnectWithoutAdInput = {
@@ -60378,6 +60414,7 @@ export namespace Prisma {
     adId: string
     profileId?: string | null
     viewed_at?: Date | string
+    country?: string | null
   }
 
   export type UserVideoViewCreateManyUserInput = {
@@ -60572,6 +60609,7 @@ export namespace Prisma {
   export type AdViewUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     viewed_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    country?: NullableStringFieldUpdateOperationsInput | string | null
     ad?: AdUpdateOneRequiredWithoutViewsNestedInput
     profile?: SharedAccountUserUpdateOneWithoutAdViewsNestedInput
   }
@@ -60581,6 +60619,7 @@ export namespace Prisma {
     adId?: StringFieldUpdateOperationsInput | string
     profileId?: NullableStringFieldUpdateOperationsInput | string | null
     viewed_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    country?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AdViewUncheckedUpdateManyWithoutUserInput = {
@@ -60588,6 +60627,7 @@ export namespace Prisma {
     adId?: StringFieldUpdateOperationsInput | string
     profileId?: NullableStringFieldUpdateOperationsInput | string | null
     viewed_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    country?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserVideoViewUpdateWithoutUserInput = {
@@ -60901,6 +60941,7 @@ export namespace Prisma {
     adId: string
     userId?: string | null
     viewed_at?: Date | string
+    country?: string | null
   }
 
   export type SharedProfileActivityCreateManyProfileInput = {
@@ -60921,6 +60962,7 @@ export namespace Prisma {
   export type AdViewUpdateWithoutProfileInput = {
     id?: StringFieldUpdateOperationsInput | string
     viewed_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    country?: NullableStringFieldUpdateOperationsInput | string | null
     ad?: AdUpdateOneRequiredWithoutViewsNestedInput
     user?: UserUpdateOneWithoutAdViewsNestedInput
   }
@@ -60930,6 +60972,7 @@ export namespace Prisma {
     adId?: StringFieldUpdateOperationsInput | string
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     viewed_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    country?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AdViewUncheckedUpdateManyWithoutProfileInput = {
@@ -60937,6 +60980,7 @@ export namespace Prisma {
     adId?: StringFieldUpdateOperationsInput | string
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     viewed_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    country?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type SharedProfileActivityUpdateWithoutProfileInput = {
@@ -61996,6 +62040,7 @@ export namespace Prisma {
     userId?: string | null
     profileId?: string | null
     viewed_at?: Date | string
+    country?: string | null
   }
 
   export type MediaAttachmentUpdateWithoutAdInput = {
@@ -62028,6 +62073,7 @@ export namespace Prisma {
   export type AdViewUpdateWithoutAdInput = {
     id?: StringFieldUpdateOperationsInput | string
     viewed_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    country?: NullableStringFieldUpdateOperationsInput | string | null
     user?: UserUpdateOneWithoutAdViewsNestedInput
     profile?: SharedAccountUserUpdateOneWithoutAdViewsNestedInput
   }
@@ -62037,6 +62083,7 @@ export namespace Prisma {
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     profileId?: NullableStringFieldUpdateOperationsInput | string | null
     viewed_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    country?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AdViewUncheckedUpdateManyWithoutAdInput = {
@@ -62044,6 +62091,7 @@ export namespace Prisma {
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     profileId?: NullableStringFieldUpdateOperationsInput | string | null
     viewed_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    country?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
 

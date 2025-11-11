@@ -653,6 +653,7 @@ model AdView {
   profile   SharedAccountUser? @relation(fields: [profileId], references: [id])
   profileId String?
   viewed_at DateTime           @default(now())
+  country   String?
 }
 
 // =============================================

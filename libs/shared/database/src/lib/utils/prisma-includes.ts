@@ -7,6 +7,23 @@ export const attachmentInclude = {
   ad:true
 } as const;
 
+export const adInclude = {
+  attachment: {
+    include: attachmentInclude
+  }
+} as const;
+
+export const adViewInclude = {
+  ad: {
+    select: {
+      id: true,
+      title: true
+    }
+  },
+  user: true,
+  profile: true
+} as const;
+
 export const metadataInclude = {
   format: true,
   category: true,
@@ -122,3 +139,7 @@ export const adminInclude = {
   emailValidation: true
 } as const;
 
+export const userVideoViewInclude = {
+  user:true,
+  movie:true
+} as const;
