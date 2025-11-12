@@ -1,6 +1,6 @@
-version: '3.8'
 
 services:
+  # Votre base de données existante
   safliix-db:
     image: postgres
     container_name: safliix-db
@@ -15,6 +15,48 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  # Base de données DÉDIÉE à Keycloak
+  keycloak-db:
+    image: postgres:14
+    container_name: keycloak-db
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: password # Mot de passe à changer en production!
+    volumes:
+      - keycloak_db_data:/var/lib/postgresql/data
+    networks:
+      - sevencorp
+    restart: unless-stopped
+
+  # Service Keycloak
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    container_name: keycloak
+    environment:
+      # Configuration de la connexion DB
+      # Utilisation du nom du service Docker pour le host : keycloak-db
+      - KC_DB=postgres
+      - KC_DB_URL=jdbc:postgresql://keycloak-db:5432/keycloak
+      - KC_DB_USERNAME=keycloak
+      - KC_DB_PASSWORD=password
+      # Identifiants de l'administrateur Keycloak initial
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin # Mot de passe à changer en production!
+      # Configuration du hostname
+      - KC_HOSTNAME=localhost
+      - KC_HTTP_PORT=8080
+      - KC_PROXY=edge
+    ports:
+      - "8080:8080" # Port d'accès à la console Keycloak
+    command: start-dev # Démarrage en mode développement
+    depends_on:
+      - keycloak-db # S'assurer que la DB est prête
+    networks:
+      - sevencorp
+    restart: unless-stopped
+
+  # ... (Vos services Redis existants)
   safliix-redis:
     image: redis
     container_name: safliix-redis
@@ -42,3 +84,4 @@ networks:
 volumes:
   postgres_data:
   redis_data:
+  keycloak_db_data: # Nouveau volume pour la DB Keycloak

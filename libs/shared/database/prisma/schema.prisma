@@ -93,15 +93,19 @@ model Session {
   userId       String?
   admin        Admin?   @relation(fields: [adminId], references: [id])
   adminId      String?
+  profile      SharedAccountUser? @relation(fields: [profileId], references: [id])
+  profileId    String?
   refreshToken String   @unique
   ipAddress    String?
   userAgent    String?
   expiresAt    DateTime
+  sessionType  SessionType @default(USER)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([userId, refreshToken])
+  @@index([profileId])
 }
 
 enum AdminRole {
@@ -211,8 +215,14 @@ model SharedAccountUser {
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
   activeStreams ActiveStream[]
+  sessions      Session[]
 
   @@unique([sharedAccountId, profileName])
+}
+
+enum SessionType {
+  USER
+  PROFILE
 }
 
 // =============================================

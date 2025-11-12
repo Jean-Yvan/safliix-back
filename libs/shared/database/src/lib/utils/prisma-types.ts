@@ -25,6 +25,7 @@ export type MetadataWithRelations = Prisma.VideoMetadataGetPayload<{
 export type VideoFormatWithoutRelation = Prisma.VideoFormatGetPayload<object>
 export type VideoCategoryWithoutRelation = Prisma.VideoCategoryGetPayload<object>;
 export type MediaFileWithoutRelation = Prisma.MediaFileGetPayload<object>;
+export type ActiveStreamWithoutRelation = Prisma.ActiveStreamGetPayload<object>;
 export type VideoGenderWithoutRelation = Prisma.VideoGenreGetPayload<object>;
 
 export type MovieWithRelations = Prisma.MovieGetPayload<{

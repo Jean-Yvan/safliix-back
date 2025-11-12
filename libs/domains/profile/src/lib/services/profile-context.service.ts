@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PrismaService } from '@safliix-back/database';
 
-type ProfileContext = {
+export type ProfileContext = {
   profileId: string;
   accountId: string;
 };

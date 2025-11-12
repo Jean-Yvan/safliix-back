@@ -3,7 +3,7 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaService, sharedAccountUserInclude, sharedAccountInclude } from "@safliix-back/database";
 import { Result, Ok, Err } from "oxide.ts";
-import { ISharedAccountRepository } from "../domain/ports/shared-account.repository";
+import { ISharedAccountRepository, SharedAccountLimitDetails } from "../domain/ports/shared-account.repository";
 import { SharedAccount } from "../domain/entities/shared-account.entity";
 import { SharedAccountUser } from "../domain/entities/shared-account-user.entity"; // L'entité corrigée
 import { SharedAccountMapper } from "../domain/mappers/shared-account.mapper";
@@ -113,36 +113,153 @@ export class SharedAccountRepositoryImpl implements ISharedAccountRepository {
   // --- MÉTHODES RESTANTES (Pas de changement lié au PIN) ---
 
   async getSharedAccountById(accountId: string): Promise<Result<SharedAccount, Error>> {
-    // ... (Code inchangé)
+    try {
+      const account = await this.prisma.sharedAccount.findUnique({
+        where: { id: accountId },
+        include: sharedAccountInclude,
+      });
+
+      if (!account) {
+        return Err(new Error("Shared account not found"));
+      }
+
+      return Ok(SharedAccountMapper.toDomain(account));
+    } catch (e) {
+      return Err(e as Error);
+    }
   }
 
   async removeProfile(profileId: string): Promise<Result<boolean, Error>> {
-    // ... (Code inchangé)
+    try {
+      await this.prisma.sharedAccountUser.delete({
+        where: { id: profileId },
+      });
+
+      return Ok(true);
+    } catch (e) {
+      return Err(e as Error);
+    }
   }
 
   async listProfiles(accountId: string): Promise<Result<SharedAccountUser[], Error>> {
-    // ... (Code inchangé)
+    try {
+      const profiles = await this.prisma.sharedAccountUser.findMany({
+        where: { sharedAccountId: accountId },
+        include: sharedAccountUserInclude,
+        orderBy: { createdAt: 'asc' },
+      });
+
+      return Ok(profiles.map((profile) => SharedAccountUserMapper.toDomain(profile)));
+    } catch (e) {
+      return Err(e as Error);
+    }
   }
   
   async deleteSharedAccount(accountId: string): Promise<Result<boolean, Error>> {
-    // ... (Code inchangé)
+    try {
+      await this.prisma.sharedAccount.delete({
+        where: { id: accountId },
+      });
+
+      return Ok(true);
+    } catch (e) {
+      return Err(e as Error);
+    }
   }
 
   async updateProfile(
     profileId: string,
-    data: Partial<Pick<SharedAccountUser, "profileName" | "avatarUrl" | "pinCode">>
+    data: SharedAccountUser
   ): Promise<Result<SharedAccountUser, Error>> {
     // IMPORTANT: Si 'pinCode' est dans 'data', il doit déjà être un VO/Hash ici
     try {
       // Le mapper doit gérer l'extraction du hash si pinCode est passé.
-      const updateData = data.pinCode ? { pinCode: (data.pinCode as Password).value } : data;
+      const updateData = SharedAccountUserMapper.toPrismaUpdate(profileId,data);
       
-      const updated = await this.prisma.sharedAccountUser.update({
-        where: { id: profileId },
-        data: updateData,
-      });
+      const updated = await this.prisma.sharedAccountUser.update({...updateData, include:sharedAccountUserInclude});
+
+      const result = SharedAccountUserMapper.toDomain(updated);
       // Le mappage vers le domaine peut nécessiter des ajustements si l'objet DB n'est pas complet
-      return Ok(updated as unknown as SharedAccountUser);
+      return Ok(result);
+    } catch (e) {
+      return Err(e as Error);
+    }
+  }
+
+  async getAccountWithDetails(accountId: string): Promise<Result<SharedAccountLimitDetails, Error>> {
+    try {
+      const now = new Date();
+      const account = await this.prisma.sharedAccount.findUnique({
+        where: { id: accountId },
+        include: {
+          owner: {
+            select: {
+              id: true,
+              subscriptions: {
+                where: {
+                  endDate: { gt: now },
+                },
+                orderBy: { endDate: 'desc' },
+                take: 1,
+                include: {
+                  plan: {
+                    select: { maxSharedAccounts: true },
+                  },
+                },
+              },
+            },
+          },
+          profiles: {
+            select: { id: true },
+          },
+        },
+      });
+
+      if (!account) {
+        return Err(new Error("Shared account not found"));
+      }
+
+      const activeSubscription = account.owner.subscriptions[0];
+
+      if (!activeSubscription?.plan) {
+        return Err(
+          new Error('Aucun abonnement actif trouvé pour ce compte partagé.'),
+        );
+      }
+
+      const details: SharedAccountLimitDetails = {
+        accountId: account.id,
+        ownerUserId: account.ownerUserId,
+        currentActiveProfiles: account.profiles.length,
+        maxSharedAccountsLimit: activeSubscription.plan.maxSharedAccounts,
+      };
+
+      return Ok(details);
+    } catch (e) {
+      return Err(e as Error);
+    }
+  }
+
+  async findProfileForOwner(
+    accountId: string,
+    profileId: string,
+  ): Promise<Result<SharedAccountUser, Error>> {
+    try {
+      const profile = await this.prisma.sharedAccountUser.findFirst({
+        where: {
+          id: profileId,
+          sharedAccount: {
+            ownerUserId: accountId,
+          },
+        },
+        include: sharedAccountUserInclude,
+      });
+
+      if (!profile) {
+        return Err(new Error('Profil introuvable pour ce compte.'));
+      }
+
+      return Ok(SharedAccountUserMapper.toDomain(profile));
     } catch (e) {
       return Err(e as Error);
     }

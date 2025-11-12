@@ -223,6 +223,14 @@ export const SharedAccountStatus: {
 export type SharedAccountStatus = (typeof SharedAccountStatus)[keyof typeof SharedAccountStatus]
 
 
+export const SessionType: {
+  USER: 'USER',
+  PROFILE: 'PROFILE'
+};
+
+export type SessionType = (typeof SessionType)[keyof typeof SessionType]
+
+
 export const MediaType: {
   VIDEO: 'VIDEO',
   IMAGE: 'IMAGE'
@@ -318,6 +326,10 @@ export const RenewalStatus: typeof $Enums.RenewalStatus
 export type SharedAccountStatus = $Enums.SharedAccountStatus
 
 export const SharedAccountStatus: typeof $Enums.SharedAccountStatus
+
+export type SessionType = $Enums.SessionType
+
+export const SessionType: typeof $Enums.SessionType
 
 export type MediaType = $Enums.MediaType
 
@@ -4252,12 +4264,14 @@ export namespace Prisma {
     adViews: number
     activities: number
     activeStreams: number
+    sessions: number
   }
 
   export type SharedAccountUserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     adViews?: boolean | SharedAccountUserCountOutputTypeCountAdViewsArgs
     activities?: boolean | SharedAccountUserCountOutputTypeCountActivitiesArgs
     activeStreams?: boolean | SharedAccountUserCountOutputTypeCountActiveStreamsArgs
+    sessions?: boolean | SharedAccountUserCountOutputTypeCountSessionsArgs
   }
 
   // Custom InputTypes
@@ -4290,6 +4304,13 @@ export namespace Prisma {
    */
   export type SharedAccountUserCountOutputTypeCountActiveStreamsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ActiveStreamWhereInput
+  }
+
+  /**
+   * SharedAccountUserCountOutputType without action
+   */
+  export type SharedAccountUserCountOutputTypeCountSessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SessionWhereInput
   }
 
 
@@ -8616,10 +8637,12 @@ export namespace Prisma {
     id: string | null
     userId: string | null
     adminId: string | null
+    profileId: string | null
     refreshToken: string | null
     ipAddress: string | null
     userAgent: string | null
     expiresAt: Date | null
+    sessionType: $Enums.SessionType | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -8628,10 +8651,12 @@ export namespace Prisma {
     id: string | null
     userId: string | null
     adminId: string | null
+    profileId: string | null
     refreshToken: string | null
     ipAddress: string | null
     userAgent: string | null
     expiresAt: Date | null
+    sessionType: $Enums.SessionType | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -8640,10 +8665,12 @@ export namespace Prisma {
     id: number
     userId: number
     adminId: number
+    profileId: number
     refreshToken: number
     ipAddress: number
     userAgent: number
     expiresAt: number
+    sessionType: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -8654,10 +8681,12 @@ export namespace Prisma {
     id?: true
     userId?: true
     adminId?: true
+    profileId?: true
     refreshToken?: true
     ipAddress?: true
     userAgent?: true
     expiresAt?: true
+    sessionType?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -8666,10 +8695,12 @@ export namespace Prisma {
     id?: true
     userId?: true
     adminId?: true
+    profileId?: true
     refreshToken?: true
     ipAddress?: true
     userAgent?: true
     expiresAt?: true
+    sessionType?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -8678,10 +8709,12 @@ export namespace Prisma {
     id?: true
     userId?: true
     adminId?: true
+    profileId?: true
     refreshToken?: true
     ipAddress?: true
     userAgent?: true
     expiresAt?: true
+    sessionType?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -8763,10 +8796,12 @@ export namespace Prisma {
     id: string
     userId: string | null
     adminId: string | null
+    profileId: string | null
     refreshToken: string
     ipAddress: string | null
     userAgent: string | null
     expiresAt: Date
+    sessionType: $Enums.SessionType
     createdAt: Date
     updatedAt: Date
     _count: SessionCountAggregateOutputType | null
@@ -8792,68 +8827,82 @@ export namespace Prisma {
     id?: boolean
     userId?: boolean
     adminId?: boolean
+    profileId?: boolean
     refreshToken?: boolean
     ipAddress?: boolean
     userAgent?: boolean
     expiresAt?: boolean
+    sessionType?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | Session$userArgs<ExtArgs>
     admin?: boolean | Session$adminArgs<ExtArgs>
+    profile?: boolean | Session$profileArgs<ExtArgs>
   }, ExtArgs["result"]["session"]>
 
   export type SessionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
     adminId?: boolean
+    profileId?: boolean
     refreshToken?: boolean
     ipAddress?: boolean
     userAgent?: boolean
     expiresAt?: boolean
+    sessionType?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | Session$userArgs<ExtArgs>
     admin?: boolean | Session$adminArgs<ExtArgs>
+    profile?: boolean | Session$profileArgs<ExtArgs>
   }, ExtArgs["result"]["session"]>
 
   export type SessionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
     adminId?: boolean
+    profileId?: boolean
     refreshToken?: boolean
     ipAddress?: boolean
     userAgent?: boolean
     expiresAt?: boolean
+    sessionType?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | Session$userArgs<ExtArgs>
     admin?: boolean | Session$adminArgs<ExtArgs>
+    profile?: boolean | Session$profileArgs<ExtArgs>
   }, ExtArgs["result"]["session"]>
 
   export type SessionSelectScalar = {
     id?: boolean
     userId?: boolean
     adminId?: boolean
+    profileId?: boolean
     refreshToken?: boolean
     ipAddress?: boolean
     userAgent?: boolean
     expiresAt?: boolean
+    sessionType?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type SessionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "adminId" | "refreshToken" | "ipAddress" | "userAgent" | "expiresAt" | "createdAt" | "updatedAt", ExtArgs["result"]["session"]>
+  export type SessionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "adminId" | "profileId" | "refreshToken" | "ipAddress" | "userAgent" | "expiresAt" | "sessionType" | "createdAt" | "updatedAt", ExtArgs["result"]["session"]>
   export type SessionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | Session$userArgs<ExtArgs>
     admin?: boolean | Session$adminArgs<ExtArgs>
+    profile?: boolean | Session$profileArgs<ExtArgs>
   }
   export type SessionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | Session$userArgs<ExtArgs>
     admin?: boolean | Session$adminArgs<ExtArgs>
+    profile?: boolean | Session$profileArgs<ExtArgs>
   }
   export type SessionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | Session$userArgs<ExtArgs>
     admin?: boolean | Session$adminArgs<ExtArgs>
+    profile?: boolean | Session$profileArgs<ExtArgs>
   }
 
   export type $SessionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -8861,15 +8910,18 @@ export namespace Prisma {
     objects: {
       user: Prisma.$UserPayload<ExtArgs> | null
       admin: Prisma.$AdminPayload<ExtArgs> | null
+      profile: Prisma.$SharedAccountUserPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       userId: string | null
       adminId: string | null
+      profileId: string | null
       refreshToken: string
       ipAddress: string | null
       userAgent: string | null
       expiresAt: Date
+      sessionType: $Enums.SessionType
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["session"]>
@@ -9268,6 +9320,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends Session$userArgs<ExtArgs> = {}>(args?: Subset<T, Session$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     admin<T extends Session$adminArgs<ExtArgs> = {}>(args?: Subset<T, Session$adminArgs<ExtArgs>>): Prisma__AdminClient<$Result.GetResult<Prisma.$AdminPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    profile<T extends Session$profileArgs<ExtArgs> = {}>(args?: Subset<T, Session$profileArgs<ExtArgs>>): Prisma__SharedAccountUserClient<$Result.GetResult<Prisma.$SharedAccountUserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9300,10 +9353,12 @@ export namespace Prisma {
     readonly id: FieldRef<"Session", 'String'>
     readonly userId: FieldRef<"Session", 'String'>
     readonly adminId: FieldRef<"Session", 'String'>
+    readonly profileId: FieldRef<"Session", 'String'>
     readonly refreshToken: FieldRef<"Session", 'String'>
     readonly ipAddress: FieldRef<"Session", 'String'>
     readonly userAgent: FieldRef<"Session", 'String'>
     readonly expiresAt: FieldRef<"Session", 'DateTime'>
+    readonly sessionType: FieldRef<"Session", 'SessionType'>
     readonly createdAt: FieldRef<"Session", 'DateTime'>
     readonly updatedAt: FieldRef<"Session", 'DateTime'>
   }
@@ -9737,6 +9792,25 @@ export namespace Prisma {
      */
     include?: AdminInclude<ExtArgs> | null
     where?: AdminWhereInput
+  }
+
+  /**
+   * Session.profile
+   */
+  export type Session$profileArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SharedAccountUser
+     */
+    select?: SharedAccountUserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SharedAccountUser
+     */
+    omit?: SharedAccountUserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SharedAccountUserInclude<ExtArgs> | null
+    where?: SharedAccountUserWhereInput
   }
 
   /**
@@ -14369,6 +14443,7 @@ export namespace Prisma {
     adViews?: boolean | SharedAccountUser$adViewsArgs<ExtArgs>
     activities?: boolean | SharedAccountUser$activitiesArgs<ExtArgs>
     activeStreams?: boolean | SharedAccountUser$activeStreamsArgs<ExtArgs>
+    sessions?: boolean | SharedAccountUser$sessionsArgs<ExtArgs>
     _count?: boolean | SharedAccountUserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["sharedAccountUser"]>
 
@@ -14413,6 +14488,7 @@ export namespace Prisma {
     adViews?: boolean | SharedAccountUser$adViewsArgs<ExtArgs>
     activities?: boolean | SharedAccountUser$activitiesArgs<ExtArgs>
     activeStreams?: boolean | SharedAccountUser$activeStreamsArgs<ExtArgs>
+    sessions?: boolean | SharedAccountUser$sessionsArgs<ExtArgs>
     _count?: boolean | SharedAccountUserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type SharedAccountUserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -14429,6 +14505,7 @@ export namespace Prisma {
       adViews: Prisma.$AdViewPayload<ExtArgs>[]
       activities: Prisma.$SharedProfileActivityPayload<ExtArgs>[]
       activeStreams: Prisma.$ActiveStreamPayload<ExtArgs>[]
+      sessions: Prisma.$SessionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -14837,6 +14914,7 @@ export namespace Prisma {
     adViews<T extends SharedAccountUser$adViewsArgs<ExtArgs> = {}>(args?: Subset<T, SharedAccountUser$adViewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdViewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     activities<T extends SharedAccountUser$activitiesArgs<ExtArgs> = {}>(args?: Subset<T, SharedAccountUser$activitiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SharedProfileActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     activeStreams<T extends SharedAccountUser$activeStreamsArgs<ExtArgs> = {}>(args?: Subset<T, SharedAccountUser$activeStreamsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActiveStreamPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    sessions<T extends SharedAccountUser$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, SharedAccountUser$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -15339,6 +15417,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ActiveStreamScalarFieldEnum | ActiveStreamScalarFieldEnum[]
+  }
+
+  /**
+   * SharedAccountUser.sessions
+   */
+  export type SharedAccountUser$sessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Session
+     */
+    select?: SessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Session
+     */
+    omit?: SessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SessionInclude<ExtArgs> | null
+    where?: SessionWhereInput
+    orderBy?: SessionOrderByWithRelationInput | SessionOrderByWithRelationInput[]
+    cursor?: SessionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SessionScalarFieldEnum | SessionScalarFieldEnum[]
   }
 
   /**
@@ -43798,10 +43900,12 @@ export namespace Prisma {
     id: 'id',
     userId: 'userId',
     adminId: 'adminId',
+    profileId: 'profileId',
     refreshToken: 'refreshToken',
     ipAddress: 'ipAddress',
     userAgent: 'userAgent',
     expiresAt: 'expiresAt',
+    sessionType: 'sessionType',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -44284,6 +44388,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'SessionType'
+   */
+  export type EnumSessionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SessionType'>
+    
+
+
+  /**
+   * Reference to a field of type 'SessionType[]'
+   */
+  export type ListEnumSessionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SessionType[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -44730,28 +44848,34 @@ export namespace Prisma {
     id?: StringFilter<"Session"> | string
     userId?: StringNullableFilter<"Session"> | string | null
     adminId?: StringNullableFilter<"Session"> | string | null
+    profileId?: StringNullableFilter<"Session"> | string | null
     refreshToken?: StringFilter<"Session"> | string
     ipAddress?: StringNullableFilter<"Session"> | string | null
     userAgent?: StringNullableFilter<"Session"> | string | null
     expiresAt?: DateTimeFilter<"Session"> | Date | string
+    sessionType?: EnumSessionTypeFilter<"Session"> | $Enums.SessionType
     createdAt?: DateTimeFilter<"Session"> | Date | string
     updatedAt?: DateTimeFilter<"Session"> | Date | string
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     admin?: XOR<AdminNullableScalarRelationFilter, AdminWhereInput> | null
+    profile?: XOR<SharedAccountUserNullableScalarRelationFilter, SharedAccountUserWhereInput> | null
   }
 
   export type SessionOrderByWithRelationInput = {
     id?: SortOrder
     userId?: SortOrderInput | SortOrder
     adminId?: SortOrderInput | SortOrder
+    profileId?: SortOrderInput | SortOrder
     refreshToken?: SortOrder
     ipAddress?: SortOrderInput | SortOrder
     userAgent?: SortOrderInput | SortOrder
     expiresAt?: SortOrder
+    sessionType?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     user?: UserOrderByWithRelationInput
     admin?: AdminOrderByWithRelationInput
+    profile?: SharedAccountUserOrderByWithRelationInput
   }
 
   export type SessionWhereUniqueInput = Prisma.AtLeast<{
@@ -44762,23 +44886,28 @@ export namespace Prisma {
     NOT?: SessionWhereInput | SessionWhereInput[]
     userId?: StringNullableFilter<"Session"> | string | null
     adminId?: StringNullableFilter<"Session"> | string | null
+    profileId?: StringNullableFilter<"Session"> | string | null
     ipAddress?: StringNullableFilter<"Session"> | string | null
     userAgent?: StringNullableFilter<"Session"> | string | null
     expiresAt?: DateTimeFilter<"Session"> | Date | string
+    sessionType?: EnumSessionTypeFilter<"Session"> | $Enums.SessionType
     createdAt?: DateTimeFilter<"Session"> | Date | string
     updatedAt?: DateTimeFilter<"Session"> | Date | string
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     admin?: XOR<AdminNullableScalarRelationFilter, AdminWhereInput> | null
+    profile?: XOR<SharedAccountUserNullableScalarRelationFilter, SharedAccountUserWhereInput> | null
   }, "id" | "refreshToken">
 
   export type SessionOrderByWithAggregationInput = {
     id?: SortOrder
     userId?: SortOrderInput | SortOrder
     adminId?: SortOrderInput | SortOrder
+    profileId?: SortOrderInput | SortOrder
     refreshToken?: SortOrder
     ipAddress?: SortOrderInput | SortOrder
     userAgent?: SortOrderInput | SortOrder
     expiresAt?: SortOrder
+    sessionType?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: SessionCountOrderByAggregateInput
@@ -44793,10 +44922,12 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Session"> | string
     userId?: StringNullableWithAggregatesFilter<"Session"> | string | null
     adminId?: StringNullableWithAggregatesFilter<"Session"> | string | null
+    profileId?: StringNullableWithAggregatesFilter<"Session"> | string | null
     refreshToken?: StringWithAggregatesFilter<"Session"> | string
     ipAddress?: StringNullableWithAggregatesFilter<"Session"> | string | null
     userAgent?: StringNullableWithAggregatesFilter<"Session"> | string | null
     expiresAt?: DateTimeWithAggregatesFilter<"Session"> | Date | string
+    sessionType?: EnumSessionTypeWithAggregatesFilter<"Session"> | $Enums.SessionType
     createdAt?: DateTimeWithAggregatesFilter<"Session"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Session"> | Date | string
   }
@@ -45083,6 +45214,7 @@ export namespace Prisma {
     adViews?: AdViewListRelationFilter
     activities?: SharedProfileActivityListRelationFilter
     activeStreams?: ActiveStreamListRelationFilter
+    sessions?: SessionListRelationFilter
   }
 
   export type SharedAccountUserOrderByWithRelationInput = {
@@ -45098,6 +45230,7 @@ export namespace Prisma {
     adViews?: AdViewOrderByRelationAggregateInput
     activities?: SharedProfileActivityOrderByRelationAggregateInput
     activeStreams?: ActiveStreamOrderByRelationAggregateInput
+    sessions?: SessionOrderByRelationAggregateInput
   }
 
   export type SharedAccountUserWhereUniqueInput = Prisma.AtLeast<{
@@ -45117,6 +45250,7 @@ export namespace Prisma {
     adViews?: AdViewListRelationFilter
     activities?: SharedProfileActivityListRelationFilter
     activeStreams?: ActiveStreamListRelationFilter
+    sessions?: SessionListRelationFilter
   }, "id" | "sharedAccountId_profileName">
 
   export type SharedAccountUserOrderByWithAggregationInput = {
@@ -47200,20 +47334,24 @@ export namespace Prisma {
     ipAddress?: string | null
     userAgent?: string | null
     expiresAt: Date | string
+    sessionType?: $Enums.SessionType
     createdAt?: Date | string
     updatedAt?: Date | string
     user?: UserCreateNestedOneWithoutSessionsInput
     admin?: AdminCreateNestedOneWithoutSessionsInput
+    profile?: SharedAccountUserCreateNestedOneWithoutSessionsInput
   }
 
   export type SessionUncheckedCreateInput = {
     id?: string
     userId?: string | null
     adminId?: string | null
+    profileId?: string | null
     refreshToken: string
     ipAddress?: string | null
     userAgent?: string | null
     expiresAt: Date | string
+    sessionType?: $Enums.SessionType
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -47224,20 +47362,24 @@ export namespace Prisma {
     ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
     userAgent?: NullableStringFieldUpdateOperationsInput | string | null
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessionType?: EnumSessionTypeFieldUpdateOperationsInput | $Enums.SessionType
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneWithoutSessionsNestedInput
     admin?: AdminUpdateOneWithoutSessionsNestedInput
+    profile?: SharedAccountUserUpdateOneWithoutSessionsNestedInput
   }
 
   export type SessionUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     adminId?: NullableStringFieldUpdateOperationsInput | string | null
+    profileId?: NullableStringFieldUpdateOperationsInput | string | null
     refreshToken?: StringFieldUpdateOperationsInput | string
     ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
     userAgent?: NullableStringFieldUpdateOperationsInput | string | null
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessionType?: EnumSessionTypeFieldUpdateOperationsInput | $Enums.SessionType
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -47246,10 +47388,12 @@ export namespace Prisma {
     id?: string
     userId?: string | null
     adminId?: string | null
+    profileId?: string | null
     refreshToken: string
     ipAddress?: string | null
     userAgent?: string | null
     expiresAt: Date | string
+    sessionType?: $Enums.SessionType
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -47260,6 +47404,7 @@ export namespace Prisma {
     ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
     userAgent?: NullableStringFieldUpdateOperationsInput | string | null
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessionType?: EnumSessionTypeFieldUpdateOperationsInput | $Enums.SessionType
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -47268,10 +47413,12 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     adminId?: NullableStringFieldUpdateOperationsInput | string | null
+    profileId?: NullableStringFieldUpdateOperationsInput | string | null
     refreshToken?: StringFieldUpdateOperationsInput | string
     ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
     userAgent?: NullableStringFieldUpdateOperationsInput | string | null
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessionType?: EnumSessionTypeFieldUpdateOperationsInput | $Enums.SessionType
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -47564,6 +47711,7 @@ export namespace Prisma {
     adViews?: AdViewCreateNestedManyWithoutProfileInput
     activities?: SharedProfileActivityCreateNestedManyWithoutProfileInput
     activeStreams?: ActiveStreamCreateNestedManyWithoutProfileInput
+    sessions?: SessionCreateNestedManyWithoutProfileInput
   }
 
   export type SharedAccountUserUncheckedCreateInput = {
@@ -47578,6 +47726,7 @@ export namespace Prisma {
     adViews?: AdViewUncheckedCreateNestedManyWithoutProfileInput
     activities?: SharedProfileActivityUncheckedCreateNestedManyWithoutProfileInput
     activeStreams?: ActiveStreamUncheckedCreateNestedManyWithoutProfileInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutProfileInput
   }
 
   export type SharedAccountUserUpdateInput = {
@@ -47592,6 +47741,7 @@ export namespace Prisma {
     adViews?: AdViewUpdateManyWithoutProfileNestedInput
     activities?: SharedProfileActivityUpdateManyWithoutProfileNestedInput
     activeStreams?: ActiveStreamUpdateManyWithoutProfileNestedInput
+    sessions?: SessionUpdateManyWithoutProfileNestedInput
   }
 
   export type SharedAccountUserUncheckedUpdateInput = {
@@ -47606,6 +47756,7 @@ export namespace Prisma {
     adViews?: AdViewUncheckedUpdateManyWithoutProfileNestedInput
     activities?: SharedProfileActivityUncheckedUpdateManyWithoutProfileNestedInput
     activeStreams?: ActiveStreamUncheckedUpdateManyWithoutProfileNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutProfileNestedInput
   }
 
   export type SharedAccountUserCreateManyInput = {
@@ -49784,14 +49935,28 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
+  export type EnumSessionTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.SessionType | EnumSessionTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.SessionType[] | ListEnumSessionTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SessionType[] | ListEnumSessionTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumSessionTypeFilter<$PrismaModel> | $Enums.SessionType
+  }
+
+  export type SharedAccountUserNullableScalarRelationFilter = {
+    is?: SharedAccountUserWhereInput | null
+    isNot?: SharedAccountUserWhereInput | null
+  }
+
   export type SessionCountOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
     adminId?: SortOrder
+    profileId?: SortOrder
     refreshToken?: SortOrder
     ipAddress?: SortOrder
     userAgent?: SortOrder
     expiresAt?: SortOrder
+    sessionType?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -49800,10 +49965,12 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     adminId?: SortOrder
+    profileId?: SortOrder
     refreshToken?: SortOrder
     ipAddress?: SortOrder
     userAgent?: SortOrder
     expiresAt?: SortOrder
+    sessionType?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -49812,12 +49979,24 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     adminId?: SortOrder
+    profileId?: SortOrder
     refreshToken?: SortOrder
     ipAddress?: SortOrder
     userAgent?: SortOrder
     expiresAt?: SortOrder
+    sessionType?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type EnumSessionTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.SessionType | EnumSessionTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.SessionType[] | ListEnumSessionTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SessionType[] | ListEnumSessionTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumSessionTypeWithAggregatesFilter<$PrismaModel> | $Enums.SessionType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumSessionTypeFilter<$PrismaModel>
+    _max?: NestedEnumSessionTypeFilter<$PrismaModel>
   }
 
   export type SharedAccountUserScalarRelationFilter = {
@@ -51227,11 +51406,6 @@ export namespace Prisma {
     isNot?: AdWhereInput
   }
 
-  export type SharedAccountUserNullableScalarRelationFilter = {
-    is?: SharedAccountUserWhereInput | null
-    isNot?: SharedAccountUserWhereInput | null
-  }
-
   export type AdViewCountOrderByAggregateInput = {
     id?: SortOrder
     adId?: SortOrder
@@ -51919,6 +52093,16 @@ export namespace Prisma {
     connect?: AdminWhereUniqueInput
   }
 
+  export type SharedAccountUserCreateNestedOneWithoutSessionsInput = {
+    create?: XOR<SharedAccountUserCreateWithoutSessionsInput, SharedAccountUserUncheckedCreateWithoutSessionsInput>
+    connectOrCreate?: SharedAccountUserCreateOrConnectWithoutSessionsInput
+    connect?: SharedAccountUserWhereUniqueInput
+  }
+
+  export type EnumSessionTypeFieldUpdateOperationsInput = {
+    set?: $Enums.SessionType
+  }
+
   export type UserUpdateOneWithoutSessionsNestedInput = {
     create?: XOR<UserCreateWithoutSessionsInput, UserUncheckedCreateWithoutSessionsInput>
     connectOrCreate?: UserCreateOrConnectWithoutSessionsInput
@@ -51937,6 +52121,16 @@ export namespace Prisma {
     delete?: AdminWhereInput | boolean
     connect?: AdminWhereUniqueInput
     update?: XOR<XOR<AdminUpdateToOneWithWhereWithoutSessionsInput, AdminUpdateWithoutSessionsInput>, AdminUncheckedUpdateWithoutSessionsInput>
+  }
+
+  export type SharedAccountUserUpdateOneWithoutSessionsNestedInput = {
+    create?: XOR<SharedAccountUserCreateWithoutSessionsInput, SharedAccountUserUncheckedCreateWithoutSessionsInput>
+    connectOrCreate?: SharedAccountUserCreateOrConnectWithoutSessionsInput
+    upsert?: SharedAccountUserUpsertWithoutSessionsInput
+    disconnect?: SharedAccountUserWhereInput | boolean
+    delete?: SharedAccountUserWhereInput | boolean
+    connect?: SharedAccountUserWhereUniqueInput
+    update?: XOR<XOR<SharedAccountUserUpdateToOneWithWhereWithoutSessionsInput, SharedAccountUserUpdateWithoutSessionsInput>, SharedAccountUserUncheckedUpdateWithoutSessionsInput>
   }
 
   export type SharedAccountUserCreateNestedOneWithoutActiveStreamsInput = {
@@ -52148,6 +52342,13 @@ export namespace Prisma {
     connect?: ActiveStreamWhereUniqueInput | ActiveStreamWhereUniqueInput[]
   }
 
+  export type SessionCreateNestedManyWithoutProfileInput = {
+    create?: XOR<SessionCreateWithoutProfileInput, SessionUncheckedCreateWithoutProfileInput> | SessionCreateWithoutProfileInput[] | SessionUncheckedCreateWithoutProfileInput[]
+    connectOrCreate?: SessionCreateOrConnectWithoutProfileInput | SessionCreateOrConnectWithoutProfileInput[]
+    createMany?: SessionCreateManyProfileInputEnvelope
+    connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+  }
+
   export type AdViewUncheckedCreateNestedManyWithoutProfileInput = {
     create?: XOR<AdViewCreateWithoutProfileInput, AdViewUncheckedCreateWithoutProfileInput> | AdViewCreateWithoutProfileInput[] | AdViewUncheckedCreateWithoutProfileInput[]
     connectOrCreate?: AdViewCreateOrConnectWithoutProfileInput | AdViewCreateOrConnectWithoutProfileInput[]
@@ -52167,6 +52368,13 @@ export namespace Prisma {
     connectOrCreate?: ActiveStreamCreateOrConnectWithoutProfileInput | ActiveStreamCreateOrConnectWithoutProfileInput[]
     createMany?: ActiveStreamCreateManyProfileInputEnvelope
     connect?: ActiveStreamWhereUniqueInput | ActiveStreamWhereUniqueInput[]
+  }
+
+  export type SessionUncheckedCreateNestedManyWithoutProfileInput = {
+    create?: XOR<SessionCreateWithoutProfileInput, SessionUncheckedCreateWithoutProfileInput> | SessionCreateWithoutProfileInput[] | SessionUncheckedCreateWithoutProfileInput[]
+    connectOrCreate?: SessionCreateOrConnectWithoutProfileInput | SessionCreateOrConnectWithoutProfileInput[]
+    createMany?: SessionCreateManyProfileInputEnvelope
+    connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
   }
 
   export type SharedAccountUpdateOneRequiredWithoutProfilesNestedInput = {
@@ -52219,6 +52427,20 @@ export namespace Prisma {
     deleteMany?: ActiveStreamScalarWhereInput | ActiveStreamScalarWhereInput[]
   }
 
+  export type SessionUpdateManyWithoutProfileNestedInput = {
+    create?: XOR<SessionCreateWithoutProfileInput, SessionUncheckedCreateWithoutProfileInput> | SessionCreateWithoutProfileInput[] | SessionUncheckedCreateWithoutProfileInput[]
+    connectOrCreate?: SessionCreateOrConnectWithoutProfileInput | SessionCreateOrConnectWithoutProfileInput[]
+    upsert?: SessionUpsertWithWhereUniqueWithoutProfileInput | SessionUpsertWithWhereUniqueWithoutProfileInput[]
+    createMany?: SessionCreateManyProfileInputEnvelope
+    set?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    disconnect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    delete?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    update?: SessionUpdateWithWhereUniqueWithoutProfileInput | SessionUpdateWithWhereUniqueWithoutProfileInput[]
+    updateMany?: SessionUpdateManyWithWhereWithoutProfileInput | SessionUpdateManyWithWhereWithoutProfileInput[]
+    deleteMany?: SessionScalarWhereInput | SessionScalarWhereInput[]
+  }
+
   export type AdViewUncheckedUpdateManyWithoutProfileNestedInput = {
     create?: XOR<AdViewCreateWithoutProfileInput, AdViewUncheckedCreateWithoutProfileInput> | AdViewCreateWithoutProfileInput[] | AdViewUncheckedCreateWithoutProfileInput[]
     connectOrCreate?: AdViewCreateOrConnectWithoutProfileInput | AdViewCreateOrConnectWithoutProfileInput[]
@@ -52259,6 +52481,20 @@ export namespace Prisma {
     update?: ActiveStreamUpdateWithWhereUniqueWithoutProfileInput | ActiveStreamUpdateWithWhereUniqueWithoutProfileInput[]
     updateMany?: ActiveStreamUpdateManyWithWhereWithoutProfileInput | ActiveStreamUpdateManyWithWhereWithoutProfileInput[]
     deleteMany?: ActiveStreamScalarWhereInput | ActiveStreamScalarWhereInput[]
+  }
+
+  export type SessionUncheckedUpdateManyWithoutProfileNestedInput = {
+    create?: XOR<SessionCreateWithoutProfileInput, SessionUncheckedCreateWithoutProfileInput> | SessionCreateWithoutProfileInput[] | SessionUncheckedCreateWithoutProfileInput[]
+    connectOrCreate?: SessionCreateOrConnectWithoutProfileInput | SessionCreateOrConnectWithoutProfileInput[]
+    upsert?: SessionUpsertWithWhereUniqueWithoutProfileInput | SessionUpsertWithWhereUniqueWithoutProfileInput[]
+    createMany?: SessionCreateManyProfileInputEnvelope
+    set?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    disconnect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    delete?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    update?: SessionUpdateWithWhereUniqueWithoutProfileInput | SessionUpdateWithWhereUniqueWithoutProfileInput[]
+    updateMany?: SessionUpdateManyWithWhereWithoutProfileInput | SessionUpdateManyWithWhereWithoutProfileInput[]
+    deleteMany?: SessionScalarWhereInput | SessionScalarWhereInput[]
   }
 
   export type VideoFormatCreateNestedOneWithoutVideosInput = {
@@ -54209,6 +54445,23 @@ export namespace Prisma {
     _max?: NestedEnumAdminRoleFilter<$PrismaModel>
   }
 
+  export type NestedEnumSessionTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.SessionType | EnumSessionTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.SessionType[] | ListEnumSessionTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SessionType[] | ListEnumSessionTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumSessionTypeFilter<$PrismaModel> | $Enums.SessionType
+  }
+
+  export type NestedEnumSessionTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.SessionType | EnumSessionTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.SessionType[] | ListEnumSessionTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SessionType[] | ListEnumSessionTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumSessionTypeWithAggregatesFilter<$PrismaModel> | $Enums.SessionType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumSessionTypeFilter<$PrismaModel>
+    _max?: NestedEnumSessionTypeFilter<$PrismaModel>
+  }
+
   export type NestedFloatFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel>
     in?: number[] | ListFloatFieldRefInput<$PrismaModel>
@@ -54460,18 +54713,22 @@ export namespace Prisma {
     ipAddress?: string | null
     userAgent?: string | null
     expiresAt: Date | string
+    sessionType?: $Enums.SessionType
     createdAt?: Date | string
     updatedAt?: Date | string
     admin?: AdminCreateNestedOneWithoutSessionsInput
+    profile?: SharedAccountUserCreateNestedOneWithoutSessionsInput
   }
 
   export type SessionUncheckedCreateWithoutUserInput = {
     id?: string
     adminId?: string | null
+    profileId?: string | null
     refreshToken: string
     ipAddress?: string | null
     userAgent?: string | null
     expiresAt: Date | string
+    sessionType?: $Enums.SessionType
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -54779,10 +55036,12 @@ export namespace Prisma {
     id?: StringFilter<"Session"> | string
     userId?: StringNullableFilter<"Session"> | string | null
     adminId?: StringNullableFilter<"Session"> | string | null
+    profileId?: StringNullableFilter<"Session"> | string | null
     refreshToken?: StringFilter<"Session"> | string
     ipAddress?: StringNullableFilter<"Session"> | string | null
     userAgent?: StringNullableFilter<"Session"> | string | null
     expiresAt?: DateTimeFilter<"Session"> | Date | string
+    sessionType?: EnumSessionTypeFilter<"Session"> | $Enums.SessionType
     createdAt?: DateTimeFilter<"Session"> | Date | string
     updatedAt?: DateTimeFilter<"Session"> | Date | string
   }
@@ -55061,18 +55320,22 @@ export namespace Prisma {
     ipAddress?: string | null
     userAgent?: string | null
     expiresAt: Date | string
+    sessionType?: $Enums.SessionType
     createdAt?: Date | string
     updatedAt?: Date | string
     user?: UserCreateNestedOneWithoutSessionsInput
+    profile?: SharedAccountUserCreateNestedOneWithoutSessionsInput
   }
 
   export type SessionUncheckedCreateWithoutAdminInput = {
     id?: string
     userId?: string | null
+    profileId?: string | null
     refreshToken: string
     ipAddress?: string | null
     userAgent?: string | null
     expiresAt: Date | string
+    sessionType?: $Enums.SessionType
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -55431,6 +55694,39 @@ export namespace Prisma {
     create: XOR<AdminCreateWithoutSessionsInput, AdminUncheckedCreateWithoutSessionsInput>
   }
 
+  export type SharedAccountUserCreateWithoutSessionsInput = {
+    id?: string
+    profileName: string
+    iskidProfile?: boolean
+    avatarUrl?: string | null
+    pinCode: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sharedAccount: SharedAccountCreateNestedOneWithoutProfilesInput
+    adViews?: AdViewCreateNestedManyWithoutProfileInput
+    activities?: SharedProfileActivityCreateNestedManyWithoutProfileInput
+    activeStreams?: ActiveStreamCreateNestedManyWithoutProfileInput
+  }
+
+  export type SharedAccountUserUncheckedCreateWithoutSessionsInput = {
+    id?: string
+    sharedAccountId: string
+    profileName: string
+    iskidProfile?: boolean
+    avatarUrl?: string | null
+    pinCode: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    adViews?: AdViewUncheckedCreateNestedManyWithoutProfileInput
+    activities?: SharedProfileActivityUncheckedCreateNestedManyWithoutProfileInput
+    activeStreams?: ActiveStreamUncheckedCreateNestedManyWithoutProfileInput
+  }
+
+  export type SharedAccountUserCreateOrConnectWithoutSessionsInput = {
+    where: SharedAccountUserWhereUniqueInput
+    create: XOR<SharedAccountUserCreateWithoutSessionsInput, SharedAccountUserUncheckedCreateWithoutSessionsInput>
+  }
+
   export type UserUpsertWithoutSessionsInput = {
     update: XOR<UserUpdateWithoutSessionsInput, UserUncheckedUpdateWithoutSessionsInput>
     create: XOR<UserCreateWithoutSessionsInput, UserUncheckedCreateWithoutSessionsInput>
@@ -55533,6 +55829,45 @@ export namespace Prisma {
     emailValidation?: EmailValidationUncheckedUpdateManyWithoutAdminNestedInput
   }
 
+  export type SharedAccountUserUpsertWithoutSessionsInput = {
+    update: XOR<SharedAccountUserUpdateWithoutSessionsInput, SharedAccountUserUncheckedUpdateWithoutSessionsInput>
+    create: XOR<SharedAccountUserCreateWithoutSessionsInput, SharedAccountUserUncheckedCreateWithoutSessionsInput>
+    where?: SharedAccountUserWhereInput
+  }
+
+  export type SharedAccountUserUpdateToOneWithWhereWithoutSessionsInput = {
+    where?: SharedAccountUserWhereInput
+    data: XOR<SharedAccountUserUpdateWithoutSessionsInput, SharedAccountUserUncheckedUpdateWithoutSessionsInput>
+  }
+
+  export type SharedAccountUserUpdateWithoutSessionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    profileName?: StringFieldUpdateOperationsInput | string
+    iskidProfile?: BoolFieldUpdateOperationsInput | boolean
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    pinCode?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sharedAccount?: SharedAccountUpdateOneRequiredWithoutProfilesNestedInput
+    adViews?: AdViewUpdateManyWithoutProfileNestedInput
+    activities?: SharedProfileActivityUpdateManyWithoutProfileNestedInput
+    activeStreams?: ActiveStreamUpdateManyWithoutProfileNestedInput
+  }
+
+  export type SharedAccountUserUncheckedUpdateWithoutSessionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sharedAccountId?: StringFieldUpdateOperationsInput | string
+    profileName?: StringFieldUpdateOperationsInput | string
+    iskidProfile?: BoolFieldUpdateOperationsInput | boolean
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    pinCode?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    adViews?: AdViewUncheckedUpdateManyWithoutProfileNestedInput
+    activities?: SharedProfileActivityUncheckedUpdateManyWithoutProfileNestedInput
+    activeStreams?: ActiveStreamUncheckedUpdateManyWithoutProfileNestedInput
+  }
+
   export type SharedAccountUserCreateWithoutActiveStreamsInput = {
     id?: string
     profileName: string
@@ -55544,6 +55879,7 @@ export namespace Prisma {
     sharedAccount: SharedAccountCreateNestedOneWithoutProfilesInput
     adViews?: AdViewCreateNestedManyWithoutProfileInput
     activities?: SharedProfileActivityCreateNestedManyWithoutProfileInput
+    sessions?: SessionCreateNestedManyWithoutProfileInput
   }
 
   export type SharedAccountUserUncheckedCreateWithoutActiveStreamsInput = {
@@ -55557,6 +55893,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     adViews?: AdViewUncheckedCreateNestedManyWithoutProfileInput
     activities?: SharedProfileActivityUncheckedCreateNestedManyWithoutProfileInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutProfileInput
   }
 
   export type SharedAccountUserCreateOrConnectWithoutActiveStreamsInput = {
@@ -55633,6 +55970,7 @@ export namespace Prisma {
     sharedAccount?: SharedAccountUpdateOneRequiredWithoutProfilesNestedInput
     adViews?: AdViewUpdateManyWithoutProfileNestedInput
     activities?: SharedProfileActivityUpdateManyWithoutProfileNestedInput
+    sessions?: SessionUpdateManyWithoutProfileNestedInput
   }
 
   export type SharedAccountUserUncheckedUpdateWithoutActiveStreamsInput = {
@@ -55646,6 +55984,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     adViews?: AdViewUncheckedUpdateManyWithoutProfileNestedInput
     activities?: SharedProfileActivityUncheckedUpdateManyWithoutProfileNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutProfileNestedInput
   }
 
   export type UserUpsertWithoutActiveStreamsInput = {
@@ -55963,6 +56302,7 @@ export namespace Prisma {
     adViews?: AdViewCreateNestedManyWithoutProfileInput
     activities?: SharedProfileActivityCreateNestedManyWithoutProfileInput
     activeStreams?: ActiveStreamCreateNestedManyWithoutProfileInput
+    sessions?: SessionCreateNestedManyWithoutProfileInput
   }
 
   export type SharedAccountUserUncheckedCreateWithoutSharedAccountInput = {
@@ -55976,6 +56316,7 @@ export namespace Prisma {
     adViews?: AdViewUncheckedCreateNestedManyWithoutProfileInput
     activities?: SharedProfileActivityUncheckedCreateNestedManyWithoutProfileInput
     activeStreams?: ActiveStreamUncheckedCreateNestedManyWithoutProfileInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutProfileInput
   }
 
   export type SharedAccountUserCreateOrConnectWithoutSharedAccountInput = {
@@ -56168,6 +56509,42 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type SessionCreateWithoutProfileInput = {
+    id?: string
+    refreshToken: string
+    ipAddress?: string | null
+    userAgent?: string | null
+    expiresAt: Date | string
+    sessionType?: $Enums.SessionType
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user?: UserCreateNestedOneWithoutSessionsInput
+    admin?: AdminCreateNestedOneWithoutSessionsInput
+  }
+
+  export type SessionUncheckedCreateWithoutProfileInput = {
+    id?: string
+    userId?: string | null
+    adminId?: string | null
+    refreshToken: string
+    ipAddress?: string | null
+    userAgent?: string | null
+    expiresAt: Date | string
+    sessionType?: $Enums.SessionType
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SessionCreateOrConnectWithoutProfileInput = {
+    where: SessionWhereUniqueInput
+    create: XOR<SessionCreateWithoutProfileInput, SessionUncheckedCreateWithoutProfileInput>
+  }
+
+  export type SessionCreateManyProfileInputEnvelope = {
+    data: SessionCreateManyProfileInput | SessionCreateManyProfileInput[]
+    skipDuplicates?: boolean
+  }
+
   export type SharedAccountUpsertWithoutProfilesInput = {
     update: XOR<SharedAccountUpdateWithoutProfilesInput, SharedAccountUncheckedUpdateWithoutProfilesInput>
     create: XOR<SharedAccountCreateWithoutProfilesInput, SharedAccountUncheckedCreateWithoutProfilesInput>
@@ -56252,6 +56629,22 @@ export namespace Prisma {
   export type ActiveStreamUpdateManyWithWhereWithoutProfileInput = {
     where: ActiveStreamScalarWhereInput
     data: XOR<ActiveStreamUpdateManyMutationInput, ActiveStreamUncheckedUpdateManyWithoutProfileInput>
+  }
+
+  export type SessionUpsertWithWhereUniqueWithoutProfileInput = {
+    where: SessionWhereUniqueInput
+    update: XOR<SessionUpdateWithoutProfileInput, SessionUncheckedUpdateWithoutProfileInput>
+    create: XOR<SessionCreateWithoutProfileInput, SessionUncheckedCreateWithoutProfileInput>
+  }
+
+  export type SessionUpdateWithWhereUniqueWithoutProfileInput = {
+    where: SessionWhereUniqueInput
+    data: XOR<SessionUpdateWithoutProfileInput, SessionUncheckedUpdateWithoutProfileInput>
+  }
+
+  export type SessionUpdateManyWithWhereWithoutProfileInput = {
+    where: SessionScalarWhereInput
+    data: XOR<SessionUpdateManyMutationInput, SessionUncheckedUpdateManyWithoutProfileInput>
   }
 
   export type VideoFormatCreateWithoutVideosInput = {
@@ -60153,6 +60546,7 @@ export namespace Prisma {
     sharedAccount: SharedAccountCreateNestedOneWithoutProfilesInput
     activities?: SharedProfileActivityCreateNestedManyWithoutProfileInput
     activeStreams?: ActiveStreamCreateNestedManyWithoutProfileInput
+    sessions?: SessionCreateNestedManyWithoutProfileInput
   }
 
   export type SharedAccountUserUncheckedCreateWithoutAdViewsInput = {
@@ -60166,6 +60560,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     activities?: SharedProfileActivityUncheckedCreateNestedManyWithoutProfileInput
     activeStreams?: ActiveStreamUncheckedCreateNestedManyWithoutProfileInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutProfileInput
   }
 
   export type SharedAccountUserCreateOrConnectWithoutAdViewsInput = {
@@ -60279,6 +60674,7 @@ export namespace Prisma {
     sharedAccount?: SharedAccountUpdateOneRequiredWithoutProfilesNestedInput
     activities?: SharedProfileActivityUpdateManyWithoutProfileNestedInput
     activeStreams?: ActiveStreamUpdateManyWithoutProfileNestedInput
+    sessions?: SessionUpdateManyWithoutProfileNestedInput
   }
 
   export type SharedAccountUserUncheckedUpdateWithoutAdViewsInput = {
@@ -60292,6 +60688,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     activities?: SharedProfileActivityUncheckedUpdateManyWithoutProfileNestedInput
     activeStreams?: ActiveStreamUncheckedUpdateManyWithoutProfileNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutProfileNestedInput
   }
 
   export type SharedAccountUserCreateWithoutActivitiesInput = {
@@ -60305,6 +60702,7 @@ export namespace Prisma {
     sharedAccount: SharedAccountCreateNestedOneWithoutProfilesInput
     adViews?: AdViewCreateNestedManyWithoutProfileInput
     activeStreams?: ActiveStreamCreateNestedManyWithoutProfileInput
+    sessions?: SessionCreateNestedManyWithoutProfileInput
   }
 
   export type SharedAccountUserUncheckedCreateWithoutActivitiesInput = {
@@ -60318,6 +60716,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     adViews?: AdViewUncheckedCreateNestedManyWithoutProfileInput
     activeStreams?: ActiveStreamUncheckedCreateNestedManyWithoutProfileInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutProfileInput
   }
 
   export type SharedAccountUserCreateOrConnectWithoutActivitiesInput = {
@@ -60347,6 +60746,7 @@ export namespace Prisma {
     sharedAccount?: SharedAccountUpdateOneRequiredWithoutProfilesNestedInput
     adViews?: AdViewUpdateManyWithoutProfileNestedInput
     activeStreams?: ActiveStreamUpdateManyWithoutProfileNestedInput
+    sessions?: SessionUpdateManyWithoutProfileNestedInput
   }
 
   export type SharedAccountUserUncheckedUpdateWithoutActivitiesInput = {
@@ -60360,15 +60760,18 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     adViews?: AdViewUncheckedUpdateManyWithoutProfileNestedInput
     activeStreams?: ActiveStreamUncheckedUpdateManyWithoutProfileNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutProfileNestedInput
   }
 
   export type SessionCreateManyUserInput = {
     id?: string
     adminId?: string | null
+    profileId?: string | null
     refreshToken: string
     ipAddress?: string | null
     userAgent?: string | null
     expiresAt: Date | string
+    sessionType?: $Enums.SessionType
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -60467,18 +60870,22 @@ export namespace Prisma {
     ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
     userAgent?: NullableStringFieldUpdateOperationsInput | string | null
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessionType?: EnumSessionTypeFieldUpdateOperationsInput | $Enums.SessionType
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     admin?: AdminUpdateOneWithoutSessionsNestedInput
+    profile?: SharedAccountUserUpdateOneWithoutSessionsNestedInput
   }
 
   export type SessionUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     adminId?: NullableStringFieldUpdateOperationsInput | string | null
+    profileId?: NullableStringFieldUpdateOperationsInput | string | null
     refreshToken?: StringFieldUpdateOperationsInput | string
     ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
     userAgent?: NullableStringFieldUpdateOperationsInput | string | null
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessionType?: EnumSessionTypeFieldUpdateOperationsInput | $Enums.SessionType
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -60486,10 +60893,12 @@ export namespace Prisma {
   export type SessionUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     adminId?: NullableStringFieldUpdateOperationsInput | string | null
+    profileId?: NullableStringFieldUpdateOperationsInput | string | null
     refreshToken?: StringFieldUpdateOperationsInput | string
     ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
     userAgent?: NullableStringFieldUpdateOperationsInput | string | null
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessionType?: EnumSessionTypeFieldUpdateOperationsInput | $Enums.SessionType
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -60765,10 +61174,12 @@ export namespace Prisma {
   export type SessionCreateManyAdminInput = {
     id?: string
     userId?: string | null
+    profileId?: string | null
     refreshToken: string
     ipAddress?: string | null
     userAgent?: string | null
     expiresAt: Date | string
+    sessionType?: $Enums.SessionType
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -60789,18 +61200,22 @@ export namespace Prisma {
     ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
     userAgent?: NullableStringFieldUpdateOperationsInput | string | null
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessionType?: EnumSessionTypeFieldUpdateOperationsInput | $Enums.SessionType
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneWithoutSessionsNestedInput
+    profile?: SharedAccountUserUpdateOneWithoutSessionsNestedInput
   }
 
   export type SessionUncheckedUpdateWithoutAdminInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: NullableStringFieldUpdateOperationsInput | string | null
+    profileId?: NullableStringFieldUpdateOperationsInput | string | null
     refreshToken?: StringFieldUpdateOperationsInput | string
     ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
     userAgent?: NullableStringFieldUpdateOperationsInput | string | null
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessionType?: EnumSessionTypeFieldUpdateOperationsInput | $Enums.SessionType
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -60808,10 +61223,12 @@ export namespace Prisma {
   export type SessionUncheckedUpdateManyWithoutAdminInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: NullableStringFieldUpdateOperationsInput | string | null
+    profileId?: NullableStringFieldUpdateOperationsInput | string | null
     refreshToken?: StringFieldUpdateOperationsInput | string
     ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
     userAgent?: NullableStringFieldUpdateOperationsInput | string | null
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessionType?: EnumSessionTypeFieldUpdateOperationsInput | $Enums.SessionType
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -60911,6 +61328,7 @@ export namespace Prisma {
     adViews?: AdViewUpdateManyWithoutProfileNestedInput
     activities?: SharedProfileActivityUpdateManyWithoutProfileNestedInput
     activeStreams?: ActiveStreamUpdateManyWithoutProfileNestedInput
+    sessions?: SessionUpdateManyWithoutProfileNestedInput
   }
 
   export type SharedAccountUserUncheckedUpdateWithoutSharedAccountInput = {
@@ -60924,6 +61342,7 @@ export namespace Prisma {
     adViews?: AdViewUncheckedUpdateManyWithoutProfileNestedInput
     activities?: SharedProfileActivityUncheckedUpdateManyWithoutProfileNestedInput
     activeStreams?: ActiveStreamUncheckedUpdateManyWithoutProfileNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutProfileNestedInput
   }
 
   export type SharedAccountUserUncheckedUpdateManyWithoutSharedAccountInput = {
@@ -60957,6 +61376,19 @@ export namespace Prisma {
     videoId?: string | null
     startedAt?: Date | string
     expiresAt: Date | string
+  }
+
+  export type SessionCreateManyProfileInput = {
+    id?: string
+    userId?: string | null
+    adminId?: string | null
+    refreshToken: string
+    ipAddress?: string | null
+    userAgent?: string | null
+    expiresAt: Date | string
+    sessionType?: $Enums.SessionType
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type AdViewUpdateWithoutProfileInput = {
@@ -61026,6 +61458,45 @@ export namespace Prisma {
     videoId?: NullableStringFieldUpdateOperationsInput | string | null
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SessionUpdateWithoutProfileInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    refreshToken?: StringFieldUpdateOperationsInput | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessionType?: EnumSessionTypeFieldUpdateOperationsInput | $Enums.SessionType
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneWithoutSessionsNestedInput
+    admin?: AdminUpdateOneWithoutSessionsNestedInput
+  }
+
+  export type SessionUncheckedUpdateWithoutProfileInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    adminId?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshToken?: StringFieldUpdateOperationsInput | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessionType?: EnumSessionTypeFieldUpdateOperationsInput | $Enums.SessionType
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SessionUncheckedUpdateManyWithoutProfileInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    adminId?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshToken?: StringFieldUpdateOperationsInput | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessionType?: EnumSessionTypeFieldUpdateOperationsInput | $Enums.SessionType
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type VideoActorCreateManyVideoInput = {

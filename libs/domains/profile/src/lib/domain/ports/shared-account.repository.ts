@@ -9,38 +9,44 @@ export type SharedAccountLimitDetails = {
   maxSharedAccountsLimit: number;
 };
 
-export abstract class ISharedAccountRepository {
+export interface ISharedAccountRepository {
   // Créer un compte partagé lié à un owner
-  abstract createSharedAccount(data:SharedAccount): Promise<Result<SharedAccount, Error>>;
+  createSharedAccount(data:SharedAccount): Promise<Result<SharedAccount, Error>>;
 
   // Récupérer un compte partagé par son id
-  abstract getSharedAccountById(accountId: string): Promise<Result<SharedAccount, Error>>;
+   getSharedAccountById(accountId: string): Promise<Result<SharedAccount, Error>>;
 
   // Supprimer un compte partagé entier (owner only)
-  abstract deleteSharedAccount(accountId: string): Promise<Result<boolean, Error>>;
+   deleteSharedAccount(accountId: string): Promise<Result<boolean, Error>>;
 
   // Ajouter un profil (sous-compte)
-  abstract addProfile(data:SharedAccountUser): Promise<Result<SharedAccountUser, Error>>;
+   addProfile(data:SharedAccountUser): Promise<Result<SharedAccountUser, Error>>;
 
   // Supprimer un profil
-  abstract removeProfile(profileId: string): Promise<Result<boolean, Error>>;
+   removeProfile(profileId: string): Promise<Result<boolean, Error>>;
 
   // Mettre à jour un profil (nom, avatar, pinCode)
-  abstract updateProfile(
+   updateProfile(
     profileId: string,
     updates: Partial<Pick<SharedAccountUser, "profileName" | "avatarUrl" | "pinCode">>
   ): Promise<Result<SharedAccountUser, Error>>;
 
   // Lister tous les profils d’un compte
-  abstract listProfiles(accountId: string): Promise<Result<SharedAccountUser[], Error>>;
+   listProfiles(accountId: string): Promise<Result<SharedAccountUser[], Error>>;
 
   // Obtenir les informations utiles pour contrôler la limite d'un compte partagé
-  abstract getAccountWithDetails(accountId: string): Promise<Result<SharedAccountLimitDetails, Error>>;
+   getAccountWithDetails(accountId: string): Promise<Result<SharedAccountLimitDetails, Error>>;
   
   // Connexion par profil (nom + pinCode)
-  abstract loginWithProfile(
+   loginWithProfile(
     accountId: string,
     profileName: string,
     pinCode: number
+  ): Promise<Result<SharedAccountUser, Error>>;
+
+  // Récupère un profil appartenant à un compte propriétaire
+   findProfileForOwner(
+    accountId: string,
+    profileId: string
   ): Promise<Result<SharedAccountUser, Error>>;
 }

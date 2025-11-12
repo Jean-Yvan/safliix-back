@@ -9,7 +9,12 @@
     "emitDecoratorMetadata": true,
     "target": "es2021"
   },
-  "include": ["src/**/*.ts", "purchase/**/*.ts", "subscription/**/*.ts"],
+  "include": [
+    "src/**/*.ts",
+    "purchase/**/*.ts",
+    "subscription/**/*.ts",
+    "viewTracking/**/*.ts"
+  ],
   "exclude": [
     "out-tsc",
     "dist",

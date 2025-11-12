@@ -2,22 +2,34 @@
 
 import { Injectable, UnauthorizedException, Inject } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
-import { ProfileLoginQuery,ProfileTokenGenerationService  } from '@safliix-back/profile'; // Import corrigé du module Profile
-import { IUserRepository, USER_REPOSITORY } from '@safliix-back/users'; // Interface du User
+import {
+  ProfileLoginQuery,
+  ProfileSessionMetadata,
+  ProfileSessionService,
+  ProfileTokenService,
+  SelectProfileQuery,
+} from '@safliix-back/profile';
+import { IUserRepository, USER_REPOSITORY } from '@safliix-back/users';
 
 @Injectable()
-export class ProfileAuthApplicationService { 
+export class ProfileAuthApplicationService {
   constructor(
     private readonly queryBus: QueryBus,
-    private readonly internalTokenService: ProfileTokenGenerationService,
-    @Inject(USER_REPOSITORY) 
-    private readonly userRepository: IUserRepository, 
+    private readonly profileTokenService: ProfileTokenService,
+    private readonly profileSessionService: ProfileSessionService,
+    @Inject(USER_REPOSITORY)
+    private readonly userRepository: IUserRepository,
   ) {}
 
   /**
    * Authentifie un profil par PIN en utilisant l'email du propriétaire.
    */
-  async authenticateProfile(ownerEmail: string, profileName: string, pinCode: number): Promise<string> {
+  async authenticateProfile(
+    ownerEmail: string,
+    profileName: string,
+    pinCode: number,
+    metadata?: ProfileSessionMetadata,
+  ): Promise<string> {
     
     // 1. NOUVELLE ÉTAPE : Traduire l'email en ID interne (dépendance au module USER)
     const userResult = await this.userRepository.findByEmail(ownerEmail);
@@ -38,9 +50,17 @@ export class ProfileAuthApplicationService {
       const profile = result.unwrap();
 
       // 3. Émission du Jeton de Profil Interne
-      const profileToken = this.internalTokenService.generateProfileToken(
-        profile.id as string, 
-        profile.sharedAccountId
+      const sessionId = await this.profileSessionService.startProfileSession(
+        profile.id as string,
+        profile.sharedAccountId,
+        metadata,
+      );
+
+      const profileToken = this.profileTokenService.signProfileToken(
+        profile.id as string,
+        profile.sharedAccountId,
+        sessionId,
+        { expiresIn: '7d' },
       );
 
       return profileToken;
@@ -49,5 +69,37 @@ export class ProfileAuthApplicationService {
 
     }
     
+  }
+
+  /**
+   * Génère un token de profil pour un compte principal authentifié.
+   */
+  async issueProfileTokenForOwner(
+    accountId: string,
+    profileId: string,
+    metadata?: ProfileSessionMetadata,
+  ): Promise<string> {
+    const result = await this.queryBus.execute(
+      new SelectProfileQuery(accountId, profileId),
+    );
+
+    if (result.isErr()) {
+      throw new UnauthorizedException(
+        result.unwrapErr().message || 'Profil introuvable pour ce compte.',
+      );
+    }
+
+    const profile = result.unwrap();
+    const sessionId = await this.profileSessionService.startProfileSession(
+      profile.id as string,
+      profile.sharedAccountId,
+      metadata,
+    );
+
+    return this.profileTokenService.signProfileToken(
+      profile.id as string,
+      profile.sharedAccountId,
+      sessionId,
+    );
   }
 }

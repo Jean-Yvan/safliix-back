@@ -165,10 +165,12 @@ exports.Prisma.SessionScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   adminId: 'adminId',
+  profileId: 'profileId',
   refreshToken: 'refreshToken',
   ipAddress: 'ipAddress',
   userAgent: 'userAgent',
   expiresAt: 'expiresAt',
+  sessionType: 'sessionType',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -490,6 +492,11 @@ exports.Prisma.JsonNullValueFilter = {
 exports.AdminRole = exports.$Enums.AdminRole = {
   ADMIN: 'ADMIN',
   SUPER_ADMIN: 'SUPER_ADMIN'
+};
+
+exports.SessionType = exports.$Enums.SessionType = {
+  USER: 'USER',
+  PROFILE: 'PROFILE'
 };
 
 exports.VideoQuality = exports.$Enums.VideoQuality = {

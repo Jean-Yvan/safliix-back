@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { SafliixBackDatabaseModule } from '@safliix-back/database';
+import { ConfigModule } from '@nestjs/config';
 
 import { SharedAccountRepositoryImpl } from './infrastructure/prisma-shared-account.repository';
 import { SHARED_ACCOUNT_REPOSITORY } from './utils/types';
@@ -12,6 +13,10 @@ import { GetSharedAccountByIdHandler } from './application/handlers/get-shared-a
 import { ListProfilesHandler } from './application/handlers/list-profiles.handler';
 import { ProfileLoginHandler } from './application/handlers/profile-login.handler';
 import { VerifyProfileAccessHandler } from './application/handlers/verify-profile-access.handler';
+import { ProfileContextService } from './services/profile-context.service';
+import { ProfileTokenService } from './services/profile-token.service';
+import { ProfileSessionService } from './services/profile-session.service';
+import { SelectProfileHandler } from './application/handlers/select-profile.handler';
 
 const handlers = [
   CreateSharedAccountHandler,
@@ -23,17 +28,21 @@ const handlers = [
   ListProfilesHandler,
   ProfileLoginHandler,
   VerifyProfileAccessHandler,
+  SelectProfileHandler,
 ];
 
+const services = [ProfileContextService, ProfileTokenService, ProfileSessionService];
+
 @Module({
-  imports: [SafliixBackDatabaseModule],
+  imports: [SafliixBackDatabaseModule, ConfigModule],
   providers: [
     {
       provide: SHARED_ACCOUNT_REPOSITORY,
       useClass: SharedAccountRepositoryImpl,
     },
     ...handlers,
+    ...services,
   ],
-  exports: handlers,
+  exports: [...handlers, ...services],
 })
 export class SafliixBackProfileModule {}
