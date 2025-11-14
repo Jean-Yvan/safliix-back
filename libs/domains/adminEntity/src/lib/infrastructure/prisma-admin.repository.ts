@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { adminInclude, PrismaService } from '@safliix-back/database';
 import { AdminEntity as Admin } from '../domain/entities/admin.entity';
 import { AdminRepository } from '../domain/port/admin.repository';
-import { AdminFilter, AdminRole } from '../utils/types';
+import { AdminFilter } from '../utils/types';
 import { AdminMapper } from '../domain/mappers/admin.mapper';
 
 @Injectable()
@@ -118,7 +118,8 @@ export class PrismaAdminRepository implements AdminRepository {
     // Recherche textuelle (nom ou email)
     if (filters.search) {
       where.OR = [
-        { name: { contains: filters.search, mode: 'insensitive' } },
+        { firstName: { contains: filters.search, mode: 'insensitive' } },
+        { lastName: { contains: filters.search, mode: 'insensitive' } },
         { email: { contains: filters.search, mode: 'insensitive' } }
       ];
     }

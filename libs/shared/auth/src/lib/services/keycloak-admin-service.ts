@@ -266,4 +266,95 @@ export class KeycloakProvisioningService {
 
     return userId;
   }
+
+  public async updateUser(
+    userId: string,
+    updates: {
+      email?: string;
+      password?: string;
+      firstName?: string;
+      lastName?: string;
+      enabled?: boolean;
+      emailVerified?: boolean;
+    },
+    roles?: string[],
+    requiredRoles: string[] = [],
+  ): Promise<void> {
+    const token = await this.getAdminToken();
+    const payload: Record<string, unknown> = {};
+
+    if (updates.email !== undefined) {
+      payload.email = updates.email;
+    }
+    if (updates.firstName !== undefined) {
+      payload.firstName = updates.firstName;
+    }
+    if (updates.lastName !== undefined) {
+      payload.lastName = updates.lastName;
+    }
+    if (updates.enabled !== undefined) {
+      payload.enabled = updates.enabled;
+    }
+    if (updates.emailVerified !== undefined) {
+      payload.emailVerified = updates.emailVerified;
+    }
+
+    try {
+      if (Object.keys(payload).length > 0) {
+        await firstValueFrom(
+          this.http.put(this.buildAdminUrl(`/users/${userId}`), payload, {
+            headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+          }),
+        );
+      }
+
+      if (updates.password) {
+        await firstValueFrom(
+          this.http.put(
+            this.buildAdminUrl(`/users/${userId}/reset-password`),
+            {
+              type: 'password',
+              value: updates.password,
+              temporary: false,
+            },
+            {
+              headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+            },
+          ),
+        );
+      }
+
+      if (roles && roles.length > 0) {
+        const rolesToAssign = await this.getRealmRolesMap(roles, token, requiredRoles);
+        const roleMappingUrl = this.buildAdminUrl(`/users/${userId}/role-mappings/realm`);
+
+        await firstValueFrom(
+          this.http.put(roleMappingUrl, rolesToAssign, {
+            headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+          }),
+        );
+      }
+    } catch (error) {
+      this.logAxiosError(`Échec de la mise à jour Keycloak pour l'utilisateur ${userId}`, error);
+      throw new InternalServerErrorException('Échec de la mise à jour utilisateur externe.');
+    }
+  }
+
+  public async deleteUser(userId: string): Promise<void> {
+    const token = await this.getAdminToken();
+    try {
+      await firstValueFrom(
+        this.http.delete(this.buildAdminUrl(`/users/${userId}`), {
+          headers: { Authorization: `Bearer ${token}` },
+        }),
+      );
+    } catch (error) {
+      if (isAxiosError(error) && error.response?.status === 404) {
+        this.logger.warn(`Suppression Keycloak ignorée, utilisateur ${userId} introuvable.`);
+        return;
+      }
+      this.logAxiosError(`Échec de la suppression de l'utilisateur Keycloak ${userId}.`, error);
+      throw new InternalServerErrorException('Échec de la suppression utilisateur externe.');
+    }
+  }
 }

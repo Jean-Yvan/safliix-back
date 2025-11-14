@@ -1,5 +1,5 @@
 // libs/shared/interfaces/src/lib/dto/admin-filter.dto.ts
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsEnum, IsBoolean, IsOptional, IsString, IsArray, IsDate } from 'class-validator';
 import { AdminRole } from '../../utils/types';
@@ -88,7 +88,8 @@ export class AdminFilterDto {
     if (this.isActive !== undefined) filter.isActive = this.isActive;
     if (this.search) {
       filter.OR = [
-        { name: { contains: this.search, mode: 'insensitive' } },
+        { firstName: { contains: this.search, mode: 'insensitive' } },
+        { lastName: { contains: this.search, mode: 'insensitive' } },
         { email: { contains: this.search, mode: 'insensitive' } }
       ];
     }

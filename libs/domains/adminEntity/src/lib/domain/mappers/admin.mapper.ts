@@ -9,17 +9,20 @@ export class AdminMapper {
 
   static toCreatePrisma(data: AdminEntity): CreateToPrisma<'Admin'> {
     return {
+      keycloakId: data.keycloakId ?? undefined,
       email: data.email,
-      password_hash: data.passwordHash,
       firstName: data.firstName,
       lastName: data.lastName,
       country: data.country,
       city: data.city,
-      state: data.state,
-      phoneNumber: data.phoneNumber,
-      address: data.address,
+      state: data.state ?? undefined,
+      phoneNumber: data.phoneNumber ?? undefined,
+      address: data.address ?? undefined,
       lastLoginAt: data.lastLoginAt,
       isVerified: data.isVerified,
+      isActive: data.isActive,
+      permissions: data.permissions,
+      role: data.role as any,
     };
   }
 
@@ -27,8 +30,8 @@ export class AdminMapper {
     return {
       where: { id },
       data: {
+        keycloakId: mapField(data.keycloakId ?? undefined),
         email: mapField(data.email),
-        password_hash: mapField(data.passwordHash),
         firstName: mapField(data.firstName),
         lastName: mapField(data.lastName),
         country: mapField(data.country),
@@ -38,6 +41,9 @@ export class AdminMapper {
         address: mapField(data.address),
         lastLoginAt: mapField(data.lastLoginAt),
         isVerified: mapField(data.isVerified),
+        isActive: mapField(data.isActive),
+        permissions: mapField(data.permissions),
+        role: mapField(data.role as any),
       },
     };
   }

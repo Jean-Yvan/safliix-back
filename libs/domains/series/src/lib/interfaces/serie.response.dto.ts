@@ -96,7 +96,7 @@ export class SerieResponseDto {
     this.description = serie.metadata.description;
     this.releaseDate = serie.metadata.releaseDate;
     this.platformDate = serie.metadata.platformDate;
-    this.thumbnailUrl = serie.metadata.thumbnail;
+    this.thumbnailUrl = serie.metadata.thumbnailUrl;
     this.isPremiere = serie.isPremiere;
     //this.maxVideoQuality = this.calculateMaxQuality(serie);
     this.seasons = serie.getSeasons().map(season => ({

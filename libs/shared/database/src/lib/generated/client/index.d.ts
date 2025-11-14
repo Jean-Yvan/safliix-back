@@ -190,7 +190,8 @@ export type SharedProfileActivity = $Result.DefaultSelection<Prisma.$SharedProfi
 export namespace $Enums {
   export const AdminRole: {
   ADMIN: 'ADMIN',
-  SUPER_ADMIN: 'SUPER_ADMIN'
+  SUPER_ADMIN: 'SUPER_ADMIN',
+  OWNER: 'OWNER'
 };
 
 export type AdminRole = (typeof AdminRole)[keyof typeof AdminRole]
@@ -6264,6 +6265,7 @@ export namespace Prisma {
 
   export type AdminMinAggregateOutputType = {
     id: string | null
+    keycloakId: string | null
     email: string | null
     firstName: string | null
     lastName: string | null
@@ -6275,6 +6277,7 @@ export namespace Prisma {
     avatarUrl: string | null
     lastLoginAt: Date | null
     isVerified: boolean | null
+    isActive: boolean | null
     role: $Enums.AdminRole | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -6282,6 +6285,7 @@ export namespace Prisma {
 
   export type AdminMaxAggregateOutputType = {
     id: string | null
+    keycloakId: string | null
     email: string | null
     firstName: string | null
     lastName: string | null
@@ -6293,6 +6297,7 @@ export namespace Prisma {
     avatarUrl: string | null
     lastLoginAt: Date | null
     isVerified: boolean | null
+    isActive: boolean | null
     role: $Enums.AdminRole | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -6300,6 +6305,7 @@ export namespace Prisma {
 
   export type AdminCountAggregateOutputType = {
     id: number
+    keycloakId: number
     email: number
     firstName: number
     lastName: number
@@ -6311,6 +6317,8 @@ export namespace Prisma {
     avatarUrl: number
     lastLoginAt: number
     isVerified: number
+    isActive: number
+    permissions: number
     role: number
     createdAt: number
     updatedAt: number
@@ -6320,6 +6328,7 @@ export namespace Prisma {
 
   export type AdminMinAggregateInputType = {
     id?: true
+    keycloakId?: true
     email?: true
     firstName?: true
     lastName?: true
@@ -6331,6 +6340,7 @@ export namespace Prisma {
     avatarUrl?: true
     lastLoginAt?: true
     isVerified?: true
+    isActive?: true
     role?: true
     createdAt?: true
     updatedAt?: true
@@ -6338,6 +6348,7 @@ export namespace Prisma {
 
   export type AdminMaxAggregateInputType = {
     id?: true
+    keycloakId?: true
     email?: true
     firstName?: true
     lastName?: true
@@ -6349,6 +6360,7 @@ export namespace Prisma {
     avatarUrl?: true
     lastLoginAt?: true
     isVerified?: true
+    isActive?: true
     role?: true
     createdAt?: true
     updatedAt?: true
@@ -6356,6 +6368,7 @@ export namespace Prisma {
 
   export type AdminCountAggregateInputType = {
     id?: true
+    keycloakId?: true
     email?: true
     firstName?: true
     lastName?: true
@@ -6367,6 +6380,8 @@ export namespace Prisma {
     avatarUrl?: true
     lastLoginAt?: true
     isVerified?: true
+    isActive?: true
+    permissions?: true
     role?: true
     createdAt?: true
     updatedAt?: true
@@ -6447,17 +6462,20 @@ export namespace Prisma {
 
   export type AdminGroupByOutputType = {
     id: string
+    keycloakId: string | null
     email: string
     firstName: string
     lastName: string
     country: string
     city: string
-    state: string
-    phoneNumber: string
-    address: string
+    state: string | null
+    phoneNumber: string | null
+    address: string | null
     avatarUrl: string | null
     lastLoginAt: Date | null
     isVerified: boolean
+    isActive: boolean
+    permissions: string[]
     role: $Enums.AdminRole
     createdAt: Date
     updatedAt: Date
@@ -6482,6 +6500,7 @@ export namespace Prisma {
 
   export type AdminSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    keycloakId?: boolean
     email?: boolean
     firstName?: boolean
     lastName?: boolean
@@ -6493,6 +6512,8 @@ export namespace Prisma {
     avatarUrl?: boolean
     lastLoginAt?: boolean
     isVerified?: boolean
+    isActive?: boolean
+    permissions?: boolean
     role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -6503,6 +6524,7 @@ export namespace Prisma {
 
   export type AdminSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    keycloakId?: boolean
     email?: boolean
     firstName?: boolean
     lastName?: boolean
@@ -6514,6 +6536,8 @@ export namespace Prisma {
     avatarUrl?: boolean
     lastLoginAt?: boolean
     isVerified?: boolean
+    isActive?: boolean
+    permissions?: boolean
     role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -6521,6 +6545,7 @@ export namespace Prisma {
 
   export type AdminSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    keycloakId?: boolean
     email?: boolean
     firstName?: boolean
     lastName?: boolean
@@ -6532,6 +6557,8 @@ export namespace Prisma {
     avatarUrl?: boolean
     lastLoginAt?: boolean
     isVerified?: boolean
+    isActive?: boolean
+    permissions?: boolean
     role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -6539,6 +6566,7 @@ export namespace Prisma {
 
   export type AdminSelectScalar = {
     id?: boolean
+    keycloakId?: boolean
     email?: boolean
     firstName?: boolean
     lastName?: boolean
@@ -6550,12 +6578,14 @@ export namespace Prisma {
     avatarUrl?: boolean
     lastLoginAt?: boolean
     isVerified?: boolean
+    isActive?: boolean
+    permissions?: boolean
     role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type AdminOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "firstName" | "lastName" | "country" | "city" | "state" | "phoneNumber" | "address" | "avatarUrl" | "lastLoginAt" | "isVerified" | "role" | "createdAt" | "updatedAt", ExtArgs["result"]["admin"]>
+  export type AdminOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "keycloakId" | "email" | "firstName" | "lastName" | "country" | "city" | "state" | "phoneNumber" | "address" | "avatarUrl" | "lastLoginAt" | "isVerified" | "isActive" | "permissions" | "role" | "createdAt" | "updatedAt", ExtArgs["result"]["admin"]>
   export type AdminInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     sessions?: boolean | Admin$sessionsArgs<ExtArgs>
     emailValidation?: boolean | Admin$emailValidationArgs<ExtArgs>
@@ -6572,17 +6602,20 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
+      keycloakId: string | null
       email: string
       firstName: string
       lastName: string
       country: string
       city: string
-      state: string
-      phoneNumber: string
-      address: string
+      state: string | null
+      phoneNumber: string | null
+      address: string | null
       avatarUrl: string | null
       lastLoginAt: Date | null
       isVerified: boolean
+      isActive: boolean
+      permissions: string[]
       role: $Enums.AdminRole
       createdAt: Date
       updatedAt: Date
@@ -7012,6 +7045,7 @@ export namespace Prisma {
    */
   interface AdminFieldRefs {
     readonly id: FieldRef<"Admin", 'String'>
+    readonly keycloakId: FieldRef<"Admin", 'String'>
     readonly email: FieldRef<"Admin", 'String'>
     readonly firstName: FieldRef<"Admin", 'String'>
     readonly lastName: FieldRef<"Admin", 'String'>
@@ -7023,6 +7057,8 @@ export namespace Prisma {
     readonly avatarUrl: FieldRef<"Admin", 'String'>
     readonly lastLoginAt: FieldRef<"Admin", 'DateTime'>
     readonly isVerified: FieldRef<"Admin", 'Boolean'>
+    readonly isActive: FieldRef<"Admin", 'Boolean'>
+    readonly permissions: FieldRef<"Admin", 'String[]'>
     readonly role: FieldRef<"Admin", 'AdminRole'>
     readonly createdAt: FieldRef<"Admin", 'DateTime'>
     readonly updatedAt: FieldRef<"Admin", 'DateTime'>
@@ -15476,6 +15512,8 @@ export namespace Prisma {
     id: string | null
     title: string | null
     description: string | null
+    thumbnailUrl: string | null
+    secondaryImage: string | null
     releaseDate: Date | null
     platformDate: Date | null
     ageRating: string | null
@@ -15494,6 +15532,8 @@ export namespace Prisma {
     id: string | null
     title: string | null
     description: string | null
+    thumbnailUrl: string | null
+    secondaryImage: string | null
     releaseDate: Date | null
     platformDate: Date | null
     ageRating: string | null
@@ -15512,6 +15552,8 @@ export namespace Prisma {
     id: number
     title: number
     description: number
+    thumbnailUrl: number
+    secondaryImage: number
     releaseDate: number
     platformDate: number
     ageRating: number
@@ -15532,6 +15574,8 @@ export namespace Prisma {
     id?: true
     title?: true
     description?: true
+    thumbnailUrl?: true
+    secondaryImage?: true
     releaseDate?: true
     platformDate?: true
     ageRating?: true
@@ -15550,6 +15594,8 @@ export namespace Prisma {
     id?: true
     title?: true
     description?: true
+    thumbnailUrl?: true
+    secondaryImage?: true
     releaseDate?: true
     platformDate?: true
     ageRating?: true
@@ -15568,6 +15614,8 @@ export namespace Prisma {
     id?: true
     title?: true
     description?: true
+    thumbnailUrl?: true
+    secondaryImage?: true
     releaseDate?: true
     platformDate?: true
     ageRating?: true
@@ -15659,6 +15707,8 @@ export namespace Prisma {
     id: string
     title: string
     description: string
+    thumbnailUrl: string
+    secondaryImage: string | null
     releaseDate: Date
     platformDate: Date
     ageRating: string
@@ -15694,6 +15744,8 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     description?: boolean
+    thumbnailUrl?: boolean
+    secondaryImage?: boolean
     releaseDate?: boolean
     platformDate?: boolean
     ageRating?: boolean
@@ -15721,6 +15773,8 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     description?: boolean
+    thumbnailUrl?: boolean
+    secondaryImage?: boolean
     releaseDate?: boolean
     platformDate?: boolean
     ageRating?: boolean
@@ -15742,6 +15796,8 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     description?: boolean
+    thumbnailUrl?: boolean
+    secondaryImage?: boolean
     releaseDate?: boolean
     platformDate?: boolean
     ageRating?: boolean
@@ -15763,6 +15819,8 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     description?: boolean
+    thumbnailUrl?: boolean
+    secondaryImage?: boolean
     releaseDate?: boolean
     platformDate?: boolean
     ageRating?: boolean
@@ -15777,7 +15835,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type VideoMetadataOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "releaseDate" | "platformDate" | "ageRating" | "productionHouse" | "productionCountry" | "director" | "formatId" | "categoryId" | "genderId" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["videoMetadata"]>
+  export type VideoMetadataOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "thumbnailUrl" | "secondaryImage" | "releaseDate" | "platformDate" | "ageRating" | "productionHouse" | "productionCountry" | "director" | "formatId" | "categoryId" | "genderId" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["videoMetadata"]>
   export type VideoMetadataInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     format?: boolean | VideoMetadata$formatArgs<ExtArgs>
     category?: boolean | VideoCategoryDefaultArgs<ExtArgs>
@@ -15816,6 +15874,8 @@ export namespace Prisma {
       id: string
       title: string
       description: string
+      thumbnailUrl: string
+      secondaryImage: string | null
       releaseDate: Date
       platformDate: Date
       ageRating: string
@@ -16262,6 +16322,8 @@ export namespace Prisma {
     readonly id: FieldRef<"VideoMetadata", 'String'>
     readonly title: FieldRef<"VideoMetadata", 'String'>
     readonly description: FieldRef<"VideoMetadata", 'String'>
+    readonly thumbnailUrl: FieldRef<"VideoMetadata", 'String'>
+    readonly secondaryImage: FieldRef<"VideoMetadata", 'String'>
     readonly releaseDate: FieldRef<"VideoMetadata", 'DateTime'>
     readonly platformDate: FieldRef<"VideoMetadata", 'DateTime'>
     readonly ageRating: FieldRef<"VideoMetadata", 'String'>
@@ -43863,6 +43925,7 @@ export namespace Prisma {
 
   export const AdminScalarFieldEnum: {
     id: 'id',
+    keycloakId: 'keycloakId',
     email: 'email',
     firstName: 'firstName',
     lastName: 'lastName',
@@ -43874,6 +43937,8 @@ export namespace Prisma {
     avatarUrl: 'avatarUrl',
     lastLoginAt: 'lastLoginAt',
     isVerified: 'isVerified',
+    isActive: 'isActive',
+    permissions: 'permissions',
     role: 'role',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -43982,6 +44047,8 @@ export namespace Prisma {
     id: 'id',
     title: 'title',
     description: 'description',
+    thumbnailUrl: 'thumbnailUrl',
+    secondaryImage: 'secondaryImage',
     releaseDate: 'releaseDate',
     platformDate: 'platformDate',
     ageRating: 'ageRating',
@@ -44665,17 +44732,20 @@ export namespace Prisma {
     OR?: AdminWhereInput[]
     NOT?: AdminWhereInput | AdminWhereInput[]
     id?: StringFilter<"Admin"> | string
+    keycloakId?: StringNullableFilter<"Admin"> | string | null
     email?: StringFilter<"Admin"> | string
     firstName?: StringFilter<"Admin"> | string
     lastName?: StringFilter<"Admin"> | string
     country?: StringFilter<"Admin"> | string
     city?: StringFilter<"Admin"> | string
-    state?: StringFilter<"Admin"> | string
-    phoneNumber?: StringFilter<"Admin"> | string
-    address?: StringFilter<"Admin"> | string
+    state?: StringNullableFilter<"Admin"> | string | null
+    phoneNumber?: StringNullableFilter<"Admin"> | string | null
+    address?: StringNullableFilter<"Admin"> | string | null
     avatarUrl?: StringNullableFilter<"Admin"> | string | null
     lastLoginAt?: DateTimeNullableFilter<"Admin"> | Date | string | null
     isVerified?: BoolFilter<"Admin"> | boolean
+    isActive?: BoolFilter<"Admin"> | boolean
+    permissions?: StringNullableListFilter<"Admin">
     role?: EnumAdminRoleFilter<"Admin"> | $Enums.AdminRole
     createdAt?: DateTimeFilter<"Admin"> | Date | string
     updatedAt?: DateTimeFilter<"Admin"> | Date | string
@@ -44685,17 +44755,20 @@ export namespace Prisma {
 
   export type AdminOrderByWithRelationInput = {
     id?: SortOrder
+    keycloakId?: SortOrderInput | SortOrder
     email?: SortOrder
     firstName?: SortOrder
     lastName?: SortOrder
     country?: SortOrder
     city?: SortOrder
-    state?: SortOrder
-    phoneNumber?: SortOrder
-    address?: SortOrder
+    state?: SortOrderInput | SortOrder
+    phoneNumber?: SortOrderInput | SortOrder
+    address?: SortOrderInput | SortOrder
     avatarUrl?: SortOrderInput | SortOrder
     lastLoginAt?: SortOrderInput | SortOrder
     isVerified?: SortOrder
+    isActive?: SortOrder
+    permissions?: SortOrder
     role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -44705,6 +44778,7 @@ export namespace Prisma {
 
   export type AdminWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    keycloakId?: string
     email?: string
     AND?: AdminWhereInput | AdminWhereInput[]
     OR?: AdminWhereInput[]
@@ -44713,32 +44787,37 @@ export namespace Prisma {
     lastName?: StringFilter<"Admin"> | string
     country?: StringFilter<"Admin"> | string
     city?: StringFilter<"Admin"> | string
-    state?: StringFilter<"Admin"> | string
-    phoneNumber?: StringFilter<"Admin"> | string
-    address?: StringFilter<"Admin"> | string
+    state?: StringNullableFilter<"Admin"> | string | null
+    phoneNumber?: StringNullableFilter<"Admin"> | string | null
+    address?: StringNullableFilter<"Admin"> | string | null
     avatarUrl?: StringNullableFilter<"Admin"> | string | null
     lastLoginAt?: DateTimeNullableFilter<"Admin"> | Date | string | null
     isVerified?: BoolFilter<"Admin"> | boolean
+    isActive?: BoolFilter<"Admin"> | boolean
+    permissions?: StringNullableListFilter<"Admin">
     role?: EnumAdminRoleFilter<"Admin"> | $Enums.AdminRole
     createdAt?: DateTimeFilter<"Admin"> | Date | string
     updatedAt?: DateTimeFilter<"Admin"> | Date | string
     sessions?: SessionListRelationFilter
     emailValidation?: EmailValidationListRelationFilter
-  }, "id" | "email">
+  }, "id" | "keycloakId" | "email">
 
   export type AdminOrderByWithAggregationInput = {
     id?: SortOrder
+    keycloakId?: SortOrderInput | SortOrder
     email?: SortOrder
     firstName?: SortOrder
     lastName?: SortOrder
     country?: SortOrder
     city?: SortOrder
-    state?: SortOrder
-    phoneNumber?: SortOrder
-    address?: SortOrder
+    state?: SortOrderInput | SortOrder
+    phoneNumber?: SortOrderInput | SortOrder
+    address?: SortOrderInput | SortOrder
     avatarUrl?: SortOrderInput | SortOrder
     lastLoginAt?: SortOrderInput | SortOrder
     isVerified?: SortOrder
+    isActive?: SortOrder
+    permissions?: SortOrder
     role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -44752,17 +44831,20 @@ export namespace Prisma {
     OR?: AdminScalarWhereWithAggregatesInput[]
     NOT?: AdminScalarWhereWithAggregatesInput | AdminScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Admin"> | string
+    keycloakId?: StringNullableWithAggregatesFilter<"Admin"> | string | null
     email?: StringWithAggregatesFilter<"Admin"> | string
     firstName?: StringWithAggregatesFilter<"Admin"> | string
     lastName?: StringWithAggregatesFilter<"Admin"> | string
     country?: StringWithAggregatesFilter<"Admin"> | string
     city?: StringWithAggregatesFilter<"Admin"> | string
-    state?: StringWithAggregatesFilter<"Admin"> | string
-    phoneNumber?: StringWithAggregatesFilter<"Admin"> | string
-    address?: StringWithAggregatesFilter<"Admin"> | string
+    state?: StringNullableWithAggregatesFilter<"Admin"> | string | null
+    phoneNumber?: StringNullableWithAggregatesFilter<"Admin"> | string | null
+    address?: StringNullableWithAggregatesFilter<"Admin"> | string | null
     avatarUrl?: StringNullableWithAggregatesFilter<"Admin"> | string | null
     lastLoginAt?: DateTimeNullableWithAggregatesFilter<"Admin"> | Date | string | null
     isVerified?: BoolWithAggregatesFilter<"Admin"> | boolean
+    isActive?: BoolWithAggregatesFilter<"Admin"> | boolean
+    permissions?: StringNullableListFilter<"Admin">
     role?: EnumAdminRoleWithAggregatesFilter<"Admin"> | $Enums.AdminRole
     createdAt?: DateTimeWithAggregatesFilter<"Admin"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Admin"> | Date | string
@@ -45288,6 +45370,8 @@ export namespace Prisma {
     id?: StringFilter<"VideoMetadata"> | string
     title?: StringFilter<"VideoMetadata"> | string
     description?: StringFilter<"VideoMetadata"> | string
+    thumbnailUrl?: StringFilter<"VideoMetadata"> | string
+    secondaryImage?: StringNullableFilter<"VideoMetadata"> | string | null
     releaseDate?: DateTimeFilter<"VideoMetadata"> | Date | string
     platformDate?: DateTimeFilter<"VideoMetadata"> | Date | string
     ageRating?: StringFilter<"VideoMetadata"> | string
@@ -45314,6 +45398,8 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
+    thumbnailUrl?: SortOrder
+    secondaryImage?: SortOrderInput | SortOrder
     releaseDate?: SortOrder
     platformDate?: SortOrder
     ageRating?: SortOrder
@@ -45343,6 +45429,8 @@ export namespace Prisma {
     NOT?: VideoMetadataWhereInput | VideoMetadataWhereInput[]
     title?: StringFilter<"VideoMetadata"> | string
     description?: StringFilter<"VideoMetadata"> | string
+    thumbnailUrl?: StringFilter<"VideoMetadata"> | string
+    secondaryImage?: StringNullableFilter<"VideoMetadata"> | string | null
     releaseDate?: DateTimeFilter<"VideoMetadata"> | Date | string
     platformDate?: DateTimeFilter<"VideoMetadata"> | Date | string
     ageRating?: StringFilter<"VideoMetadata"> | string
@@ -45369,6 +45457,8 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
+    thumbnailUrl?: SortOrder
+    secondaryImage?: SortOrderInput | SortOrder
     releaseDate?: SortOrder
     platformDate?: SortOrder
     ageRating?: SortOrder
@@ -45393,6 +45483,8 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"VideoMetadata"> | string
     title?: StringWithAggregatesFilter<"VideoMetadata"> | string
     description?: StringWithAggregatesFilter<"VideoMetadata"> | string
+    thumbnailUrl?: StringWithAggregatesFilter<"VideoMetadata"> | string
+    secondaryImage?: StringNullableWithAggregatesFilter<"VideoMetadata"> | string | null
     releaseDate?: DateTimeWithAggregatesFilter<"VideoMetadata"> | Date | string
     platformDate?: DateTimeWithAggregatesFilter<"VideoMetadata"> | Date | string
     ageRating?: StringWithAggregatesFilter<"VideoMetadata"> | string
@@ -47121,17 +47213,20 @@ export namespace Prisma {
 
   export type AdminCreateInput = {
     id?: string
+    keycloakId?: string | null
     email: string
     firstName: string
     lastName: string
     country: string
     city: string
-    state: string
-    phoneNumber: string
-    address: string
+    state?: string | null
+    phoneNumber?: string | null
+    address?: string | null
     avatarUrl?: string | null
     lastLoginAt?: Date | string | null
     isVerified?: boolean
+    isActive?: boolean
+    permissions?: AdminCreatepermissionsInput | string[]
     role?: $Enums.AdminRole
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -47141,17 +47236,20 @@ export namespace Prisma {
 
   export type AdminUncheckedCreateInput = {
     id?: string
+    keycloakId?: string | null
     email: string
     firstName: string
     lastName: string
     country: string
     city: string
-    state: string
-    phoneNumber: string
-    address: string
+    state?: string | null
+    phoneNumber?: string | null
+    address?: string | null
     avatarUrl?: string | null
     lastLoginAt?: Date | string | null
     isVerified?: boolean
+    isActive?: boolean
+    permissions?: AdminCreatepermissionsInput | string[]
     role?: $Enums.AdminRole
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -47161,17 +47259,20 @@ export namespace Prisma {
 
   export type AdminUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    keycloakId?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     country?: StringFieldUpdateOperationsInput | string
     city?: StringFieldUpdateOperationsInput | string
-    state?: StringFieldUpdateOperationsInput | string
-    phoneNumber?: StringFieldUpdateOperationsInput | string
-    address?: StringFieldUpdateOperationsInput | string
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    permissions?: AdminUpdatepermissionsInput | string[]
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -47181,17 +47282,20 @@ export namespace Prisma {
 
   export type AdminUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    keycloakId?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     country?: StringFieldUpdateOperationsInput | string
     city?: StringFieldUpdateOperationsInput | string
-    state?: StringFieldUpdateOperationsInput | string
-    phoneNumber?: StringFieldUpdateOperationsInput | string
-    address?: StringFieldUpdateOperationsInput | string
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    permissions?: AdminUpdatepermissionsInput | string[]
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -47201,17 +47305,20 @@ export namespace Prisma {
 
   export type AdminCreateManyInput = {
     id?: string
+    keycloakId?: string | null
     email: string
     firstName: string
     lastName: string
     country: string
     city: string
-    state: string
-    phoneNumber: string
-    address: string
+    state?: string | null
+    phoneNumber?: string | null
+    address?: string | null
     avatarUrl?: string | null
     lastLoginAt?: Date | string | null
     isVerified?: boolean
+    isActive?: boolean
+    permissions?: AdminCreatepermissionsInput | string[]
     role?: $Enums.AdminRole
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -47219,17 +47326,20 @@ export namespace Prisma {
 
   export type AdminUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    keycloakId?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     country?: StringFieldUpdateOperationsInput | string
     city?: StringFieldUpdateOperationsInput | string
-    state?: StringFieldUpdateOperationsInput | string
-    phoneNumber?: StringFieldUpdateOperationsInput | string
-    address?: StringFieldUpdateOperationsInput | string
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    permissions?: AdminUpdatepermissionsInput | string[]
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -47237,17 +47347,20 @@ export namespace Prisma {
 
   export type AdminUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
+    keycloakId?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     country?: StringFieldUpdateOperationsInput | string
     city?: StringFieldUpdateOperationsInput | string
-    state?: StringFieldUpdateOperationsInput | string
-    phoneNumber?: StringFieldUpdateOperationsInput | string
-    address?: StringFieldUpdateOperationsInput | string
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    permissions?: AdminUpdatepermissionsInput | string[]
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -47795,6 +47908,8 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
+    thumbnailUrl: string
+    secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
@@ -47818,6 +47933,8 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
+    thumbnailUrl: string
+    secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
@@ -47841,6 +47958,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    thumbnailUrl?: StringFieldUpdateOperationsInput | string
+    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -47864,6 +47983,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    thumbnailUrl?: StringFieldUpdateOperationsInput | string
+    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -47887,6 +48008,8 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
+    thumbnailUrl: string
+    secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
@@ -47905,6 +48028,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    thumbnailUrl?: StringFieldUpdateOperationsInput | string
+    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -47920,6 +48045,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    thumbnailUrl?: StringFieldUpdateOperationsInput | string
+    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -49821,6 +49948,14 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
   export type EnumAdminRoleFilter<$PrismaModel = never> = {
     equals?: $Enums.AdminRole | EnumAdminRoleFieldRefInput<$PrismaModel>
     in?: $Enums.AdminRole[] | ListEnumAdminRoleFieldRefInput<$PrismaModel>
@@ -49830,6 +49965,7 @@ export namespace Prisma {
 
   export type AdminCountOrderByAggregateInput = {
     id?: SortOrder
+    keycloakId?: SortOrder
     email?: SortOrder
     firstName?: SortOrder
     lastName?: SortOrder
@@ -49841,6 +49977,8 @@ export namespace Prisma {
     avatarUrl?: SortOrder
     lastLoginAt?: SortOrder
     isVerified?: SortOrder
+    isActive?: SortOrder
+    permissions?: SortOrder
     role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -49848,6 +49986,7 @@ export namespace Prisma {
 
   export type AdminMaxOrderByAggregateInput = {
     id?: SortOrder
+    keycloakId?: SortOrder
     email?: SortOrder
     firstName?: SortOrder
     lastName?: SortOrder
@@ -49859,6 +49998,7 @@ export namespace Prisma {
     avatarUrl?: SortOrder
     lastLoginAt?: SortOrder
     isVerified?: SortOrder
+    isActive?: SortOrder
     role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -49866,6 +50006,7 @@ export namespace Prisma {
 
   export type AdminMinOrderByAggregateInput = {
     id?: SortOrder
+    keycloakId?: SortOrder
     email?: SortOrder
     firstName?: SortOrder
     lastName?: SortOrder
@@ -49877,6 +50018,7 @@ export namespace Prisma {
     avatarUrl?: SortOrder
     lastLoginAt?: SortOrder
     isVerified?: SortOrder
+    isActive?: SortOrder
     role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -50375,6 +50517,8 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
+    thumbnailUrl?: SortOrder
+    secondaryImage?: SortOrder
     releaseDate?: SortOrder
     platformDate?: SortOrder
     ageRating?: SortOrder
@@ -50393,6 +50537,8 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
+    thumbnailUrl?: SortOrder
+    secondaryImage?: SortOrder
     releaseDate?: SortOrder
     platformDate?: SortOrder
     ageRating?: SortOrder
@@ -50411,6 +50557,8 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
+    thumbnailUrl?: SortOrder
+    secondaryImage?: SortOrder
     releaseDate?: SortOrder
     platformDate?: SortOrder
     ageRating?: SortOrder
@@ -51961,6 +52109,10 @@ export namespace Prisma {
     deleteMany?: ActiveStreamScalarWhereInput | ActiveStreamScalarWhereInput[]
   }
 
+  export type AdminCreatepermissionsInput = {
+    set: string[]
+  }
+
   export type SessionCreateNestedManyWithoutAdminInput = {
     create?: XOR<SessionCreateWithoutAdminInput, SessionUncheckedCreateWithoutAdminInput> | SessionCreateWithoutAdminInput[] | SessionUncheckedCreateWithoutAdminInput[]
     connectOrCreate?: SessionCreateOrConnectWithoutAdminInput | SessionCreateOrConnectWithoutAdminInput[]
@@ -51987,6 +52139,11 @@ export namespace Prisma {
     connectOrCreate?: EmailValidationCreateOrConnectWithoutAdminInput | EmailValidationCreateOrConnectWithoutAdminInput[]
     createMany?: EmailValidationCreateManyAdminInputEnvelope
     connect?: EmailValidationWhereUniqueInput | EmailValidationWhereUniqueInput[]
+  }
+
+  export type AdminUpdatepermissionsInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
   export type EnumAdminRoleFieldUpdateOperationsInput = {
@@ -55461,17 +55618,20 @@ export namespace Prisma {
 
   export type AdminCreateWithoutEmailValidationInput = {
     id?: string
+    keycloakId?: string | null
     email: string
     firstName: string
     lastName: string
     country: string
     city: string
-    state: string
-    phoneNumber: string
-    address: string
+    state?: string | null
+    phoneNumber?: string | null
+    address?: string | null
     avatarUrl?: string | null
     lastLoginAt?: Date | string | null
     isVerified?: boolean
+    isActive?: boolean
+    permissions?: AdminCreatepermissionsInput | string[]
     role?: $Enums.AdminRole
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -55480,17 +55640,20 @@ export namespace Prisma {
 
   export type AdminUncheckedCreateWithoutEmailValidationInput = {
     id?: string
+    keycloakId?: string | null
     email: string
     firstName: string
     lastName: string
     country: string
     city: string
-    state: string
-    phoneNumber: string
-    address: string
+    state?: string | null
+    phoneNumber?: string | null
+    address?: string | null
     avatarUrl?: string | null
     lastLoginAt?: Date | string | null
     isVerified?: boolean
+    isActive?: boolean
+    permissions?: AdminCreatepermissionsInput | string[]
     role?: $Enums.AdminRole
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -55568,17 +55731,20 @@ export namespace Prisma {
 
   export type AdminUpdateWithoutEmailValidationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    keycloakId?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     country?: StringFieldUpdateOperationsInput | string
     city?: StringFieldUpdateOperationsInput | string
-    state?: StringFieldUpdateOperationsInput | string
-    phoneNumber?: StringFieldUpdateOperationsInput | string
-    address?: StringFieldUpdateOperationsInput | string
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    permissions?: AdminUpdatepermissionsInput | string[]
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -55587,17 +55753,20 @@ export namespace Prisma {
 
   export type AdminUncheckedUpdateWithoutEmailValidationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    keycloakId?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     country?: StringFieldUpdateOperationsInput | string
     city?: StringFieldUpdateOperationsInput | string
-    state?: StringFieldUpdateOperationsInput | string
-    phoneNumber?: StringFieldUpdateOperationsInput | string
-    address?: StringFieldUpdateOperationsInput | string
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    permissions?: AdminUpdatepermissionsInput | string[]
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -55653,17 +55822,20 @@ export namespace Prisma {
 
   export type AdminCreateWithoutSessionsInput = {
     id?: string
+    keycloakId?: string | null
     email: string
     firstName: string
     lastName: string
     country: string
     city: string
-    state: string
-    phoneNumber: string
-    address: string
+    state?: string | null
+    phoneNumber?: string | null
+    address?: string | null
     avatarUrl?: string | null
     lastLoginAt?: Date | string | null
     isVerified?: boolean
+    isActive?: boolean
+    permissions?: AdminCreatepermissionsInput | string[]
     role?: $Enums.AdminRole
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -55672,17 +55844,20 @@ export namespace Prisma {
 
   export type AdminUncheckedCreateWithoutSessionsInput = {
     id?: string
+    keycloakId?: string | null
     email: string
     firstName: string
     lastName: string
     country: string
     city: string
-    state: string
-    phoneNumber: string
-    address: string
+    state?: string | null
+    phoneNumber?: string | null
+    address?: string | null
     avatarUrl?: string | null
     lastLoginAt?: Date | string | null
     isVerified?: boolean
+    isActive?: boolean
+    permissions?: AdminCreatepermissionsInput | string[]
     role?: $Enums.AdminRole
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -55793,17 +55968,20 @@ export namespace Prisma {
 
   export type AdminUpdateWithoutSessionsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    keycloakId?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     country?: StringFieldUpdateOperationsInput | string
     city?: StringFieldUpdateOperationsInput | string
-    state?: StringFieldUpdateOperationsInput | string
-    phoneNumber?: StringFieldUpdateOperationsInput | string
-    address?: StringFieldUpdateOperationsInput | string
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    permissions?: AdminUpdatepermissionsInput | string[]
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -55812,17 +55990,20 @@ export namespace Prisma {
 
   export type AdminUncheckedUpdateWithoutSessionsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    keycloakId?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     country?: StringFieldUpdateOperationsInput | string
     city?: StringFieldUpdateOperationsInput | string
-    state?: StringFieldUpdateOperationsInput | string
-    phoneNumber?: StringFieldUpdateOperationsInput | string
-    address?: StringFieldUpdateOperationsInput | string
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    permissions?: AdminUpdatepermissionsInput | string[]
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57529,6 +57710,8 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
+    thumbnailUrl: string
+    secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
@@ -57551,6 +57734,8 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
+    thumbnailUrl: string
+    secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
@@ -57602,6 +57787,8 @@ export namespace Prisma {
     id?: StringFilter<"VideoMetadata"> | string
     title?: StringFilter<"VideoMetadata"> | string
     description?: StringFilter<"VideoMetadata"> | string
+    thumbnailUrl?: StringFilter<"VideoMetadata"> | string
+    secondaryImage?: StringNullableFilter<"VideoMetadata"> | string | null
     releaseDate?: DateTimeFilter<"VideoMetadata"> | Date | string
     platformDate?: DateTimeFilter<"VideoMetadata"> | Date | string
     ageRating?: StringFilter<"VideoMetadata"> | string
@@ -57660,6 +57847,8 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
+    thumbnailUrl: string
+    secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
@@ -57682,6 +57871,8 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
+    thumbnailUrl: string
+    secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
@@ -57739,6 +57930,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    thumbnailUrl?: StringFieldUpdateOperationsInput | string
+    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -57761,6 +57954,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    thumbnailUrl?: StringFieldUpdateOperationsInput | string
+    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -57808,6 +58003,8 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
+    thumbnailUrl: string
+    secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
@@ -57830,6 +58027,8 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
+    thumbnailUrl: string
+    secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
@@ -57873,6 +58072,8 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
+    thumbnailUrl: string
+    secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
@@ -57895,6 +58096,8 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
+    thumbnailUrl: string
+    secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
@@ -57943,6 +58146,8 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
+    thumbnailUrl: string
+    secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
@@ -57965,6 +58170,8 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
+    thumbnailUrl: string
+    secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
@@ -58013,6 +58220,8 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
+    thumbnailUrl: string
+    secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
@@ -58035,6 +58244,8 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
+    thumbnailUrl: string
+    secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
@@ -58177,6 +58388,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    thumbnailUrl?: StringFieldUpdateOperationsInput | string
+    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -58199,6 +58412,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    thumbnailUrl?: StringFieldUpdateOperationsInput | string
+    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -58293,6 +58508,8 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
+    thumbnailUrl: string
+    secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
@@ -58315,6 +58532,8 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
+    thumbnailUrl: string
+    secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
@@ -58489,6 +58708,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    thumbnailUrl?: StringFieldUpdateOperationsInput | string
+    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -58511,6 +58732,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    thumbnailUrl?: StringFieldUpdateOperationsInput | string
+    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -59642,6 +59865,8 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
+    thumbnailUrl: string
+    secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
@@ -59664,6 +59889,8 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
+    thumbnailUrl: string
+    secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
@@ -59739,6 +59966,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    thumbnailUrl?: StringFieldUpdateOperationsInput | string
+    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -59761,6 +59990,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    thumbnailUrl?: StringFieldUpdateOperationsInput | string
+    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -61639,6 +61870,8 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
+    thumbnailUrl: string
+    secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
@@ -61656,6 +61889,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    thumbnailUrl?: StringFieldUpdateOperationsInput | string
+    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -61678,6 +61913,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    thumbnailUrl?: StringFieldUpdateOperationsInput | string
+    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -61700,6 +61937,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    thumbnailUrl?: StringFieldUpdateOperationsInput | string
+    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -61745,6 +61984,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    thumbnailUrl?: StringFieldUpdateOperationsInput | string
+    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -61767,6 +62008,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    thumbnailUrl?: StringFieldUpdateOperationsInput | string
+    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -61789,6 +62032,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    thumbnailUrl?: StringFieldUpdateOperationsInput | string
+    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -61807,6 +62052,8 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
+    thumbnailUrl: string
+    secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
@@ -61824,6 +62071,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    thumbnailUrl?: StringFieldUpdateOperationsInput | string
+    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -61846,6 +62095,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    thumbnailUrl?: StringFieldUpdateOperationsInput | string
+    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -61868,6 +62119,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    thumbnailUrl?: StringFieldUpdateOperationsInput | string
+    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -61885,6 +62138,8 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
+    thumbnailUrl: string
+    secondaryImage?: string | null
     releaseDate: Date | string
     platformDate: Date | string
     ageRating: string
@@ -61902,6 +62157,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    thumbnailUrl?: StringFieldUpdateOperationsInput | string
+    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -61924,6 +62181,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    thumbnailUrl?: StringFieldUpdateOperationsInput | string
+    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string
@@ -61946,6 +62205,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    thumbnailUrl?: StringFieldUpdateOperationsInput | string
+    secondaryImage?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     platformDate?: DateTimeFieldUpdateOperationsInput | Date | string
     ageRating?: StringFieldUpdateOperationsInput | string

@@ -3,9 +3,9 @@ import { Inject, Injectable } from '@nestjs/common';
 import { Result, Ok, Err } from "oxide.ts";
 import type { IMovieRepository } from '../../domain/ports/movie.repository';
 import { UpdateMovieCommand } from '../cqrs/commands/update-movie.command';
-import { MOVIE_REPOSITORY } from '../..//utils/types';
+import { MOVIE_REPOSITORY } from '../../utils/types';
 import { MovieNotFoundError } from '../../errors/movie.errors';
-import { MovieAggregate } from 'src/lib/domain/entities/movie.aggregate';
+import { MovieAggregate } from '../../domain/entities/movie.aggregate';
 import { BaseHandler } from '@safliix-back/cqrs';
 
 @Injectable()

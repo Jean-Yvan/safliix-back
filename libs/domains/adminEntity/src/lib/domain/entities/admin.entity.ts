@@ -1,73 +1,76 @@
-import { Result, Err, Ok } from "oxide.ts";
-import { AdminWithRelation } from "@safliix-back/database";
-import { CreateAdminDto } from "../../interfaces/dto/create-admin.dto";
-import { UpdateAdminDto } from "../../interfaces/dto/update-admin.dto";
+import { Result, Err, Ok } from 'oxide.ts';
+import { AdminWithRelation } from '@safliix-back/database';
+import { CreateAdminDto } from '../../interfaces/dto/create-admin.dto';
+import { UpdateAdminDto } from '../../interfaces/dto/update-admin.dto';
+import { AdminRole } from '../../utils/types';
 
 export class AdminEntity {
   private constructor(
     public readonly id: string | undefined,
+    public readonly keycloakId: string | null,
     public readonly email: string,
-    public readonly passwordHash: string,
     public readonly firstName: string,
     public readonly lastName: string,
     public readonly country: string,
     public readonly city: string,
-    public readonly state: string,
-    public readonly phoneNumber: string,
-    public readonly address: string,
+    public readonly state: string | null,
+    public readonly phoneNumber: string | null,
+    public readonly address: string | null,
     public readonly lastLoginAt: Date | null,
-    public readonly isVerified: boolean
+    public readonly isVerified: boolean,
+    public readonly isActive: boolean,
+    public readonly permissions: string[],
+    public readonly role: AdminRole,
   ) {}
 
-  // Création d'un admin
   static create(dto: CreateAdminDto): Result<AdminEntity, Error> {
     if (!dto.email) {
       return Err(new Error("L'email est obligatoire"));
-    }
-    if (!dto.password) {
-      return Err(new Error("Le mot de passe est obligatoire"));
     }
 
     return Ok(
       new AdminEntity(
         undefined,
+        dto.keycloakId ?? null,
         dto.email,
-        dto.password,
         dto.firstName,
         dto.lastName,
         dto.country,
         dto.city,
-        dto.state ?? '',
-        dto.phoneNumber ?? '',
-        dto.address ?? '',
-        null, // lastLoginAt vide à la création
-        false // par défaut non vérifié
-      )
+        dto.state ?? null,
+        dto.phoneNumber ?? null,
+        dto.address ?? null,
+        null,
+        false,
+        true,
+        [],
+        dto.role ?? AdminRole.ADMIN,
+      ),
     );
   }
 
-  // Restauration depuis Prisma
   static restore(data: AdminWithRelation): AdminEntity {
     return new AdminEntity(
       data.id,
+      data.keycloakId ?? null,
       data.email,
-      data.password_hash,
       data.firstName,
       data.lastName,
       data.country,
       data.city,
-      data.state,
-      data.phoneNumber,
-      data.address,
+      data.state ?? null,
+      data.phoneNumber ?? null,
+      data.address ?? null,
       data.lastLoginAt,
-      data.isVerified
+      data.isVerified,
+      data.isActive,
+      data.permissions ?? [],
+      data.role as AdminRole,
     );
   }
 
-  // Mise à jour
   updateWith(dto: UpdateAdminDto): Result<AdminEntity, Error> {
     const newEmail = dto.email ?? this.email;
-    const newPasswordHash = dto.password ?? this.passwordHash;
     const newFirstName = dto.firstName ?? this.firstName;
     const newLastName = dto.lastName ?? this.lastName;
     const newCountry = dto.country ?? this.country;
@@ -75,31 +78,35 @@ export class AdminEntity {
     const newState = dto.state ?? this.state;
     const newPhoneNumber = dto.phoneNumber ?? this.phoneNumber;
     const newAddress = dto.address ?? this.address;
-    const newLastLoginAt = dto.lastLoginAt ?? this.lastLoginAt;
+    const newLastLoginAt = dto.lastLoginAt ? new Date(dto.lastLoginAt) : this.lastLoginAt;
     const newIsVerified = dto.isVerified ?? this.isVerified;
+    const newIsActive = dto.isActive ?? this.isActive;
+    const newPermissions = dto.permissions ?? this.permissions;
+    const newRole = dto.role ?? this.role;
+    const newKeycloakId = dto.keycloakId ?? this.keycloakId;
 
     if (!newEmail) {
       return Err(new Error("L'email est obligatoire"));
-    }
-    if (!newPasswordHash) {
-      return Err(new Error("Le mot de passe est obligatoire"));
     }
 
     return Ok(
       new AdminEntity(
         this.id,
+        newKeycloakId ?? null,
         newEmail,
-        newPasswordHash,
         newFirstName,
         newLastName,
         newCountry,
         newCity,
-        newState,
-        newPhoneNumber,
-        newAddress,
+        newState ?? null,
+        newPhoneNumber ?? null,
+        newAddress ?? null,
         newLastLoginAt,
-        newIsVerified
-      )
+        newIsVerified,
+        newIsActive,
+        newPermissions,
+        newRole,
+      ),
     );
   }
 }

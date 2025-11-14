@@ -1,10 +1,16 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEmail, IsNotEmpty, IsOptional, IsString } from "class-validator";
+import { IsEmail, IsEnum, IsNotEmpty, IsOptional, IsString } from "class-validator";
+import { AdminRole } from "../../utils/types";
 
 export class CreateAdminDto {
   @ApiProperty({ example: "admin@example.com", description: "Adresse email de l'administrateur" })
   @IsEmail({}, { message: "Email invalide" })
   email!: string;
+
+  @ApiProperty({ example: "2b0d9181-e9c5-4e0d-9efc-9e76c5e9e1f5", description: "Identifiant Keycloak associé", required: false })
+  @IsString()
+  @IsOptional()
+  keycloakId?: string;
 
   @ApiProperty({ example: "hashedpassword123", description: "Mot de passe hashé" })
   @IsString()
@@ -45,4 +51,9 @@ export class CreateAdminDto {
   @IsString()
   @IsOptional()
   address?: string;
+
+  @ApiProperty({ example: AdminRole.SUPER_ADMIN, enum: AdminRole, required: false })
+  @IsEnum(AdminRole)
+  @IsOptional()
+  role?: AdminRole;
 }

@@ -1,9 +1,11 @@
 import {
   AdWithRelation,
   CreateToPrisma,
+  MediaAttachmentWithRelation,
   UpdateToPrisma,
 } from '@safliix-back/database';
 import { Ad, AdPrimitives } from '../entities/ad.entity';
+import { AdAttachmentPrimitives } from '../types/ad-attachment.type';
 
 export class AdMapper {
   static toDomain(data: AdWithRelation): Ad {
@@ -46,6 +48,31 @@ export class AdMapper {
       startDate: data.startDate,
       endDate: data.endDate,
       isActive: data.isActive,
+      attachments: this.mapAttachments(data.attachment),
     };
+  }
+
+  private static mapAttachments(
+    attachments?: MediaAttachmentWithRelation[],
+  ): AdAttachmentPrimitives[] {
+    if (!attachments?.length) {
+      return [];
+    }
+    return attachments.map((attachment) => ({
+      id: attachment.id,
+      mediaFileId: attachment.mediaFileId,
+      type: attachment.type,
+      mediaFile: attachment.mediaFile
+        ? {
+            id: attachment.mediaFile.id,
+            s3Key: attachment.mediaFile.s3Key,
+            duration: attachment.mediaFile.duration,
+            width: attachment.mediaFile.width,
+            height: attachment.mediaFile.height,
+            status: attachment.mediaFile.status,
+            mediaType: attachment.mediaFile.mediaType,
+          }
+        : undefined,
+    }));
   }
 }

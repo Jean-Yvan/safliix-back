@@ -9,17 +9,19 @@ import { SubscriptionModule } from './subscription/subscription.module';
 import { AdminConnectModule } from './adminConnect/admin-connect.module';
 import { SerieModule } from './serie/serie.module';
 import { VideosModule } from './videos/videos.module';
+import { AdsModule } from './ads/ads.module';
 
 @Module({
   imports: [
     CqrsModule.forRoot(),
-    SafliixBackBullmqModule.forRoot(),
+    SafliixBackBullmqModule,
     MoviesModule,
     UsersModule,
     SubscriptionModule,
     AdminConnectModule,
     SerieModule,
     VideosModule,
+    AdsModule,
   ],
 
   providers: [

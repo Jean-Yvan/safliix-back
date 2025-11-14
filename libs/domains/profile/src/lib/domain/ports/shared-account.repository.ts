@@ -46,7 +46,9 @@ export interface ISharedAccountRepository {
 
   // Récupère un profil appartenant à un compte propriétaire
    findProfileForOwner(
-    accountId: string,
-    profileId: string
-  ): Promise<Result<SharedAccountUser, Error>>;
+   	accountId: string,
+   	profileId: string
+ 	): Promise<Result<SharedAccountUser, Error>>;
+
+  verifyAccess(profileId: string, pinCode: number): Promise<Result<boolean, Error>>;
 }

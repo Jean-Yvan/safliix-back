@@ -1,6 +1,6 @@
 import { AggregateRoot } from '@nestjs/cqrs';
-import { VideoMetadata,VideoCategory,VideoFormat,VideoGender } from '@safliix-back/contents';
-import { Result,Ok,Err } from 'oxide.ts';
+import { VideoMetadata, VideoCategory, VideoFormat, VideoGender } from '@safliix-back/contents';
+import { Result, Ok, Err } from 'oxide.ts';
 import { CreateMovieDto } from '../../interface/rest/dto/create-movie.dto';
 import { UpdateMovieDto } from '../../interface/rest/dto/update-movie.dto';
 import { ContentStatus } from '@safliix-back/common';
@@ -21,7 +21,7 @@ export class InvalidDurationError extends Error {
 
 
 export class MovieAggregate extends AggregateRoot {
-  update(payload: { title?: string; status?: "DRAFT" | "PUBLISHED"; }) {
+  update(payload: { title?: string; status?: 'DRAFT' | 'PUBLISHED' }) {
     throw new Error('Method not implemented.');
   }
   
@@ -29,7 +29,7 @@ export class MovieAggregate extends AggregateRoot {
   private constructor(
     public readonly id: string | undefined,
     public readonly metadata: VideoMetadata,
-    public readonly  attachments: MediaAttachment[],
+    public readonly attachments: MediaAttachment[],
     public status: ContentStatus = ContentStatus.DRAFT,
     public rentalPrice: number,
     public type: string
@@ -40,7 +40,7 @@ export class MovieAggregate extends AggregateRoot {
 
   // === Méthodes Métier ===
   publishMovie(publicationDate: Date = new Date()): Result<void, Error> {
-    if (this.status === 'PUBLISHED') {
+    if (this.status === ContentStatus.PUBLISHED) {
       return Err(new Error('MOVIE_ALREADY_PUBLISHED'));
     }
 
@@ -66,7 +66,6 @@ export class MovieAggregate extends AggregateRoot {
 
   // === Factory Method ===
   static create(data:CreateMovieDto): Result<MovieAggregate, Error> {
-
     const categoryResult = VideoCategory.create(
       undefined,
       data.category,
@@ -93,23 +92,23 @@ export class MovieAggregate extends AggregateRoot {
     if(genderResult.isErr()){
       return Err(genderResult.unwrapErr());
     }
-    const metadataResult = VideoMetadata.create(
-      undefined,
-      data.title,
-      data.description,
-      data.thumbnailUrl,
-      data.productionHouse,
-      data.productionCountry,
-      data.status,
-      data.director,
-      data.secondaryImageUrl ?? '',
-      new Date(data.releaseDate),
-      new Date(data.plateformDate),
-      categoryResult.unwrap(),
-      formatResult.unwrap(),
-      genderResult.unwrap(),
-      data.actors
-    );
+    const metadataResult = VideoMetadata.create({
+      id: undefined,
+      title: data.title,
+      description: data.description ?? '',
+      thumbnailUrl: data.thumbnailUrl,
+      secondaryImage: data.secondaryImageUrl ?? null,
+      productionHouse: data.productionHouse,
+      productionCountry: data.productionCountry,
+      status: data.status,
+      director: data.director,
+      releaseDate: new Date(data.releaseDate),
+      platformDate: new Date(data.plateformDate),
+      category: categoryResult.unwrap(),
+      format: formatResult.unwrap(),
+      gender: genderResult.unwrap(),
+      actors: data.actors
+    });
     
     if (metadataResult.isErr()) {
       return Err(metadataResult.unwrapErr());
@@ -122,7 +121,7 @@ export class MovieAggregate extends AggregateRoot {
       undefined,
       metadataResult.unwrap(),
       [],
-      data.status,
+      data.status ?? ContentStatus.DRAFT,
       data.rentalPrice || 0,
       data.type
     );
@@ -136,7 +135,12 @@ export class MovieAggregate extends AggregateRoot {
   
   static restore(data: MovieWithRelations): MovieAggregate {
 
-    const s = data.status == "DRAFT" ? ContentStatus.DRAFT : ContentStatus.PUBLISHED;
+    const s =
+      data.status === ContentStatus.DRAFT
+        ? ContentStatus.DRAFT
+        : data.status === ContentStatus.ARCHIVED
+          ? ContentStatus.ARCHIVED
+          : ContentStatus.PUBLISHED;
     const movie = new MovieAggregate(
       data.id,
       VideoMetadata.restore(data.metadata),
@@ -171,9 +175,12 @@ export class MovieAggregate extends AggregateRoot {
   const metadataUpdateResult = this.metadata.updateWith({
     title: payload.title ?? this.metadata.title,
     description: payload.description ?? this.metadata.description,
+    thumbnailUrl: payload.thumbnailUrl ?? this.metadata.thumbnailUrl,
+    secondaryImage: payload.secondaryImageUrl ?? this.metadata.secondaryImage,
     releaseDate: payload.releaseDate ? new Date(payload.releaseDate) : this.metadata.releaseDate,
     platformDate: payload.plateformDate ? new Date(payload.plateformDate) : this.metadata.platformDate,
     productionHouse: payload.productionHouse ?? this.metadata.productionHouse,
+    productionCountry: payload.productionCountry ?? this.metadata.productionCountry,
     director: payload.director ?? this.metadata.director,
     category: category,
     format: format ?? undefined ,
@@ -211,4 +218,3 @@ export class MovieAggregate extends AggregateRoot {
 }
 
 }
-

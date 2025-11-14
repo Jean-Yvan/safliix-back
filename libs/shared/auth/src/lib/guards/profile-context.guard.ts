@@ -4,7 +4,7 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { Request } from 'express';
+import type { Request } from 'express';
 import {
   ProfileContext,
   ProfileContextService,
@@ -16,6 +16,7 @@ import {
 export interface RequestWithProfileContext extends Request {
   profileContext?: ProfileContext;
   profileTokenPayload?: ProfileTokenPayload;
+  user?: any;
 }
 
 @Injectable()

@@ -134,6 +134,7 @@ exports.Prisma.UserScalarFieldEnum = {
 
 exports.Prisma.AdminScalarFieldEnum = {
   id: 'id',
+  keycloakId: 'keycloakId',
   email: 'email',
   firstName: 'firstName',
   lastName: 'lastName',
@@ -145,6 +146,8 @@ exports.Prisma.AdminScalarFieldEnum = {
   avatarUrl: 'avatarUrl',
   lastLoginAt: 'lastLoginAt',
   isVerified: 'isVerified',
+  isActive: 'isActive',
+  permissions: 'permissions',
   role: 'role',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -229,6 +232,8 @@ exports.Prisma.VideoMetadataScalarFieldEnum = {
   id: 'id',
   title: 'title',
   description: 'description',
+  thumbnailUrl: 'thumbnailUrl',
+  secondaryImage: 'secondaryImage',
   releaseDate: 'releaseDate',
   platformDate: 'platformDate',
   ageRating: 'ageRating',
@@ -491,7 +496,8 @@ exports.Prisma.JsonNullValueFilter = {
 };
 exports.AdminRole = exports.$Enums.AdminRole = {
   ADMIN: 'ADMIN',
-  SUPER_ADMIN: 'SUPER_ADMIN'
+  SUPER_ADMIN: 'SUPER_ADMIN',
+  OWNER: 'OWNER'
 };
 
 exports.SessionType = exports.$Enums.SessionType = {

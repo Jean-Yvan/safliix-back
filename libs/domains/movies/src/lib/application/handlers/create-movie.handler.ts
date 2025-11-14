@@ -46,10 +46,9 @@ export class CreateMovieHandler extends BaseHandler<CreateMovieCommand, Result<M
  //     this.logger.error(`Failed to save movie ${command.payload.title}: ${saveResult.unwrapErr().message}`);
       return Err(new MovieSaveError(saveResult.unwrapErr().message));
     }
-    this.eventBus.publish(new MovieCreatedEvent(saveResult.unwrap().id!, movie.metadata.title));
+    const persisted = saveResult.unwrap();
+    this.eventBus.publish(new MovieCreatedEvent(persisted.id!, persisted.metadata.title));
     // 3. Retourner le résultat
-    return Ok(movie);
-    
-    return Ok(movie);
+    return Ok(persisted);
   }
 }

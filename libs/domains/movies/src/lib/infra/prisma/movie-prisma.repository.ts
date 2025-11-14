@@ -5,6 +5,7 @@ import { IMovieRepository } from '../../domain/ports/movie.repository';
 import { MovieMapper } from '../../mappers/movie.mapper';
 import { movieInclude } from '@safliix-back/database';
 import { MovieFilter } from '../../utils/types';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class MovieRepository implements IMovieRepository {
@@ -73,7 +74,8 @@ export class MovieRepository implements IMovieRepository {
   }
 
   async findAll(filters?: MovieFilter): Promise<MovieAggregate[]> {
-    const where: Record<string, unknown> = {};
+    const where: Prisma.MovieWhereInput = {};
+    const metadataWhere: Prisma.VideoMetadataWhereInput = {};
 
     if (filters) {
       if (filters.status) {
@@ -81,21 +83,35 @@ export class MovieRepository implements IMovieRepository {
       }
 
       if (filters.director) {
-        where.director = {
+        metadataWhere.director = {
           contains: filters.director,
           mode: "insensitive", // recherche insensible à la casse
         };
       }
 
       if (filters.format) {
-        where.format = filters.format;
+        metadataWhere.format = {
+          is: {
+            format: filters.format,
+          },
+        };
       }
 
       if (filters.minDuration) {
-        where.duration = {
-          gte: filters.minDuration,
+        where.attachment = {
+          some: {
+            mediaFile: {
+              duration: {
+                gte: filters.minDuration,
+              },
+            },
+          },
         };
       }
+    }
+
+    if (Object.keys(metadataWhere).length > 0) {
+      where.metadata = metadataWhere;
     }
 
     const movies = await this.prisma.movie.findMany({

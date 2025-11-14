@@ -8,10 +8,13 @@ export interface ViewsRange {
 export interface AdViewRepository {
   create(view: AdView): Promise<AdView>;
   findByAd(adId: string): Promise<AdView[]>;
-  countByAd(adId: string): Promise<number>;
-  uniqueViewersCount(adId: string): Promise<number>;
+  countByAd(adId: string, range?: ViewsRange): Promise<number>;
+  uniqueViewersCount(adId: string, range?: ViewsRange): Promise<number>;
   viewsByDate(adId: string, range?: ViewsRange): Promise<Record<string, number>>;
-  viewsByCountry(adId: string): Promise<Record<string, number>>;
+  viewsByCountry(
+    adId: string,
+    range?: ViewsRange,
+  ): Promise<Record<string, number>>;
 }
 
 export interface AdStatistics {

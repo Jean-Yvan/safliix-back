@@ -21,7 +21,15 @@
     "target": "es2022",
     "customConditions": ["development"],
     "paths": {
-      "@safliix-back/*": ["libs/*/src/index.ts"]
-    }
-  }
+      "@safliix-back/*": ["libs/*/src/index.ts"],
+      "passport-jwt": ["types/passport-jwt/index.d.ts"]
+    },
+    "typeRoots": ["./types", "./node_modules/@types"]
+  },
+  "references": [
+    { "path": "libs/shared/database" },
+    { "path": "libs/shared/cqrs" },
+    { "path": "libs/shared/auth" },
+    { "path": "libs/domains/common" }
+  ]
 }

@@ -25,24 +25,27 @@ export class TrackAdViewHandler extends BaseHandler<
   protected override async handle(
     command: TrackAdViewCommand,
   ): Promise<Result<void, Error>> {
+    const adViewResult = AdView.create(command.payload);
+    if (adViewResult.isErr()) {
+      return Err(adViewResult.unwrapErr());
+    }
+    const adView = adViewResult.unwrap();
+
     const adResult = await Result.safe(
       this.adRepository.findById(command.payload.adId),
     );
     if (adResult.isErr()) {
       return Err(adResult.unwrapErr());
     }
-    if (!adResult.unwrap()) {
+    const ad = adResult.unwrap();
+    if (!ad) {
       return Err(new Error('Ad not found'));
     }
-
-    const adViewResult = AdView.create(command.payload);
-    if (adViewResult.isErr()) {
-      return Err(adViewResult.unwrapErr());
+    if (!ad.isCurrentlyActive(adView.viewedAt)) {
+      return Err(new Error('Ad is not active for the provided view date'));
     }
 
-    const safe = await Result.safe(
-      this.adViewRepository.create(adViewResult.unwrap()),
-    );
+    const safe = await Result.safe(this.adViewRepository.create(adView));
 
     if (safe.isErr()) {
       return Err(safe.unwrapErr());

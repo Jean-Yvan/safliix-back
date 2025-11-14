@@ -96,7 +96,7 @@ export class CreateMovieDto {
   @IsString()
   @IsOptional()
   @IsNotEmpty({ message: 'La description est requise.' })
-  description!: string;
+  description?: string;
 
   @ApiProperty({example:true,required:false})
   @IsBoolean({ message: 'Indiquez si la série est produite par SaFliix ou pas.' })
@@ -111,7 +111,8 @@ export class CreateMovieDto {
   @ApiProperty({required:false})
   @IsArray({ message: 'Les langues des sous-titres doivent être un tableau.' })
   @IsString({ each: true, message: 'Chaque langue doit être une chaîne.' })
-  subtitleLanguages!: string[];
+  @IsOptional()
+  subtitleLanguages?: string[];
 
   @ApiProperty({example:"fr",required:false})
   @IsString({ message: 'La langue principale doit être une chaîne.' })
@@ -121,7 +122,7 @@ export class CreateMovieDto {
   @ApiProperty({example:"DRAFT",required:true})
   @IsEnum(["DRAFT","PUBLISHED"],{message:"status must be DRAFT or PUBLISHED"})
   @IsOptional()
-  status!: ContentStatus;
+  status?: ContentStatus;
   
 
   @ApiProperty({example:"R",required:false})
@@ -129,7 +130,7 @@ export class CreateMovieDto {
   @IsIn(['G', 'PG', 'PG-13', 'R', 'NC-17'], {
     message: 'La classification d’âge est invalide.',
   })
-  ageRating!: 'G' | 'PG' | 'PG-13' | 'R' | 'NC-17';
+  ageRating?: 'G' | 'PG' | 'PG-13' | 'R' | 'NC-17';
   
   @ApiProperty({example:"https://wwww.s3.com",required:true})
   @IsUrl({}, { message: 'L’URL de la vidéo est invalide' })

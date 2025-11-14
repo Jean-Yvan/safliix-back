@@ -67,7 +67,7 @@ export class VideoMetadataMapper {
 
       
       thumbnailUrl: metadata.thumbnailUrl,
-      secondaryImage: metadata.secondaryImage == null ? '': metadata.secondaryImage,
+      secondaryImage: metadata.secondaryImage,
       releaseDate: metadata.releaseDate,
       platformDate: metadata.platformDate,
       ageRating: '',
@@ -117,25 +117,26 @@ export class VideoMetadataMapper {
         },
 
         actors: {
-        create: metadata.actors.map(actor => {
-          if (actor.actorId) {
-            return {
-              actor: {
-                connect: { id: actor.actorId },
-              },
-            };
-          } else {
-            return {
-              actor: {
-                create: { name: actor.name },
-              },
-            };
-          }
-        }),
-      },
+          deleteMany: {},
+          create: metadata.actors.map(actor => {
+            if (actor.actorId) {
+              return {
+                actor: {
+                  connect: { id: actor.actorId },
+                },
+              };
+            } else {
+              return {
+                actor: {
+                  create: { name: actor.name },
+                },
+              };
+            }
+          }),
+        },
         
         thumbnailUrl: metadata.thumbnailUrl,
-        secondaryImage: metadata.secondaryImage == null ? '': metadata.secondaryImage,
+        secondaryImage: metadata.secondaryImage,
         releaseDate: metadata.releaseDate,
         platformDate: metadata.platformDate,
         ageRating: '',
@@ -152,4 +153,3 @@ export class VideoMetadataMapper {
      
 
   
-

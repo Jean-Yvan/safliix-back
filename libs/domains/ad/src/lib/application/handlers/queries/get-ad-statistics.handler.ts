@@ -45,21 +45,21 @@ export class GetAdStatisticsHandler extends BaseQueryHandler<
     const range = query.options?.range;
 
     const totalsResult = await Result.safe(
-      this.viewRepository.countByAd(query.adId),
+      this.viewRepository.countByAd(query.adId, range),
     );
     if (totalsResult.isErr()) {
       return Err(totalsResult.unwrapErr());
     }
 
     const uniquesResult = await Result.safe(
-      this.viewRepository.uniqueViewersCount(query.adId),
+      this.viewRepository.uniqueViewersCount(query.adId, range),
     );
     if (uniquesResult.isErr()) {
       return Err(uniquesResult.unwrapErr());
     }
 
     const byCountryResult = await Result.safe(
-      this.viewRepository.viewsByCountry(query.adId),
+      this.viewRepository.viewsByCountry(query.adId, range),
     );
     if (byCountryResult.isErr()) {
       return Err(byCountryResult.unwrapErr());

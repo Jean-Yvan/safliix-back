@@ -16,6 +16,9 @@
       "path": "./apps/client"
     },
     {
+      "path": "./libs/domains/metric"
+    },
+    {
       "path": "./libs/domains/users"
     },
     {
@@ -38,9 +41,6 @@
     },
     {
       "path": "./libs/domains/errors"
-    },
-    {
-      "path": "./libs/shared/metric"
     },
     {
       "path": "./libs/domains/common"

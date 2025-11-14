@@ -1,10 +1,10 @@
-import { Result,Ok,Err } from 'oxide.ts';
+import { Result, Ok, Err } from 'oxide.ts';
 import { VideoCategory } from './video-category.value-object';
 import { VideoFormat } from './video-format.value-object';
 import { MetadataWithRelations } from '@safliix-back/database';
 import { VideoCategoryMapper } from '../mappers/video-category.mapper';
 import { VideoFormatMapper } from '../mappers/video-format.mapper';
-import { ContentStatus } from "@safliix-back/common";
+import { ContentStatus } from '@safliix-back/common';
 import { VideoGender } from './video-gender.value-object';
 import { VideoGenderMapper } from '../mappers/video-gender.mapper';
 // Définition des erreurs métier
@@ -16,61 +16,70 @@ export class MissingRequiredFieldError extends Error {
   }
 }
 
+type ActorProps = { name: string; role?: string; actorId?: string; id?: string };
+
+export type VideoMetadataCreateProps = {
+  id?: string;
+  title: string;
+  description: string;
+  thumbnailUrl: string;
+  secondaryImage?: string | null;
+  releaseDate: Date;
+  platformDate: Date;
+  productionHouse: string;
+  productionCountry: string;
+  status?: ContentStatus;
+  director: string;
+  category: VideoCategory;
+  format?: VideoFormat | null;
+  gender: VideoGender;
+  actors?: ActorProps[];
+};
 
 export class VideoMetadata {
   private constructor(
     public readonly id: string | undefined,
     public title: string,
     public description: string,
+    public thumbnailUrl: string,
+    public secondaryImage: string | null,
     public releaseDate: Date,
     public platformDate: Date,
     public productionHouse: string,
     public productionCountry: string,
-    public status: ContentStatus,     
+    public status: ContentStatus,
     public director: string,
     public category: VideoCategory,
     public format: VideoFormat | null,
     public gender: VideoGender,
-    public actors: { name: string; role?: string; actorId?: string; id?: string }[] = []
+    public actors: ActorProps[] = []
   ) {}
 
   // === Factory ===
-  static create(
-    id: string | undefined,
-    title: string,
-    description: string,
-    productionHouse: string,
-    productionCountry: string,
-    status = ContentStatus.DRAFT,
-    director: string,
-    releaseDate: Date,
-    platformDate: Date,
-    category: VideoCategory,
-    format: VideoFormat | null,
-    gender: VideoGender,
-    actors?: { name: string; role?: string; actorId?: string }[],
-  ): Result<VideoMetadata, MissingRequiredFieldError> {
-    if (!title) {
-      return Err(new MissingRequiredFieldError("title"));
+  static create(props: VideoMetadataCreateProps): Result<VideoMetadata, MissingRequiredFieldError> {
+    if (!props.title || !props.title.trim()) {
+      return Err(new MissingRequiredFieldError('title'));
     }
 
     const instance = new VideoMetadata(
-      id,
-      title,
-      description,
-      releaseDate,
-      platformDate,
-      productionHouse,
-      productionCountry,
-      status,
-      director,
-      category,
-      format,
-      gender
+      props.id,
+      props.title,
+      props.description,
+      props.thumbnailUrl,
+      props.secondaryImage ?? null,
+      props.releaseDate,
+      props.platformDate,
+      props.productionHouse,
+      props.productionCountry,
+      props.status ?? ContentStatus.DRAFT,
+      props.director,
+      props.category,
+      props.format ?? null,
+      props.gender
     );
 
-    if (actors) {
-      for (const actor of actors) {
+    if (props.actors) {
+      for (const actor of props.actors) {
         const actorResult = instance.addActor(actor);
         if (actorResult.isErr()) {
           return Err(actorResult.unwrapErr());
@@ -86,6 +95,8 @@ export class VideoMetadata {
       data.id,
       data.title,
       data.description,
+      data.thumbnailUrl,
+      data.secondaryImage ?? null,
       data.releaseDate,
       data.platformDate,
       data.productionHouse,
@@ -110,20 +121,22 @@ export class VideoMetadata {
   updateWith(data: {
     title?: string;
     description?: string;
+    thumbnailUrl?: string;
+    secondaryImage?: string | null;
     releaseDate?: Date;
     platformDate?: Date;
     productionHouse?: string;
-    productionCountry?:string;
+    productionCountry?: string;
     status?: ContentStatus;
     director?: string;
     category?: VideoCategory;
-    format?: VideoFormat;
+    format?: VideoFormat | null;
     gender?: VideoGender;
-    actors?: { name: string; role?: string; actorId?: string }[];
+    actors?: ActorProps[];
   }): Result<VideoMetadata, MissingRequiredFieldError | Error> {
     if (data.title !== undefined) {
       if (!data.title) {
-        return Err(new MissingRequiredFieldError("title"));
+        return Err(new MissingRequiredFieldError('title'));
       }
       this.title = data.title;
     }
@@ -132,7 +145,13 @@ export class VideoMetadata {
       this.description = data.description;
     }
 
-    
+    if (data.thumbnailUrl !== undefined) {
+      this.thumbnailUrl = data.thumbnailUrl;
+    }
+
+    if (data.secondaryImage !== undefined) {
+      this.secondaryImage = data.secondaryImage;
+    }
 
     if (data.releaseDate !== undefined) {
       this.releaseDate = data.releaseDate;
@@ -146,11 +165,11 @@ export class VideoMetadata {
       this.productionHouse = data.productionHouse;
     }
 
-    if(data.productionCountry){
+    if (data.productionCountry !== undefined) {
       this.productionCountry = data.productionCountry;
     }
 
-    if(data.status){
+    if (data.status) {
       this.status = data.status;
     }
 
@@ -169,7 +188,7 @@ export class VideoMetadata {
     if (data.actors !== undefined) {
       for (const actor of data.actors) {
         if (!actor.name) {
-          return Err(new Error("Actor name is required"));
+          return Err(new Error('Actor name is required'));
         }
       }
       this.actors = [...data.actors];
@@ -181,7 +200,7 @@ export class VideoMetadata {
   // === Business ===
   addActor(actor: { name: string; role?: string; actorId?: string }): Result<void, Error> {
     if (!actor.name) {
-      return Err(new Error("Actor name is required"));
+      return Err(new Error('Actor name is required'));
     }
 
     this.actors.push(actor);

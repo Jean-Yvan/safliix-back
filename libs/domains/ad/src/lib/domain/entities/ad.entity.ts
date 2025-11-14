@@ -1,6 +1,7 @@
 import { Err, Ok, Result } from 'oxide.ts';
 import { CreateAdDto } from '../../interfaces/dto/create-ad.dto';
 import { UpdateAdDto } from '../../interfaces/dto/update-ad.dto';
+import { AdAttachmentPrimitives } from '../types/ad-attachment.type';
 
 export interface AdPrimitives {
   id?: string;
@@ -9,6 +10,7 @@ export interface AdPrimitives {
   startDate: Date;
   endDate: Date;
   isActive: boolean;
+  attachments?: AdAttachmentPrimitives[];
 }
 
 export class Ad {
@@ -42,6 +44,7 @@ export class Ad {
         startDate,
         endDate,
         isActive: dto.isActive ?? true,
+        attachments: [],
       }),
     );
   }
@@ -54,6 +57,7 @@ export class Ad {
       ...data,
       startDate,
       endDate,
+      attachments: data.attachments ?? [],
     });
   }
 
@@ -84,6 +88,7 @@ export class Ad {
         startDate,
         endDate,
         isActive,
+        attachments: this.props.attachments ?? [],
       }),
     );
   }
@@ -117,7 +122,7 @@ export class Ad {
   }
 
   toPrimitives(): AdPrimitives {
-    return { ...this.props };
+    return { ...this.props, attachments: this.attachments };
   }
 
   get id(): string | undefined {
@@ -144,4 +149,7 @@ export class Ad {
     return this.props.isActive;
   }
 
+  get attachments(): AdAttachmentPrimitives[] {
+    return this.props.attachments ?? [];
+  }
 }

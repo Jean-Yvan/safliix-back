@@ -4,11 +4,12 @@ import { CommandHandler } from '@nestjs/cqrs';
 import { Inject, Injectable, ForbiddenException, ConflictException } from '@nestjs/common';
 import { Result, Err } from 'oxide.ts';
 
-import { ISharedAccountRepository } from '../../domain/ports/shared-account.repository';
+import type { ISharedAccountRepository } from '../../domain/ports/shared-account.repository';
 import { SharedAccountUser } from '../../domain/entities/shared-account-user.entity';
 import { AddProfileToAccountCommand } from '../cqrs/commands/profile.command';
 
 import { BaseHandler } from '@safliix-back/cqrs';
+import { SHARED_ACCOUNT_REPOSITORY } from '../../utils/types';
 
 
 @CommandHandler(AddProfileToAccountCommand)
@@ -16,9 +17,11 @@ import { BaseHandler } from '@safliix-back/cqrs';
 export class AddProfileToAccountHandler extends BaseHandler<AddProfileToAccountCommand, Result<SharedAccountUser,Error>> {
   
   constructor(
-    @Inject('ISharedAccountRepository')
-    private readonly sharedAccountRepository: ISharedAccountRepository, 
-  ) { super()}
+    @Inject(SHARED_ACCOUNT_REPOSITORY)
+    private readonly sharedAccountRepository: ISharedAccountRepository,
+  ) {
+    super();
+  }
 
   override async handle(command: AddProfileToAccountCommand): Promise<Result<SharedAccountUser, Error>> {
     const { shareAccountId } = command.payload;
@@ -58,4 +61,3 @@ export class AddProfileToAccountHandler extends BaseHandler<AddProfileToAccountC
     return creationResult;
   }
 }
-

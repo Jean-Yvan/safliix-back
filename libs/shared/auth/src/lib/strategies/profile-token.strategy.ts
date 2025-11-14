@@ -1,6 +1,7 @@
 // libs/shared/keycloak-security/src/lib/profile-token.strategy.ts
 
 import { PassportStrategy } from '@nestjs/passport';
+// @ts-ignore Missing type declarations for passport-jwt in offline environment
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';

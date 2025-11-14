@@ -23,12 +23,16 @@ export class MovieMapper {
   }
 
   static toPrismaUpdate(id:string,data:MovieAggregate): UpdateToPrisma<"Movie">{
+    if (!data.metadata.id) {
+      throw new Error('Movie metadata must have an id to be updated');
+    }
+
     return {
       where: {id},
       data:{
         metadata: {
-        create: VideoMetadataMapper.toPrismaCreate(data.metadata),
-      },
+          update: VideoMetadataMapper.toPrismaUpdate(data.metadata.id, data.metadata),
+        },
       
       rentalPrice: data.rentalPrice,
       status: data.status,

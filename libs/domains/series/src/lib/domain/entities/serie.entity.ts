@@ -2,9 +2,10 @@ import { VideoCategory, VideoGender, VideoMetadata, VideoMetadataMapper } from "
 import { Season } from "./season.entity";
 import { CreateSerieDto } from "../../interfaces/create-serie.dto";
 import { UpdateSerieDto } from "../../interfaces/update-serie.dto";
-import { Result,Err,Ok } from "oxide.ts";
+import { Result, Err, Ok } from "oxide.ts";
 import { SerieWithMetadataAndSeasonCount, SerieWithRelations } from "@safliix-back/database";
 import { MediaAttachment } from "@safliix-back/video";
+import { ContentStatus } from "@safliix-back/common";
 
 export class Serie {
   private seasons: Season[] = [];
@@ -41,20 +42,23 @@ export class Serie {
     if(gender.isErr()){
       return Err(gender.unwrapErr());
     }
-    const metadata = VideoMetadata.create(
-      undefined,
-      data.title,
-      data.description ?? '',
-      data.productionHouse,
-      data.productionCountry,
-      data.status,
-      data.director,
-      new Date(data.releaseDate),
-      new Date(data.plateformDate),
-      category.unwrap(),
-      null,
-      gender.unwrap(),
-    );
+    const metadata = VideoMetadata.create({
+      id: undefined,
+      title: data.title,
+      description: data.description ?? '',
+      thumbnailUrl: data.thumbnailUrl,
+      secondaryImage: data.secondaryImageUrl ?? null,
+      productionHouse: data.productionHouse,
+      productionCountry: data.productionCountry,
+      status: data.status ?? ContentStatus.DRAFT,
+      director: data.director,
+      releaseDate: new Date(data.releaseDate),
+      platformDate: new Date(data.plateformDate),
+      category: category.unwrap(),
+      format: null,
+      gender: gender.unwrap(),
+      actors: data.actors
+    });
 
     if (metadata.isErr()) {
       console.log("code:l'erreur vient d'ici");
@@ -116,6 +120,8 @@ export class Serie {
     this.metadata.updateWith({
       title: data.title ?? this.metadata.title,
       description: data.description ?? this.metadata.description,
+      thumbnailUrl: data.thumbnailUrl ?? this.metadata.thumbnailUrl,
+      secondaryImage: data.secondaryImageUrl ?? this.metadata.secondaryImage,
       productionHouse: data.productionHouse ?? this.metadata.productionHouse,
       productionCountry: data.productionCountry ?? this.metadata.productionCountry,
       director: data.director ?? this.metadata.director,

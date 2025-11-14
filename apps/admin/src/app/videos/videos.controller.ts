@@ -5,8 +5,7 @@ import { RequestUploadDto,
   ConfirmUploadDto,
   RequestUploadCommand,
   ConfirmUploadCommand,
-  AttachVideoToElmtCommand, 
-  AttachVideoToElementDto
+  
 } from "@safliix-back/video";
 
 
@@ -59,7 +58,7 @@ export class VideosController {
   // -----------------------------
   // Attacher une vidéo à un élément (Movie, Episode, Ad)
   // -----------------------------
-  @Post("attach")
+  /* @Post("attach")
   @ApiOperation({ summary: "Attacher une vidéo à un élément" })
   @ApiResponse({ status: 200, description: "Vidéo attachée" })
   async attachVideo(@Body() body: AttachVideoToElementDto) {
@@ -76,7 +75,7 @@ export class VideosController {
       success: true,
       data: result.unwrap(),
     };
-  }
+  } */
 
   // -----------------------------
   // Query pour récupérer le status d'une vidéo

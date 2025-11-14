@@ -50,17 +50,20 @@ model User {
 
 model Admin {
   id          String    @id @default(uuid())
+  keycloakId  String?   @unique
   email       String    @unique
   firstName   String
   lastName    String
   country     String
   city        String
-  state       String
-  phoneNumber String
-  address     String
+  state       String?
+  phoneNumber String?
+  address     String?
   avatarUrl   String?
   lastLoginAt DateTime?
   isVerified  Boolean   @default(false)
+  isActive    Boolean   @default(true)
+  permissions String[]  @default([])
   role        AdminRole @default(ADMIN)
   // Relations
   sessions    Session[]
@@ -111,6 +114,7 @@ model Session {
 enum AdminRole {
   ADMIN
   SUPER_ADMIN
+  OWNER
 }
 
 // Exemple de modèle Prisma pour la table ActiveStream
@@ -233,6 +237,8 @@ model VideoMetadata {
   id                String        @id @default(uuid())
   title             String
   description       String
+  thumbnailUrl      String
+  secondaryImage    String?
   releaseDate       DateTime      @map("theater_release")
   platformDate      DateTime      @map("platform_publish")
   ageRating         String
