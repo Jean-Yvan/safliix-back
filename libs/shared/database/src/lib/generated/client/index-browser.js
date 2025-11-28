@@ -427,10 +427,10 @@ exports.Prisma.PurchaseScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   movieId: 'movieId',
-  serieId: 'serieId',
   purchaseDate: 'purchaseDate',
   expirationDate: 'expirationDate',
-  country: 'country'
+  country: 'country',
+  serieId: 'serieId'
 };
 
 exports.Prisma.CommentScalarFieldEnum = {
@@ -467,6 +467,16 @@ exports.Prisma.SharedProfileActivityScalarFieldEnum = {
   action: 'action',
   details: 'details',
   performed_at: 'performed_at'
+};
+
+exports.Prisma.FavoriteScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  contentId: 'contentId',
+  contentType: 'contentType',
+  title: 'title',
+  image: 'image',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -597,7 +607,8 @@ exports.Prisma.ModelName = {
   Comment: 'Comment',
   Ad: 'Ad',
   AdView: 'AdView',
-  SharedProfileActivity: 'SharedProfileActivity'
+  SharedProfileActivity: 'SharedProfileActivity',
+  Favorite: 'Favorite'
 };
 
 /**

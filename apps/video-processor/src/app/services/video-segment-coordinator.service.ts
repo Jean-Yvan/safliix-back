@@ -102,7 +102,7 @@ export class VideoSegmentCoordinator {
       });
 
       // 🔧 AMÉLIORATION: Meilleure gestion de la réponse LUA
-      const [encodedParts, expectedParts, isComplete] = this.parseLuaResult(result);
+      const [encodedParts, _expectedParts, isComplete] = this.parseLuaResult(result);
 
       this.logger.debug(`Part ${partIndex}/${totalParts} registered for ${s3Key} (${encodedParts} encoded)`);
 

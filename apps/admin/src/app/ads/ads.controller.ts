@@ -153,9 +153,9 @@ export class AdsController {
   @Get(':id/views/count')
   @ApiOperation({ summary: 'Compter les vues d’une publicité' })
   async getViewsCount(@Param('id', ParseUUIDPipe) id: string) {
-    const result = await this.queryBus.execute<Result<number, Error>>(
+    const result = await this.queryBus.execute(
       new GetAdViewsCountQuery(id),
-    );
+    ) as Result<number, Error>;
     const count = this.unwrapResult(result);
     return { success: true, data: count };
   }

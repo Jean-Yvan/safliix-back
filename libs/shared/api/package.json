@@ -12,5 +12,29 @@
     },
     "./package.json": "./package.json"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "nx": {
+    "root": "libs/shared/api",
+    "sourceRoot": "libs/shared/api/src",
+    "projectType": "library",
+    "targets": {
+      "build": {
+        "executor": "@nx/js:tsc",
+        "outputs": [
+          "{options.outputPath}"
+        ],
+        "dependsOn": [
+          "^build"
+        ],
+        "options": {
+          "outputPath": "dist/libs/shared/api",
+          "main": "libs/shared/api/src/index.ts",
+          "tsConfig": "libs/shared/api/tsconfig.lib.json",
+          "assets": [
+            "libs/shared/api/src/**/*"
+          ]
+        }
+      }
+    }
+  }
 }

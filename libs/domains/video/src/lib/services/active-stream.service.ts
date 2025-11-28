@@ -2,7 +2,7 @@ import { Inject, Injectable } from "@nestjs/common";
 import { Err, Ok, Result } from "oxide.ts";
 
 import { ActiveStream } from "../domain/entities/active-stream.entity";
-import { ActiveStreamRepository } from "../domain/ports/active-stream.repository";
+import type { ActiveStreamRepository } from "../domain/ports/active-stream.repository";
 import { ACTIVE_STREAM_REPOSITORY } from "../utils/types";
 
 export class TooManyActiveStreamsError extends Error {

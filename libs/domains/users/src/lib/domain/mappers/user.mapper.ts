@@ -10,7 +10,6 @@ export class UserMapper {
   static toPrismaCreate(user: User): CreateToPrisma<"User"> {
     return {
       email: user.email,
-      password_hash: user.passwordHash,
       name: user.name,
       avatarUrl: user.avatarUrl,
       //lastLoginAt: user.lastLoginAt ?? undefined,

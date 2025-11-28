@@ -26,10 +26,6 @@
     },
     "typeRoots": ["./types", "./node_modules/@types"]
   },
-  "references": [
-    { "path": "libs/shared/database" },
-    { "path": "libs/shared/cqrs" },
-    { "path": "libs/shared/auth" },
-    { "path": "libs/domains/common" }
-  ]
+  "exclude": ["node_modules", "dist", "out-tsc", "tmp"]
+  
 }

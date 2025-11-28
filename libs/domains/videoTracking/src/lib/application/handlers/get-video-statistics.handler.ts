@@ -5,7 +5,7 @@ import { BaseQueryHandler } from '@safliix-back/cqrs';
 
 import { GetVideoStatisticsQuery } from '../cqrs/queries/get-video-statistics.query';
 import { USER_VIDEO_VIEW_REPOSITORY } from '../../utils/types';
-import {
+import type {
   IUserVideoViewRepository,
   VideoStatistics,
 } from '../../domain/ports/user-video-view.repository';

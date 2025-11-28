@@ -1,7 +1,7 @@
 import { BaseHandler } from '@safliix-back/cqrs'
-import { CommandHandler, EventBus } from '@nestjs/cqrs';
+import { CommandHandler } from '@nestjs/cqrs';
 import { CreateSerieCommand } from '../cqrs/commands/add-serie.command';
-import { Injectable, Inject, Logger } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { Result, Ok, Err } from 'oxide.ts'; 
 import { SERIE_REPOSITORY } from '../../utils/types';
 import type { ISerieRepository } from '../../domain/ports/serie.repository';
@@ -15,9 +15,8 @@ export class CreateSerieHandler extends BaseHandler<CreateSerieCommand, Result<v
   constructor(
     @Inject(SERIE_REPOSITORY)
     private readonly repository: ISerieRepository,
-    eventBus: EventBus
   ) {
-    super(eventBus);
+    super();
   }
 
   protected override async handle(command: CreateSerieCommand): Promise<Result<void,Error>> {

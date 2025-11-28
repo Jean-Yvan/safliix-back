@@ -11,7 +11,7 @@ export class SerieMapper {
     return Serie.restore(data)
   }
 
-  static toPrismaCreate(serie: Serie): CreateToPrisma<"Series"> {
+  static toPrismaCreate(serie: Serie): CreateToPrisma<"Serie"> {
     return {
       rentalPrice: serie.rentalPrice ?? null,
       metadata: {
@@ -22,7 +22,7 @@ export class SerieMapper {
     };
   }
 
-  static toPrismaUpdate(id:string,serie:Serie): UpdateToPrisma<"Series">{
+  static toPrismaUpdate(id:string,serie:Serie): UpdateToPrisma<"Serie">{
     return {
       where:{id},
       data:{

@@ -473,21 +473,6 @@ ffmpeg -y -ss ${formattedStartTime} -t ${formattedDuration} -i "${inputPath}" -r
   }
 
   /**
-   * Construit la var_stream_map pour HLS - CORRIGÉ
-   */
-  private buildStreamMap(streamCount: number, hasAudio: boolean): string {
-    const streams = [];
-    for (let i = 0; i < streamCount; i++) {
-      if (hasAudio) {
-        streams.push(`v:${i},a:${i}`);
-      } else {
-        streams.push(`v:${i}`);
-      }
-    }
-    return streams.join(' ');
-  }
-
-  /**
    * Compte les segments générés
    */
   private async countSegments(outputDir: string): Promise<string[]> {

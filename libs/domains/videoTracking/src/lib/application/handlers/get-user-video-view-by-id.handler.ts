@@ -5,7 +5,7 @@ import { BaseQueryHandler } from '@safliix-back/cqrs';
 
 import { GetUserVideoViewByIdQuery } from '../cqrs/queries/get-user-video-view-by-id.query';
 import { USER_VIDEO_VIEW_REPOSITORY } from '../../utils/types';
-import { IUserVideoViewRepository } from '../../domain/ports/user-video-view.repository';
+import type { IUserVideoViewRepository } from '../../domain/ports/user-video-view.repository';
 import { UserVideoView } from '../../domain/entities/user-video-view';
 
 @Injectable()

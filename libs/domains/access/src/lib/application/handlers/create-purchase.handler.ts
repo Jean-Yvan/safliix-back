@@ -20,7 +20,7 @@ export class CreatePurchaseHandler extends BaseHandler<CreatePurchaseCommand, Re
   protected override async handle(command: CreatePurchaseCommand): Promise<Result<Purchase, Error>> {
     const purchaseResult = Purchase.create({
       userId: command.payload.userId,
-      videoId: command.payload.videoId,
+      movieId: command.payload.movieId,
       country: command.payload.country ?? null,
     });
 
@@ -30,7 +30,7 @@ export class CreatePurchaseHandler extends BaseHandler<CreatePurchaseCommand, Re
 
     const existingPurchase = await this.repository.findByUserAndVideo(
       command.payload.userId,
-      command.payload.videoId
+      command.payload.movieId
     );
 
     if (

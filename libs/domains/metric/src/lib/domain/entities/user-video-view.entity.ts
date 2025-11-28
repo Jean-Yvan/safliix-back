@@ -1,49 +1,51 @@
-import { UserVideoViewToPrisma } from '@safliix-back/database';
-import { Result, Err, Ok } from 'oxide.ts';
-import { UserVideoProgressDto } from '../../interfaces/user-progress-video.dto';
+import { UserVideoViewWithRelation } from '@safliix-back/database';
+import { Err, Ok, Result } from 'oxide.ts';
 
 export class UserVideoView {
   private constructor(
     public readonly id: string | undefined,
     public readonly userId: string,
-    public readonly profileId: string | null,
     public readonly videoId: string,
-    public readonly progress: number,
-    public readonly completed: boolean,
-    public readonly country: string | null,
-    public readonly device: string | null,
-    public readonly rating: number | null,
-    public readonly startedAt: Date | null,
-    public readonly endedAt: Date | null,
+    public readonly profileId: string | undefined,
+    public readonly country: string | undefined,
+    public readonly device: string | undefined,
+    public progress: number,
+    public completed: boolean,
+    public rating: number | null,
+    public startedAt: Date | undefined,
+    public endedAt: Date | undefined,
     public readonly createdAt: Date | undefined,
     public readonly updatedAt: Date | undefined,
   ) {}
 
-  static create(params: UserVideoProgressDto): Result<UserVideoView, Error> {
-    if ((params.progress ?? 0) < 0) {
-      return Err(new Error('Progress seconds cannot be negative'));
-    }
-
+  static create(params: {
+    userId: string;
+    videoId: string;
+    profileId?: string;
+    country?: string;
+    device?: string;
+    progress?: number;
+    completed?: boolean;
+    rating?: number;
+    startedAt?: Date;
+    endedAt?: Date;
+  }): Result<UserVideoView, Error> {
     if (params.rating !== undefined && (params.rating < 0 || params.rating > 5)) {
       return Err(new Error('Rating must be between 0 and 5'));
     }
 
-    if (params.startedAt && params.endedAt && params.endedAt < params.startedAt) {
-      return Err(new Error('endedAt must be after startedAt'));
-    }
-
     const view = new UserVideoView(
-      params.id,
+      undefined,
       params.userId,
-      params.profileId ?? null,
       params.videoId,
+      params.profileId,
+      params.country,
+      params.device,
       params.progress ?? 0,
-      params.isFinished ?? false,
-      params.country ?? null,
-      params.device ?? null,
+      params.completed ?? false,
       params.rating ?? null,
-      params.startedAt ?? null,
-      params.endedAt ?? null,
+      params.startedAt ?? new Date(),
+      params.endedAt,
       undefined,
       undefined,
     );
@@ -51,21 +53,40 @@ export class UserVideoView {
     return Ok(view);
   }
 
-  static restore(props: UserVideoViewToPrisma): UserVideoView {
+  static restore(props: UserVideoViewWithRelation): UserVideoView {
     return new UserVideoView(
       props.id,
       props.userId,
-      props.profileId ?? null,
       props.videoId,
+      props.profileId ?? undefined,
+      props.country ?? undefined,
+      props.device ?? undefined,
       props.progress ?? 0,
       props.completed ?? false,
-      props.country ?? null,
-      props.device ?? null,
       props.rating ?? null,
-      props.startedAt ?? null,
-      props.endedAt ?? null,
-      props.createdAt,
-      props.updatedAt,
+      props.startedAt ?? undefined,
+      props.endedAt ?? undefined,
+      props.createdAt ?? undefined,
+      props.updatedAt ?? undefined,
     );
+  }
+
+  markAsCompleted(): void {
+    this.completed = true;
+    this.endedAt = new Date();
+  }
+
+  updateProgress(progress: number): void {
+    if (progress < 0) {
+      throw new Error('Progress cannot be negative');
+    }
+    this.progress = progress;
+  }
+
+  rate(rating: number): void {
+    if (rating < 0 || rating > 5) {
+      throw new Error('Rating must be between 0 and 5');
+    }
+    this.rating = rating;
   }
 }

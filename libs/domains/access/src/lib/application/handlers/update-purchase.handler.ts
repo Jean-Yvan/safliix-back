@@ -36,7 +36,7 @@ export class UpdatePurchaseHandler extends BaseHandler<UpdatePurchaseCommand, Re
 
 const mapUpdateDtoToProps = (dto: UpdatePurchaseDto): PurchaseUpdateProps => ({
   userId: dto.userId,
-  videoId: dto.videoId,
+  movieId: dto.movieId,
   country: dto.country,
   expirationDate:
     dto.expirationDate === undefined

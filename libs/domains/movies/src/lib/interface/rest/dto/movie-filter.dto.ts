@@ -32,4 +32,16 @@ export class MovieFilterDto {
   @IsOptional()
   @IsString()
   status?: string; // e.g., 'published', 'draft'
+
+  @IsOptional()
+  @IsString()
+  q?: string;
+
+  @IsOptional()
+  @IsString()
+  category?: string;
+
+  @IsOptional()
+  @IsString()
+  genre?: string;
 }

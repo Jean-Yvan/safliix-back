@@ -11,7 +11,7 @@ export class CreatePurchaseDto{
   @ApiProperty({example:"1sd12",required:true})
   @IsString({message:"L'id du film est une chaine de charactère"})
   @IsNotEmpty({message:"L'id du film ne peut être vide"})
-  videoId!:string;
+  movieId!:string;
 
   @ApiProperty({example:"Bénin",required:false})
   @IsOptional()

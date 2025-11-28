@@ -1,6 +1,6 @@
 import { CommandHandler, EventBus } from '@nestjs/cqrs';
 import { BaseHandler } from '@safliix-back/cqrs';
-import { Inject, Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Result, Err, Ok } from 'oxide.ts';
 import type { IMovieRepository } from '../../domain/ports/movie.repository';
 import { MovieAggregate } from '../../domain/entities/movie.aggregate';

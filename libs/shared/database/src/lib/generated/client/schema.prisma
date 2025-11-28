@@ -40,6 +40,8 @@ model User {
 
   seasonView SeasonView[]
 
+  favorites Favorite[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -92,8 +94,8 @@ model EmailValidation {
 
 model Session {
   id           String             @id @default(uuid())
-  user         User?              @relation(fields: [userId], references: [id])
-  userId       String?
+  user         User               @relation(fields: [userId], references: [id])
+  userId       String
   admin        Admin?             @relation(fields: [adminId], references: [id])
   adminId      String?
   profile      SharedAccountUser? @relation(fields: [profileId], references: [id])
@@ -612,18 +614,16 @@ model Subtitle {
 // =============================================
 
 model Purchase {
-  id     String @id @default(uuid())
-  user   User   @relation(fields: [userId], references: [id])
-  userId String
-
-  movieId String?
-  serieId String?
-
-  movie          Movie?    @relation(fields: [movieId], references: [id])
-  serie          Serie?    @relation(fields: [serieId], references: [id])
+  id             String    @id @default(uuid())
+  user           User      @relation(fields: [userId], references: [id])
+  userId         String
+  movieId        String
+  movie          Movie     @relation(fields: [movieId], references: [id])
   purchaseDate   DateTime  @default(now())
   expirationDate DateTime?
   country        String
+  serie          Serie?    @relation(fields: [serieId], references: [id])
+  serieId        String?
 }
 
 model Comment {
@@ -683,6 +683,23 @@ model SharedProfileActivity {
   action       ProfileActivityAction
   details      Json?
   performed_at DateTime              @default(now())
+}
+
+// =============================================
+// FAVORIS
+// =============================================
+
+model Favorite {
+  id          String   @id @default(uuid())
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String
+  contentId   String
+  contentType String
+  title       String?
+  image       String?
+  createdAt   DateTime @default(now())
+
+  @@unique([userId, contentId])
 }
 
 enum ProfileActivityAction {

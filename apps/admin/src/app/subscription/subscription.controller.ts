@@ -1,19 +1,15 @@
-import { Controller, Body, Post,Put, Param, Get, Delete } from "@nestjs/common";
+import { Controller, Body, Post,Put, Param, Get, Delete, Query } from "@nestjs/common";
 
 import {
   CreateSubscriptionPlanHandler,
   UpdateSubscriptionPlanHandler,
   DeleteSubscriptionPlanHandler,
   ListSubscriptionPlanByIdHandler,
-  ListSubscriptionPlansHandler,
-  ListSubscriptionPlanByNameHandler,
 
   CreateSubscriptionPlanCommand,
   UpdateSubscriptionPlanCommand,
   DeleteSubscriptionPlanCommand,
-  ListSubscriptionPlanQuery,
   ListSubscriptionPlanByIdQuery,
-  ListSubscriptionPlanByNameQuery,
 
   CreateSubscriptionPlanDto,
   UpdateSubscriptionPlanDto,
@@ -21,17 +17,32 @@ import {
 } from '@safliix-back/access';
 
 import { ApiOperation,ApiResponse } from "@nestjs/swagger";
+import { Prisma, PrismaService } from "@safliix-back/database";
+import { Type } from "class-transformer";
+import { IsOptional, IsString } from "class-validator";
 
-@Controller("subscription")
+class PlanListQueryDto {
+  @Type(() => Number)
+  @IsOptional()
+  page?: number = 1;
+
+  @Type(() => Number)
+  @IsOptional()
+  pageSize?: number = 10;
+
+  @IsOptional()
+  @IsString()
+  search?: string;
+}
+
+@Controller(["subscription","plans"])
 export class AdminSubscriptionController{
-
   constructor(
     private readonly createHandler : CreateSubscriptionPlanHandler,
     private readonly updateHandler : UpdateSubscriptionPlanHandler,
     private readonly deleteHandler : DeleteSubscriptionPlanHandler,
-    private readonly listHandler : ListSubscriptionPlansHandler,
     private readonly listByIdHandler : ListSubscriptionPlanByIdHandler,
-    private readonly listByNameHandler : ListSubscriptionPlanByNameHandler
+    private readonly prisma: PrismaService
   ){}
 
   @Post()
@@ -58,7 +69,7 @@ export class AdminSubscriptionController{
     }
   }
 
-  @Put()
+  @Put(':id')
   @ApiOperation({summary:"update a subscription plan"})
   @ApiResponse({ 
     status: 201,
@@ -68,8 +79,8 @@ export class AdminSubscriptionController{
     status: 400,
     description: 'Invalid input data'
   })
-  async update(@Body() dto: UpdateSubscriptionPlanDto) {
-    const command = new UpdateSubscriptionPlanCommand(dto);
+  async update(@Param('id') id: string, @Body() dto: UpdateSubscriptionPlanDto) {
+    const command = new UpdateSubscriptionPlanCommand({ ...dto, id });
 
     const result = await this.updateHandler.execute(command);
     if(result.isErr()){
@@ -82,7 +93,7 @@ export class AdminSubscriptionController{
     }
   }
 
-  @Delete()
+  @Delete(':id')
   @ApiOperation({summary:"delete a subscription plan"})
   @ApiResponse({ 
     status: 201,
@@ -92,7 +103,7 @@ export class AdminSubscriptionController{
     status: 400,
     description: 'Invalid input data'
   })
-  async delete(@Param() id:string) {
+  async delete(@Param('id') id:string) {
     const command = new DeleteSubscriptionPlanCommand(id);
 
     const result = await this.deleteHandler.execute(command);
@@ -116,18 +127,37 @@ export class AdminSubscriptionController{
     status: 400,
     description: 'Invalid input data'
   })
-  async list() {
-    const command = new ListSubscriptionPlanQuery();
+  async list(@Query() query: PlanListQueryDto) {
+    const page = Math.max(1, query.page ?? 1);
+    const pageSize = Math.min(100, Math.max(1, query.pageSize ?? 10));
+    const where = query.search
+      ? {
+          name: { contains: query.search, mode: 'insensitive' as Prisma.QueryMode },
+        }
+      : undefined;
 
-    const result = await this.listHandler.execute(command);
-    if(result.isErr()){
-      throw result.isErr();
-    }else{
-      return {
-        success:true,
-        data: result.unwrap()
-      };
-    }
+    const [totalItems, plans] = await Promise.all([
+      this.prisma.subscriptionPlan.count({ where }),
+      this.prisma.subscriptionPlan.findMany({
+        where,
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+        orderBy: { createdAt: 'desc' },
+      }),
+    ]);
+
+    return {
+      success: true,
+      data: {
+        items: plans,
+        pageInfo: {
+          page,
+          pageSize,
+          totalItems,
+          totalPages: Math.ceil(totalItems / pageSize),
+        },
+      },
+    };
   }
 
   @Get(':id')
@@ -140,7 +170,7 @@ export class AdminSubscriptionController{
     status: 400,
     description: 'Invalid input data'
   })
-  async listById(@Param() id:string ) {
+  async listById(@Param('id') id:string ) {
     const command = new ListSubscriptionPlanByIdQuery(id);
 
     const result = await this.listByIdHandler.execute(command);

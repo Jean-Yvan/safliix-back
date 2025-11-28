@@ -1,0 +1,71 @@
+Dashboard général (/dashboard)
+- GET /dashboard/metrics : Params (optional) { from?, to?, range? }. Retour : { revenueTotal, newUsers, newProducts, watching, minutes, trend info }.
+- GET /dashboard/highlights : Retour : { recentContents: [{ id, title, type, status, price, date, publisher, stats }], donuts, topCountries }.
+- GET /dashboard/repartition : Params { from?, to? }. Retour : { countries: [{ name, value }], locationVsSubscription: series[] }.
+
+Films
+- GET /films : Query { page, pageSize, search?, status?, category?, sort? }. Retour : { items: [{ id, title, status, director, dp, category, poster, hero, stats, geo, stars, donut }], pageInfo }.
+- GET /films/:id : Retour : { id, title, status, category, director, dp, duration, releaseDate, publishDate, price, poster, hero, synopsis, stats{ vues, revenus, locations?, abonnements? }, activity[], geo[] }.
+- POST /films/:id/actions (publier|pause) : Body { action: "publish"|"pause" }. Retour : { status }.
+- POST /films (create) / PUT /films/:id (update) : Body JSON métadonnées { title, description, status, language, productionHouse, country, type, price, releaseDate, publishDate, format, category, genre, actors, director, duration, secondType }. Retour : { id }.
+- POST /films/:id/uploads/presign : Body { files: [{ key: "main_image"|"secondary_image"|"trailer"|"movie", name, type }] }. Retour : [{ key, uploadUrl, finalUrl }].
+- PUT upload direct vers uploadUrl (Content-Type: type du fichier). Pas de retour JSON (204).
+- POST /films/:id/uploads/finalize : Body { uploads: [{ key, finalUrl }] }. Retour : { ok: true }.
+- GET /films/meta/options : Retour listes (types, catégories, formats, langues, genres, acteurs, pays, maisonsProd).
+
+Séries
+- GET /series : Query { page, pageSize, search?, status?, category?, sort? }. Retour : { items: [{ id, title, status, director, dp, number, category, poster, hero, stats, stars, geo, donut }], pageInfo }.
+- GET /series/:id : Retour : { id, title, status, category, director, dp, poster, hero, synopsis?, seasons: [{ id, number, title, poster, episodesCount }], stats? }.
+- POST /series (create) / PUT /series/:id (update) : Body métadonnées série { title, description, status, language, productionHouse?, country?, type, price?, releaseDate?, publishDate?, format?, category?, genre?, actors?, director?, duration?, secondType? }. Retour : { id }.
+- POST /series/:id/uploads/presign : Body { files: [{ key: "poster"|"hero"|"trailer"|"actor_photo", name, type }] }. Retour : [{ key, uploadUrl, finalUrl }].
+- PUT upload direct vers uploadUrl. POST /series/:id/uploads/finalize : Body { uploads: [{ key, finalUrl }] }.
+- GET /series/meta/options : listes de références (types, genres, langues, catégories, acteurs…).
+
+Saisons
+- POST /series/:id/seasons : Body { number, title?, posterTempId? } ou poster direct. Retour : { seasonId }.
+- POST /series/:id/seasons/:seasonId/uploads/presign : Body { files: [{ key: "poster", name, type }] }. Retour : [{ key, uploadUrl, finalUrl }].
+- PUT upload vers uploadUrl. POST finalize /series/:id/seasons/:seasonId/uploads/finalize.
+- GET /series/search?query=... pour auto-complétion du champ serieId.
+
+Épisodes
+- GET /series/:id/seasons/:seasonId/episodes (optionnel) : Query { page, pageSize }. Retour liste d’épisodes.
+- GET /episodes/:episodeId (optionnel préremplir).
+- POST /series/:id/seasons/:seasonId/episodes : Body métadonnées { title, releaseDate, publishDate, director, duration, synopsis, status, language, productionFlag }.
+- POST /episodes/:episodeId/uploads/presign (ou via route imbriquée) : Body { files: [{ key: "poster"|"video"|"subtitle", name, type }] }. Retour : [{ key, uploadUrl, finalUrl }].
+- PUT upload vers uploadUrl. POST /episodes/:episodeId/uploads/finalize : Body { uploads: [{ key, finalUrl }] }.
+
+Utilisateurs
+- GET /users : Query { page, pageSize, search?, status?, role? }. Retour : { items, pageInfo }.
+- GET /users/:id : Retour : profil, activité, abonnements, transactions.
+- PATCH /users/:id : Body { status?, role?, profile? } pour suspension/activation/màj.
+
+Abonnements & plans
+- GET /subscriptions : Query { page, pageSize, filter? }. Retour liste abonnements.
+- GET /plans : Query { page, pageSize }. Retour liste plans.
+- GET /plans/:id : Retour détail plan.
+- POST /plans / PUT /plans/:id : Body { name, price, period, features, status }.
+- POST /subscriptions : Body { userId, planId, paymentMethod, startDate?, promoCode? }. Retour : { subscriptionId }.
+- GET /payments/methods, GET /payments/history (si affichage).
+
+Stats (/dashboard/stats/*)
+- GET /stats/films : Query { from?, to?, groupBy? }. Retour séries pour charts films.
+- GET /stats/revenue : Query { from?, to?, groupBy? }. Retour agrégats revenus.
+- GET /stats/revenue/:id : Détail revenu (par produit ou segment).
+- GET /stats/pub : Stats publicitaires.
+- GET /stats/pub/:id : Détail campagne.
+- GET /stats/users : Stats utilisateurs (acquisition, rétention).
+- (Option) Endpoints d’export CSV/Excel pour chaque.
+
+Report & Intro
+- GET /reports : liste rapports téléchargeables ou génération.
+- GET /reports/:id/download : fichier.
+- GET /intro/resources : assets/vidéos pour la page intro.
+
+Settings
+- GET /settings : Retour paramètres globaux.
+- PUT /settings : Body { ... } mise à jour.
+
+Uploads génériques (service transversal)
+- POST /uploads/presign : Body { resourceType, resourceId?, files: [{ key, name, type }] }. Retour presigned [{ key, uploadUrl, finalUrl }].
+- PUT direct vers uploadUrl.
+- POST /uploads/finalize : Body { resourceId, uploads: [{ key, finalUrl }] }.

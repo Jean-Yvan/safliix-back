@@ -15,6 +15,7 @@ import {
 import { SerieMapper } from "../mappers/serie.mapper";
 import { SeasonMapper } from "../mappers/season.mapper";
 import { EpisodeMapper } from "../mappers/episode.mapper";
+import { SerieFilter } from "../utils/types";
 
 @Injectable()
 export class PrismaSerieRepository implements ISerieRepository{
@@ -26,7 +27,7 @@ export class PrismaSerieRepository implements ISerieRepository{
   async save(serie: Serie): Promise<void> {
     const created = SerieMapper.toPrismaCreate(serie);
     console.dir(created,{depth:2});
-    await this.prisma.series.create({
+    await this.prisma.serie.create({
       data: created,
     });
   }
@@ -34,7 +35,7 @@ export class PrismaSerieRepository implements ISerieRepository{
   async update(serie: Serie): Promise<Serie> {
 
     const update = SerieMapper.toPrismaUpdate(serie.id!,serie);
-    const result = await this.prisma.series.update({
+    const result = await this.prisma.serie.update({
       ...update,
       include:serieInclude
     });
@@ -42,7 +43,7 @@ export class PrismaSerieRepository implements ISerieRepository{
   }
 
   async findById(id: string): Promise<Serie | null> {
-    const serie: SerieWithRelations | null = await this.prisma.series.findUnique({
+    const serie: SerieWithRelations | null = await this.prisma.serie.findUnique({
       where: { id },
       include: serieInclude,
     });
@@ -51,24 +52,45 @@ export class PrismaSerieRepository implements ISerieRepository{
     
   }
 
-  async findAll(): Promise<Serie[]> {
-    const series : SerieWithMetadataAndSeasonCount[] = await this.prisma.series.findMany({
+  async findAll(filters?: SerieFilter): Promise<Serie[]> {
+    const where: any = {};
+    const metadataWhere: any = {};
+
+    if (filters?.q) {
+      metadataWhere.title = { contains: filters.q, mode: 'insensitive' };
+    }
+    if (filters?.category) {
+      metadataWhere.category = {
+        category: { contains: filters.category, mode: 'insensitive' },
+      };
+    }
+    if (filters?.genre) {
+      metadataWhere.gender = {
+        name: { contains: filters.genre, mode: 'insensitive' },
+      };
+    }
+    if (Object.keys(metadataWhere).length > 0) {
+      where.metadata = metadataWhere;
+    }
+
+    const serie : SerieWithMetadataAndSeasonCount[] = await this.prisma.serie.findMany({
+      where,
       include: serieWithMetadataAndSeasonCountInclude,
     });
     
-    return series.map(serie => SerieMapper.toDomain(serie));
+    return serie.map(serie => SerieMapper.toDomain(serie));
   }
 
   
   async deleteById(id: string): Promise<void> {
-    this.prisma.series.delete({
+    this.prisma.serie.delete({
       where: {id}
     });
   }
 
   async findSeasonsBySerieId(serieId: string): Promise<Season[]> {
     const seasons = await this.prisma.season.findMany({
-      where: { seriesId : serieId },
+      where: { serieId : serieId },
       include: seasonInclude,
     });
 
@@ -86,13 +108,13 @@ export class PrismaSerieRepository implements ISerieRepository{
 
   async countSeasons(serieId: string): Promise<number> {
     return this.prisma.season.count({
-      where: { seriesId:serieId },
+      where: { serieId:serieId },
     });
   }
 
   async countEpisodes(serieId: string): Promise<number> {
     return this.prisma.episode.count({
-      where: { season: {seriesId: serieId } },
+      where: { season: {serieId: serieId } },
     });
   }
 

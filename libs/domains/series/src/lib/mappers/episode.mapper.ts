@@ -1,6 +1,5 @@
 import { Episode } from "../domain/entities/episode.entity";
 import { EpisodeWithRelations, CreateToPrisma, UpdateToPrisma } from "@safliix-back/database";
-import { MediaFileMapper } from "@safliix-back/video"
 import { mapConnect } from "@safliix-back/common";
 
 export class EpisodeMapper {

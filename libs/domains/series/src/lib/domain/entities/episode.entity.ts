@@ -1,8 +1,8 @@
 
-import { Err,Ok, Result } from "oxide.ts";
+import { Err, Ok, Result } from "oxide.ts";
 import { AddEpisodeDto } from "../../interfaces/add-episode.dto";
 import { EpisodeWithRelations } from "@safliix-back/database";
-import { UpdateEpisodeDto } from "src/lib/interfaces/update-episode.dto";
+import { UpdateEpisodeDto } from "../../interfaces/update-episode.dto";
 import { MediaAttachment } from "@safliix-back/video";
 
 export class Episode{

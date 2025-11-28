@@ -7,7 +7,7 @@ export class MediaAttachment {
   
   private constructor(
     public readonly id: string | undefined,
-    public videoFileId: string,
+    public mediaFileId: string,
     public movieId: string | null,
     //serieId: string | null,
     public episodeId: string | null,
@@ -18,7 +18,7 @@ export class MediaAttachment {
   ) {}
 
   static create(dto:AttachMediaToElementDto): Result<MediaAttachment, Error> {
-    if (!dto.videoFileId) {
+    if (!dto.mediaFileId) {
       return Err(new Error("Media file ID is required"));
     }
     if (!dto.elementId) {
@@ -48,7 +48,7 @@ export class MediaAttachment {
     return Ok(
       new MediaAttachment(
         undefined,
-        dto.videoFileId,
+        dto.mediaFileId,
         movieId,
       //  null,
         episodeId,
@@ -74,8 +74,8 @@ export class MediaAttachment {
   }
 
   updateWith(dto: UpdateMediaAttachDto): Result<MediaAttachment, Error> {
-    if (dto.videoFileId !== undefined) {
-      this.videoFileId = dto.videoFileId;
+    if (dto.mediaFileId !== undefined) {
+      this.mediaFileId = dto.mediaFileId;
     }
     
     if( dto.elementId != undefined){

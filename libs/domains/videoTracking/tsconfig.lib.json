@@ -3,17 +3,30 @@
   "compilerOptions": {
     "baseUrl": ".",
     "rootDir": "src",
-    "outDir": "dist",
-    "tsBuildInfoFile": "dist/tsconfig.lib.tsbuildinfo",
+    "outDir": "../../../dist/out-tsc/libs/domains/videoTracking",
+    "tsBuildInfoFile": "../../../dist/out-tsc/libs/domains/videoTracking/tsconfig.lib.tsbuildinfo",
     "emitDeclarationOnly": true,
     "forceConsistentCasingInFileNames": true,
-    "types": ["node"],
+    "types": [
+      "node"
+    ],
     "target": "es2021",
     "strictNullChecks": true,
     "noImplicitAny": true,
     "strictBindCallApply": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "declaration": true
   },
-  "include": ["src/**/*.ts"],
-  "references": []
+  "include": [
+    "src/index.ts",
+    "src/**/*.ts"
+  ],
+  "references": [
+    {
+      "path": "../../shared/database/tsconfig.lib.json"
+    },
+    {
+      "path": "../../shared/cqrs/tsconfig.lib.json"
+    }
+  ]
 }

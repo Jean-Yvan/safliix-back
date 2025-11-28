@@ -27,32 +27,7 @@
           "buildDepsName": "build-deps",
           "watchDepsName": "watch-deps"
         }
-      },
-      "exclude": [
-        "libs/domains/video/*",
-        "libs/domains/users/*",
-        "libs/domains/series/*",
-        "libs/shared/*",
-        "libs/shared/auth/*",
-        "libs/shared/database/*",
-        "libs/domains/movies/*",
-        "libs/domains/contents/*",
-        "libs/shared/cqrs/*",
-        "libs/shared/api/*",
-        "libs/domains/errors/*",
-        "libs/domains/common/*",
-        "libs/domains/access/*",
-        "libs/domains/adminEntity/*",
-        "shared/bullmq/*",
-        "libs/shared/bullmq/*",
-        "libs/shared/video-file/*",
-        "libs/shared/s3/*",
-        "libs/shared/video-process-type/*",
-        "libs/shared/keycloack/*",
-        "libs/domains/profile/*",
-        "libs/domains/videoTracking/*",
-        "libs/domains/ads/*"
-      ]
+      }
     },
     {
       "plugin": "@nx/webpack/plugin",
@@ -77,46 +52,18 @@
       },
       "exclude": [
         "admin-e2e/**/*",
-        "admin-e2e/**/*",
         "video-processor-e2e/**/*",
         "apps/video-processor-e2e/**/*"
       ]
-    },
-    {
-      "plugin": "@nx/js/typescript",
-      "include": [
-        "libs/domains/video/*",
-        "libs/domains/users/*",
-        "libs/domains/series/*",
-        "libs/shared/*",
-        "libs/shared/auth/*",
-        "libs/shared/database/*",
-        "libs/domains/movies/*",
-        "libs/domains/contents/*",
-        "libs/shared/cqrs/*",
-        "libs/shared/api/*",
-        "libs/domains/errors/*",
-        "libs/domains/common/*",
-        "libs/domains/access/*",
-        "libs/domains/adminEntity/*",
-        "shared/bullmq/*",
-        "libs/shared/bullmq/*",
-        "libs/shared/video-file/*",
-        "libs/shared/s3/*",
-        "libs/shared/video-process-type/*",
-        "libs/shared/keycloack/*",
-        "libs/domains/profile/*",
-        "libs/domains/videoTracking/*",
-        "libs/domains/ads/*"
-      ],
-      "options": {
-        "typecheck": {
-          "targetName": "typecheck"
-        }
-      }
     }
   ],
   "targetDefaults": {
+    "build": {
+      "defaultConfiguration": "development"
+    },
+    "serve": {
+      "defaultConfiguration": "development"
+    },
     "test": {
       "dependsOn": ["^build"]
     }

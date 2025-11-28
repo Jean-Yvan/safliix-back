@@ -1,21 +1,20 @@
 import { CommandHandler } from "@nestjs/cqrs";
-import { BaseHandler } from "@safliix-back/cqrs";
+//import { BaseHandler } from "@safliix-back/cqrs";
 import { RequestUploadCommand } from "../cqrs/command/request-media-upload.command";
-import { MediaFile } from "../../domain/entities/media-file.entity";
-import { MEDIA_REPOSITORY } from "../../utils/types";
-import type { MediaFileRepository } from "../../domain/ports/media-file.repository";
-import { Result, Ok, Err } from "oxide.ts";
-import { Injectable, Inject } from "@nestjs/common";
+//import { MEDIA_REPOSITORY } from "../../utils/types";
+//import type { MediaFileRepository } from "../../domain/ports/media-file.repository";
+//import { Result } from "oxide.ts";
+import { Injectable,  } from "@nestjs/common";
 
 @CommandHandler(RequestUploadCommand)
 @Injectable()
-export class RequestUploadHandler extends BaseHandler<RequestUploadCommand, Result<{ videoFileId: string; signedUrl: string }, Error>> {
+export class RequestUploadHandler /* extends BaseHandler<RequestUploadCommand, Result<{ videoFileId: string; signedUrl: string }, Error>> */ {
   
   constructor(
-    @Inject(MEDIA_REPOSITORY)
-    private readonly repository: MediaFileRepository
+    /* @Inject(MEDIA_REPOSITORY)
+    private readonly repository: MediaFileRepository */
   ) {
-    super();
+    //super();
   }
   
   /* protected override async handle(
@@ -65,8 +64,8 @@ export class RequestUploadHandler extends BaseHandler<RequestUploadCommand, Resu
 
   return Ok({ mediaFiles: results });
 } */
-  protected override async handle(command: RequestUploadCommand): Promise<Result<{ videoFileId: string; signedUrl: string }, Error>> {
+  /* protected override async handle(command: RequestUploadCommand): Promise<Result<{ videoFileId: string; signedUrl: string }, Error>> {
     throw new Error('Method not implemented.');
-  }
+  } */
  
 }

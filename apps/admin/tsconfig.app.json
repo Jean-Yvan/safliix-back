@@ -20,33 +20,5 @@
     "eslint.config.cjs",
     "eslint.config.mjs"
   ],
-  "references": [
-    {
-      "path": "../../libs/domains/video/tsconfig.lib.json"
-    },
-    {
-      "path": "../../libs/domains/users/tsconfig.lib.json"
-    },
-    {
-      "path": "../../libs/domains/access/tsconfig.lib.json"
-    },
-    {
-      "path": "../../libs/domains/series/tsconfig.lib.json"
-    },
-    {
-      "path": "../../libs/domains/movies/tsconfig.lib.json"
-    },
-    {
-      "path": "../../libs/domains/ad/tsconfig.lib.json"
-    },
-    {
-      "path": "../../libs/shared/bullmq/tsconfig.lib.json"
-    },
-    {
-      "path": "../../libs/shared/api/tsconfig.lib.json"
-    },
-    {
-      "path": "../../libs/domains/adminEntity/tsconfig.lib.json"
-    }
-  ]
+  
 }

@@ -85,7 +85,7 @@
       "path": "./libs/domains/videoTracking"
     },
     {
-      "path": "./libs/domains/ads"
+      "path": "./libs/domains/ad"
     }
   ]
 }

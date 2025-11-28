@@ -10,6 +10,9 @@ import { AdminConnectModule } from './adminConnect/admin-connect.module';
 import { SerieModule } from './serie/serie.module';
 import { VideosModule } from './videos/videos.module';
 import { AdsModule } from './ads/ads.module';
+import { DashboardModule } from './dashboard/dashboard.module';
+import { UploadsModule } from './uploads/uploads.module';
+import { MiscModule } from './misc/misc.module';
 
 @Module({
   imports: [
@@ -22,6 +25,9 @@ import { AdsModule } from './ads/ads.module';
     SerieModule,
     VideosModule,
     AdsModule,
+    DashboardModule,
+    UploadsModule,
+    MiscModule,
   ],
 
   providers: [

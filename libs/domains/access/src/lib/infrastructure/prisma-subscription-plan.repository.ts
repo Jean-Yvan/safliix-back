@@ -1,7 +1,7 @@
 import { PrismaService, SubscriptionPlanWithRelation } from "@safliix-back/database";
 import { SubscriptionPlan } from "../domain/entities/subscription-plan.entity";
 import { ISubscriptionPlanRepository } from "../domain/ports/subscription-plan.repository";
-import { Err, Ok, Result } from 'oxide.ts';
+import { Err } from 'oxide.ts';
 import { SubscriptionPlanMapper } from "../domain/mappers/subscription-plan.mapper";
 import { Injectable } from "@nestjs/common";
 

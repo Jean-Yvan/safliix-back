@@ -4,6 +4,7 @@ import { PrismaSubscriptionRepository } from './infrastructure/prisma-subscripti
 import { PrismaPurchaseRepository } from './infrastructure/prisma-purchase.repository';
 import { SUBPLAN_REPOSITORY, SUBSCRIPTION_REPOSITORY, PURCHASE_REPOSITORY } from './utils/types';
 import { SafliixBackDatabaseModule } from '@safliix-back/database';
+import { CheckoutService } from './services/checkout.service';
 
 import { CreateSubscriptionPlanHandler } from './application/handlers/create-subscription-plan.handler';
 import { UpdateSubscriptionPlanHandler } from './application/handlers/update-subscription-plan.handler';
@@ -64,7 +65,8 @@ import { ListPurchasesHandler } from './application/handlers/list-purchases.hand
     ListPurchasesByUserHandler,
     FindPurchaseByUserAndVideoHandler,
     ListExpiredPurchasesHandler,
-    ListPurchasesHandler
+    ListPurchasesHandler,
+    CheckoutService
   ],
   exports: [
     CreateSubscriptionPlanHandler,
@@ -87,7 +89,8 @@ import { ListPurchasesHandler } from './application/handlers/list-purchases.hand
     ListPurchasesByUserHandler,
     FindPurchaseByUserAndVideoHandler,
     ListExpiredPurchasesHandler,
-    ListPurchasesHandler
+    ListPurchasesHandler,
+    CheckoutService
   ],
 })
 export class SafliixBackAccessModule {}

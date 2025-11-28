@@ -8,7 +8,7 @@ import DailyRotateFile from 'winston-daily-rotate-file';
 export class FileLogger implements LoggerService {
   private logger;
 
-  constructor(private context: string) {
+  constructor(private readonly context: string) {
     // Créer le dossier logs s'il n'existe pas
     const logDir = path.join(process.cwd(), 'logs');
     console.log('Log directory:', logDir);
@@ -23,7 +23,7 @@ export class FileLogger implements LoggerService {
         format.errors({ stack: true }),
         format.json()
       ),
-      defaultMeta: { service: '', context },
+      defaultMeta: { service: '', context: this.context },
       transports: [
         // Logs rotatifs généraux
         new DailyRotateFile({
@@ -86,7 +86,7 @@ export class FileLogger implements LoggerService {
                 meta && Object.keys(meta).length
                   ? ` ${JSON.stringify(meta)}`
                   : '';
-              return `[Nest] ${timestamp} [${context}] ${level.toUpperCase()} ${message}${metaStr}`;
+              return `[Nest] ${timestamp} [${context ?? this.context}] ${level.toUpperCase()} ${message}${metaStr}`;
             })
           )
         })

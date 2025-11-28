@@ -12,5 +12,29 @@
     },
     "./package.json": "./package.json"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "nx": {
+    "root": "libs/domains/users",
+    "sourceRoot": "libs/domains/users/src",
+    "projectType": "library",
+    "targets": {
+      "build": {
+        "executor": "@nx/js:tsc",
+        "outputs": [
+          "{options.outputPath}"
+        ],
+        "dependsOn": [
+          "^build"
+        ],
+        "options": {
+          "outputPath": "dist/libs/domains/users",
+          "main": "libs/domains/users/src/index.ts",
+          "tsConfig": "libs/domains/users/tsconfig.lib.json",
+          "assets": [
+            "libs/domains/users/src/**/*"
+          ]
+        }
+      }
+    }
+  }
 }

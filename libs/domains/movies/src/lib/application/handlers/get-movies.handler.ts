@@ -23,13 +23,16 @@ export class GetMoviesHandler extends BaseQueryHandler<GetMoviesQuery, Result<Mo
   protected async handle(query: GetMoviesQuery): Promise<Result<MovieAggregate[], Error>> {
     const dto = query.filters;
     
-      const filter: MovieFilter = {
+    const filter: MovieFilter = {
       page: dto?.page ?? 0,
       limit: dto?.limit ?? 10,
       director: dto?.director,
       format: dto?.format,
       minDuration: dto?.minDuration,
       status: dto?.status,
+      q: dto?.q,
+      category: dto?.category,
+      genre: dto?.genre,
     };
 
      const saveResult = await Result.safe(this.repository.findAll(filter));

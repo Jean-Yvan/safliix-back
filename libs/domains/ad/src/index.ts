@@ -35,3 +35,4 @@ export type { AdFilter } from './lib/domain/types/ad-filter.type';
 export type { AdStatisticsOptions } from './lib/domain/types/ad-statistics-options.type';
 export type { AdStatistics } from './lib/domain/port/ad-view.repository';
 export type { AdAttachmentPrimitives } from './lib/domain/types/ad-attachment.type';
+

@@ -10,6 +10,9 @@
       "path": "../../shared/cqrs"
     },
     {
+      "path": "../../shared/auth"
+    },
+    {
       "path": "../../shared/database"
     },
     {

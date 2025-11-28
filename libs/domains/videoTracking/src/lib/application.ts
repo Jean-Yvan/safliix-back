@@ -40,5 +40,6 @@ export * from './application/handlers/get-recent-views.handler';
 
 // DTOs
 export { CreateUserVideoViewDto } from './interfaces/dto/create-user-video-view.dto';
+export { ViewDto } from './interfaces/dto/view.dto';
 
 export * from './interfaces/dto/some.dto';

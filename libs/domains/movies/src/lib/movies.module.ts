@@ -14,7 +14,7 @@ import { SafliixBackBullmqModule } from '@safliix-back/bullmq';
 @Module({
   imports: [
     SafliixBackDatabaseModule,
-    SafliixBackBullmqModule.forRoot()
+    SafliixBackBullmqModule
   ],
   providers: [
     {

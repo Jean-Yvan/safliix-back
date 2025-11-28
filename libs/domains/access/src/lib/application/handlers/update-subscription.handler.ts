@@ -35,9 +35,9 @@ export class UpdateSubscriptionHandler extends BaseHandler<UpdateSubscriptionCom
 }
 
 const mapUpdateDtoToProps = (dto: UpdateSubscriptionDto): SubscriptionUpdateProps => {
-  const toDate = (value?: string): Date | null => {
+  const toDate = (value?: string): Date | undefined => {
     if (!value) {
-      return null;
+      return undefined;
     }
     return new Date(value);
   };

@@ -12,9 +12,9 @@ export class SubscriptionMapper{
     return {
       user: mapConnect(data.userId),
       plan:mapConnect(data.planId),
-      country: data.country ?? undefined,
-      startDate: data.startDate ?? undefined,
-      endDate: data.endDate ?? undefined,
+      country: data.country ?? "unknow",
+      startDate: data.startDate,
+      endDate: data.endDate,
       renewalStatus: data.renewalStatus
     }
   }

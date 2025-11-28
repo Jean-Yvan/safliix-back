@@ -6,4 +6,7 @@ export type MovieFilter = {
   format?: string;
   minDuration?: number;
   status?: string;
+  q?: string;
+  category?: string;
+  genre?: string;
 };

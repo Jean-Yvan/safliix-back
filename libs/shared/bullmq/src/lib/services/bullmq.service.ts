@@ -1,12 +1,12 @@
 // src/services/bullmq.service.ts
 
 import { Injectable, Logger, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
-import { Queue, Worker, QueueEvents, Job, JobsOptions, WorkerOptions } from 'bullmq';
+import { Queue, Worker, QueueEvents, Job, WorkerOptions } from 'bullmq';
 import Redis, { Redis as RedisType } from 'ioredis';
 import { ConfigService } from '@nestjs/config';
 // Assurez-vous que vos types sont définis correctement. 
 // J'utilise ici les types génériques pour la clarté.
-import type { BullMQConfig, QueueJob, QueueMetrics, JobResult, JobState, BullMQQueueConfig, JobTypeMap } from '../interfaces/bullmq.interface';
+import type { BullMQConfig, QueueJob, BullMQQueueConfig, JobTypeMap } from '../interfaces/bullmq.interface';
 
 @Injectable()
 export class BullMQService implements OnModuleInit, OnModuleDestroy {

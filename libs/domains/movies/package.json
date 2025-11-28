@@ -12,5 +12,29 @@
     },
     "./package.json": "./package.json"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "nx": {
+    "root": "libs/domains/movies",
+    "sourceRoot": "libs/domains/movies/src",
+    "projectType": "library",
+    "targets": {
+      "build": {
+        "executor": "@nx/js:tsc",
+        "outputs": [
+          "{options.outputPath}"
+        ],
+        "dependsOn": [
+          "^build"
+        ],
+        "options": {
+          "outputPath": "dist/libs/domains/movies",
+          "main": "libs/domains/movies/src/index.ts",
+          "tsConfig": "libs/domains/movies/tsconfig.lib.json",
+          "assets": [
+            "libs/domains/movies/src/**/*"
+          ]
+        }
+      }
+    }
+  }
 }

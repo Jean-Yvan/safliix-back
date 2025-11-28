@@ -12,5 +12,29 @@
     },
     "./package.json": "./package.json"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "nx": {
+    "root": "libs/shared/keycloack",
+    "sourceRoot": "libs/shared/keycloack/src",
+    "projectType": "library",
+    "targets": {
+      "build": {
+        "executor": "@nx/js:tsc",
+        "outputs": [
+          "{options.outputPath}"
+        ],
+        "dependsOn": [
+          "^build"
+        ],
+        "options": {
+          "outputPath": "dist/libs/shared/keycloack",
+          "main": "libs/shared/keycloack/src/index.ts",
+          "tsConfig": "libs/shared/keycloack/tsconfig.lib.json",
+          "assets": [
+            "libs/shared/keycloack/src/**/*"
+          ]
+        }
+      }
+    }
+  }
 }

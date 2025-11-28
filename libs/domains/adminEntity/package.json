@@ -12,5 +12,29 @@
     },
     "./package.json": "./package.json"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "nx": {
+    "root": "libs/domains/adminEntity",
+    "sourceRoot": "libs/domains/adminEntity/src",
+    "projectType": "library",
+    "targets": {
+      "build": {
+        "executor": "@nx/js:tsc",
+        "outputs": [
+          "{options.outputPath}"
+        ],
+        "dependsOn": [
+          "^build"
+        ],
+        "options": {
+          "outputPath": "dist/libs/domains/adminEntity",
+          "main": "libs/domains/adminEntity/src/index.ts",
+          "tsConfig": "libs/domains/adminEntity/tsconfig.lib.json",
+          "assets": [
+            "libs/domains/adminEntity/src/**/*"
+          ]
+        }
+      }
+    }
+  }
 }

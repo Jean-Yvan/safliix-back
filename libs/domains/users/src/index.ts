@@ -8,6 +8,7 @@ export { ListUserByEmailHandler } from "./lib/application/handlers/list-user-by-
 export { CreateUserDto } from './lib/interfaces/dto/create-user.dto';
 export { UpdateUserDto } from './lib/interfaces/dto/update-user.dto';
 export { ListUserDto } from './lib/interfaces/dto/list-user.dto';
+export { UpdateMeDto } from './lib/interfaces/dto/update-me.dto';
 
 export { CreateUserCommand } from './lib/application/cqrs/commands/create-user.command';
 export { UpdateUserCommand } from './lib/application/cqrs/commands/update-user.command';

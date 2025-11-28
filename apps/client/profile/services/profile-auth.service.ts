@@ -9,7 +9,8 @@ import {
   ProfileTokenService,
   SelectProfileQuery,
 } from '@safliix-back/profile';
-import { IUserRepository, USER_REPOSITORY } from '@safliix-back/users';
+import type { IUserRepository } from '@safliix-back/users';
+import { USER_REPOSITORY } from '@safliix-back/users';
 
 @Injectable()
 export class ProfileAuthApplicationService {

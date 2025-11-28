@@ -3,7 +3,7 @@ import { PurchaseWithRelation } from "@safliix-back/database";
 
 export interface PurchaseCreateProps {
   userId: string;
-  videoId: string;
+  movieId: string;
   country?: string | null;
   expirationDate?: Date | null;
   purchaseDate?: Date;
@@ -11,7 +11,7 @@ export interface PurchaseCreateProps {
 
 export interface PurchaseUpdateProps {
   userId?: string;
-  videoId?: string;
+  movieId?: string;
   expirationDate?: Date | null;
   country?: string | null;
 }
@@ -20,7 +20,7 @@ export class Purchase {
   private constructor(
     public readonly id: string | undefined,
     public readonly userId: string,
-    public readonly videoId: string,
+    public readonly movieId: string,
     public readonly purchaseDate: Date,
     public readonly expirationDate: Date | null,
     public readonly country: string | null
@@ -31,7 +31,7 @@ export class Purchase {
     if (!dto.userId?.trim()) {
       return Err(new Error("L'utilisateur est obligatoire"));
     }
-    if (!dto.videoId?.trim()) {
+    if (!dto.movieId?.trim()) {
       return Err(new Error("La vidéo est obligatoire"));
     }
     
@@ -40,7 +40,7 @@ export class Purchase {
       new Purchase(
         undefined,
         dto.userId.trim(),
-        dto.videoId.trim(),
+        dto.movieId.trim(),
         dto.purchaseDate ?? new Date(), // purchaseDate = maintenant
         dto.expirationDate ?? null,
         dto.country?.trim() ?? null
@@ -53,7 +53,7 @@ export class Purchase {
     return new Purchase(
       data.id,
       data.userId,
-      data.videoId,
+      data.movieId,
       data.purchaseDate,
       data.expirationDate,
       data.country
@@ -63,7 +63,7 @@ export class Purchase {
   // Mise à jour
   updateWith(dto: PurchaseUpdateProps): Result<Purchase, Error> {
     const newUserId = dto.userId?.trim() ?? this.userId;
-    const newVideoId = dto.videoId?.trim() ?? this.videoId;
+    const newVideoId = dto.movieId?.trim() ?? this.movieId;
     const newExpirationDate =
       dto.expirationDate !== undefined ? dto.expirationDate : this.expirationDate;
     const newCountry = dto.country !== undefined ? dto.country?.trim() ?? null : this.country;

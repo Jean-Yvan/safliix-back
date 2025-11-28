@@ -1,19 +1,40 @@
-import { Body, Controller, Post,Put,Get,Query, Param, ParseUUIDPipe } from '@nestjs/common';
+import { Body, Controller, Post,Put,Get,Query, Param, Patch } from '@nestjs/common';
 import { 
   CreateUserHandler,
   UpdateUserHandler,
   ListUserByIdHandler,
-  ListUserHandler,
   CreateUserCommand,
   UpdateUserCommand,
   ListUserByIdQuery,
-  ListUserQuery,
   CreateUserDto,
   UpdateUserDto,
-  ListUserDto,
 } from '@safliix-back/users';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
-//import { CreateUserDto } from '@safliix-back/users';
+import { PrismaService } from '@safliix-back/database';
+import { Type } from 'class-transformer';
+import { IsOptional, IsString } from 'class-validator';
+
+class UserListQueryDto {
+  @Type(() => Number)
+  @IsOptional()
+  page?: number = 1;
+
+  @Type(() => Number)
+  @IsOptional()
+  pageSize?: number = 10;
+
+  @IsOptional()
+  @IsString()
+  search?: string;
+
+  @IsOptional()
+  @IsString()
+  status?: string;
+
+  @IsOptional()
+  @IsString()
+  role?: string;
+}
 
 @Controller('users')
 export class AdminUserController{
@@ -22,7 +43,7 @@ export class AdminUserController{
     private readonly createHandler:CreateUserHandler,
     private readonly updateHandler:UpdateUserHandler,
     private readonly listByIdHandler: ListUserByIdHandler,
-    private readonly listHandler: ListUserHandler
+    private readonly prisma: PrismaService
   ){}
 
 
@@ -80,17 +101,37 @@ export class AdminUserController{
 
   @Get()
   @ApiOperation({ summary: 'List users with filters' })
-  async list(@Query() filters: ListUserDto) {
-    const query = new ListUserQuery(filters);
-    const result = await this.listHandler.execute(query);
-
-    if (result.isErr()) {
-      throw result.unwrapErr();
+  async list(@Query() filters: UserListQueryDto) {
+    const page = Math.max(1, filters.page ?? 1);
+    const pageSize = Math.min(100, Math.max(1, filters.pageSize ?? 10));
+    const where: Record<string, unknown> = {};
+    if (filters.search) {
+      where.OR = [
+        { email: { contains: filters.search, mode: 'insensitive' } },
+        { name: { contains: filters.search, mode: 'insensitive' } },
+      ];
     }
 
+    const [totalItems, users] = await Promise.all([
+      this.prisma.user.count({ where }),
+      this.prisma.user.findMany({
+        where,
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+        orderBy: { createdAt: 'desc' },
+      }),
+    ]);
     return {
       success: true,
-      data: result.unwrap(),
+      data: {
+        items: users,
+        pageInfo: {
+          page,
+          pageSize,
+          totalItems,
+          totalPages: Math.ceil(totalItems / pageSize),
+        },
+      },
     };
   }
 
@@ -110,4 +151,19 @@ export class AdminUserController{
     };
   }
 
+  @Patch(':id')
+  @ApiOperation({ summary: 'Update user status/role/profile' })
+  async patchUser(
+    @Param('id') id: string,
+    @Body() body: { status?: string; role?: string; profile?: Record<string, unknown> },
+  ) {
+    const updated = await this.prisma.user.update({
+      where: { id },
+      data: {
+        isVerified: body.status ? body.status === 'active' : undefined,
+        name: body.profile?.['name'] as string | undefined,
+      },
+    });
+    return { success: true, data: updated };
+  }
 }

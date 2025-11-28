@@ -12,5 +12,29 @@
     },
     "./package.json": "./package.json"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "nx": {
+    "root": "libs/domains/videoTracking",
+    "sourceRoot": "libs/domains/videoTracking/src",
+    "projectType": "library",
+    "targets": {
+      "build": {
+        "executor": "@nx/js:tsc",
+        "outputs": [
+          "{options.outputPath}"
+        ],
+        "dependsOn": [
+          "^build"
+        ],
+        "options": {
+          "outputPath": "dist/libs/domains/videoTracking",
+          "main": "libs/domains/videoTracking/src/index.ts",
+          "tsConfig": "libs/domains/videoTracking/tsconfig.lib.json",
+          "assets": [
+            "libs/domains/videoTracking/src/**/*"
+          ]
+        }
+      }
+    }
+  }
 }

@@ -93,7 +93,6 @@ export const sessionInclude = {
 export const userWithoutRelationsSelect = {
   id: true,
   email: true,
-  password_hash: true,
   name: true,
   avatarUrl: true,
   lastLoginAt: true,

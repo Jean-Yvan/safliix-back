@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Serie } from "../domain/entities/serie.entity";
+//import { Serie } from "../domain/entities/serie.entity";
 
 
 export class SeasonSummaryDto {
@@ -30,25 +30,25 @@ export class SerieResponseDto {
     example: 'a1b2c3d4',
     description: 'Unique identifier of the series'
   })
-  id: string;
+  id!: string;
 
   @ApiProperty({
     example: 'Breaking Bad',
     description: 'Title of the series'
   })
-  title: string;
+  title!: string;
 
   @ApiProperty({
     example: 'A high school chemistry teacher diagnosed with cancer...',
     description: 'Detailed description of the series'
   })
-  description: string;
+  description!: string;
 
   @ApiProperty({
     example: '2018-01-01T00:00:00.000Z',
     description: 'Original release date'
   })
-  releaseDate: Date;
+  releaseDate!: Date;
 
   @ApiProperty({
     example: '2020-05-01T00:00:00.000Z',
@@ -68,19 +68,19 @@ export class SerieResponseDto {
     type: [SeasonSummaryDto],
     description: 'List of seasons with basic information'
   })
-  seasons: SeasonSummaryDto[];
+  seasons?: SeasonSummaryDto[];
   
   @ApiProperty({
     example: 'https://image.tmdb.org/t/p/original/ggFHVNu6YYI5L9pCfOacjizRGt.jpg',
     description: 'URL of the main thumbnail image'
   })
-  thumbnailUrl: string;
+  thumbnailUrl!: string;
 
   @ApiProperty({
     example: false,
     description: 'Whether the series is a platform exclusive premiere'
   })
-  isPremiere: boolean;
+  isPremiere!: boolean;
 
   
   @ApiProperty({
@@ -90,22 +90,7 @@ export class SerieResponseDto {
   })
   rating?: number;
 
-  constructor(serie: Serie) {
-    this.id = serie.id;
-    this.title = serie.metadata.title;
-    this.description = serie.metadata.description;
-    this.releaseDate = serie.metadata.releaseDate;
-    this.platformDate = serie.metadata.platformDate;
-    this.thumbnailUrl = serie.metadata.thumbnailUrl;
-    this.isPremiere = serie.isPremiere;
-    //this.maxVideoQuality = this.calculateMaxQuality(serie);
-    this.seasons = serie.getSeasons().map(season => ({
-      id: season.id,
-      number: season.number,
-      title: season.title,
-      episodeCount: season.episodes.length
-    }));
-  }
+  
 
   
 }

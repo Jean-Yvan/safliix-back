@@ -193,21 +193,6 @@ export class VideoEventWorker extends WorkerBase<GenericPayload | PartReadyPaylo
     return Math.min(progress, PROGRESS_VALUES.ENCODING_END);
   }
 
-  // Utiliser pour les erreurs internes du worker (ex: erreur DB lors de la mise à jour de la progression)
-  private async handleProcessingError(eventName: string, data: GenericPayload, error: unknown) {
-    const errorMessage = error instanceof Error ? error.message : String(error);
-
-    this.logger.error(`❌ Erreur interne lors du traitement de l'event ${eventName}:`, error);
-
-    if (data?.videoId) {
-      // Nous ne devons pas marquer la vidéo comme échouée si le job échoue. 
-      // Le job "VIDEO_PROCESSING_FAILED" est responsable de cela. 
-      // Ici, on gère juste le cas où la mise à jour de progression elle-même échoue.
-      
-      // Laisser l'erreur se propager pour le logging BullMQ.
-    }
-  }
-
   override async onModuleDestroy() {
     this.logger.log('🛑 Shutting down VideoEventWorker...');
     await super.onModuleDestroy();

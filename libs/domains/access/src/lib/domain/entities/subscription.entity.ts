@@ -44,8 +44,8 @@ export interface SubscriptionCreateProps {
 export interface SubscriptionUpdateProps {
   userId?: string;
   planId?: string;
-  startDate?: Date | null;
-  endDate?: Date | null;
+  startDate?: Date;
+  endDate?: Date;
   renewalStatus?: RenewalStatus;
   country?: string | null;
 }
@@ -55,8 +55,8 @@ export class Subscription {
     public readonly id: string | undefined,
     public readonly userId: string,
     public readonly planId: string,
-    public readonly startDate: Date | null,
-    public readonly endDate: Date | null,
+    public readonly startDate: Date,
+    public readonly endDate: Date,
     public readonly renewalStatus: RenewalStatus,
     public readonly country: string | null,
     public readonly createdAt: Date | null,

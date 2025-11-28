@@ -44,7 +44,7 @@ export class UploaderWorker extends WorkerBase<PlaylistResult,void> {
   }
 
   async processJob(job: Job<PlaylistResult>): Promise<void> {
-    const { outputDir, masterPlaylistPath, s3Key, } = job.data;
+    const { outputDir, masterPlaylistPath: _masterPlaylistPath, s3Key, } = job.data;
     this.logger.log(`📤 Upload de la vidéo ${s3Key} pour user ${s3Key}..`);
 
     try {

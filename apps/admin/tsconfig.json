@@ -3,38 +3,6 @@
   "files": [],
   "include": [],
   "references": [
-    {
-      "path": "../../libs/domains/video"
-    },
-    {
-      "path": "../../libs/domains/users"
-    },
-    {
-      "path": "../../libs/domains/access"
-    },
-    {
-      "path": "../../libs/domains/series"
-    },
-    {
-      "path": "../../libs/domains/movies"
-    },
-    {
-      "path": "../../libs/domains/ad"
-    },
-    {
-      "path": "../../libs/shared/bullmq"
-    },
-    {
-      "path": "../../libs/shared/api"
-    },
-    {
-      "path": "../../libs/domains/adminEntity"
-    },
-    {
-      "path": "./tsconfig.app.json"
-    },
-    {
-      "path": "./tsconfig.spec.json"
-    }
+    {"path": "./tsconfig.app.json"}
   ]
 }

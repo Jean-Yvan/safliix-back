@@ -5,7 +5,7 @@ import { BaseQueryHandler } from '@safliix-back/cqrs';
 
 import { GetWatchHistoryQuery } from '../cqrs/queries/get-watch-history.query';
 import { USER_VIDEO_VIEW_REPOSITORY } from '../../utils/types';
-import { IUserVideoViewRepository } from '../../domain/ports/user-video-view.repository';
+import type { IUserVideoViewRepository } from '../../domain/ports/user-video-view.repository';
 import { UserVideoView } from '../../domain/entities/user-video-view';
 
 @Injectable()

@@ -1,4 +1,4 @@
-import { CreateToPrisma, UpdateToPrisma, VideoFormatToPrisma, VideoFormatWithoutRelation } from "@safliix-back/database";
+import { CreateToPrisma, UpdateToPrisma, VideoFormatWithoutRelation } from "@safliix-back/database";
 import { VideoFormat } from "../entities/video-format.value-object";
 
 

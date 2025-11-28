@@ -289,6 +289,7 @@ export class PrismaUserVideoViewRepository implements IUserVideoViewRepository {
           userId,
           updatedAt: { gte: startDate }
         },
+        include: userVideoViewInclude,
         orderBy: { updatedAt: 'desc' },
       });
       return Ok(views.map(UserVideoViewMapper.toDomain));

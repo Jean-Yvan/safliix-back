@@ -1,4 +1,4 @@
-import { Injectable, BadRequestException, InternalServerErrorException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import * as fs from 'fs/promises';
 import * as path from 'path';
 import { FfmpegService } from './ffmpeg.service';
@@ -119,7 +119,7 @@ export class VideoEncodingService {
       return encodedInfo;
     } catch (error) {
       this.logger.error(`💥 Échec encodage partie ${partIndex}: ${error}`);
-      //await this.cleanupOnError(inputFile); // Nettoyage ajusté
+      await this.cleanupOnError(inputFile); // Nettoyage ajusté
       throw error;
     }
   }

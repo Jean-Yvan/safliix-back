@@ -15,7 +15,7 @@ export class VideoProcessor extends WorkerHost {
   }
 
   async process(job: Job<VideoProcessingJobData>): Promise<any> {
-    const { videoFileId, s3Key, context } = job.data;
+    const { videoFileId } = job.data;
 
     try {
       this.logger.log(`Starting processing for job ${job.id}: ${videoFileId}`);

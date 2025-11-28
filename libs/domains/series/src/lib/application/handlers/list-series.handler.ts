@@ -20,7 +20,7 @@ export class ListSeriesHandler extends BaseQueryHandler<ListSerieQuery,Result<Se
   }
   
   protected override async handle(query: ListSerieQuery): Promise<Result<Serie[], Error>> {
-    const result = await Result.safe(this.repository.findAll());
+    const result = await Result.safe(this.repository.findAll(query.filters));
     if(result.isErr()){
       return Err(result.unwrapErr());
     }

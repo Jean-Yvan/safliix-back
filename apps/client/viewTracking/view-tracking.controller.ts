@@ -38,7 +38,6 @@ import {
 
   UpdateProgressDto,
   RateViewDto,
-  ProgressUpdateItemDto,
   UpdateProgressBatchDto,
   MarkMultipleCompletedDto,
   WatchHistoryQueryDto,

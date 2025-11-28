@@ -1,14 +1,12 @@
 import { CreateUserDto } from "../../interfaces/dto/create-user.dto";
-import { Password } from '@safliix-back/common';
 import { UserWithoutRelation, UserWithRelation } from "@safliix-back/database";
-import { Result, Ok,Err } from 'oxide.ts';
+import { Result, Ok } from 'oxide.ts';
 import { UpdateUserDto } from "../../interfaces/dto/update-user.dto";
 
 export class User {
   private constructor(
     public readonly id: string | undefined,
     public email: string,
-    public  passwordHash: string,
     public  name: string | null,
     public  avatarUrl: string | null,
     public  lastLoginAt: Date | null,
@@ -28,16 +26,13 @@ export class User {
 
   // Factory pour créer un nouvel utilisateur
   static async create(props: CreateUserDto): Promise<Result<User,Error>> {
-    const passwordResult = await Password.create(props.password);
+    
 
-    if(passwordResult.isErr()){
-      return Err(passwordResult.unwrapErr());
-    }
+    
 
     return Ok(new User(
       undefined,
       props.email,
-      passwordResult.unwrap().value,
       props.name,
       props.avatarUrl ?? null,
       null,
@@ -51,7 +46,6 @@ export class User {
     return new User(
       props.id,
       props.email,
-      props.password_hash,
       props.name,
       props.avatarUrl,
       props.lastLoginAt,
@@ -78,10 +72,7 @@ export class User {
       this.name = dto.name;
     }
 
-    if(dto.password != undefined){
-      const passwordR = await Password.create(dto.password);
-      this.passwordHash = passwordR.unwrap().value;
-    }
+    
 
     
   }

@@ -1,4 +1,4 @@
-import { Body, Controller, Post,Put,Get,Query, Param, ParseUUIDPipe } from '@nestjs/common';
+import { Body, Controller, Post,Put,Get,Query, Param } from '@nestjs/common';
 import { 
   CreateAdminHandler,
   UpdateAdminHandler,
@@ -7,13 +7,12 @@ import {
   CreateAdminCommand,
   UpdateAdminCommand,
   ListAdminByIdQuery,
-  ListAdminByEmailQuery,
-  ListAdminByEmailHandler,
+  //ListAdminByEmailHandler,
   ListAdminQuery,
   CreateAdminDto,
   UpdateAdminDto,
   AdminFilterDto,
-  DeleteAdminHandler,
+  //DeleteAdminHandler,
 } from '@safliix-back/adminEntity';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 
@@ -22,10 +21,10 @@ export class AdminController{
   constructor(
     private readonly createHandler: CreateAdminHandler,
     private readonly updateHandler: UpdateAdminHandler,
-    private readonly deleteHandler: DeleteAdminHandler,
+    //private readonly deleteHandler: DeleteAdminHandler,
     private readonly listHandler: ListAdminHandler,
     private readonly listByIdHandler: ListAdminByIdHandler,
-    private readonly listByEmailHandler: ListAdminByEmailHandler
+    //private readonly listByEmailHandler: ListAdminByEmailHandler
   ){}
 
   @Post()

@@ -5,7 +5,7 @@ import { BaseHandler } from '@safliix-back/cqrs';
 
 import { UpdateUserVideoProgressCommand } from '../cqrs/commands/update-user-video-progress.command';
 import { USER_VIDEO_VIEW_REPOSITORY } from '../../utils/types';
-import { IUserVideoViewRepository } from '../../domain/ports/user-video-view.repository';
+import type { IUserVideoViewRepository } from '../../domain/ports/user-video-view.repository';
 import { UserVideoView } from '../../domain/entities/user-video-view';
 
 @Injectable()

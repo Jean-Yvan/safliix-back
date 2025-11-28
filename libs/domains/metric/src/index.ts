@@ -4,7 +4,7 @@ export * from './lib/interfaces/user-progress-video.dto';
 export * from './lib/domain/entities';
 export * from './lib/domain/port/user-video-view.repository';
 export * from './lib/utils/tokens';
-export { PrismaVideoViewRepository } from './lib/infrastructure/prisma-video-view.repository';
 export { PlatformAnalyticsService } from './lib/application/services/platform-analytics.service';
 export { MovieAnalyticsService } from './lib/application/services/movie-analytics.service';
 export { AdAnalyticsService } from './lib/application/services/ad-analytics.service';
+export * from './lib/application/cqrs/queries/dashboard.queries';

@@ -11,9 +11,9 @@ export class PurchaseMapper{
   static toCreatePrisma(data:Purchase) : CreateToPrisma<"Purchase">{
     return {
       user: mapConnect(data.userId),
-      video:mapConnect(data.videoId),
+      movie:mapConnect(data.movieId),
       purchaseDate:data.purchaseDate,
-      country:data.country ?? undefined,
+      country:data.country ?? 'other',
       expirationDate:data.expirationDate
     }
   }
@@ -25,7 +25,7 @@ export class PurchaseMapper{
       },
       data:{
         user: mapField(data.userId, mapConnect),
-        video: mapField(data.videoId, mapConnect),
+        movie: mapField(data.movieId, mapConnect),
         purchaseDate:mapField(data.purchaseDate),
         country:mapField(data.country),
         expirationDate:mapField(data.expirationDate)

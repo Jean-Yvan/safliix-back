@@ -1,4 +1,4 @@
-import { SerieViewToPrisma } from '@safliix-back/database';
+import { SerieViewWithRelation } from '@safliix-back/database';
 import { Result, Ok, Err } from 'oxide.ts';
 
 export class SeriesView {
@@ -56,7 +56,7 @@ export class SeriesView {
     return Ok(view);
   }
 
-  static restore(props: SerieViewToPrisma): SeriesView {
+  static restore(props: SerieViewWithRelation): SeriesView {
     return new SeriesView(
       props.id,
       props.seriesId,

@@ -1,5 +1,5 @@
-import { Body, Controller, Post, Get, Param } from "@nestjs/common";
-import { CommandBus, QueryBus } from "@nestjs/cqrs";
+import { Body, Controller, Post } from "@nestjs/common";
+import { CommandBus } from "@nestjs/cqrs";
 import { ApiTags, ApiOperation, ApiResponse } from "@nestjs/swagger";
 import { RequestUploadDto, 
   ConfirmUploadDto,
@@ -14,7 +14,6 @@ import { RequestUploadDto,
 export class VideosController {
   constructor(
     private readonly commandBus: CommandBus,
-    private readonly queryBus: QueryBus
   ) {}
 
   // -----------------------------

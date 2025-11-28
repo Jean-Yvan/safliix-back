@@ -1,7 +1,7 @@
 import { SeasonWithRelations } from '@safliix-back/database';
 import { AddSeasonDto } from '../../interfaces/add-season.dto';
 import { Episode } from './episode.entity';
-import { Result,Ok,Err } from 'oxide.ts';
+import { Result,Ok } from 'oxide.ts';
 import { UpdateSeasonDto } from '../../interfaces/update-season.dto';
 
 
@@ -39,7 +39,7 @@ export class Season {
     return new Season(
       data.id,
       data.number,
-      data.seriesId,
+      data.serieId,
       ''
     )
   }

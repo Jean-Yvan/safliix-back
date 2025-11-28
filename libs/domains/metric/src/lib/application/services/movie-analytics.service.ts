@@ -57,7 +57,6 @@ export class MovieAnalyticsService {
     try {
       const groupedPurchases = await this.prisma.purchase.groupBy({
         by: ['movieId'],
-        where: { movieId: { not: null } },
         _count: { movieId: true },
       });
       if (groupedPurchases.length === 0) {
@@ -73,13 +72,23 @@ export class MovieAnalyticsService {
 
       const revenues = groupedPurchases
         .map((item) => {
-          const price = item.movieId ? priceMap.get(item.movieId) ?? 0 : 0;
+          const rentalCount =
+            typeof item._count === 'object' && item._count ? item._count.movieId ?? 0 : 0;
+          if (!item.movieId || rentalCount === 0) {
+            return null;
+          }
+          const price = priceMap.get(item.movieId) ?? 0;
           return {
-            movieId: item.movieId!,
-            totalRevenue: price * item._count.movieId,
+            movieId: item.movieId,
+            totalRevenue: price * rentalCount,
           };
         })
-        .filter((item) => item.totalRevenue > 0)
+        .filter((item): item is RevenuePerMovie => {
+          if (!item) {
+            return false;
+          }
+          return item.totalRevenue > 0;
+        })
         .sort((a, b) => b.totalRevenue - a.totalRevenue)
         .slice(0, 2);
 
@@ -133,12 +142,13 @@ export class MovieAnalyticsService {
         return 0;
       }
 
-      const uniqueViewers = await this.prisma.userVideoView.count({
+      const uniqueViewers = await this.prisma.userVideoView.groupBy({
+        by: ['userId'],
         where: { videoId: topContent.videoId },
-        distinct: ['userId'],
       });
+      const uniqueViewersCount = uniqueViewers.length;
 
-      const percentage = (uniqueViewers / totalActiveSubscribers) * 100;
+      const percentage = (uniqueViewersCount / totalActiveSubscribers) * 100;
       return parseFloat(percentage.toFixed(2));
     } catch (error) {
       this.logger.error('Failed to get most followed content subscriber percentage', error as Error);

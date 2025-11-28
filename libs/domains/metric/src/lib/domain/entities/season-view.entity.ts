@@ -1,4 +1,4 @@
-import { SeasonViewToPrisma } from '@safliix-back/database';
+import { SeasonViewWithRelation } from '@safliix-back/database';
 import { Result, Ok, Err } from 'oxide.ts';
 
 export class SeasonView {
@@ -49,7 +49,7 @@ export class SeasonView {
     return Ok(view);
   }
 
-  static restore(props: SeasonViewToPrisma): SeasonView {
+  static restore(props: SeasonViewWithRelation): SeasonView {
     return new SeasonView(
       props.id,
       props.seasonId,

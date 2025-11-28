@@ -2,7 +2,6 @@
   "name": "@safliix-back/mappers",
   "version": "0.0.1",
   "private": true,
-  "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -17,5 +16,29 @@
   },
   "dependencies": {
     "tslib": "^2.3.0"
+  },
+  "nx": {
+    "root": "libs/shared/database/mappers",
+    "sourceRoot": "libs/shared/database/mappers/src",
+    "projectType": "library",
+    "targets": {
+      "build": {
+        "executor": "@nx/js:tsc",
+        "outputs": [
+          "{options.outputPath}"
+        ],
+        "dependsOn": [
+          "^build"
+        ],
+        "options": {
+          "outputPath": "dist/libs/shared/database/mappers",
+          "main": "libs/shared/database/mappers/src/index.ts",
+          "tsConfig": "libs/shared/database/mappers/tsconfig.lib.json",
+          "assets": [
+            "libs/shared/database/mappers/src/**/*"
+          ]
+        }
+      }
+    }
   }
 }

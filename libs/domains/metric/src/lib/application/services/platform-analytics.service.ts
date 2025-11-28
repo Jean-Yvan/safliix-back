@@ -40,9 +40,9 @@ export class PlatformAnalyticsService {
     return totalSeconds._sum.progress ?? 0;
   }
 
-  async getTotalMonthlyRevenue(): Promise<number> {
+  async getTotalMonthlyRevenue(range?: { start: Date; end: Date }): Promise<number> {
     try {
-      const currentMonth = getMonthRange(new Date());
+      const currentMonth = range ?? getMonthRange(new Date());
       const [rentalRevenue, subscriptionRevenue] = await Promise.all([
         this.calculateRentalRevenue(currentMonth.start, currentMonth.end),
         this.calculateSubscriptionRevenue(currentMonth.start, currentMonth.end),
@@ -54,9 +54,9 @@ export class PlatformAnalyticsService {
     }
   }
 
-  async getNewUsersCount(): Promise<number> {
+  async getNewUsersCount(range?: { start: Date; end: Date }): Promise<number> {
     try {
-      const currentMonth = getMonthRange(new Date());
+      const currentMonth = range ?? getMonthRange(new Date());
       return this.prisma.user.count({
         where: { createdAt: { gte: currentMonth.start, lte: currentMonth.end } },
       });
@@ -66,9 +66,9 @@ export class PlatformAnalyticsService {
     }
   }
 
-  async getNewContentCount(): Promise<number> {
+  async getNewContentCount(range?: { start: Date; end: Date }): Promise<number> {
     try {
-      const currentMonth = getMonthRange(new Date());
+      const currentMonth = range ?? getMonthRange(new Date());
       const [newMovies, newSeries] = await Promise.all([
         this.prisma.movie.count({ where: { createdAt: { gte: currentMonth.start, lte: currentMonth.end } } }),
         this.prisma.serie.count({ where: { createdAt: { gte: currentMonth.start, lte: currentMonth.end } } }),

@@ -3,17 +3,28 @@
   "compilerOptions": {
     "baseUrl": ".",
     "rootDir": "src",
-    "outDir": "dist",
-    "tsBuildInfoFile": "dist/tsconfig.lib.tsbuildinfo",
+    "outDir": "../../../dist/out-tsc/libs/shared/auth",
+    "tsBuildInfoFile": "../../../dist/out-tsc/libs/shared/auth/tsconfig.lib.tsbuildinfo",
     "emitDeclarationOnly": true,
     "forceConsistentCasingInFileNames": true,
-    "types": ["node", "passport-jwt"],
+    "types": [
+      "node",
+      "passport-jwt"
+    ],
     "target": "es2021",
     "strictNullChecks": true,
     "noImplicitAny": true,
     "strictBindCallApply": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "declaration": true
   },
-  "include": ["src/**/*.ts"],
-  "references": []
+  "include": [
+    "src/index.ts",
+    "src/**/*.ts"
+  ],
+  "references": [
+    {
+      "path": "../../domains/profile/tsconfig.lib.json"
+    }
+  ]
 }

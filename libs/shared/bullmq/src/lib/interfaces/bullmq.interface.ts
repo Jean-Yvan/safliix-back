@@ -6,7 +6,6 @@ import {
   IngestJobPayload,
   DownloadedPayload,
   SplittedPayload,
-  PartEncodedInfo,
   PartReadyPayload,
   SegmentedPayload,
   PartProcessPayload,

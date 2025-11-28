@@ -12,8 +12,9 @@ export class SeasonMapper{
     const data = {
       id: season.id,
       number: season.number,
-      series: mapConnect(season.serieId),
+      serie: mapConnect(season.serieId),
       title: season.title,
+      
     };
 
     return data;
@@ -24,7 +25,7 @@ export class SeasonMapper{
       where:{id},
       data:{
         number: season.number,
-        series: mapConnect(season.serieId),
+        serie: mapConnect(season.serieId),
       }
     }
   }

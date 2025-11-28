@@ -2,10 +2,16 @@ import { Serie } from '../entities/serie.entity';
 import { Episode } from '../entities/episode.entity';
 import { Season } from '../entities/season.entity';
 
+export interface SerieFilter {
+  q?: string;
+  category?: string;
+  genre?: string;
+}
+
 export interface ISerieRepository {
   // CRUD Series
   findById(id: string): Promise<Serie | null>;
-  findAll(): Promise<Serie[]>;
+  findAll(filters?: SerieFilter): Promise<Serie[]>;
   save(serie: Serie): Promise<void>;
   update(serie: Serie): Promise<Serie>;
   deleteById(id: string): Promise<void>;

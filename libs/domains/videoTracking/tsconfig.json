@@ -4,6 +4,12 @@
   "include": [],
   "references": [
     {
+      "path": "../../shared/database"
+    },
+    {
+      "path": "../../shared/cqrs"
+    },
+    {
       "path": "./tsconfig.lib.json"
     }
   ]

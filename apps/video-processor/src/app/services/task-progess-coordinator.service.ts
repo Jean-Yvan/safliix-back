@@ -1,8 +1,6 @@
 // src/services/task-progress-coordinator.service.ts
 import { Injectable } from '@nestjs/common';
 import { Redis } from 'ioredis';
-import { VideoEventDispatcher } from './video-event-dispatcher.service';
-import { VideoEvents } from '@safliix-back/video-process-type';
 import { FileLogger } from '../utils/logger';
 import { RedisManager } from './redis-manager';
 interface VideoProgressState {
@@ -29,7 +27,6 @@ export class TaskProgressCoordinator {
   private readonly TTL = 3600; // 1h en secondes
   private readonly redis: Redis;
   constructor(
-    private readonly dispatcher: VideoEventDispatcher,
     private readonly redisManager: RedisManager
   ) {
     this.redis = this.redisManager.createConnectionForWorker();

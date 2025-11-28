@@ -11,9 +11,16 @@
   },
   "include": [
     "src/**/*.ts",
+    "profile/**/*.ts",
     "purchase/**/*.ts",
     "subscription/**/*.ts",
-    "viewTracking/**/*.ts"
+    "viewTracking/**/*.ts",
+    "auth/**/*.ts",
+    "catalog/**/*.ts",
+    "content/**/*.ts",
+    "interactions/**/*.ts",
+    "checkout/**/*.ts",
+    "user/**/*.ts"
   ],
   "exclude": [
     "out-tsc",
@@ -24,5 +31,19 @@
     "eslint.config.js",
     "eslint.config.cjs",
     "eslint.config.mjs"
+  ],
+  "references": [
+    {
+      "path": "../../libs/domains/videoTracking/tsconfig.lib.json"
+    },
+    {
+      "path": "../../libs/domains/access/tsconfig.lib.json"
+    },
+    {
+      "path": "../../libs/domains/users/tsconfig.lib.json"
+    },
+    {
+      "path": "../../libs/domains/profile/tsconfig.lib.json"
+    }
   ]
 }

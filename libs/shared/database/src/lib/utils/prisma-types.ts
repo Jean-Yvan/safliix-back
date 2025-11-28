@@ -1,5 +1,6 @@
 // libs/database/src/lib/prisma-types.ts
 import { Prisma, ContentStatus, MediaAttachmentType, MediaFileStatus, MediaType } from "../generated/client";
+
 import {
   metadataInclude,
   episodeInclude,
@@ -17,6 +18,10 @@ import {
   adInclude,
   adViewInclude,
 } from "./prisma-includes";
+
+
+export { Prisma };
+
 
 export type MetadataWithRelations = Prisma.VideoMetadataGetPayload<{
   include: typeof metadataInclude;
@@ -112,6 +117,18 @@ export type UserVideoViewWithRelation = Prisma.UserVideoViewGetPayload<{
   };
 }>;
 
+export type SeasonViewWithRelation = Prisma.SeasonViewGetPayload<{
+  include:{
+    season:true
+  }
+}>;
+
+export type SerieViewWithRelation = Prisma.SerieViewGetPayload<{
+  include:{
+    series:true
+  }
+}>;
+
 
 
 
@@ -119,7 +136,7 @@ export type UserVideoViewWithRelation = Prisma.UserVideoViewGetPayload<{
 
 // 👇 utilitaire générique pour les "create"
 export type CreateToPrisma<TModelName extends keyof Prisma.TypeMap["model"]> =
-  Prisma.TypeMap["model"][TModelName]["operations"]["create"]["args"]["data"];
+    Prisma.TypeMap["model"][TModelName]["operations"]["create"]["args"]["data"];
 
 // 👇 utilitaire générique pour les "update"
 export type UpdateToPrisma<TModelName extends keyof Prisma.TypeMap["model"]> = {

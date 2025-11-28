@@ -8,7 +8,6 @@ import {
   IsIn,
   IsEnum,
   IsNotEmpty,
-  ArrayNotEmpty,
   ValidateNested,
   IsDateString,
 } from 'class-validator';

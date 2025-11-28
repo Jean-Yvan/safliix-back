@@ -36,3 +36,6 @@ export { ListPurchaseByIdQuery } from './lib/application/cqrs/queries/list-purch
 export { ListPurchasesByUserQuery } from './lib/application/cqrs/queries/list-purchases-by-user.query';
 export { FindPurchaseByUserAndVideoQuery } from './lib/application/cqrs/queries/find-purchase-by-user-and-video.query';
 export { ListExpiredPurchasesQuery } from './lib/application/cqrs/queries/list-expired-purchases.query';
+export { CheckoutService, CheckoutPlanType, CheckoutIntentPayload } from './lib/services/checkout.service';
+export * from './lib/interfaces/dto/checkout.dto';
+export * from './lib/interfaces/dto/rentals-query.dto';

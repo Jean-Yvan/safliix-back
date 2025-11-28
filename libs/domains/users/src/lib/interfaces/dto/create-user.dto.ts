@@ -1,7 +1,7 @@
 // libs/domains/src/users/dtos/create-user.dto.ts
 
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEmail, IsOptional, IsString, IsAlpha,IsBoolean, IsStrongPassword } from "class-validator";
+import { IsEmail, IsOptional, IsString, IsAlpha,  IsStrongPassword } from "class-validator";
 //import { UserRole } from "../enums/user-role.enum";
 
 export class CreateUserDto {

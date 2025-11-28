@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Season } from "../domain/entities/season.entity";
+
 
 export class EpisodeDto {
   @ApiProperty({ 
@@ -98,20 +98,5 @@ export class SeasonWithEpisodesDto {
   })
   rating?: number;
 
-  constructor(season: Season) {
-    this.id = season.id;
-    this.seasonNumber = season.number;
-    this.title = season.title;
-    //this.thumbnailUrl = season.thumbnailUrl; // Assuming Season has a thumbnailUrl property
-    this.year = new Date().getFullYear().toString(); // Placeholder, should be set properly
-    this.episodes = season.episodes.map(episode => ({
-      id: episode.id,
-      episodeNumber: episode.number,
-      title: episode.title,
-      description: episode.metadata?.description ?? '',
-      airDate: episode.metadata?.releaseDate ?? new Date(),
-      duration: episode.metadata?.duration ?? 0,
-      thumbnailUrl: episode.metadata?.thumbnail ?? '',
-    }));
-  }
+  
 }

@@ -12,5 +12,29 @@
     },
     "./package.json": "./package.json"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "nx": {
+    "root": "libs/shared/auth",
+    "sourceRoot": "libs/shared/auth/src",
+    "projectType": "library",
+    "targets": {
+      "build": {
+        "executor": "@nx/js:tsc",
+        "outputs": [
+          "{options.outputPath}"
+        ],
+        "dependsOn": [
+          "^build"
+        ],
+        "options": {
+          "outputPath": "dist/libs/shared/auth",
+          "main": "libs/shared/auth/src/index.ts",
+          "tsConfig": "libs/shared/auth/tsconfig.lib.json",
+          "assets": [
+            "libs/shared/auth/src/**/*"
+          ]
+        }
+      }
+    }
+  }
 }

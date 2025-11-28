@@ -3,8 +3,11 @@
   "files": [],
   "include": [],
   "references": [
-    { "path": "../common" },
-    { "path": "../../shared/database" },
-    { "path": "./tsconfig.lib.json" }
+    {
+      "path": "../../shared/database"
+    },
+    {
+      "path": "./tsconfig.lib.json"
+    }
   ]
 }

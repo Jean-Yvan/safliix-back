@@ -1,11 +1,9 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { PrismaService } from '@safliix-back/database';
 import { MovieAggregate } from '../../domain/entities/movie.aggregate';
 import { IMovieRepository } from '../../domain/ports/movie.repository';
 import { MovieMapper } from '../../mappers/movie.mapper';
-import { movieInclude } from '@safliix-back/database';
+import { movieInclude, PrismaService, Prisma, ContentStatus } from '@safliix-back/database';
 import { MovieFilter } from '../../utils/types';
-import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class MovieRepository implements IMovieRepository {
@@ -78,8 +76,16 @@ export class MovieRepository implements IMovieRepository {
     const metadataWhere: Prisma.VideoMetadataWhereInput = {};
 
     if (filters) {
+      if (filters.q) {
+        metadataWhere.title = {
+          contains: filters.q,
+          mode: 'insensitive',
+        };
+      }
+
       if (filters.status) {
-        where.status = filters.status;
+        // cast the incoming string to the Prisma-generated enum type expected by the where clause
+        where.status = filters.status as unknown as ContentStatus;
       }
 
       if (filters.director) {
@@ -95,6 +101,18 @@ export class MovieRepository implements IMovieRepository {
             format: filters.format,
           },
         };
+      }
+
+      if (filters.category) {
+        metadataWhere.category = {
+          category: { contains: filters.category, mode: 'insensitive' },
+        } as Prisma.VideoCategoryWhereInput;
+      }
+
+      if (filters.genre) {
+        metadataWhere.gender = {
+          name: { contains: filters.genre, mode: 'insensitive' },
+        } as Prisma.VideoGenreWhereInput;
       }
 
       if (filters.minDuration) {
